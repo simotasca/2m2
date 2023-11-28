@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "qualities": {
+      "low-prices": ["prezzi", "bassi"],
+      "speed": ["spedizione", "rapida"],
+      "reliability": ["affidabilità"],
+      "support": ["supporto", "dedicato"],
+      "test": ["usato", "testato"],
+      "security": ["acquista con", "sicurezza"]
+    },
+    "filters": {
+      "category": {
+        "title": "filtra in base alla <b>categoria</b> dei ricambi"
+      },
+      "brand": {
+        "title": "filtra in base alla <b>marca</b> della tua auto"
+      }
+    }
+  }
+}

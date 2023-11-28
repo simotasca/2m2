@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - API_ROUTE_SECRET="a66521fabb2a24f34ca4cff815d71a481393301afaa64588b4d33ecfa8f9e7e7"
+      - STRIPE_SECRET_KEY="sk_test_51MOjPrJoX5bBhFKS8DbfK2sMuXynrqBI3yu46bFSk5Iyt5VJzNaVldas3YfBRGjJHpnATQwI50ZfOiJO7SrYPELc00g1nWxTcW"
+      - NEXT_PUBLIC_STRIPE_KEY="pk_test_51MOjPrJoX5bBhFKSnI7K2xzZQNxR0Qkys1JIK1hitJrYrCieBK5LQST7bnZSjfozXJ3q7Z876zfO3T3FL9K5JqVh00IPwQh1b8"
+
+      # Update these with your Supabase details from your project settings > API
+      # https://app.supabase.com/project/_/settings/api
+      - NEXT_PUBLIC_SUPABASE_URL=http://kong:8000
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE
+
+      - SUPABASE_SERVICE_ROLE_KEY=SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJzZXJ2aWNlX3JvbGUiLAogICAgImlzcyI6ICJzdXBhYmFzZS1kZW1vIiwKICAgICJpYXQiOiAxNjQxNzY5MjAwLAogICAgImV4cCI6IDE3OTk1MzU2MDAKfQ.DaYlNEoUrrEn2Ig7tqibS-PHK5vgusbcbo7X36XVt4Q
+
+      - JWT_SECRET=RQkgKE6SJrIVAaAwisPx8hvinRYrUApDOBgOmtg0w2HF1WeKp1bUn8CWoUGD0VT44t1+xAl10GuRRqMBKYcbPtBmbTQezuaZI8MzVxQRBMhasD4KfxTo3Ol/Ppm+nHi+aIR7Asr3bt3w/Jbggl3D5EgS8+Jve8wuJ3Cb49FF2KQZqTzaHEgzMAtg8r4HT6YpR9uKqojyrCKfsAGU4cnlZNmeCllCP7hdOu69JDT1AVGKOAaAaSROjI7Xp/zic28MTziEFXrnMueGb/9TP7wgG3e7cdKpjdm9Wcu8C//2JfhnpuMSkyoNmUbwQHGoRGPAHPcvaIGsmkSSsadjqT4syg==
+
+      - ECODAT_API_TOKEN=PFX-WSECD-85S4D5_TST_eco_2022_87854523149847447623549
+      - ECODAT_API_URL=http://p.ecodat.it:82/WSEcodatLocal.asmx

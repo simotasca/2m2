@@ -1,0 +1,26 @@
+{
+  "search-bar": {
+    "search": "Search",
+    "filters": {
+      "title": "Filters"
+    },
+    "placeholder": "Enter your research here . . ."
+  },
+  "login": "Login / SignUp",
+  "cart": {
+    "products": {
+      "single": "product",
+      "many": "products"
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "parts": {
+      "title": "Car Parts",
+      "filters": {}
+    },
+    "models": { "title": "Models" },
+    "about": "About Us",
+    "contacts": "Contacts"
+  }
+}

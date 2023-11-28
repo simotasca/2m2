@@ -1,0 +1,26 @@
+{
+  "search-bar": {
+    "search": "Cerca",
+    "filters": {
+      "title": "Filtra"
+    },
+    "placeholder": "Ricerca qui il tuo ricambio . . ."
+  },
+  "login": "Login / Registrati",
+  "cart": {
+    "products": {
+      "single": "prodotto",
+      "many": "prodotti"
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "parts": {
+      "title": "Ricambi",
+      "filters": {}
+    },
+    "models": { "title": "Modelli" },
+    "about": "Chi Siamo",
+    "contacts": "Contatti"
+  }
+}

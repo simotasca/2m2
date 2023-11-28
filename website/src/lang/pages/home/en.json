@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "qualities": {
+      "low-prices": ["low", "prices"],
+      "speed": ["fast", "delivery"],
+      "reliability": ["reliability"],
+      "support": ["dedicated", "support"],
+      "test": ["used", "tested"],
+      "security": ["buy with", "confidence"]
+    },
+    "filters": {
+      "category": {
+        "title": "filter by spare parts <b>category</b>"
+      },
+      "brand": {
+        "title": "filter based on the <b>brand</b> of your car"
+      }
+    }
+  }
+}
