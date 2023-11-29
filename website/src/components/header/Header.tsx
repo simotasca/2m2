@@ -83,7 +83,7 @@ export default function Header({ extension, small = true }: Props) {
             <Navbar small={small} />
           </MaxWidthContainer>
         )}
-        <div className={twMerge(small ? "h-2" : "h-3 sm:h-4")}></div>
+        <div className={twMerge(small ? "h-2.5" : "h-3 sm:h-4")}></div>
         <div className="text-dark">{extension && extension}</div>
       </header>
     </>

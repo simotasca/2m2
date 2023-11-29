@@ -9,7 +9,7 @@ import Image from "next/image";
 
 export default function ClientPage() {
   return (
-    <PageLayout>
+    <PageLayout headerSmall={true}>
       <Hero />
       <MapSection />
       <History />
