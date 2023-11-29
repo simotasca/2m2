@@ -26,26 +26,31 @@ function qs(obj: any) {
 
 export default function Hero() {
   return (
-    <div className="relative">
+    <div className="relative max-md:flex flex-col">
       <HeroBg />
+      <div className="max-md:order-5">
+        <QualitiesBar />
+      </div>
 
-      <QualitiesBar />
+      <MaxWidthContainer className="flex flex-col md:grid md:grid-cols-[13fr_12fr] lg:grid-cols-[4fr_3fr] pb-10">
+        <div className="max-md:order-2 max-md:pt-8 ">
+          <HeroFilters />
+        </div>
 
-      <MaxWidthContainer className="grid grid-cols-[4fr_3fr] pb-10">
-        <HeroFilters />
-
-        <main className="text-white px-8">
-          <Image
-            src={imgLogoEsteso}
-            alt="Logo 2emme2 autoricambi"
-            className="w-full max-w-sm [filter:drop-shadow(0px_2px_2px_black)]"
-          />
-          <p className="text-xl leading-tight [text-shadow:0_2px_2px_black] mt-4">
-            Assistenza garantita su tutto.
-            <br />
-            Puoi contare su di noi.
-          </p>
-          <Button className="group mt-6 bg-white text-red-600 pl-12 pr-10 py-1.5 tracking-wide">
+        <main className="sm:flex md:block gap-6 items-end text-white px-8 xs:px-16 sm:px-4 md:px-8 max-lg:pt-4">
+          <div>
+            <Image
+              src={imgLogoEsteso}
+              alt="Logo 2emme2 autoricambi"
+              className="w-full sm:w-[80%] md:w-full md:max-w-sm [filter:drop-shadow(0px_2px_1px_#000000aa)_drop-shadow(2px_0px_1px_#000000aa)] md:[filter:drop-shadow(0px_2px_2px_black)]"
+            />
+            <p className="sm:max-w-md md:max-w-none text-lg xs:text-xl leading-tight sm:leading-6 md:leading-tight [text-shadow:0_2px_4px_black] max-sm:text-center sm:pt-2 md:mt-4">
+              Assistenza garantita su tutto.{" "}
+              <br className="sm:hidden md:block" />
+              Puoi contare su di noi.
+            </p>
+          </div>
+          <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
             <span>Contattaci</span>
             <Image
               src={iconSend}
@@ -166,8 +171,8 @@ function HeroFilters() {
 
   return (
     <div>
-      <div className="bg-white rounded grid grid-cols-2 gap-x-8 gap-y-2 px-9 py-7">
-        <div className="flex items-start gap-1">
+      <div className="bg-white rounded max-sm:flex flex-col sm:grid md:flex lg:grid grid-cols-2 gap-x-8 gap-y-2 px-9 py-7">
+        <div className="flex items-start gap-1 lg:order-1">
           <Image className="w-8" src={iconCategory} alt="" />
           <h4 className="text-xl leading-[0.9] font-bold uppercase">
             {rich("category.title", {
@@ -175,7 +180,7 @@ function HeroFilters() {
             })}
           </h4>
         </div>
-        <div className="flex items-start gap-1">
+        <div className="flex items-start gap-1 max-sm:order-2 md:order-2 lg:order-2  max-sm:pt-4 md:pt-4 lg:pt-0">
           <Image className="w-8" src={iconBrand} alt="" />
           <h4 className="text-xl leading-[0.9] font-bold uppercase">
             {rich("brand.title", {
@@ -183,7 +188,7 @@ function HeroFilters() {
             })}
           </h4>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 lg:order-3">
           <SearchFilter
             label="category"
             placeholder="Select the category"
@@ -198,7 +203,7 @@ function HeroFilters() {
             onChange={(t) => setTypology(t)}
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 max-sm:order-2 md:order-2 lg:order-4">
           <SearchFilter
             label="brand"
             placeholder="Select the brand"
@@ -213,10 +218,11 @@ function HeroFilters() {
             onChange={(m) => setModel(m)}
           />
         </div>
-        <div className="col-span-full pt-3">
+        <div className="col-span-full pt-3 order-3 lg:order-5">
           <Button
             onClick={doSearch}
-            className="text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500">
+            className="text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500"
+          >
             Search
           </Button>
         </div>
@@ -228,26 +234,27 @@ function HeroFilters() {
 function HeroBg() {
   return (
     <>
-      <div className="absolute top-0 left-0 w-full h-full grid grid-cols-[6fr_7fr] -z-10">
-        <div className="relative z-10 [background-image:linear-gradient(to_left,#F03B3B_30%,#9D2A2A_100%)]">
+      <div className="absolute top-0 left-0 w-full h-full grid grid-cols-1 sm:grid-cols-[1fr_3fr] md:grid-cols-[1fr_2fr] lg:grid-cols-[6fr_7fr] -z-10">
+        <div className="relative z-10 [background-image:linear-gradient(to_left,#F03B3B_30%,#9D2A2A_100%)] h-full max-sm:order-2 max-sm:border-t-2 max-sm:border-neutral-400">
           <Image
-            className="absolute left-full -translate-x-px top-0 h-full w-auto object-cover object-left"
+            className="absolute left-full -translate-x-px top-0 h-full w-auto object-cover object-left max-w-none max-sm:hidden"
             src={imgSkew}
             alt=""
           />
           <div className="absolute w-full h-full overflow-hidden">
-            <div className="absolute bottom-0 translate-y-1/2 right-0 w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
-            <div className="absolute bottom-0 translate-y-1/2 right-[32%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
-            <div className="absolute bottom-0 translate-y-1/2 right-[64%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
-            <div className="absolute bottom-0 translate-y-1/2 right-[96%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
-            <div className="absolute bottom-0 translate-y-1/2 right-[128%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
+            <div className="absolute bottom-0 translate-y-1/2 md:right-0 w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
+            <div className="absolute bottom-0 translate-y-1/2 md:right-[32%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
+            <div className="absolute bottom-0 translate-y-1/2 md:right-[64%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
+            <div className="absolute bottom-0 translate-y-1/2 md:right-[96%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
+            <div className="absolute bottom-0 translate-y-1/2 md:right-[128%] w-px h-[400%] bg-white opacity-[16%] -rotate-[22deg] -z-10"></div>
           </div>
         </div>
         <div className="relative">
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"></Image>
+            className="absolute inset-0 w-full h-full object-cover"
+          ></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>
@@ -278,31 +285,43 @@ function QualitiesBar() {
   return (
     <MaxWidthContainer className="grid grid-cols-2 gap-x-12 px-12 py-8 text-white uppercase font-semibold leading-[1]">
       <div className="flex gap-12">
-        <div className="flex gap-3 items-center">
-          <Image src={iconGuaranteed} alt="" />
-          <p>{mapQuality("reliability")}</p>
+        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
+          <Image className="md:w-6 lg:w-full" src={iconGuaranteed} alt="" />
+          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+            {mapQuality("reliability")}
+          </p>
         </div>
-        <div className="flex gap-3 items-center">
-          <Image src={iconShipping} alt="" />
-          <p>{mapQuality("speed")}</p>
+        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
+          <Image className="md:w-6 lg:w-full" src={iconShipping} alt="" />
+          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+            {mapQuality("speed")}
+          </p>
         </div>
-        <div className="flex gap-3 items-center">
-          <Image src={iconLowPrices} alt="" />
-          <p>{mapQuality("low-prices")}</p>
+        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
+          <Image className="md:w-6 lg:w-full" src={iconLowPrices} alt="" />
+          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+            {mapQuality("low-prices")}
+          </p>
         </div>
       </div>
       <div className="flex gap-12 place-self-end">
-        <div className="flex gap-3 items-center">
-          <Image src={iconSupport} alt="" />
-          <p>{mapQuality("support")}</p>
+        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
+          <Image className="md:w-6 lg:w-full" src={iconSupport} alt="" />
+          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+            {mapQuality("support")}
+          </p>
         </div>
-        <div className="flex gap-3 items-center">
-          <Image src={iconUsedTest} alt="" />
-          <p>{mapQuality("test")}</p>
+        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
+          <Image className="md:w-6 lg:w-full" src={iconUsedTest} alt="" />
+          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+            {mapQuality("test")}
+          </p>
         </div>
-        <div className="flex gap-3 items-center">
-          <Image src={iconSecurity} alt="" />
-          <p>{mapQuality("security")}</p>
+        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
+          <Image className="md:w-4 lg:w-fit" src={iconSecurity} alt="" />
+          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+            {mapQuality("security")}
+          </p>
         </div>
       </div>
     </MaxWidthContainer>
