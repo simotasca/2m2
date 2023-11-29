@@ -7,7 +7,7 @@ import { PropsWithChildren } from "react";
 import ClientLayout from "./ClientLayout";
 
 type Props = PropsWithChildren<{
-  translations: {
+  translations?: {
     [key: string]: string;
   };
 }>;
@@ -15,6 +15,8 @@ type Props = PropsWithChildren<{
 export default async function ServerLayout({ children, translations }: Props) {
   const supabase = createServerComponentClient<Database>({ cookies: cookies });
   const cart = await getCart(supabase);
+
+  translations = translations ?? {};
 
   return (
     <>
