@@ -2,6 +2,7 @@
 
 import { useTranslation } from "@/context/lang/client";
 import iconDown from "@/images/icons/white/down.svg";
+import routes from "@/lib/shared/routes";
 import { Popover, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
@@ -14,14 +15,14 @@ export default function Navbar({ small }: { small: boolean }) {
         "flex items-center justify-between sm:justify-center gap-x-4 sm:gap-x-8 font-medium max-sm:text-sm max-sm:pl-2",
         small && "translate-y-px"
       )}>
-      <a href="/" className="">
+      <a href={routes.home()} className="">
         {t("header.navbar.home")}
       </a>
       <DropdownCarParts small={small} />
       <div className="max-sm:hidden contents">
         <DropdownModels small={small} />
       </div>
-      <a href="#">{t("header.navbar.about")}</a>
+      <a href={routes.about()}>{t("header.navbar.about")}</a>
       <a href="#" className="max-sm:hidden">
         {t("header.navbar.contacts")}
       </a>

@@ -15,6 +15,7 @@ import Navbar from "./NavBar";
 import SearchBar from "./SearchBar";
 import { UserData } from "./UserData";
 import MobilePanel, { setMobilePanelOpen } from "./MobilePanel";
+import routes from "@/lib/shared/routes";
 
 interface Props {
   extension?: React.ReactNode;
@@ -91,7 +92,7 @@ export default function Header({ extension, small = true }: Props) {
 
 function Logo() {
   return (
-    <a href="/">
+    <a href={routes.home()}>
       <Image
         src={imgLogo}
         alt="logo 2m2 autoricambi"
