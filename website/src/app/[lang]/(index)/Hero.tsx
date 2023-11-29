@@ -37,14 +37,14 @@ export default function Hero() {
           <HeroFilters />
         </div>
 
-        <main className="sm:flex md:block gap-6 items-end text-white px-8 xs:px-16 sm:px-4 md:px-8 max-lg:pt-4">
+        <main className="sm:flex md:block gap-6 items-end text-white px-4 [@media(min-width:500px)]:px-16 sm:px-4 md:px-8 max-sm:py-12 sm:pt-6 sm:pb-0 md:pt-4 lg:pt-0">
           <div>
             <Image
               src={imgLogoEsteso}
               alt="Logo 2emme2 autoricambi"
-              className="w-full sm:w-[80%] md:w-full md:max-w-sm [filter:drop-shadow(0px_2px_1px_#000000aa)_drop-shadow(2px_0px_1px_#000000aa)] md:[filter:drop-shadow(0px_2px_2px_black)]"
+              className="w-full sm:w-[90%] md:w-full md:max-w-sm [filter:drop-shadow(0px_2px_1px_#000000cc)_drop-shadow(2px_0px_1px_#000000cc)] md:[filter:drop-shadow(0px_2px_2px_black)]"
             />
-            <p className="sm:max-w-md md:max-w-none text-lg xs:text-xl leading-tight sm:leading-6 md:leading-tight [text-shadow:0_2px_4px_black] max-sm:text-center sm:pt-2 md:mt-4">
+            <p className="sm:max-w-md md:max-w-none text-lg [@media(min-width:347px)]:text-xl  [@media(min-width:420px)]:text-2xl sm:text-xl [@media(min-width:347px)]:leading-tight [@media(min-width:420px)]:leading-tight md:leading-tight [text-shadow:0_2px_4px_black] max-sm:text-center sm:pt-2 ">
               Assistenza garantita su tutto.{" "}
               <br className="sm:hidden md:block" />
               Puoi contare su di noi.
@@ -283,43 +283,44 @@ function QualitiesBar() {
   };
 
   return (
-    <MaxWidthContainer className="grid grid-cols-2 gap-x-12 px-12 py-8 text-white uppercase font-semibold leading-[1]">
-      <div className="flex gap-12">
-        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
-          <Image className="md:w-6 lg:w-full" src={iconGuaranteed} alt="" />
-          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+    <MaxWidthContainer className="grid md:grid-cols-2 gap-x-12 px-4 xs:px-12 pb-8 md:pt-6 md:pb-4 lg:py-8 text-white uppercase font-semibold leading-[1] mx-auto">
+      <div className="grid grid-cols-3 sm:flex gap-6 xs:gap-12 items-start">
+        <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
+          <Image className=" w-6 lg:w-full" src={iconGuaranteed} alt="" />
+          <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
             {mapQuality("reliability")}
           </p>
         </div>
-        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
-          <Image className="md:w-6 lg:w-full" src={iconShipping} alt="" />
-          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+        <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
+          <Image className=" w-6 lg:w-full" src={iconShipping} alt="" />
+          <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
             {mapQuality("speed")}
           </p>
         </div>
-        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
-          <Image className="md:w-6 lg:w-full" src={iconLowPrices} alt="" />
-          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+        <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
+          <Image className=" w-6 lg:w-full" src={iconLowPrices} alt="" />
+          <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
             {mapQuality("low-prices")}
           </p>
         </div>
       </div>
-      <div className="flex gap-12 place-self-end">
-        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
-          <Image className="md:w-6 lg:w-full" src={iconSupport} alt="" />
-          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+
+      <div className="grid grid-cols-3 sm:flex gap-6 xs:gap-12 max-xs:items-start max-md:items-end md:items-start md:place-self-end sm:ml-auto md:ml-0 sm:mr-0 mt-6 mb-2 xs:mt-4 md:mt-0">
+        <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
+          <Image className=" w-6 lg:w-full" src={iconSupport} alt="" />
+          <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
             {mapQuality("support")}
           </p>
         </div>
-        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
-          <Image className="md:w-6 lg:w-full" src={iconUsedTest} alt="" />
-          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+        <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
+          <Image className=" w-6 lg:w-full" src={iconUsedTest} alt="" />
+          <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
             {mapQuality("test")}
           </p>
         </div>
-        <div className="flex gap-3 md:gap-2 lg:gap-3 items-center">
-          <Image className="md:w-4 lg:w-fit" src={iconSecurity} alt="" />
-          <p className="md:text-sm lg:text-md md:leading-4 lg:leading-4">
+        <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
+          <Image className="w-4 lg:w-fit" src={iconSecurity} alt="" />
+          <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
             {mapQuality("security")}
           </p>
         </div>
