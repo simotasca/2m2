@@ -6,7 +6,11 @@ const MaxWidthContainer: FC<PropsWithChildren<{ className?: string }>> = ({
   className,
 }) => {
   return (
-    <div className={twMerge(`max-w-screen-xl mx-auto px-3 sm:px-6`, className)}>
+    <div
+      className={twMerge(
+        `w-full max-w-screen-xl mx-auto px-3 sm:px-6`,
+        className
+      )}>
       {children}
     </div>
   );
