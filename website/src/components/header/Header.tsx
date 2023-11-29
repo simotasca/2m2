@@ -14,6 +14,7 @@ import SearchModal from "../search/SearchModal";
 import Navbar from "./NavBar";
 import SearchBar from "./SearchBar";
 import { UserData } from "./UserData";
+import MobilePanel, { setMobilePanelOpen } from "./MobilePanel";
 
 interface Props {
   extension?: React.ReactNode;
@@ -42,6 +43,8 @@ export default function Header({ extension, small = true }: Props) {
 
       <CartPanel />
 
+      <MobilePanel />
+
       <TopBar />
 
       <header
@@ -51,7 +54,9 @@ export default function Header({ extension, small = true }: Props) {
           small ? "pt-2" : "pt-2 sm:pt-4"
         )}>
         <MaxWidthContainer className="grid grid-cols-[1fr_auto_1fr] sm:grid-cols-[auto_1fr_auto] gap-x-5">
-          <button className="sm:hidden">
+          <button
+            onClick={() => setMobilePanelOpen(true)}
+            className="sm:hidden">
             <Image src={iconHamburger} alt="" className="w-6 ml-2 opacity-90" />
           </button>
           <div

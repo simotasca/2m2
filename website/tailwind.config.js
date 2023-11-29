@@ -43,9 +43,13 @@ module.exports = {
           filter: "none",
         },
       });
+      // glopbal documentElement states
       addComponents({
         ".login-is-loading": {
           "pointer-events": "none",
+        },
+        "html.mobile-panel-open": {
+          overflow: "hidden",
         },
         ".cart-is-open": {
           overflow: "hidden",
