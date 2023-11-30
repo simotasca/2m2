@@ -59,7 +59,7 @@ export const knownCategories = {
   "Cambio e Trasmissione": { image: "/assets/category-images/cambio.png" },
   Cristalli: { image: "/assets/category-images/cristalli.png" },
   Fanaleria: { image: "/assets/category-images/fanaleria.png" },
-  "Impianto elettrico": { image: "" },
+  "Impianto elettrico": { image: "/assets/category-images/batteria.png" },
   "Impianto frenante": { image: "/assets/category-images/freni.png" },
   "Lamierati esterni": {
     image: "/assets/category-images/lamierati-esterni.png",
