@@ -52,3 +52,28 @@ export function productName(
 ) {
   return [product.item, product.brand, product.model].join(" ");
 }
+
+export const knownCategories = {
+  "Allestimenti interni": { image: "/assets/category-images/allestimenti.png" },
+  Assale: { image: "/assets/category-images/assale.png" },
+  "Cambio e Trasmissione": { image: "/assets/category-images/cambio.png" },
+  Cristalli: { image: "/assets/category-images/cristalli.png" },
+  Fanaleria: { image: "/assets/category-images/fanaleria.png" },
+  "Impianto elettrico": { image: "" },
+  "Impianto frenante": { image: "/assets/category-images/freni.png" },
+  "Lamierati esterni": {
+    image: "/assets/category-images/lamierati-esterni.png",
+  },
+  "Lamierati interni": {
+    image: "/assets/category-images/lamierati-interni.png",
+  },
+  "Manutazione Ordinaria": {
+    image: "/assets/category-images/manutenzione.png",
+  },
+  Motore: { image: "/assets/category-images/motore.png" },
+  "Scarico e Iniezione": { image: "/assets/category-images/scarico.png" },
+  Selleria: { image: "/assets/category-images/selleria.png" },
+  Sicurezza: { image: "/assets/category-images/sicurezza.png" },
+  Sterzo: { image: "/assets/category-images/sterzo.png" },
+  Termico: { image: "/assets/category-images/termico.png" },
+} as const;

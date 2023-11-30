@@ -19,18 +19,7 @@ interface Props {
 
 export default function Product({ product }: Props) {
   const { t } = useTranslation("product");
-  const [image, setImage] = useState<string | undefined>();
-  const ref = useRef<HTMLImageElement>(null);
   const { addProduct, removeProduct, hasProduct, loading } = useCart();
-
-  useEffect(() => {
-    if (!ref.current) return;
-    if (ref.current.dataset.src) return;
-    fetch("/api/ecodat/product-image?product-id=" + product.id)
-      .then((res) => res.text())
-      .then((src) => setImage(src))
-      .catch(() => setImage(undefined));
-  }, [ref]);
 
   return (
     <Link
@@ -65,11 +54,6 @@ export default function Product({ product }: Props) {
                 ? "bg-white text-red-600 border-red-600"
                 : "bg-red-gradient text-white border-0"
             )}>
-            {/* background-image: linear-gradient(to bottom right, var(r600 0%, r500 100%)); */}
-
-            {/* -tw-gradient-from: #b91c1c 0%;
-  --tw-gradient-to: rgb(185 28 28 / 0) var();
-  --tw-gradient-stops:  */}
             {hasProduct(product) ? (
               <span>Remove</span>
             ) : (
