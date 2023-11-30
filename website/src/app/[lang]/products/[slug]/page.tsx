@@ -68,42 +68,18 @@ function BuySection({ product }: { product: EcodatArticle }) {
 }
 
 export default async function ProductPage({ params: { slug } }: Props) {
-  // const product = await fetchEcodatArticle(slug).catch(() => null);
-  const product: EcodatArticle = {
-    id: 4,
-    price: 2.23,
-    notes: "Prezzo nuovo: 4,4600\nDa Anno: 2003-08\nA Anno: 2004-12",
-    category: "ASSALE",
-    categoryId: 18,
-    type: "SOSPENSIONI",
-    typeId: 77,
-    item: "CUFFIA PARAPOLVERE AMMORTIZZATORE ANT. DX.",
-    itemId: 2497,
-    brand: "DAEWOO",
-    brandId: 8,
-    model: "NUBIRA «III» SW (2004)",
-    modelId: 417,
-    version:
-      "1.6 SE, 16v. Station Wagon, 5 p. dal 2003-08 al 2004-12 cm3 1598 cv 109 valv. 16 (B)",
-    new: true,
-    available: true,
-    description:
-      "CUFFIA PARAPOLVERE AMMORTIZZATORE ANT. DX. USATO DAL 2003 AL 2004 DAEWOO NUBIRA «III» SW (2004)",
-    altDescription: "Cuffia parapolvere ammortizzatore (dx.) (ant.) (SPINOTTO)",
-    oeCode: "96300082",
-    engine: "F16D3",
-    yearFrom: 2002,
-    yearTo: 2007,
-  };
+  const product = await fetchEcodatArticle(slug).catch(() => null);
 
   if (!product) return notFound();
 
-  // const photoIdsList: number[] = await fetchEcodatArticlePhotoList({
-  //   articleId: product.id,
-  // }).catch((e) => {
-  //   console.error(e);
-  //   return [];
-  // });
+  const photoIdsList: number[] = await fetchEcodatArticlePhotoList({
+    articleId: product.id,
+  }).catch((e) => {
+    console.error(e);
+    return [];
+  });
+
+  console.log("PHOTONS", photoIdsList);
 
   return (
     <ServerLayout translations={{}}>
@@ -121,14 +97,13 @@ export default async function ProductPage({ params: { slug } }: Props) {
             </div>
             <div className="grid grid-cols-[13fr_10fr_7fr] gap-4">
               <div>
-                {/* <ProductImage big photo={{ imageId: photoIdsList[0] }} /> */}
-                <img src={IMAGE} alt="" className="aspect-[3/2]" />
+                <ProductImage big photo={{ imageId: photoIdsList[0] }} />
                 <div className="flex gap-1 pt-1">
-                  {/* {photoIdsList.slice(1).map((imageId) => (
+                  {photoIdsList.slice(1).map((imageId) => (
                     <div className="p-0.5 border border-slate-300 rounded">
                       <ProductImage className="w-20" photo={{ imageId }} />
                     </div>
-                  ))} */}
+                  ))}
                 </div>
               </div>
               <main>
