@@ -18,6 +18,7 @@ import Hero from "./Hero";
 import Button from "@/components/ui/Button";
 import routes from "@/lib/shared/routes";
 import { shuffle } from "@/lib/shared/array";
+import Link from "next/link";
 
 interface Props {
   latestProducts: EcodatArticle[];
@@ -28,7 +29,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
   return (
     <PageLayout>
       <Hero />
-      
+
       <CategoriesSection categories={categories} />
 
       <MaxWidthContainer className="bg-neutral-100 pt-10 pb-10">
@@ -85,7 +86,7 @@ const cardColors = [
 
 function CategoryCard({ name }: { name: string }) {
   return (
-    <a
+    <Link
       href={routes.category(name)}
       className={twMerge(
         "group relative text-left text-white aspect-video overflow-hidden",
@@ -110,7 +111,7 @@ function CategoryCard({ name }: { name: string }) {
           view more
         </p>
       </div>
-    </a>
+    </Link>
   );
 }
 
