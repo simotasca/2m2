@@ -25,6 +25,7 @@ export interface EcodatArticle {
   power?: string;
   nPorte?: string;
   Km?: string;
+  psYear?: string;
 }
 
 export interface EcodatCategory {

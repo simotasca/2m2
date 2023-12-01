@@ -21,14 +21,15 @@ import { shuffle } from "@/lib/shared/array";
 
 interface Props {
   latestProducts: EcodatArticle[];
+  categories: string[];
 }
 
-export default function ClientPage({ latestProducts }: Props) {
+export default function ClientPage({ latestProducts, categories }: Props) {
   return (
     <PageLayout>
       <Hero />
-
-      <CategoriesSection />
+      
+      <CategoriesSection categories={categories} />
 
       <MaxWidthContainer className="bg-neutral-100 pt-10 pb-10">
         <div className="flex gap-8 items-end">
@@ -65,14 +66,7 @@ export default function ClientPage({ latestProducts }: Props) {
   );
 }
 
-function CategoriesSection() {
-  const [categories, setCategories] = useState<string[]>();
-  useEffect(() => {
-    setCategories(shuffle(shuffle(Object.keys(knownCategories))));
-  }, []);
-
-  if (!categories) return <></>;
-
+function CategoriesSection({ categories }: { categories: string[] }) {
   return (
     <div className="relative grid grid-cols-6 shadow-[0px_3px_5px_#00000030] z-10">
       {categories.slice(0, 12).map((key) => (

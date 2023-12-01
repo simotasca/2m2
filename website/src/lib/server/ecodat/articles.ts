@@ -7,12 +7,19 @@ export interface APIArticles {
     nRows: number;
     lastRow: number;
   };
+  /** filtra per la descrizione completa dell’articolo attraverso l’operatore LIKE */
   description?: string;
+  /** se > 0 filtra per IDMarca */
   brandId?: number;
+  /** se > 0 filtra per IDModello */
   modelId?: number;
+  /** se > 0 filtra per IDCategoria */
   categoryId?: number;
+  /** se > 0 filtra per IDTipologi */
   typeId?: number;
+  /** se numerico filtra per il campo “DaAnno” con operatore “=” */
   fromYear?: number;
+  /** se numerico filtra per il campo “AAnno” con operatore “=” */
   toYear?: number;
 }
 
@@ -92,6 +99,7 @@ function parseArticle(a: Element): EcodatArticle {
     engine: XMLParser.getVal(a, "TipoMotore")!,
     yearFrom: parseInt(XMLParser.getVal(a, "DaAnno")!),
     yearTo: parseInt(XMLParser.getVal(a, "AAnno")!),
+    psYear: XMLParser.getVal(a, "AnnoPS")!,
   };
 }
 

@@ -5,6 +5,7 @@ import iconDown from "@/images/icons/white/down.svg";
 import routes from "@/lib/shared/routes";
 import { Popover, Transition } from "@headlessui/react";
 import Image from "next/image";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 export default function Navbar({ small }: { small: boolean }) {
@@ -14,29 +15,26 @@ export default function Navbar({ small }: { small: boolean }) {
       className={twMerge(
         "[@media(max-width:700px)]:grid grid-cols-3 [@media(min-width:700px)]:flex items-center justify-between [@media(min-width:700px)]:justify-center gap-x-4 [@media(min-width:700px)]:gap-x-8 font-medium [@media(max-width:700px)]:text-sm [@media(max-width:700px)]:pl-2",
         small && "translate-y-px"
-      )}
-    >
-      <a
+      )}>
+      <Link
         href={routes.home()}
-        className="[@media(max-width:700px)]:ml-auto [@media(max-width:700px)]:mr-0"
-      >
+        className="[@media(max-width:700px)]:ml-auto [@media(max-width:700px)]:mr-0">
         {t("header.navbar.home")}
-      </a>
+      </Link>
       <div className="[@media(max-width:700px)]:mx-auto">
         <DropdownCarParts small={small} />
       </div>
       <div className="[@media(max-width:700px)]:hidden contents">
         <DropdownModels small={small} />
       </div>
-      <a
+      <Link
         href={routes.about()}
-        className="[@media(max-width:700px)]mr-auto [@media(max-width:700px)]:ml-0"
-      >
+        className="[@media(max-width:700px)]mr-auto [@media(max-width:700px)]:ml-0">
         {t("header.navbar.about")}
-      </a>
-      <a href="#" className="[@media(max-width:766px)]:hidden">
+      </Link>
+      <Link href="#" className="[@media(max-width:766px)]:hidden">
         {t("header.navbar.contacts")}
-      </a>
+      </Link>
     </nav>
   );
 }
