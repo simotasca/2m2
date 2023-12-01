@@ -18,6 +18,8 @@ export default function ProductImage({ photo, big, className }: Props) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("NOT WORKS", image);
+
     if (!ref.current) return;
     if (!photo) return;
     if (image !== undefined) return;

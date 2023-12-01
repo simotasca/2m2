@@ -2,10 +2,13 @@ import ServerLayout from "../base/ServerLayout";
 import SearchClientLayout from "./SearchClientLayout";
 import { SearchLayoutProps } from "./props";
 
-export default function SearchServerLayout(props: SearchLayoutProps) {
+export default function SearchServerLayout({
+  children,
+  ...props
+}: SearchLayoutProps) {
   return (
     <ServerLayout translations={{ product: "misc/product" }}>
-      <SearchClientLayout {...props} />
+      <SearchClientLayout {...props}>{children}</SearchClientLayout>
     </ServerLayout>
   );
 }

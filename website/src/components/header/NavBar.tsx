@@ -50,7 +50,8 @@ function DropdownCarParts({ small }) {
             className={twMerge(
               "outline-none flex items-center gap-1 rounded pl-3 pr-1.5 sm:pl-5 sm:pr-4 border border-[#DA8D6C] bg-[linear-gradient(180deg,#DB5F06_30%,#D20404_180%);]",
               small ? "py-1" : "py-0.5 sm:py-2"
-            )}>
+            )}
+          >
             <span>{t("header.navbar.parts.title")}</span>
             <Image src={iconDown} alt="dropdown icon" className="w-4 mt-0.5" />
           </Popover.Button>
@@ -62,7 +63,8 @@ function DropdownCarParts({ small }) {
             enterTo="transform translate-y-0 opacity-100"
             leave="transition duration-75 ease-out"
             leaveFrom="transform translate-y-0 opacity-100"
-            leaveTo="transform -translate-y-2 opacity-0">
+            leaveTo="transform -translate-y-2 opacity-0"
+          >
             <Popover.Panel className="pt-2 z-10 min-w-fit">
               <div className="grid grid-cols-2 bg-white border border-slate-400 rounded-md text-black p-4  gap-y-1">
                 <a href="#">Analytics</a>
@@ -89,7 +91,8 @@ function DropdownModels({ small }) {
             className={twMerge(
               "outline-none flex items-center gap-1 py-2",
               small && "py-1"
-            )}>
+            )}
+          >
             <span>{t("header.navbar.models.title")}</span>
             <Image src={iconDown} alt="dropdown icon" className="w-4 mt-0.5" />
           </Popover.Button>
@@ -101,7 +104,8 @@ function DropdownModels({ small }) {
             enterTo="transform translate-y-0 opacity-100"
             leave="transition duration-75 ease-out"
             leaveFrom="transform translate-y-0 opacity-100"
-            leaveTo="transform -translate-y-2 opacity-0">
+            leaveTo="transform -translate-y-2 opacity-0"
+          >
             <Popover.Panel className="-translate-x-3 pt-2 z-10 min-w-fit">
               <div className="grid grid-cols-2 bg-white border border-slate-400 rounded-md text-black p-4  gap-y-1">
                 <a href="#">Analytics</a>

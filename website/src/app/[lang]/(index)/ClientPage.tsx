@@ -28,7 +28,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
   return (
     <PageLayout>
       <Hero />
-
+      
       <CategoriesSection categories={categories} />
 
       <MaxWidthContainer className="bg-neutral-100 pt-10 pb-10">
