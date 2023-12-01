@@ -8,6 +8,8 @@ import { SearchLayoutProps } from "./props";
 import Button from "@/components/ui/Button";
 import iconRight from "@/images/icons/right.svg";
 import Image from "next/image";
+import { Dispatch, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 export default function SearchClientLayout({
   products,
@@ -16,35 +18,54 @@ export default function SearchClientLayout({
 }: SearchLayoutProps) {
   const t = useTranslation("");
 
+  const [page, setPage] = useState(1);
+
   return (
     <PageLayout headerSmall headerExtension={headerExtension}>
       <MaxWidthContainer className="bg-neutral-100">
-        <Pagination currentPage={0} />
+        <Pagination currentPage={page} setCurrentPage={setPage} />
+
         <ProductsGrid products={products} className="py-6" />
-        <Pagination currentPage={0} />
+
+        <Pagination currentPage={page} setCurrentPage={setPage} />
+
         {children}
       </MaxWidthContainer>
     </PageLayout>
   );
 }
 
-function Pagination({ currentPage }: { currentPage: number }) {
+function Pagination({
+  currentPage,
+  setCurrentPage,
+}: {
+  currentPage: number;
+  setCurrentPage: Dispatch<number>;
+}) {
   return (
     <div className="flex gap-2 items-center pb-4 justify-center pr-4">
-      <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 px-1 py-1">
+      <Button
+        onClick={() => setCurrentPage(currentPage - 1)}
+        disabled={currentPage <= 1}
+        className={twMerge(
+          "group text-sm bg-transparent border border-slate-500 bg-neutral-50 px-1 py-1",
+          currentPage <= 1 && "bg-black"
+        )}>
         <Image
           className="w-5 -translate-y-px group-hover:-translate-x-0.5 transition-transform duration-100 -scale-x-100 my-auto "
           alt=""
           src={iconRight}
-        ></Image>
+        />
       </Button>
       <span className="oswald text-lg">{currentPage}</span>
-      <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 px-1 py-1">
+      <Button
+        onClick={() => setCurrentPage(currentPage + 1)}
+        disabled={currentPage >= 10}
+        className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 px-1 py-1">
         <Image
           className="w-5 -translate-y-px group-hover:translate-x-0.5 transition-transform duration-100 my-auto "
           alt=""
-          src={iconRight}
-        ></Image>
+          src={iconRight}></Image>
       </Button>
     </div>
   );
