@@ -19,6 +19,7 @@ import SearchFilter from "./SearchFilter";
 import { useRouter } from "next/navigation";
 import QueryString from "qs";
 import { encodeQueryParam } from "@/lib/shared/search";
+import routes from "@/lib/shared/routes";
 
 function qs(obj: any) {
   return QueryString.stringify(obj, { addQueryPrefix: true });
@@ -141,32 +142,15 @@ function HeroFilters() {
 
     if (!brand) {
       if (!typology) {
-        // to category page
-        router.push(
-          `/category/${encodeQueryParam(category.name.toLowerCase())}${qs({
-            ...qsObject,
-            categoryId: undefined,
-          })}`
-        );
+        router.push(routes.category(category.name));
         return;
       }
-      // to model page
-      router.push(
-        `/category/` +
-          encodeQueryParam(category.name.toLowerCase()) +
-          "/" +
-          encodeQueryParam(typology.name.toLowerCase()) +
-          qs({
-            ...qsObject,
-            categoryId: undefined,
-            typeId: undefined,
-          })
-      );
+      router.push(routes.type(category.name, typology.name));
       return;
     }
 
     // to generic results page
-    // router.push(`/products${qs}`);
+    router.push(routes.products() + "?manage-filtes");
   };
 
   return (
@@ -221,8 +205,7 @@ function HeroFilters() {
         <div className="col-span-full pt-3 order-3 lg:order-5">
           <Button
             onClick={doSearch}
-            className="text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500"
-          >
+            className="text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500">
             Search
           </Button>
         </div>
@@ -253,8 +236,7 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"
-          ></Image>
+            className="absolute inset-0 w-full h-full object-cover"></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>
