@@ -4,7 +4,6 @@ import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import iconAvailable from "@/images/icons/available.svg";
 import iconFavorite from "@/images/icons/favorite.svg";
-import iconFilters from "@/images/icons/filters.svg";
 import iconShare from "@/images/icons/share.svg";
 import iconCart from "@/images/icons/white/cart.svg";
 import PageLayout from "@/layouts/PageLayout";
@@ -12,12 +11,12 @@ import ServerLayout from "@/layouts/base/ServerLayout";
 import {
   fetchEcodatArticle,
   fetchEcodatArticlePhotoList,
+  fetchEcodatCategories,
+  fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
 import { EcodatArticle } from "@/lib/shared/ecodat";
-import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ComponentProps } from "react";
 
 interface Props {
   params: {
@@ -32,9 +31,25 @@ export default async function ProductPage({ params: { slug } }: Props) {
   const product = await fetchEcodatArticle(id).catch(() => null);
   if (!product) return notFound();
 
+  const categories = await fetchEcodatCategories()
+    .then((cats) => cats.map((c) => c.name))
+    .catch((err) => {
+      console.error("Error fetching categories:", err.message);
+      return undefined;
+    });
+
+  const types = await fetchEcodatTypologies(product.categoryId)
+    .then((cats) => (cats.length <= 1 ? undefined : cats.map((c) => c.name)))
+    .catch((err) => {
+      console.error("Error fetching categories:", err.message);
+      return undefined;
+    });
+
   const bread = {
     category: product.category,
+    categories,
     type: product.type,
+    types,
     item: product.item,
   };
 
