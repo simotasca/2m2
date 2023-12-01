@@ -28,12 +28,14 @@ export default function CartPanel() {
         className={twMerge(
           "fixed inset-0 w-screen h-screen bg-black bg-opacity-40 z-[51]",
           !isOpen && "hidden"
-        )}></div>
+        )}
+      ></div>
       <div
         className={twMerge(
           "fixed top-0 left-full z-[52] bg-white w-80 h-screen transition-transform shadow-md shadow-neutral-800",
           isOpen ? "-translate-x-full" : "translate-x-0"
-        )}>
+        )}
+      >
         {/* il pr-4 viene messo negli elementi all'interno per evitare sovrapposizioni con la scrollbar di firefox */}
         <div className="flex flex-col max-h-full text-dark pl-4 pt-4 pb-3 overflow-hidden">
           <div className="pr-4 mb-1">
@@ -46,7 +48,8 @@ export default function CartPanel() {
               </p>
               <div
                 className="ml-auto cursor-pointer"
-                onClick={() => setIsOpen(false)}>
+                onClick={() => setIsOpen(false)}
+              >
                 <Image src={iconClose} alt="close icon" className="w-6" />
               </div>
             </div>
@@ -60,7 +63,8 @@ export default function CartPanel() {
             {cart.map((product) => (
               <div
                 key={product.id}
-                className="grid grid-cols-[1fr_auto_auto] gap-2 pr-3">
+                className="grid grid-cols-[1fr_auto_auto] gap-2 pr-3"
+              >
                 <div>
                   <p className="font-semibold text-sm leading-[1.1]">
                     {productName(product)}
@@ -97,7 +101,8 @@ export default function CartPanel() {
                 href={
                   "/checkout?p=" +
                   encodeURIComponent([cart.map((p) => p.id)].join(","))
-                }>
+                }
+              >
                 <Button className="block mt-2 bg-red-gradient text-white w-full uppercase">
                   CHECKOUT
                 </Button>

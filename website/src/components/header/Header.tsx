@@ -15,6 +15,7 @@ import Navbar from "./NavBar";
 import SearchBar from "./SearchBar";
 import { UserData } from "./UserData";
 import MobilePanel, { setMobilePanelOpen } from "./MobilePanel";
+import routes from "@/lib/shared/routes";
 
 interface Props {
   extension?: React.ReactNode;
@@ -51,19 +52,22 @@ export default function Header({ extension, small = true }: Props) {
         className={twMerge(
           "sticky top-0 bg-gradient-to-b from-neutral-700 to-neutral-900 text-white z-50 transition-transform",
           open ? "-translate-y-0" : "-translate-y-full",
-          small ? "pt-2" : "pt-2 sm:pt-4"
-        )}>
-        <MaxWidthContainer className="grid grid-cols-[1fr_auto_1fr] sm:grid-cols-[auto_1fr_auto] gap-x-5">
+          small ? "pt-2" : "pt-2 [@media(min-width:700px)]:pt-4"
+        )}
+      >
+        <MaxWidthContainer className="grid grid-cols-[1fr_auto_1fr] [@media(min-width:700px)]:grid-cols-[auto_1fr_auto] gap-x-5">
           <button
             onClick={() => setMobilePanelOpen(true)}
-            className="sm:hidden">
+            className="[@media(min-width:700px)]:hidden"
+          >
             <Image src={iconHamburger} alt="" className="w-6 ml-2 opacity-90" />
           </button>
           <div
             className={twMerge(
-              "max-sm:justify-self-center",
+              "[@media(max-width:700px)]:justify-self-center",
               small && "-translate-y-0.5"
-            )}>
+            )}
+          >
             <Logo />
           </div>
           {small ? (
@@ -71,7 +75,7 @@ export default function Header({ extension, small = true }: Props) {
               <Navbar small={small} />
             </div>
           ) : (
-            <div className="col-span-full order-3 mt-2 sm:contents">
+            <div className="col-span-full order-3 mt-2 [@media(min-width:700px)]:contents">
               <SearchBar />
             </div>
           )}
@@ -82,7 +86,11 @@ export default function Header({ extension, small = true }: Props) {
             <Navbar small={small} />
           </MaxWidthContainer>
         )}
-        <div className={twMerge(small ? "h-2" : "h-3 sm:h-4")}></div>
+        <div
+          className={twMerge(
+            small ? "h-2.5" : "h-3 [@media(min-width:700px)]:h-4"
+          )}
+        ></div>
         <div className="text-dark">{extension && extension}</div>
       </header>
     </>
@@ -91,11 +99,11 @@ export default function Header({ extension, small = true }: Props) {
 
 function Logo() {
   return (
-    <a href="/">
+    <a href={routes.home()}>
       <Image
         src={imgLogo}
         alt="logo 2m2 autoricambi"
-        className="w-14 sm:w-20"
+        className="w-14 [@media(min-width:766px)]:w-20"
       />
     </a>
   );
@@ -124,7 +132,7 @@ function TopBar() {
           </Link>
         </div>
 
-        <div className="hidden sm:contents">
+        <div className="hidden [@media(min-width:700px)]:contents">
           <div className="w-px h-3 bg-white mx-3"></div>
           <div className="flex items-center gap-1">
             <Image

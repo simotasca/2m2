@@ -6,12 +6,13 @@ import iconCart from "@/images/icons/white/cart.svg";
 import iconFavourite from "@/images/icons/white/favourite.svg";
 import { CartProduct } from "@/lib/shared/cart";
 import { productName } from "@/lib/shared/ecodat";
+import { encodeQueryParam } from "@/lib/shared/search";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
 import ProductImage from "./ProductImage";
+import routes from "@/lib/shared/routes";
 
 interface Props {
   product: CartProduct;
@@ -19,22 +20,11 @@ interface Props {
 
 export default function Product({ product }: Props) {
   const { t } = useTranslation("product");
-  const [image, setImage] = useState<string | undefined>();
-  const ref = useRef<HTMLImageElement>(null);
   const { addProduct, removeProduct, hasProduct, loading } = useCart();
-
-  useEffect(() => {
-    if (!ref.current) return;
-    if (ref.current.dataset.src) return;
-    fetch("/api/ecodat/product-image?product-id=" + product.id)
-      .then((res) => res.text())
-      .then((src) => setImage(src))
-      .catch(() => setImage(undefined));
-  }, [ref]);
 
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={routes.product(product)}
       className="group focus:outline-none cursor-pointer">
       <div className="flex flex-col h-full px-3 pt-2 pb-4 bg-white shadow-md border border-neutral-300 group-hover:border-[rgb(180,180,180)] rounded group-focus:border-red-400">
         <span className="text-xs font-semibold capitalize">
@@ -65,11 +55,6 @@ export default function Product({ product }: Props) {
                 ? "bg-white text-red-600 border-red-600"
                 : "bg-red-gradient text-white border-0"
             )}>
-            {/* background-image: linear-gradient(to bottom right, var(r600 0%, r500 100%)); */}
-
-            {/* -tw-gradient-from: #b91c1c 0%;
-  --tw-gradient-to: rgb(185 28 28 / 0) var();
-  --tw-gradient-stops:  */}
             {hasProduct(product) ? (
               <span>Remove</span>
             ) : (
