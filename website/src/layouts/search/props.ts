@@ -3,5 +3,5 @@ import { PropsWithChildren, ReactNode } from "react";
 
 export type SearchLayoutProps = PropsWithChildren<{
   products: EcodatArticle[];
-  headerExtension: ReactNode;
+  titleSection?: ReactNode;
 }>;

@@ -18,8 +18,6 @@ export default function ProductImage({ photo, big, className }: Props) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("NOT WORKS", image);
-
     if (!ref.current) return;
     if (!photo) return;
     if (image !== undefined) return;
@@ -49,7 +47,8 @@ export default function ProductImage({ photo, big, className }: Props) {
         className,
         loading && "animate-pulse",
         !loading && !image && "opacity-60"
-      )}>
+      )}
+    >
       <img
         ref={ref}
         className="absolute w-full h-full object-cover blur-3xl opacity-0 transition-all duration-500"
