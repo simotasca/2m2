@@ -1,43 +1,58 @@
 "use client";
 
 import routes from "@/lib/shared/routes";
+import { twMerge } from "tailwind-merge";
 
 interface Params {
   category: string;
   categories?: string[];
   type?: string;
-  /** should be the types of the category specified */
+  /** should be the types of the specified category */
   types?: string[];
   item?: string;
 }
 
-export default function Breadcrumbs(params: Params) {
+export default function Breadcrumbs({
+  category,
+  categories,
+  type,
+  types,
+  item,
+}: Params) {
+  categories = categories?.filter((t) => t !== category);
+  types = types?.filter((t) => t !== type);
+
   return (
     <div className="flex gap-3 py-4 text-neutral-500 text-sm">
       <Breadcrumb
-        href={routes.category(params.category)}
-        text={params.category}
-        dropdown={params.categories?.map((c) => ({
+        href={routes.category(category)}
+        text={category}
+        dropdown={categories?.map((c) => ({
           text: c,
           href: routes.category(c),
         }))}
+        bold={!type && !item}
       />
 
-      {params.type && (
-        <Breadcrumb
-          href={routes.type(params.category, params.type)}
-          text={params.type}
-          dropdown={params.types?.map((t) => ({
-            text: t,
-            href: routes.type(params.category, t),
-          }))}
-        />
+      {type && (
+        <>
+          <Separator />
+          <Breadcrumb
+            href={routes.type(category, type)}
+            text={type}
+            dropdown={types?.map((t) => ({
+              text: t,
+              href: routes.type(category, t),
+            }))}
+            bold={!item}
+          />
+        </>
       )}
 
-      {params.type && params.item && (
+      {type && item && (
         <>
-          <span>{">"}</span>
-          <span className="font-medium text-dark">{params.item}</span>
+          <Separator />
+          <Breadcrumb text={item} bold={true} />
         </>
       )}
     </div>
@@ -46,23 +61,29 @@ export default function Breadcrumbs(params: Params) {
 
 interface LinkItem {
   text: string;
-  href: string;
+  href?: string;
+  bold?: boolean;
 }
 
 function Breadcrumb({
   text,
   href,
   dropdown,
+  bold,
 }: LinkItem & { dropdown?: LinkItem[] }) {
   return (
     <div className="relative group">
       <a
         href={href}
-        className="underline-offset-[3px] hover:underline hover:text-red-600 cursor-pointer">
+        className={twMerge(
+          bold
+            ? "font-bold text-neutral-800"
+            : "underline-offset-[3px] hover:underline hover:text-red-600 cursor-pointer"
+        )}>
         {text}
       </a>
       <div className="absolute pt-2 hidden group-hover:block top-full left-1 z-50">
-        {dropdown && (
+        {!!dropdown?.length && (
           <div className="bg-white rounded border border-slate-300 p-4 w-fit">
             <ul className="flex flex-col gap-2">
               {dropdown.map((dd) => (
@@ -76,4 +97,8 @@ function Breadcrumb({
       </div>
     </div>
   );
+}
+
+function Separator() {
+  return <p className="translate-y-px">{">"}</p>;
 }

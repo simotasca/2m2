@@ -29,6 +29,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
   if (!id) return notFound();
 
   const product = await fetchEcodatArticle(id).catch(() => null);
+  // TODO: se c'è un errore mostrare pagina di errore con status 500 anzichè not found */
   if (!product) return notFound();
 
   const categories = await fetchEcodatCategories()
@@ -39,9 +40,9 @@ export default async function ProductPage({ params: { slug } }: Props) {
     });
 
   const types = await fetchEcodatTypologies(product.categoryId)
-    .then((cats) => (cats.length <= 1 ? undefined : cats.map((c) => c.name)))
+    .then((types) => types.map((c) => c.name))
     .catch((err) => {
-      console.error("Error fetching categories:", err.message);
+      console.error("Error fetching types:", err.message);
       return undefined;
     });
 
