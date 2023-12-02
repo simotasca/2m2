@@ -35,7 +35,5 @@ export default async function TypologyPage({
     typeId: typology.id,
   });
 
-  return (
-    <SearchServerLayout products={products} title={["type", typology.name]} />
-  );
+  return <SearchServerLayout products={products} />;
 }
