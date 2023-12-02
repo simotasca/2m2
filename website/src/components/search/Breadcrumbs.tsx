@@ -77,7 +77,7 @@ function Breadcrumb({
         href={href}
         className={twMerge(
           bold
-            ? "font-bold text-neutral-800"
+            ? "font-semibold text-neutral-800"
             : "underline-offset-[3px] hover:underline hover:text-red-600 cursor-pointer"
         )}>
         {text}
@@ -85,11 +85,17 @@ function Breadcrumb({
       <div className="absolute pt-2 hidden group-hover:block top-full left-1 z-50">
         {!!dropdown?.length && (
           <div className="bg-white rounded border border-slate-300 p-4 w-fit">
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2 text-sm leading-[1] whitespace-nowrap pr-1">
+              <li className="font-medium text-neutral-800">{text}</li>
               {dropdown.map((dd) => (
-                <li className="hover:text-red-500 text-sm leading-[1]">
-                  <a href={dd.href}>{dd.text}</a>
-                </li>
+                <>
+                  <li>
+                    <hr />
+                  </li>
+                  <a href={dd.href}>
+                    <li className="hover:text-red-500">{dd.text}</li>
+                  </a>
+                </>
               ))}
             </ul>
           </div>

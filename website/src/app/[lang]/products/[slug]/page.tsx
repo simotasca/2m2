@@ -17,6 +17,7 @@ import {
 import { EcodatArticle } from "@/lib/shared/ecodat";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import ProductDetails from "./ProductDetails";
 
 interface Props {
   params: {
@@ -63,7 +64,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
 
             <div className="grid grid-cols-[13fr_10fr_7fr] gap-4">
               <PhotoSection product={product} />
-              <MainSection product={product} />
+              <ProductDetails product={product} />
               <BuySection product={product} />
             </div>
 
@@ -104,40 +105,6 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
   );
 }
 
-function MainSection({ product }: { product: EcodatArticle }) {
-  return (
-    <main>
-      <h1 className="font-bold text-xl leading-[1.1]">{product.description}</h1>
-      <p className="text-sm mb-1 mt-0.5">
-        <span className="font-semibold">Codice OEM:</span>
-        <span> {product.oeCode}</span>
-      </p>
-      <div className="grid grid-cols-[auto_1fr] text-sm">
-        <PropertyRow name="marca" value={product.brand} />
-        <PropertyRow name="modello" value={product.model} />
-        <PropertyRow name="tipo motore" value={product.engine} />
-        <PropertyRow
-          name="anno"
-          value={product.yearFrom + " - " + product.yearTo}
-        />
-        <PropertyRow name="versione" value={product.version} />
-        <div className="p-1 col-span-full text-red-700">
-          <span className="underline">more</span> +
-        </div>
-      </div>
-    </main>
-  );
-}
-
-function PropertyRow({ name, value }: { name: string; value: string }) {
-  return (
-    <div className="contents child:even:bg-neutral-200 child:px-1 child:py-1">
-      <span>{name}:</span>
-      <span className="text-right font-medium">{value}</span>
-    </div>
-  );
-}
-
 function BuySection({ product }: { product: EcodatArticle }) {
   return (
     <aside className="font-sans">
@@ -145,7 +112,9 @@ function BuySection({ product }: { product: EcodatArticle }) {
         <span className="text-[#5F5C5C] text-sm mb-[2px]">Disponibile</span>
         <Image className="w-4" src={iconAvailable} alt="available icon" />
       </div>
-      <span className="font-semibold text-4xl">280,00€</span>
+      <span className="font-semibold text-4xl">
+        {product.price.toFixed(2)}€
+      </span>
 
       <p className="text-[#5F5C5C] text-sm">Tutti i prezzi includono l'IVA</p>
       <p className="font-bold text-lg uppercase -mt-[6px]">
@@ -156,6 +125,7 @@ function BuySection({ product }: { product: EcodatArticle }) {
       </p>
 
       <div className="h-3"></div>
+
       <div className="grid grid-cols-2 leading-3">
         <div className="flex items-center gap-2 max-w-[80%]">
           <Image className="w-9" src={iconFavorite} alt="favorite icon"></Image>
@@ -177,17 +147,13 @@ function BuySection({ product }: { product: EcodatArticle }) {
           <span>AGGIUNGI</span>
         </div>
       </Button>
-      <p className="text-[#2e2d2d] underline text-xs">
+      {/* <p className="text-[#2e2d2d] underline text-xs">
         puoi pagarlo alla consegna*
-      </p>
+      </p> */}
     </aside>
   );
 }
 
 function PageContent({ product }: { product: EcodatArticle }) {
-  return (
-    <div className="p-4">
-      <pre>{JSON.stringify(product, undefined, 2)}</pre>
-    </div>
-  );
+  return <div className="p-4"></div>;
 }

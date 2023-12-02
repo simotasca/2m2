@@ -38,7 +38,7 @@ export default function Product({ product }: Props) {
           {productName(product)}
         </b>
         <div className="text-red-600 text-xl font-bold my-auto text-center">
-          <p className="pb-2.5 pt-2">€{product.price}</p>
+          <p className="pb-2.5 pt-2">€{product.price.toFixed(2)}</p>
         </div>
         <div className="flex gap-1">
           <Button
