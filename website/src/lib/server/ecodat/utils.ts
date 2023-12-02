@@ -32,4 +32,8 @@ export class XMLParser {
   static getVal(el: Element | null, tag: string) {
     return el?.querySelector(tag)?.innerHTML;
   }
+
+  static getNumber(el: Element | null, tag: string) {
+    return parseInt(this.getVal(el, tag)!) ?? undefined;
+  }
 }

@@ -21,11 +21,13 @@ export interface EcodatArticle {
   engine: string;
   yearFrom: number;
   yearTo: number;
-  displacement?: string;
-  power?: string;
-  nPorte?: string;
-  Km?: string;
   psYear?: string;
+  /** Cilindrata */
+  displacement?: string;
+  /** Alimentazione */
+  power?: string;
+  nDoors?: number;
+  Km?: number;
 }
 
 export interface EcodatCategory {
