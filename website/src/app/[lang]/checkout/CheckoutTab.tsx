@@ -110,7 +110,8 @@ function ElementsWrapper({
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance, fonts }}>
+      options={{ clientSecret, appearance, fonts }}
+    >
       <CheckoutForm clientSecret={clientSecret} email={email} />
     </Elements>
   );
@@ -136,7 +137,7 @@ function CheckoutForm({
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: window.location.origin + "/payment-success?email=" + email,
+        return_url: window.location.origin + "/checkout/success?email=" + email,
       },
     });
 
