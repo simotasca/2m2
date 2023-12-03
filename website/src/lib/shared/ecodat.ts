@@ -40,6 +40,14 @@ export interface EcodatTypology {
   name: string;
 }
 
+export interface EcodatItem {
+  id: number;
+  name: string;
+  /** Ap: post/ant */
+  position?: string;
+  side?: string;
+}
+
 export interface EcodatBrand {
   id: number;
   name: string;

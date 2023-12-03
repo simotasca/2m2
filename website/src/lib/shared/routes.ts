@@ -13,6 +13,10 @@ const routes = {
     `/category/${encodeQueryParam(category.toLowerCase())}/${encodeQueryParam(
       name.toLowerCase()
     )}`,
+  item: (category: string, type: string, name: string) =>
+    `/category/${encodeQueryParam(category.toLowerCase())}/${encodeQueryParam(
+      type.toLowerCase()
+    )}/${encodeQueryParam(name.toLowerCase())}`,
   /** TODO: manage filters */
   products: () => "/products",
   product: (product: UrlProduct) =>

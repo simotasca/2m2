@@ -17,6 +17,8 @@ export interface APIArticles {
   categoryId?: number;
   /** se > 0 filtra per IDTipologi */
   typeId?: number;
+  /** se > 0 filtra per IDItem */
+  itemId?: number;
   /** se numerico filtra per il campo “DaAnno” con operatore “=” */
   fromYear?: number;
   /** se numerico filtra per il campo “AAnno” con operatore “=” */
@@ -35,6 +37,7 @@ export async function fetchEcodatArticles(
     <IDModello>${props.modelId || "0"}</IDModello>
     <IDCategoria>${props.categoryId || "0"}</IDCategoria>
     <IDTipologia>${props.typeId || "0"}</IDTipologia>
+    <IDItem>${props.itemId || "0"}</IDItem>
     <DaAnno>${props.fromYear || ""}</DaAnno>
     <AAnno>${props.toYear || ""}</AAnno>
     <FlgNuovo></FlgNuovo>
@@ -45,7 +48,6 @@ export async function fetchEcodatArticles(
     <StrLoc4></StrLoc4>
     <StrDisponibile></StrDisponibile>
     <StrCodOE></StrCodOE>
-    <IDItem>0</IDItem>
     <NumeroPS></NumeroPS>
     <AnnoPs></AnnoPs>
     <StrNomeModello></StrNomeModello>

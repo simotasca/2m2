@@ -12,12 +12,15 @@ import {
   fetchEcodatArticle,
   fetchEcodatArticlePhotoList,
   fetchEcodatCategories,
+  fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
 import { EcodatArticle } from "@/lib/shared/ecodat";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
+import SimilarProducts from "./SimilarProducts";
+import routes from "@/lib/shared/routes";
 
 interface Props {
   params: {
@@ -47,20 +50,51 @@ export default async function ProductPage({ params: { slug } }: Props) {
       return undefined;
     });
 
-  const bread = {
-    category: product.category,
-    categories,
-    type: product.type,
-    types,
-    item: product.item,
-  };
+  const items = await fetchEcodatItems(product.categoryId, product.typeId)
+    .then((items) => items.map((c) => c.name))
+    .catch((err) => {
+      console.error("Error fetching items:", err.message);
+      return undefined;
+    });
+
+  const bread = [
+    {
+      text: product.category,
+      href: routes.category(product.category),
+      dropdown: categories
+        ?.filter((c) => c !== product.category)
+        .map((c) => ({ text: c, href: routes.category(c) })),
+    },
+    {
+      text: product.type,
+      href: routes.type(product.category, product.type),
+      dropdown: types
+        ?.filter((t) => t !== product.type)
+        .map((t) => ({
+          text: t,
+          href: routes.type(product.category, t),
+        })),
+    },
+    {
+      text: product.item,
+      href: routes.item(product.category, product.type, product.item),
+      dropdown: items
+        ?.filter((i) => i !== product.item)
+        .map((i) => ({
+          text: i,
+          href: routes.item(product.category, product.type, i),
+        })),
+    },
+  ];
 
   return (
     <ServerLayout translations={{}}>
       <PageLayout headerSmall>
         <div className="bg-white min-h-full">
           <MaxWidthContainer className="max-w-6xl">
-            <Breadcrumbs {...bread} />
+            <div className="py-4">
+              <Breadcrumbs items={bread} />
+            </div>
 
             <div className="grid grid-cols-[13fr_10fr_7fr] gap-4">
               <PhotoSection product={product} />
@@ -87,9 +121,19 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
   const photoIdsList: number[] = await fetchEcodatArticlePhotoList({
     articleId: product.id,
   }).catch((e) => {
-    console.error(e);
+    console.error("Error fetching photo list, for product", product.id, ":", e);
     return [];
   });
+
+  if (photoIdsList.length === 0)
+    return (
+      <div className="aspect-[3/2] bg-slate-200">
+        <img
+          src="/assets/placeholder-image.png"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    );
 
   return (
     <div>
@@ -155,5 +199,9 @@ function BuySection({ product }: { product: EcodatArticle }) {
 }
 
 function PageContent({ product }: { product: EcodatArticle }) {
-  return <div className="p-4"></div>;
+  return (
+    <div>
+      <SimilarProducts product={product} />
+    </div>
+  );
 }

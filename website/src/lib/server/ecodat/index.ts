@@ -2,16 +2,18 @@ import { ecodatBodyTemplate, ecodatHeaders, XMLParser } from "./utils";
 
 export * from "./articles";
 export * from "./brands";
-export * from "./categories";
 export * from "./models";
-export * from "./photos";
+export * from "./categories";
 export * from "./typologies";
+export * from "./items";
+export * from "./photos";
 
 export enum EcodatAction {
   ARTICLE = "Articolo",
   ARTICLES = "ElencoArticoli",
   CATEGORIES = "Categorie",
   TYPOLOGIES = "Tipologie",
+  ITEMS = "Items",
   BRANDS = "Marche",
   MODELS = "Modelli",
   PHOTO_LIST = "ListaFoto",

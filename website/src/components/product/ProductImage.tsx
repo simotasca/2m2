@@ -43,12 +43,11 @@ export default function ProductImage({ photo, big, className }: Props) {
   return (
     <div
       className={twMerge(
-        "relative bg-slate-300 aspect-[300/200] overflow-hidden",
+        "relative bg-slate-300 aspect-[3/2] overflow-hidden",
         className,
         loading && "animate-pulse",
         !loading && !image && "opacity-60"
-      )}
-    >
+      )}>
       <img
         ref={ref}
         className="absolute w-full h-full object-cover blur-3xl opacity-0 transition-all duration-500"
