@@ -19,7 +19,7 @@ export default function ClientPage() {
 
 function Hero() {
   return (
-    <div className="relative">
+    <div className="relative max-sm:px-2">
       <Image
         src={imgBackground}
         alt=""
@@ -27,7 +27,7 @@ function Hero() {
       />
       <div className="absolute inset-0 bg-gradient-to-tr from-[#000000f0] via-[#000000d0] to-[#00000020] -z-10"></div>
       <div className="min-h-[70vh] text-white grid items-end">
-        <MaxWidthContainer className="py-12">
+        <MaxWidthContainer className="py-12 ">
           <h1 className="text-4xl font-semibold max-w-2xl [text-shadow:0px_1px_8px_#00000099]">
             Da <span className="text-red-600">50 anni</span> lavoriamo per
             guadagnare la vostra fiducia
@@ -63,35 +63,38 @@ function MapSection() {
   return (
     <div className="relative">
       <div className="absolute w-[200%] h-full z-10 pointer-events-none [box-shadow:inset_0px_0px_12px_#000000f0] -translate-x-1/2"></div>
-      <div className="bg-slate-100  py-10">
+      <div className="bg-slate-100 py-10">
         <MaxWidthContainer>
-          <div className="grid grid-cols-3">
-            <div className="pt-10">
-              <h2 className="uppercase font-oswald text-5xl -translate-x-0.5">
-                Dove siamo
-              </h2>
-              <p className="mt-1 mb-8 text-lg">
-                Riforniamo clienti in tutta Europa
-              </p>
-              <div className="pl-2">
+          <div className="grid grid-cols-3 max-sm:py-6 max-sm:px-2">
+            <div className="max-lg:contents">
+              <div className="[@media(max-width:700px)]:col-span-3 md:mt-auto md:mb-0 lg:my-0">
+                <h2 className="uppercase font-oswald text-5xl lg:-translate-x-0.5 md:ml-7 lg:ml-0">
+                  Dove siamo
+                </h2>
+                <p className="mt-1 mb-8 text-lg leading-tight md:ml-7 lg:ml-0">
+                  Riforniamo clienti in tutta Europa
+                </p>
+              </div>
+
+              <div className=" bottom-0 w-full max-lg:order-3 max-lg:col-span-full pt-8 xs:pt-4 px-2">
                 <div className="bg-neutral-50 rounded shadow-md border border-neutral-300">
-                  <ul className="px-6 py-2">
-                    <li className="py-5 font-bold text-xl uppercase leading-[1]">
+                  <ul className="grid md:grid-cols-3 lg:grid-cols-1 items-stretch px-6 py-2">
+                    <li className="py-5 md:pr-4 font-bold text-lg xs:text-xl uppercase leading-[1] md:border-r border-r-px lg:border-r-0 border-r-bg-neutral-300">
                       <span>Fino a </span>
                       <span className="bg-red-gradient bg-clip-text text-transparent">
                         10.912
                       </span>
                       <span> ordini al giorno</span>
                     </li>
-                    <li className="h-px bg-neutral-300"></li>
-                    <li className="py-5 font-bold text-xl uppercase leading-[1]">
+                    <li className="md:hidden lg:block h-px bg-neutral-300 md:my-4 lg:my-0"></li>
+                    <li className="py-5 md:pl-4 lg:pl-0 md:pr-2 font-bold text-lg xs:text-xl uppercase leading-[1] md:border-r  border-r-px lg:border-r-0 border-r-bg-neutral-300">
                       <span className="bg-red-gradient bg-clip-text text-transparent">
                         + 10.912
                       </span>
                       <span> clienti soddisfatti</span>
                     </li>
-                    <li className="h-px bg-neutral-300"></li>
-                    <li className="py-5 font-bold text-xl uppercase leading-[1]">
+                    <li className="md:hidden lg:block h-px bg-neutral-300 md:my-4 lg:my-0"></li>
+                    <li className="py-5 md:pl-4 lg:pl-0 font-bold text-lg xs:text-xl uppercase leading-[1]">
                       <span className="bg-red-gradient bg-clip-text text-transparent">
                         + 2.500.000
                       </span>
@@ -101,7 +104,7 @@ function MapSection() {
                 </div>
               </div>
             </div>
-            <div className="relative col-span-2 pl-8">
+            <div className="relative col-span-3 [@media(min-width:700px)]:col-span-2 pl-8">
               <Image alt="2m2 europe distribution" src={imgMap} />
             </div>
           </div>
@@ -114,25 +117,41 @@ function MapSection() {
 function History() {
   return (
     <div className="relative">
-      <div className="absolute inset-0 grid grid-cols-10 -z-10">
-        <div className="relative col-span-6 bg-dark">
+      <div className="sm:absolute inset-0 grid grid-cols-10 -z-10">
+        <div className="relative col-span-10 sm:col-span-4 lg:col-span-6 max-sm:order-2 bg-dark">
+          <MaxWidthContainer className="sm:hidden">
+            <div className="text-white px-4 sm:px-10 max-sm:py-12 ">
+              <h2 className="uppercase text-2xl font-bold mb-3">
+                LA NOSTRA STORIA
+              </h2>
+              <p>
+                Ci impegniamo a semplificare la tua esperienza nella ricerca di
+                autoricambi di alta qualità a prezzi convenienti. Grazie ai
+                nostri avanzati sistemi di ricerca, ti offriamo una scoperta
+                rapida e affidabile, mettendo a tua disposizione una vasta
+                selezione di prodotti per la tua auto. Trova ciò di cui hai
+                bisogno con facilità, velocità e la sicurezza di fare una scelta
+                informata per il tuo veicolo.
+              </p>
+            </div>
+          </MaxWidthContainer>
           <Image
             src={imgSkew}
             alt=""
-            className="absolute w-auto max-w-none h-full top-0 left-full object-cover -translate-x-px"
+            className="max-sm:hidden absolute w-auto max-w-none h-full top-0 left-full object-cover -translate-x-px"
           />
         </div>
-        <div className="relative col-span-4">
+        <div className="sm:relative col-span-10 sm:col-span-6 lg:col-span-4">
           <Image
             src={imgGarage}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover -z-20"
+            className="sm:absolute inset-0 w-full h-full object-cover -z-20"
           />
         </div>
       </div>
 
-      <MaxWidthContainer className="grid grid-cols-10">
-        <div className="text-white px-10 py-24 col-span-6">
+      <MaxWidthContainer className="max-sm:hidden grid sm:grid-cols-10 top-0">
+        <div className="text-white px-10 py-24 col-span-5 lg:col-span-6 sm:mt-[20%] lg:my-0">
           <h2 className="uppercase text-2xl font-bold mb-3">
             LA NOSTRA STORIA
           </h2>

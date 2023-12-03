@@ -19,7 +19,7 @@ export default function SearchBar() {
         <Image src={iconSearch} alt="search icon" className="w-5 mx-3 mt-0.5" />
       </label>
       <div className="relative flex items-center flex-1 mr-2 md:mr-4">
-        <div className="absolute top-1/2 translate-y-3 w-full h-px bg-neutral-300 [@media(max-width:766px)]:hidden"></div>
+        <div className="absolute top-1/2 translate-y-3 w-full h-px bg-neutral-300 max-md:hidden"></div>
         <input
           id="header-search-bar"
           type="text"

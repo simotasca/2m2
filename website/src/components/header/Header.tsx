@@ -71,7 +71,7 @@ export default function Header({ extension, small = true }: Props) {
             <Logo />
           </div>
           {small ? (
-            <div className="place-self-center pl-4">
+            <div className="[@media(max-width:700px)]:hidden place-self-center pl-4">
               <Navbar small={small} />
             </div>
           ) : (
@@ -79,7 +79,7 @@ export default function Header({ extension, small = true }: Props) {
               <SearchBar />
             </div>
           )}
-          <UserData />
+          <UserData small={small} />
         </MaxWidthContainer>
         {!small && (
           <MaxWidthContainer className="pt-2.5 col-span-full">
@@ -103,7 +103,7 @@ function Logo() {
       <Image
         src={imgLogo}
         alt="logo 2m2 autoricambi"
-        className="w-14 [@media(min-width:766px)]:w-20"
+        className="w-14 md:w-20"
       />
     </a>
   );
