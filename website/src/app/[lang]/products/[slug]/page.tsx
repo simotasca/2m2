@@ -21,6 +21,8 @@ import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
 import SimilarProducts from "./SimilarProducts";
 import routes from "@/lib/shared/routes";
+import { PaymentsBar } from "@/components/ui/PaymentsBar";
+import imgLogo from "@/images/logo-dark.svg";
 
 interface Props {
   params: {
@@ -32,7 +34,11 @@ export default async function ProductPage({ params: { slug } }: Props) {
   const id = slug.split("-").at(-1);
   if (!id) return notFound();
 
-  const product = await fetchEcodatArticle(id).catch(() => null);
+  const product = await fetchEcodatArticle(id).catch((err) => {
+    console.log(err);
+    return null;
+  });
+
   // TODO: se c'è un errore mostrare pagina di errore con status 500 anzichè not found */
   if (!product) return notFound();
 
@@ -91,25 +97,31 @@ export default async function ProductPage({ params: { slug } }: Props) {
     <ServerLayout translations={{}}>
       <PageLayout headerSmall>
         <div className="bg-white min-h-full">
-          <MaxWidthContainer className="max-w-6xl">
+          <MaxWidthContainer>
             <Breadcrumbs className="py-4" items={bread} />
+          </MaxWidthContainer>
 
-            <div className="grid grid-cols-[13fr_10fr_7fr] gap-4">
+          <MaxWidthContainer className="pb-8">
+            <div className="grid grid-cols-[17fr_10fr_7fr_2fr] gap-4">
               <PhotoSection product={product} />
               <ProductDetails product={product} />
               <BuySection product={product} />
+              <div></div>
+            </div>
+          </MaxWidthContainer>
+
+          <MaxWidthContainer className="bg-white pb-8">
+            <div className="mx-auto w-fit flex items-center gap-8">
+              <Image src={imgLogo} alt="" className="w-16" />
+              <h4 className="font-semibold leading-tight text-xl">
+                Tutto il nostro usato è selezionato, testato e garantito!
+              </h4>
+              <Image src={imgLogo} alt="" className="w-16" />
             </div>
 
-            <pre>{JSON.stringify(product, null, 2)}</pre>
+            <div className="h-10"></div>
 
-            <div className="text-center max-w-xl mx-auto py-8">
-              <h3 className="font-semibold leading-tight text-xl">
-                Tutto il nostro usato è selezionato, testato e garantito
-              </h3>
-              <div className="grid"></div>
-            </div>
-
-            <PageContent product={product} />
+            <SimilarProducts product={product} />
           </MaxWidthContainer>
         </div>
       </PageLayout>
@@ -136,14 +148,16 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
     );
 
   return (
-    <div>
-      <ProductImage big photo={{ imageId: photoIdsList[0] }} />
-      <div className="flex gap-1 pt-1">
+    <div className="flex gap-1 items-start">
+      <div className="flex flex-col gap-1">
         {photoIdsList.slice(1).map((imageId) => (
-          <div className="p-0.5 border border-slate-300 rounded">
+          <div className="p-0.5 border border-slate-300 rounded-sm">
             <ProductImage className="w-20" photo={{ imageId }} />
           </div>
         ))}
+      </div>
+      <div className="w-full p-0.5 border border-slate-300 rounded-sm">
+        <ProductImage big photo={{ imageId: photoIdsList[0] }} />
       </div>
     </div>
   );
@@ -159,7 +173,6 @@ function BuySection({ product }: { product: EcodatArticle }) {
       <span className="font-semibold text-4xl">
         {product.price.toFixed(2)}€
       </span>
-
       <p className="text-[#5F5C5C] text-sm">Tutti i prezzi includono l'IVA</p>
       <p className="font-bold text-lg uppercase -mt-[6px]">
         <span>SPEDIZIONE IN </span>
@@ -167,10 +180,8 @@ function BuySection({ product }: { product: EcodatArticle }) {
           24<span className="text-sm">/</span>48 ORE
         </span>
       </p>
-
       <div className="h-3"></div>
-
-      <div className="grid grid-cols-2 leading-3">
+      <div className="grid grid-cols-[auto_auto] leading-3">
         <div className="flex items-center gap-2 max-w-[80%]">
           <Image className="w-9" src={iconFavorite} alt="favorite icon"></Image>
           <span className=" text-xs leading-[1.1]">Aggiungi ai preferiti</span>
@@ -191,17 +202,13 @@ function BuySection({ product }: { product: EcodatArticle }) {
           <span>AGGIUNGI</span>
         </div>
       </Button>
+      <div className="pt-2 flex justify-end pr-2 gap-2">
+        <span className="text-sm">pagamenti:</span>
+        <PaymentsBar className="w-fit" />
+      </div>
       {/* <p className="text-[#2e2d2d] underline text-xs">
         puoi pagarlo alla consegna*
       </p> */}
     </aside>
-  );
-}
-
-function PageContent({ product }: { product: EcodatArticle }) {
-  return (
-    <div>
-      <SimilarProducts product={product} />
-    </div>
   );
 }

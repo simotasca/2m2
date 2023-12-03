@@ -1,7 +1,9 @@
 "use client";
 
 import { EcodatArticle } from "@/lib/shared/ecodat";
+import routes from "@/lib/shared/routes";
 import { useState } from "react";
+import { twJoin } from "tailwind-merge";
 
 interface Props {
   product: EcodatArticle;
@@ -12,11 +14,11 @@ export default function ProductDetails({ product }: Props) {
 
   return (
     <main className="relative">
-      {product.new && (
+      {/* {product.new && (
         <p className="absolute bottom-full text-xs text-red-500 font-medium">
           NUOVO!
         </p>
-      )}
+      )} */}
       <h1 className="font-bold text-xl leading-[1.1]">{product.description}</h1>
       <p className="text-sm mb-1 mt-0.5">
         <span className="font-semibold">Codice OEM:</span>
@@ -24,8 +26,16 @@ export default function ProductDetails({ product }: Props) {
       </p>
 
       <div className="grid grid-cols-[auto_1fr] text-sm">
-        <PropertyRow name="marca" value={product.brand} />
-        <PropertyRow name="modello" value={product.model} />
+        <PropertyRow
+          name="marca"
+          value={product.brand}
+          href={routes.brand(product.brand)}
+        />
+        <PropertyRow
+          name="modello"
+          value={product.model}
+          href={routes.model(product.brand, product.model)}
+        />
         <PropertyRow name="versione" value={product.version} />
         {(product.yearFrom || product.yearTo) && (
           <PropertyRow
@@ -61,11 +71,26 @@ export default function ProductDetails({ product }: Props) {
   );
 }
 
-function PropertyRow({ name, value }: { name: string; value: string }) {
+function PropertyRow({
+  name,
+  value,
+  href,
+}: {
+  name: string;
+  value: string;
+  href?: string;
+}) {
   return (
     <div className="contents child:even:bg-neutral-200 child:px-1 child:py-1">
       <span>{name}:</span>
-      <span className="text-right font-medium">{value}</span>
+      <a
+        href={href}
+        className={twJoin(
+          "text-right font-medium",
+          href && "underline hover:text-red-600"
+        )}>
+        {value}
+      </a>
     </div>
   );
 }

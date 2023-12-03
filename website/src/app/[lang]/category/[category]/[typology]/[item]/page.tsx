@@ -1,22 +1,18 @@
-import ProductsGrid from "@/components/product/ProductsGrid";
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
-import Pagination from "@/components/search/Pagination";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import {
-  fetchEcodatArticles,
   fetchEcodatCategories,
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import { getCurrentPage } from "@/lib/server/search";
 import type { SearchParams } from "@/lib/server/search";
 import { itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
-import { RESULTS_PER_PAGE, decodeQueryParam } from "@/lib/shared/search";
+import { decodeQueryParam } from "@/lib/shared/search";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -94,13 +90,13 @@ export default async function ItemPage({
             <div className="h-4"></div>
 
             <PaginatedProductsGrid
+              className="py-2"
               searchParams={searchParams}
               query={{
                 categoryId: category.id,
                 typeId: typology.id,
                 itemId: item.id,
               }}
-              className="py-2"
             />
           </MaxWidthContainer>
         </div>

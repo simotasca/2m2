@@ -45,13 +45,7 @@ export default function Pagination({ isLast }: { isLast?: boolean }) {
           "text-sm bg-transparent border border-slate-500 bg-neutral-50 w-6 px-1 aspect-square grid place-items-center rounded-sm",
           page === 1 && "opacity-50"
         )}>
-        <Image
-          className={twJoin(
-            "w-full -translate-y-px transition-transform duration-100 -scale-x-100 my-auto "
-          )}
-          alt=""
-          src={iconRight}
-        />
+        <div className="translate-y-px">{"<"}</div>
       </a>
       <span className="oswald text-lg">{page}</span>
       <a
@@ -60,12 +54,7 @@ export default function Pagination({ isLast }: { isLast?: boolean }) {
           "text-sm bg-transparent border border-slate-500 bg-neutral-50 w-6 px-1 aspect-square grid place-items-center rounded-sm",
           isLast && "opacity-50"
         )}>
-        <Image
-          className={twMerge(
-            "w-full -translate-y-px transition-transform duration-100 my-auto "
-          )}
-          alt=""
-          src={iconRight}></Image>
+        <div className="translate-y-px">{">"}</div>
       </a>
     </div>
   );

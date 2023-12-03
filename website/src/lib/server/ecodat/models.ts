@@ -8,7 +8,7 @@ export async function fetchEcodatModels(
   const xml = `<IDMarca>${brandId}</IDMarca>`;
   return fetchEcodat(EcodatAction.MODELS, xml).then((res) => {
     if (!res) return [];
-    const models = res.querySelectorAll("arrmodelli > wmagazzino_modello");
+    const models = res.querySelectorAll("ArrModelli > WMAGAZZINO_Modello");
     return Array.from(models).map(parseModel);
   });
 }

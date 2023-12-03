@@ -1,42 +1,73 @@
-import SearchServerLayout from "@/layouts/search/SearchServerLayout";
-import { fetchEcodatArticles, fetchEcodatBrands } from "@/lib/server/ecodat";
-import { allowedParams, decodeQueryParam } from "@/lib/shared/search";
+import Breadcrumbs from "@/components/search/Breadcrumbs";
+import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import Title from "@/components/ui/Title";
+import PageLayout from "@/layouts/PageLayout";
+import ServerLayout from "@/layouts/base/ServerLayout";
+import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
+import { SearchParams } from "@/lib/server/search";
+import routes from "@/lib/shared/routes";
+import { decodeQueryParam } from "@/lib/shared/search";
 import { notFound } from "next/navigation";
 
 interface Props {
   params: {
     brand: string;
   };
+  searchParams: SearchParams;
 }
 
-export default async function BrandPage({ params: { brand: qsBrand } }: Props) {
+export default async function ModelPage({
+  params: { brand: qsBrand },
+  searchParams,
+}: Props) {
   const brands = await fetchEcodatBrands();
-
   const brand = brands.find(
     (b) => b.name.toLowerCase() === decodeQueryParam(qsBrand).toLowerCase()
   );
-
   if (!brand) return notFound();
 
-  const products = await fetchEcodatArticles({
-    fetchRow: { nRows: 10, lastRow: 0 },
-    brandId: brand.id,
-  });
+  const models = await fetchEcodatModels(brand.id);
+
+  const bread = [
+    {
+      text: brand.name,
+      href: routes.brand(brand.name),
+      dropdown: brands.map((b) => ({
+        text: b.name,
+        href: routes.brand(b.name),
+      })),
+    },
+    {
+      dropdown: models.map((m) => ({
+        text: m.name,
+        href: routes.model(brand.name, m.name),
+      })),
+    },
+  ];
 
   return (
-    <SearchServerLayout products={products} title={["brand", brand.name]} />
-  );
-}
+    <ServerLayout>
+      <PageLayout headerSmall>
+        <div className="bg-white pb-4">
+          <MaxWidthContainer>
+            <Breadcrumbs className="py-4" items={bread} />
 
-function parseSearchParams(params: { [key: string]: string }) {
-  let filters: any = {};
-  for (const allowed of allowedParams) {
-    if (allowed in params) {
-      const toInt = parseInt(params[allowed]);
-      if (!Number.isNaN(toInt)) {
-        filters[allowed] = toInt;
-      }
-    }
-  }
-  return filters;
+            <Title as="h1">
+              <Title.Gray>Brand</Title.Gray>
+              <Title.Red>{` ${brand.name}`}</Title.Red>
+            </Title>
+
+            <div className="h-4"></div>
+
+            <PaginatedProductsGrid
+              className="py-2"
+              searchParams={searchParams}
+              query={{ brandId: brand.id }}
+            />
+          </MaxWidthContainer>
+        </div>
+      </PageLayout>
+    </ServerLayout>
+  );
 }

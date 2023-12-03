@@ -65,7 +65,7 @@ export function productName(
 }
 
 export function itemName(item: Pick<EcodatItem, "name" | "position" | "side">) {
-  return [item.name, item.position, item.side].join(" ");
+  return [item.name, item.position, item.side].join(" ").trim();
 }
 
 export const knownCategories = {

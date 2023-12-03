@@ -3,27 +3,22 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import useTranslation from "@/context/lang/useTranslation";
 import iconBrand from "@/images/icons/sell.svg";
 import iconSend from "@/images/icons/send.svg";
+import iconGuaranteed from "@/images/icons/white/guaranteed.svg";
+import iconSecurity from "@/images/icons/white/lock.svg";
+import iconLowPrices from "@/images/icons/white/low-prices.svg";
+import iconShipping from "@/images/icons/white/shipping.svg";
+import iconSupport from "@/images/icons/white/support.svg";
+import iconUsedTest from "@/images/icons/white/testing-eye.svg";
 import iconCategory from "@/images/icons/widgets.svg";
 import imgLogoEsteso from "@/images/logo-esteso.svg";
 import mainBg from "@/images/main-background-engine.jpg";
 import imgSkew from "@/images/skew.svg";
-import Image from "next/image";
-import iconGuaranteed from "@/images/icons/white/guaranteed.svg";
-import iconShipping from "@/images/icons/white/shipping.svg";
-import iconLowPrices from "@/images/icons/white/low-prices.svg";
-import iconUsedTest from "@/images/icons/white/testing-eye.svg";
-import iconSecurity from "@/images/icons/white/lock.svg";
-import iconSupport from "@/images/icons/white/support.svg";
-import { Fragment, useEffect, useState } from "react";
-import SearchFilter from "./SearchFilter";
-import { useRouter } from "next/navigation";
-import QueryString from "qs";
-import { encodeQueryParam } from "@/lib/shared/search";
 import routes from "@/lib/shared/routes";
-
-function qs(obj: any) {
-  return QueryString.stringify(obj, { addQueryPrefix: true });
-}
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Fragment, useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
+import SearchFilter from "./SearchFilter";
 
 export default function Hero() {
   return (
@@ -46,7 +41,7 @@ export default function Hero() {
               className="w-full sm:w-[90%] md:w-full md:max-w-sm [filter:drop-shadow(0px_2px_1px_#000000cc)_drop-shadow(2px_0px_1px_#000000cc)] md:[filter:drop-shadow(0px_2px_2px_black)]"
             />
             <p className="sm:max-w-md md:max-w-none text-lg [@media(min-width:347px)]:text-xl  [@media(min-width:420px)]:text-2xl sm:text-xl [@media(min-width:347px)]:leading-tight [@media(min-width:420px)]:leading-tight md:leading-tight [text-shadow:0_2px_4px_black] max-sm:text-center sm:pt-2 ">
-              Assistenza garantita su tutto.{" "}
+              Assistenza garantita su tutto.
               <br className="sm:hidden md:block" />
               Puoi contare su di noi.
             </p>
@@ -104,39 +99,15 @@ function HeroFilters() {
 
   const doSearch = () => {
     if (!category && !brand) {
-      alert("empty filters");
+      return;
     }
-
-    const qsObject = {
-      brandId: brand?.id,
-      modelId: model?.id,
-      categoryId: category?.id,
-      typeId: typology?.id,
-    };
 
     if (!category) {
       if (!model) {
-        // to brand page
-        router.push(
-          `/brand/${encodeQueryParam(brand.name.toLowerCase())}${qs({
-            ...qsObject,
-            brandId: undefined,
-          })}`
-        );
+        router.push(routes.brand(brand.name));
         return;
       }
-      // to model page
-      router.push(
-        `/brand/` +
-          encodeQueryParam(brand.name.toLowerCase()) +
-          "/" +
-          encodeQueryParam(model.name.toLowerCase()) +
-          qs({
-            ...qsObject,
-            brandId: undefined,
-            modelId: undefined,
-          })
-      );
+      router.push(routes.model(brand.name, model.name));
       return;
     }
 
@@ -202,10 +173,14 @@ function HeroFilters() {
             onChange={(m) => setModel(m)}
           />
         </div>
-        <div className="col-span-full pt-3 order-3 lg:order-5">
+        <div className="col-span-full pt-2 order-3 lg:order-5">
           <Button
+            disabled={!brand && !category}
             onClick={doSearch}
-            className="text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500">
+            className={twMerge(
+              "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
+              !brand && !category && "opacity-70"
+            )}>
             Search
           </Button>
         </div>

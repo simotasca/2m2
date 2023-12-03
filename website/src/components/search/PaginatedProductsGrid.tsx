@@ -30,7 +30,10 @@ export default async function PaginatedProductsGrid({
   return (
     <>
       <Pagination isLast={isLast} />
-      <ProductsGrid className={className} products={products} />
+      <ProductsGrid
+        className={className}
+        products={products.slice(0, RESULTS_PER_PAGE)}
+      />
       <Pagination isLast={isLast} />
     </>
   );

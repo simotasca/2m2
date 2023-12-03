@@ -9,7 +9,7 @@ export async function fetchEcodatTypologies(
   return fetchEcodat(EcodatAction.TYPOLOGIES, xml).then((res) => {
     if (!res) return [];
     const typologies = res.querySelectorAll(
-      "arrtipologie > wmagazzino_tipologie"
+      "ArrTipologie > WMAGAZZINO_Tipologie"
     );
     return Array.from(typologies).map(parseTypology);
   });

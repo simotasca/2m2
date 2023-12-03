@@ -14,7 +14,7 @@ export async function fetchEcodatArticlePhotoList(
 
   return fetchEcodat(EcodatAction.PHOTO_LIST, xml).then((res) => {
     if (!res) return [];
-    const photoIds = Array.from(res.querySelectorAll("idfoto > long"));
+    const photoIds = Array.from(res.querySelectorAll("IDFoto > long"));
     return photoIds.map((id) => Number(id.textContent));
   });
 }

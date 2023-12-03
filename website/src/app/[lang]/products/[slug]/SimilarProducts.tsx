@@ -1,8 +1,14 @@
 "use client";
 
+import iconRight from "@/images/icons/right.svg";
 import ProductsGrid from "@/components/product/ProductsGrid";
-import { EcodatArticle } from "@/lib/shared/ecodat";
+import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
 import { useEffect, useState } from "react";
+import iconBrand from "@/images/icons/sell.svg";
+import iconCategory from "@/images/icons/widgets.svg";
+import Image from "next/image";
+import Button from "@/components/ui/Button";
+import routes from "@/lib/shared/routes";
 
 export default function SimilarProducts({
   product,
@@ -65,11 +71,49 @@ export default function SimilarProducts({
       );
   }, []);
   return (
-    <div>
-      <h3>{product.item}</h3>
-      <ProductsGrid products={sameItem} />
-      <h3>{product.model}</h3>
-      <ProductsGrid products={sameBrand} />
+    <div className="flex flex-col gap-12">
+      {!!sameItem.length && (
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Image className="w-7 -mb-0.5" src={iconBrand} alt="" />
+            <h3 className="text-xl leading-[0.9] font-bold uppercase">
+              <span>Altri ricambi in</span>
+              <span className="text-red-500">{product.item}</span>
+            </h3>
+            <a href={routes.item(product.category, product.type, product.item)}>
+              <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 ml-8 py-0.5">
+                See All
+                <Image
+                  className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
+                  alt=""
+                  src={iconRight}></Image>
+              </Button>
+            </a>
+          </div>
+          <ProductsGrid products={sameBrand} />
+        </div>
+      )}
+      {!!sameBrand.length && (
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Image className="w-7 -mb-0.5" src={iconBrand} alt="" />
+            <h3 className="text-xl leading-[0.9] font-bold uppercase">
+              <span>Altro da</span>
+              <span className="text-red-500">{` ${product.brand} + ${product.model}`}</span>
+            </h3>
+            <a href={routes.model(product.brand, product.model)}>
+              <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 ml-8 py-0.5">
+                See All
+                <Image
+                  className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
+                  alt=""
+                  src={iconRight}></Image>
+              </Button>
+            </a>
+          </div>
+          <ProductsGrid products={sameBrand} />
+        </div>
+      )}
     </div>
   );
 }

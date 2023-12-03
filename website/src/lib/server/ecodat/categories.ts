@@ -6,7 +6,7 @@ export async function fetchEcodatCategories(): Promise<EcodatCategory[]> {
   return fetchEcodat(EcodatAction.CATEGORIES).then((res) => {
     if (!res) return [];
     const categories = res.querySelectorAll(
-      "arrcategorie > wmagazzino_categorie"
+      "ArrCategorie > WMAGAZZINO_Categorie"
     );
     return Array.from(categories).map(parseCategory);
   });
