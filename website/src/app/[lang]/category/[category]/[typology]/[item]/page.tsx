@@ -3,6 +3,7 @@ import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import Pagination from "@/components/search/Pagination";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import {
@@ -85,10 +86,10 @@ export default async function ItemPage({
           <MaxWidthContainer>
             <Breadcrumbs className="py-4" items={bread} />
 
-            <h1 className="font-oswald text-3xl font-semibold uppercase">
-              <span className="text-gray-500 font-medium">Item</span>
-              <span className="text-red-700"> {itemName(item)}</span>
-            </h1>
+            <Title as="h1">
+              <Title.Gray>Item</Title.Gray>
+              <Title.Red> {itemName(item)}</Title.Red>
+            </Title>
 
             <div className="h-4"></div>
 
