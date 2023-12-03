@@ -17,7 +17,7 @@ import useRefState from "../../hooks/useRefState";
 import { productName } from "@/lib/shared/ecodat";
 import Button from "../ui/Button";
 
-export function UserData() {
+export function UserData({ small }: { small: boolean }) {
   const { setIsOpen, total, count } = useCart();
   const { t } = useTranslation();
   return (
