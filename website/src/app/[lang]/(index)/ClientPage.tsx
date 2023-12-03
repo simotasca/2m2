@@ -11,7 +11,7 @@ import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import ContactsSection from "./ContactsSection";
+import ContactsSection from "@/components/ui/ContactsSection";
 import Hero from "./Hero";
 import { PaymentsBar } from "@/components/ui/PaymentsBar";
 
@@ -56,7 +56,11 @@ export default function ClientPage({ latestProducts, categories }: Props) {
 
       <div className="h-8"></div>
 
-      <ContactsSection />
+      <div className="bg-white">
+        <MaxWidthContainer className="pt-20 pb-20">
+          <ContactsSection />
+        </MaxWidthContainer>
+      </div>
 
       <div className="bg-slate-300 py-1">
         <MaxWidthContainer>

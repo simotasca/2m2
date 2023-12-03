@@ -23,6 +23,7 @@ import SimilarProducts from "./SimilarProducts";
 import routes from "@/lib/shared/routes";
 import { PaymentsBar } from "@/components/ui/PaymentsBar";
 import imgLogo from "@/images/logo-dark.svg";
+import ContactsSection from "@/components/ui/ContactsSection";
 
 interface Props {
   params: {
@@ -99,10 +100,8 @@ export default async function ProductPage({ params: { slug } }: Props) {
         <div className="bg-white min-h-full">
           <MaxWidthContainer>
             <Breadcrumbs className="py-4" items={bread} />
-          </MaxWidthContainer>
 
-          <MaxWidthContainer className="pb-8">
-            <div className="grid grid-cols-[17fr_10fr_7fr_2fr] gap-4">
+            <div className="grid grid-cols-[17fr_10fr_8fr_1fr] gap-4">
               <PhotoSection product={product} />
               <ProductDetails product={product} />
               <BuySection product={product} />
@@ -110,7 +109,9 @@ export default async function ProductPage({ params: { slug } }: Props) {
             </div>
           </MaxWidthContainer>
 
-          <MaxWidthContainer className="bg-white pb-8">
+          <div className="h-4"></div>
+
+          <div className="bg-neutral-100 border-y border-neutral-200 py-6">
             <div className="mx-auto w-fit flex items-center gap-8">
               <Image src={imgLogo} alt="" className="w-16" />
               <h4 className="font-semibold leading-tight text-xl">
@@ -118,10 +119,20 @@ export default async function ProductPage({ params: { slug } }: Props) {
               </h4>
               <Image src={imgLogo} alt="" className="w-16" />
             </div>
+          </div>
 
-            <div className="h-10"></div>
+          <div className="h-10"></div>
 
+          <MaxWidthContainer>
             <SimilarProducts product={product} />
+
+            <div className="h-20"></div>
+
+            <MaxWidthContainer className="max-w-6xl">
+              <ContactsSection />
+            </MaxWidthContainer>
+
+            <div className="h-20"></div>
           </MaxWidthContainer>
         </div>
       </PageLayout>
