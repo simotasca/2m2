@@ -10,7 +10,7 @@ export async function fetchEcodatItems(
   return fetchEcodat(EcodatAction.ITEMS, xml).then((res) => {
     if (!res) return [];
     const items = res.querySelectorAll(
-      "arrarticoliattivi > wmagazzino_articoloattivo"
+      "ArrArticoliAttivi > WMAGAZZINO_ArticoloAttivo"
     );
     return Array.from(items)?.map(parseItem);
   });

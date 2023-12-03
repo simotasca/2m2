@@ -1,24 +1,19 @@
 "use client";
 
 import ProductsGrid from "@/components/product/ProductsGrid";
+import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import imgCarbonFiber from "@/images/carbon-fiber.png";
 import iconRight from "@/images/icons/right.svg";
-import iconAmex from "@/images/icons/payment-methods/amex.svg";
-import iconMcard from "@/images/icons/payment-methods/mastercard.svg";
-import iconUpay from "@/images/icons/payment-methods/unionpay.svg";
-import iconVisa from "@/images/icons/payment-methods/visa.svg";
 import PageLayout from "@/layouts/PageLayout";
 import { EcodatArticle, knownCategories } from "@/lib/shared/ecodat";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { twMerge } from "tailwind-merge";
-import ContactsSection from "./ContactsSection";
-import Hero from "./Hero";
-import Button from "@/components/ui/Button";
 import routes from "@/lib/shared/routes";
-import { shuffle } from "@/lib/shared/array";
+import Image from "next/image";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
+import ContactsSection from "@/components/ui/ContactsSection";
+import Hero from "./Hero";
+import { PaymentsBar } from "@/components/ui/PaymentsBar";
 
 interface Props {
   latestProducts: EcodatArticle[];
@@ -46,6 +41,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
               src={iconRight}></Image>
           </Button>
         </div>
+
         <ProductsGrid
           hidePartialRows={true}
           products={latestProducts}
@@ -60,9 +56,20 @@ export default function ClientPage({ latestProducts, categories }: Props) {
 
       <div className="h-8"></div>
 
-      <ContactsSection />
+      <div className="bg-white">
+        <MaxWidthContainer className="pt-20 pb-20">
+          <ContactsSection />
+        </MaxWidthContainer>
+      </div>
 
-      <PaymentsBar />
+      <div className="bg-slate-300 py-1">
+        <MaxWidthContainer>
+          <div className="flex gap-4 items-center">
+            <p className="uppercase font-bold text-slate-800">PAGAMENTI</p>
+            <PaymentsBar />
+          </div>
+        </MaxWidthContainer>
+      </div>
     </PageLayout>
   );
 }
@@ -112,21 +119,5 @@ function CategoryCard({ name }: { name: string }) {
         </p>
       </div>
     </Link>
-  );
-}
-
-function PaymentsBar() {
-  return (
-    <div className="bg-slate-300 py-1">
-      <MaxWidthContainer className="flex gap-4 items-center">
-        <p className="uppercase font-bold text-slate-800">PAGAMENTI</p>
-        <div className="flex gap-1.5 items-center">
-          <Image src={iconVisa} alt="" className="w-7"></Image>
-          <Image src={iconMcard} alt="" className="w-7"></Image>
-          <Image src={iconAmex} alt="" className="w-7"></Image>
-          <Image src={iconUpay} alt="" className="w-7"></Image>
-        </div>
-      </MaxWidthContainer>
-    </div>
   );
 }

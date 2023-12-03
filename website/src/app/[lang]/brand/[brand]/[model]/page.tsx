@@ -1,9 +1,13 @@
+import Breadcrumbs from "@/components/search/Breadcrumbs";
+import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import Title from "@/components/ui/Title";
+import PageLayout from "@/layouts/PageLayout";
+import ServerLayout from "@/layouts/base/ServerLayout";
 import SearchServerLayout from "@/layouts/search/SearchServerLayout";
-import {
-  fetchEcodatArticles,
-  fetchEcodatBrands,
-  fetchEcodatModels,
-} from "@/lib/server/ecodat";
+import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
+import { SearchParams } from "@/lib/server/search";
+import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
 import { notFound } from "next/navigation";
 
@@ -12,10 +16,12 @@ interface Props {
     brand: string;
     model: string;
   };
+  searchParams: SearchParams;
 }
 
 export default async function ModelPage({
   params: { brand: qsBrand, model: qsModel },
+  searchParams,
 }: Props) {
   const brands = await fetchEcodatBrands();
   const brand = brands.find(
@@ -29,16 +35,50 @@ export default async function ModelPage({
   );
   if (!model) return notFound();
 
-  const products = await fetchEcodatArticles({
-    fetchRow: { nRows: 10, lastRow: 0 },
-    brandId: brand.id,
-    modelId: model.id,
-  });
+  const bread = [
+    {
+      text: brand.name,
+      href: routes.brand(brand.name),
+      dropdown: brands.map((b) => ({
+        text: b.name,
+        href: routes.brand(b.name),
+      })),
+    },
+    {
+      text: model.name,
+      href: routes.model(brand.name, model.name),
+      dropdown: models.map((m) => ({
+        text: m.name,
+        href: routes.model(brand.name, m.name),
+      })),
+    },
+  ];
 
   return (
-    <SearchServerLayout
-      products={products}
-      title={["model", brand.name + " " + model.name]}
-    />
+    <ServerLayout>
+      <PageLayout headerSmall>
+        <div className="bg-white pb-4">
+          <MaxWidthContainer>
+            <Breadcrumbs className="py-4" items={bread} />
+
+            <Title as="h1">
+              <Title.Gray>Model</Title.Gray>
+              <Title.Red>{` ${brand.name} ${model.name}`}</Title.Red>
+            </Title>
+
+            <div className="h-4"></div>
+
+            <PaginatedProductsGrid
+              className="py-2"
+              searchParams={searchParams}
+              query={{
+                brandId: brand.id,
+                modelId: model.id,
+              }}
+            />
+          </MaxWidthContainer>
+        </div>
+      </PageLayout>
+    </ServerLayout>
   );
 }

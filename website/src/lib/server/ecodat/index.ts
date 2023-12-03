@@ -38,7 +38,7 @@ export async function fetchEcodat(action: EcodatAction, xml?: string) {
     .catch((err) => {
       throw new Error(`Error calling ecodat api ${action}: ` + err.message);
     })
-    .then((data) => XMLParser.parse(data))
+    .then((data) => XMLParser.parse(data).documentElement)
     .then((data) => {
       const responseWrapper = data.querySelector(`M_Get${action}Response`);
       const responseData = XMLParser.getVal(

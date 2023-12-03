@@ -5,7 +5,7 @@ import { XMLParser } from "./utils";
 export async function fetchEcodatBrands(): Promise<EcodatBrand[]> {
   return fetchEcodat(EcodatAction.BRANDS).then((res) => {
     if (!res) return [];
-    const brands = res.querySelectorAll("arrmarche > wmagazzino_marca");
+    const brands = res.querySelectorAll("ArrMarche > WMAGAZZINO_Marca");
     return Array.from(brands)?.map(parseBrand);
   });
 }

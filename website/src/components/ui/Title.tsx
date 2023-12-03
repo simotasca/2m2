@@ -1,27 +1,36 @@
-// import { twMerge } from "tailwind-merge";
-// import type { FC, PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
+import type { ElementType, FC, PropsWithChildren } from "react";
 
-// const Title: FC<PropsWithChildren<{ as: string; className: string }>> = ({
-//   as: Component = "a",
-//   className,
-//   children,
-//   ...props
-// }) => {
-//   className = twMerge(
-//     "font-oswald text-3xl font-semibold uppercase",
-//     className
-//   );
-//   return <Component {...props}>{children}</Component>;
-// };
+type TitleComponent = FC<
+  PropsWithChildren<{ as?: ElementType; className?: string }>
+> & {
+  Red: FC<PropsWithChildren>;
+  Gray: FC<PropsWithChildren>;
+};
 
-// function Red({ children }) {
-//   return <span className="text-red-700">{children}</span>;
-// }
+const Title: TitleComponent = ({
+  as: Component = "p",
+  className,
+  children,
+  ...props
+}) => {
+  className = twMerge(
+    "font-oswald text-3xl font-semibold uppercase leading-[1]",
+    className
+  );
+  return (
+    <Component className={className} {...props}>
+      {children}
+    </Component>
+  );
+};
 
-// Title.Red = Red;
+Title.Red = ({ children }) => {
+  return <span className="text-red-700">{children}</span>;
+};
 
-// function Grey({ children }) {
-//   return <span className="text-gray-500 font-medium">{children}</span>;
-// }
+Title.Gray = ({ children }) => {
+  return <span className="text-neutral-400">{children}</span>;
+};
 
-// Object.assign(Title, Red, Grey);
+export default Title;

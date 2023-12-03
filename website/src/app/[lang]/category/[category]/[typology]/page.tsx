@@ -1,9 +1,19 @@
+import Breadcrumbs from "@/components/search/Breadcrumbs";
+import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import Title from "@/components/ui/Title";
+import PageLayout from "@/layouts/PageLayout";
+import ServerLayout from "@/layouts/base/ServerLayout";
 import SearchServerLayout from "@/layouts/search/SearchServerLayout";
 import {
   fetchEcodatArticles,
   fetchEcodatCategories,
+  fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
+import { SearchParams } from "@/lib/server/search";
+import { itemName } from "@/lib/shared/ecodat";
+import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
 import { notFound } from "next/navigation";
 
@@ -12,10 +22,12 @@ interface Props {
     category: string;
     typology: string;
   };
+  searchParams: SearchParams;
 }
 
 export default async function TypologyPage({
   params: { category: qsCategory, typology: qsTypology },
+  searchParams,
 }: Props) {
   const categories = await fetchEcodatCategories();
   const category = categories.find(
@@ -29,11 +41,58 @@ export default async function TypologyPage({
   );
   if (!typology) return notFound();
 
-  const products = await fetchEcodatArticles({
-    fetchRow: { nRows: 10, lastRow: 0 },
-    categoryId: category.id,
-    typeId: typology.id,
-  });
+  const items = await fetchEcodatItems(category.id, typology.id);
 
-  return <SearchServerLayout products={products} />;
+  const bread = [
+    {
+      text: category.name,
+      href: routes.category(category.name),
+      dropdown: categories.map((c) => ({
+        text: c.name,
+        href: routes.category(c.name),
+      })),
+    },
+    {
+      text: typology.name,
+      href: routes.type(category.name, typology.name),
+      dropdown: types.map((t) => ({
+        text: t.name,
+        href: routes.type(category.name, t.name),
+      })),
+    },
+    {
+      dropdown: items.map((i) => ({
+        text: i.name,
+        href: routes.item(category.name, typology.name, itemName(i)),
+      })),
+    },
+  ];
+
+  return (
+    <ServerLayout>
+      <PageLayout headerSmall>
+        <div className="bg-white pb-4">
+          <MaxWidthContainer>
+            <Breadcrumbs className="py-4" items={bread} />
+
+            <Title as="h1">
+              <Title.Gray>Type</Title.Gray>
+              <Title.Red> {typology.name}</Title.Red>
+            </Title>
+
+            <div className="h-4"></div>
+
+            <PaginatedProductsGrid
+              className="py-2"
+              searchParams={searchParams}
+              query={{
+                categoryId: category.id,
+                typeId: typology.id,
+              }}
+            />
+          </MaxWidthContainer>
+        </div>
+      </PageLayout>
+    </ServerLayout>
+  );
 }

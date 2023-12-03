@@ -26,11 +26,13 @@ export function ecodatHeaders(action: EcodatAction) {
 
 export class XMLParser {
   static parse(data: string) {
-    return new JSDOM(data).window.document;
+    return new JSDOM(data, {
+      contentType: "text/xml",
+    }).window.document;
   }
 
   static getVal(el: Element | null, tag: string) {
-    return el?.querySelector(tag)?.innerHTML;
+    return el?.querySelector(tag)?.innerHTML || undefined;
   }
 
   static getNumber(el: Element | null, tag: string) {

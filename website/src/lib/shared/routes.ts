@@ -6,23 +6,23 @@ type UrlProduct = Pick<EcodatArticle, "item" | "brand" | "model" | "id">;
 const routes = {
   home: () => "/",
   about: () => "/about",
-  brand: (name: string) => `/brand/` + encodeQueryParam(name.toLowerCase()),
-  category: (name: string) =>
-    `/category/${encodeQueryParam(name.toLowerCase())}`,
-  type: (category: string, name: string) =>
-    `/category/${encodeQueryParam(category.toLowerCase())}/${encodeQueryParam(
-      name.toLowerCase()
-    )}`,
-  item: (category: string, type: string, name: string) =>
-    `/category/${encodeQueryParam(category.toLowerCase())}/${encodeQueryParam(
-      type.toLowerCase()
-    )}/${encodeQueryParam(name.toLowerCase())}`,
-  /** TODO: manage filters */
+
   products: () => "/products",
   product: (product: UrlProduct) =>
-    `/products/${encodeQueryParam(productName(product).toLowerCase())}-${
-      product.id
-    }`,
+    `/products/${enc(productName(product))}-${product.id}`,
+
+  brand: (name: string) => `/brand/${enc(name)}`,
+  model: (brand: string, name: string) => `/brand/${enc(brand)}/${enc(name)}`,
+
+  category: (name: string) => `/category/${enc(name)}`,
+  type: (category: string, name: string) =>
+    `/category/${enc(category)}/${enc(name)}`,
+  item: (category: string, type: string, name: string) =>
+    `/category/${enc(category)}/${enc(type)}/${enc(name)}`,
 } as const;
 
 export default routes;
+
+function enc(val: string) {
+  return encodeQueryParam(val.toLowerCase());
+}

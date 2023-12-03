@@ -60,7 +60,7 @@ export async function fetchEcodatArticles(
     if (!res) return [];
 
     const articles = Array.from(
-      res.querySelectorAll("arrdatimag > wmagazzino_dati_articolo")
+      res.querySelectorAll("ArrDatiMag > WMAGAZZINO_Dati_Articolo")
     );
 
     return articles.map(parseArticle);
@@ -72,7 +72,7 @@ export async function fetchEcodatArticle(
 ): Promise<EcodatArticle | null> {
   const xml = `<IDArticolo>${id}</IDArticolo>`;
   return fetchEcodat(EcodatAction.ARTICLE, xml).then((res) => {
-    const article = res?.querySelector("datimag");
+    const article = res?.querySelector("DatiMag");
     return article ? parseArticle(article) : null;
   });
 }
