@@ -39,6 +39,13 @@ export default function ProductsGrid({
       ]
     : [];
 
+  if (products.length === 0)
+    return (
+      <div className={twMerge("text-sm text-neutral-500", className)}>
+        Nessun prodotto trovato . . .
+      </div>
+    );
+
   return (
     <div
       className={twMerge(

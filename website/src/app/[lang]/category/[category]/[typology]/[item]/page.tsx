@@ -1,5 +1,6 @@
 import ProductsGrid from "@/components/product/ProductsGrid";
 import Breadcrumbs from "@/components/search/Breadcrumbs";
+import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import Pagination from "@/components/search/Pagination";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import PageLayout from "@/layouts/PageLayout";
@@ -10,8 +11,11 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
+import { getCurrentPage } from "@/lib/server/search";
+import type { SearchParams } from "@/lib/server/search";
+import { itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
-import { decodeQueryParam } from "@/lib/shared/search";
+import { RESULTS_PER_PAGE, decodeQueryParam } from "@/lib/shared/search";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -20,10 +24,12 @@ interface Props {
     typology: string;
     item: string;
   };
+  searchParams?: SearchParams;
 }
 
 export default async function ItemPage({
   params: { category: urlCategory, typology: urlTypology, item: urlItem },
+  searchParams,
 }: Props) {
   const categories = await fetchEcodatCategories();
   const category = categories.find(
@@ -39,23 +45,13 @@ export default async function ItemPage({
 
   const items = await fetchEcodatItems(category.id, typology.id);
   const item = items.find((i) => {
-    console.log(
-      i.name.toLowerCase() === decodeQueryParam(urlItem).toLowerCase(),
-      i.name.toLowerCase(),
-      decodeQueryParam(urlItem).toLowerCase()
+    return (
+      itemName(i).toLowerCase() === decodeQueryParam(urlItem).toLowerCase()
     );
-    return i.name.toLowerCase() === decodeQueryParam(urlItem).toLowerCase();
   });
   if (!item) return notFound();
 
-  const products = await fetchEcodatArticles({
-    fetchRow: { nRows: 10, lastRow: 0 },
-    categoryId: category.id,
-    typeId: typology.id,
-    itemId: item.id,
-  });
-
-  const breads = [
+  const bread = [
     {
       text: category.name,
       href: routes.category(category.name),
@@ -87,18 +83,24 @@ export default async function ItemPage({
       <PageLayout headerSmall>
         <div className="bg-white pb-4">
           <MaxWidthContainer>
-            <Breadcrumbs items={breads} />
+            <Breadcrumbs className="py-4" items={bread} />
 
             <h1 className="font-oswald text-3xl font-semibold uppercase">
               <span className="text-gray-500 font-medium">Item</span>
-              <span className="text-red-700"> {item.name}</span>
+              <span className="text-red-700"> {itemName(item)}</span>
             </h1>
 
             <div className="h-4"></div>
 
-            <Pagination />
-            <ProductsGrid className="py-2" products={products} />
-            <Pagination />
+            <PaginatedProductsGrid
+              searchParams={searchParams}
+              query={{
+                categoryId: category.id,
+                typeId: typology.id,
+                itemId: item.id,
+              }}
+              className="py-2"
+            />
           </MaxWidthContainer>
         </div>
       </PageLayout>

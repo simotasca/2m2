@@ -8,3 +8,5 @@ export function encodeQueryParam(val: string) {
 export function decodeQueryParam(val: string) {
   return decodeURIComponent(val).split("-").join(" ");
 }
+
+export const RESULTS_PER_PAGE = 20 as const;

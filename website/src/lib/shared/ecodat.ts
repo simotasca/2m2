@@ -64,6 +64,10 @@ export function productName(
   return [product.item, product.brand, product.model].join(" ");
 }
 
+export function itemName(item: Pick<EcodatItem, "name" | "position" | "side">) {
+  return [item.name, item.position, item.side].join(" ");
+}
+
 export const knownCategories = {
   "Allestimenti interni": { image: "/assets/category-images/allestimenti.png" },
   Assale: { image: "/assets/category-images/assale.png" },

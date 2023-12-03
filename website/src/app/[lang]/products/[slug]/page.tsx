@@ -15,7 +15,7 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import { EcodatArticle } from "@/lib/shared/ecodat";
+import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
@@ -51,7 +51,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
     });
 
   const items = await fetchEcodatItems(product.categoryId, product.typeId)
-    .then((items) => items.map((c) => c.name))
+    .then((items) => items)
     .catch((err) => {
       console.error("Error fetching items:", err.message);
       return undefined;
@@ -79,10 +79,10 @@ export default async function ProductPage({ params: { slug } }: Props) {
       text: product.item,
       href: routes.item(product.category, product.type, product.item),
       dropdown: items
-        ?.filter((i) => i !== product.item)
+        ?.filter((i) => i.id != product.itemId)
         .map((i) => ({
-          text: i,
-          href: routes.item(product.category, product.type, i),
+          text: itemName(i),
+          href: routes.item(product.category, product.type, itemName(i)),
         })),
     },
   ];
@@ -92,15 +92,15 @@ export default async function ProductPage({ params: { slug } }: Props) {
       <PageLayout headerSmall>
         <div className="bg-white min-h-full">
           <MaxWidthContainer className="max-w-6xl">
-            <div className="py-4">
-              <Breadcrumbs items={bread} />
-            </div>
+            <Breadcrumbs className="py-4" items={bread} />
 
             <div className="grid grid-cols-[13fr_10fr_7fr] gap-4">
               <PhotoSection product={product} />
               <ProductDetails product={product} />
               <BuySection product={product} />
             </div>
+
+            <pre>{JSON.stringify(product, null, 2)}</pre>
 
             <div className="text-center max-w-xl mx-auto py-8">
               <h3 className="font-semibold leading-tight text-xl">
