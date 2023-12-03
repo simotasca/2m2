@@ -6,7 +6,7 @@ import routes from "@/lib/shared/routes";
 import { Popover, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 
 export default function Navbar({ small }: { small: boolean }) {
   const { t } = useTranslation();
@@ -15,10 +15,12 @@ export default function Navbar({ small }: { small: boolean }) {
       className={twMerge(
         "[@media(max-width:700px)]:grid grid-cols-3 [@media(min-width:700px)]:flex items-center justify-between [@media(min-width:700px)]:justify-center gap-x-4 [@media(min-width:700px)]:gap-x-8 font-medium [@media(max-width:700px)]:text-sm [@media(max-width:700px)]:pl-2",
         small && "translate-y-px"
-      )}>
+      )}
+    >
       <Link
         href={routes.home()}
-        className="[@media(max-width:700px)]:ml-auto [@media(max-width:700px)]:mr-0">
+        className="[@media(max-width:700px)]:ml-auto [@media(max-width:700px)]:mr-0"
+      >
         {t("header.navbar.home")}
       </Link>
       <div className="[@media(max-width:700px)]:mx-auto">
@@ -29,10 +31,14 @@ export default function Navbar({ small }: { small: boolean }) {
       </div>
       <Link
         href={routes.about()}
-        className="[@media(max-width:700px)]mr-auto [@media(max-width:700px)]:ml-0">
+        className="[@media(max-width:700px)]mr-auto [@media(max-width:700px)]:ml-0"
+      >
         {t("header.navbar.about")}
       </Link>
-      <Link href="#" className="[@media(max-width:766px)]:hidden">
+      <Link
+        href="#"
+        className={twJoin(small ? "max-lg:hidden" : "max-md:hidden")}
+      >
         {t("header.navbar.contacts")}
       </Link>
     </nav>

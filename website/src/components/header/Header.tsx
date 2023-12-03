@@ -103,7 +103,7 @@ function Logo() {
       <Image
         src={imgLogo}
         alt="logo 2m2 autoricambi"
-        className="w-14 [@media(min-width:766px)]:w-20"
+        className="w-14 md:w-20"
       />
     </a>
   );

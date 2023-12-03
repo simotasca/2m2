@@ -16,17 +16,33 @@ import { FormEventHandler, useEffect, useRef, useState } from "react";
 import useRefState from "../../hooks/useRefState";
 import { productName } from "@/lib/shared/ecodat";
 import Button from "../ui/Button";
+import { twJoin, twMerge } from "tailwind-merge";
 
 export function UserData({ small }: { small: boolean }) {
   const { setIsOpen, total, count } = useCart();
   const { t } = useTranslation();
   return (
-    <div className="rounded [@media(min-width:766px)]:border [@media(min-width:766px)]:border-neutral-500 [@media(min-width:766px)]:bg-neutral-800 flex -mr-1 [@media(min-width:766px)]:mr-0 justify-self-end [@media(min-width:766px)]:justify-self-auto">
+    <div
+      className={twJoin(
+        "rounded  flex -mr-1  justify-self-end",
+        small
+          ? "lg:border lg:border-neutral-500  lg:bg-neutral-800 lg:mr-0 lg:justify-self-auto"
+          : "md:border md:border-neutral-500  md:bg-neutral-800 md:mr-0 md:justify-self-auto"
+      )}
+    >
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center h-full px-1 [@media(min-width:766px)]:px-3 rounded-l outline-none hover:outline hover:outline-[#e0c4393a] -outline-offset-1"
+        className={twJoin(
+          "flex items-center h-full px-1 rounded-l outline-none hover:outline hover:outline-[#e0c4393a] -outline-offset-1",
+          small ? "lg:px-3" : " md:px-3"
+        )}
       >
-        <div className="h-fit text-right translate-y-px hidden [@media(min-width:766px)]:block">
+        <div
+          className={twJoin(
+            "h-fit text-right translate-y-px hidden",
+            small ? "lg:block" : "md:block"
+          )}
+        >
           <p className="font-semibold text-sm leading-[1.1]">
             {total ? total.toFixed(2) + "€" : "---"}
           </p>
@@ -37,25 +53,28 @@ export function UserData({ small }: { small: boolean }) {
         <Image
           src={iconCart}
           alt="search icon"
-          className="flex-shrink-0 w-6 [@media(min-width:766px)]:ml-2"
+          className={twJoin("flex-shrink-0 w-6", small ? "lg:ml-2" : "md:ml-2")}
         />
         <Image
           src={iconDown}
           alt="dropdown icon"
-          className="hidden [@media(min-width:766px)]:block w-4 -ml-1.5"
+          className={twJoin(
+            "hidden w-4 -ml-1.5",
+            small ? "lg:block" : "md:block"
+          )}
         />
       </button>
 
-      <div className="py-2.5 hidden [@media(min-width:766px)]:block">
+      <div className={twJoin("py-2.5 hidden", small ? "lg:block" : "md:block")}>
         <div className="w-px h-full bg-neutral-500"></div>
       </div>
 
-      <DropdownLogin />
+      <DropdownLogin small={small} />
     </div>
   );
 }
 
-function DropdownLogin() {
+function DropdownLogin({ small }: { small: boolean }) {
   const { t } = useTranslation();
   const supabase = createClientComponentClient<Database>();
   const router = useRouter();
@@ -136,15 +155,26 @@ function DropdownLogin() {
             <Popover.Button
               onClick={() => user && router.push("/reserved")}
               as="button"
-              className="h-full flex items-center [@media(min-width:766px)]:px-3 outline-none"
+              className={twJoin(
+                "h-full flex items-center outline-none",
+                small ? "lg:px-3" : "md:px-3"
+              )}
             >
-              <p className="overflow-hidden font-semibold text-sm max-w-[9rem] whitespace-nowrap overflow-ellipsis text-right hidden [@media(min-width:766px)]:block">
+              <p
+                className={twJoin(
+                  "overflow-hidden font-semibold text-sm max-w-[9rem] whitespace-nowrap overflow-ellipsis text-right hidden",
+                  small ? "lg:block" : "md:block"
+                )}
+              >
                 {user || t("header.login")}
               </p>
               <Image
                 src={iconUser}
-                alt="search icon"
-                className="flex-shrink-0 w-7 ml-1 [@media(min-width:766px)]:ml-2"
+                alt="user icon"
+                className={twJoin(
+                  "flex-shrink-0 w-7 ml-1",
+                  small ? "lg:ml-2" : "md:ml-2"
+                )}
               />
             </Popover.Button>
             {!user && (
