@@ -15,7 +15,7 @@ const Title: TitleComponent = ({
   ...props
 }) => {
   className = twMerge(
-    "font-oswald text-3xl font-semibold uppercase",
+    "font-oswald text-3xl font-semibold uppercase leading-[1]",
     className
   );
   return (
