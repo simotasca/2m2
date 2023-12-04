@@ -14,7 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import { CheckoutTab } from "./CheckoutTab";
 import { DeliveryAddress, DeliveryAddressTab } from "./DeliveryAddressTab";
 import { PersonalInfoTab, type PersonalInfo } from "./PersonalInfoTab";
@@ -98,31 +98,35 @@ export default function CheckoutClientPage({ products }: Props) {
       />
       <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 -z-10"></div>
       <div className="p-8">
-        <div className="max-w-screen-md mx-auto flex flex-col gap-3 pt-5 py-6 px-8 bg-white overflow-hidden">
+        <div className="max-w-screen-md mx-auto flex flex-col gap-3 pt-5 py-6 px-4 md:px-8 bg-white overflow-hidden">
           <Breadcrumbs wizStep={wizStep} changeWizStep={changeWizStep} />
           {/* split panel */}
-          <div className="grid grid-cols-2 gap-8">
+          <div className="sm:grid grid-cols-2 gap-8">
             {/* wizard */}
             <div
               className={twMerge(
                 "relative transition-transform duration-200",
                 hideWiz && "-translate-x-5"
-              )}>
+              )}
+            >
               {currWizard}
               {wizStep < wizard.length - 1 && (
                 <Button
                   onClick={() => changeWizStep((s) => s + 1)}
-                  className="bg-red-gradient text-white">
+                  className="bg-red-gradient text-white max-sm:ml-auto mr-0"
+                >
                   Next
                 </Button>
               )}
+              <div className="sm:hidden h-6"></div>
               <div
                 className={twMerge(
                   "absolute inset-0 w-full h-full bg-white z-10 transition-all duration-200",
                   hideWiz
                     ? "opacity-100 pointer-events-none"
                     : "opacity-0 pointer-events-none"
-                )}></div>
+                )}
+              ></div>
             </div>
             {/* order details */}
             <OrderDetails
@@ -237,22 +241,32 @@ function Breadcrumbs({ wizStep, changeWizStep }) {
     "checkout",
   ];
   return (
-    <div className="flex justify-between items-center mb-1">
-      <div className="flex gap-2 text-neutral-400 text-sm">
-        <a href="/" className="underline text-dark">
-          back to shop
-        </a>
-        {breadcrumbs.map((b, i) => (
-          <Fragment key={i}>
-            <p>&gt;</p>
-            <BreadcrumbStep n={i} curr={wizStep} change={changeWizStep}>
-              {b}
-            </BreadcrumbStep>
-          </Fragment>
-        ))}
-      </div>
+    <div>
+      <a href="/" className="sm:hidden underline text-dark text-sm">
+        back to shop
+      </a>
+      <div className="sm:hidden h-4"></div>
+      <div className="flex justify-between items-center mb-1">
+        <div className="flex flex-wrap gap-y-0 gap-2 text-neutral-400 text-xs sm:text-sm">
+          <a href="/" className="max-sm:hidden underline text-dark">
+            back to shop
+          </a>
+          {breadcrumbs.map((b, i) => (
+            <div className="flex gap-2 " key={i}>
+              <p className={twJoin(i == 0 && "max-sm:hidden")}>&gt;</p>
+              <BreadcrumbStep n={i} curr={wizStep} change={changeWizStep}>
+                {b}
+              </BreadcrumbStep>
+            </div>
+          ))}
+        </div>
 
-      <Image className="w-12" alt="logo 2m2" src={imgLogo}></Image>
+        <Image
+          className="max-sm:hidden w-12"
+          alt="logo 2m2"
+          src={imgLogo}
+        ></Image>
+      </div>
     </div>
   );
 }
@@ -266,12 +280,13 @@ function BreadcrumbStep({
   return (
     <button
       className={twMerge(
-        "flex items-start",
+        "flex items-start text-left whitespace-nowrap",
         curr == n && "text-red-500",
         curr > n && "text-dark"
       )}
       disabled={curr <= n}
-      onClick={() => change(() => n)}>
+      onClick={() => change(() => n)}
+    >
       {children}
     </button>
   );
