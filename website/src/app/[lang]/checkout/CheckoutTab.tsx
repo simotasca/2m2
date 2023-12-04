@@ -89,7 +89,7 @@ function ElementsWrapper({
       });
   }, [setClientSecret]);
 
-  if (!clientSecret || !stripePromise) return <div>not worksh</div>;
+  if (!clientSecret || !stripePromise) return <LoadingSpinner></LoadingSpinner>;
 
   const appearance: Appearance = {
     disableAnimations: true,
@@ -116,6 +116,16 @@ function ElementsWrapper({
     </Elements>
   );
 }
+
+const LoadingSpinner = () => {
+  return (
+    <div className="flex justify-center items-center ">
+      <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-8 w-8"></div>
+    </div>
+  );
+};
+
+export default LoadingSpinner;
 
 function CheckoutForm({
   clientSecret,
