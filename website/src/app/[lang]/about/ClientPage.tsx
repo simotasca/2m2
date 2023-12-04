@@ -6,6 +6,7 @@ import PageLayout from "@/layouts/PageLayout";
 import imgGarage from "@/images/officina.jpg";
 import imgSkew from "@/images/skew-dark.svg";
 import Image from "next/image";
+import ContactsSection from "@/components/ui/ContactsSection";
 
 export default function ClientPage() {
   return (
@@ -13,6 +14,10 @@ export default function ClientPage() {
       <Hero />
       <MapSection />
       <History />
+      <div className="bg-neutral-100 py-12 px-3 xs:px-6 [@media(min-width:847px)]:px-16 lg:px-24">
+        <ContactsSection></ContactsSection>
+      </div>
+      ;
     </PageLayout>
   );
 }

@@ -18,6 +18,7 @@ import PageLayout from "@/layouts/PageLayout";
 import Title from "@/components/ui/Title";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import { SearchParams } from "@/lib/server/search";
+import ContactsSection from "@/components/ui/ContactsSection";
 
 interface Props {
   params: {
@@ -76,6 +77,9 @@ export default async function CategoryPage({
                 categoryId: category.id,
               }}
             />
+            <div className="h-10"></div>
+            <ContactsSection></ContactsSection>
+            <div className="h-4"></div>
           </MaxWidthContainer>
         </div>
       </PageLayout>
