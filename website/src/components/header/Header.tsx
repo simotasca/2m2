@@ -4,6 +4,8 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import useTranslation from "@/context/lang/useTranslation";
 import iconHamburger from "@/images/icons/white/hamburger.svg";
 import iconPhone from "@/images/icons/white/phone.svg";
+import iconEmail from "@/images/icons/white/mail.svg";
+import iconLocation from "@/images/icons/white/location.svg";
 import imgLogo from "@/images/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -138,23 +140,23 @@ function TopBar() {
             <Image
               src={iconPhone}
               alt="phone icon"
-              className="w-5 opacity-80"
+              className="w-3 opacity-80"
             />
             <p>+39 333 1234567</p>
           </div>
           <div className="flex items-center gap-1">
             <Image
-              src={iconPhone}
+              src={iconEmail}
               alt="phone icon"
-              className="w-5 opacity-80"
+              className="w-4 opacity-80"
             />
             <p>mail@domain.com</p>
           </div>
           <div className="flex items-center gap-1">
             <Image
-              src={iconPhone}
+              src={iconLocation}
               alt="phone icon"
-              className="w-5 opacity-80"
+              className="w-4 opacity-80"
             />
             <p>Str. Campirolo 1, 43044 Collecchio PR</p>
           </div>
