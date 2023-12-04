@@ -1,7 +1,7 @@
 "use client";
 
-import Header from "@/components/header/Header";
 import CartProvider from "@/context/cart/CartProvider";
+import SearchProvider from "@/context/search/SearchProvider";
 import { EcodatArticle } from "@/lib/shared/ecodat";
 import { PropsWithChildren } from "react";
 
@@ -16,7 +16,7 @@ export default function ClientLayout({ cart, children }: Props) {
   return (
     <>
       <CartProvider cartId={cart.id} cartProducts={cart.products}>
-        {children}
+        <SearchProvider>{children}</SearchProvider>
       </CartProvider>
     </>
   );

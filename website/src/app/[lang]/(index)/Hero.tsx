@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
+import { getFilters } from "@/lib/client/filters";
 
 export default function Hero() {
   return (
@@ -87,14 +88,10 @@ function HeroFilters() {
   };
 
   useEffect(() => {
-    fetch("/api/ecodat/filters")
-      .then((res) => res.json())
-      .then((data) => {
-        setFilters(data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    getFilters().then((res) => {
+      console.log(res);
+      res && setFilters(res);
+    });
   }, []);
 
   const doSearch = () => {
