@@ -8,9 +8,10 @@ const MaxWidthContainer: FC<PropsWithChildren<{ className?: string }>> = ({
   return (
     <div
       className={twMerge(
-        `w-full max-w-screen-xl mx-auto px-3 sm:px-6`,
+        `w-full max-w-screen-xl mx-auto px-3 xs:px-4 sm:px-6`,
         className
-      )}>
+      )}
+    >
       {children}
     </div>
   );

@@ -62,7 +62,7 @@ export default function Header({ extension, small = true }: Props) {
             onClick={() => setMobilePanelOpen(true)}
             className="[@media(min-width:700px)]:hidden"
           >
-            <Image src={iconHamburger} alt="" className="w-6 ml-2 opacity-90" />
+            <Image src={iconHamburger} alt="" className="w-6  opacity-90" />
           </button>
           <div
             className={twMerge(
