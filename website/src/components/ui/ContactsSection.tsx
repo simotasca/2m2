@@ -8,7 +8,7 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 
 export default function ContactsSection() {
   return (
-    <div className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-y-6 gap-x-12 max-md:px-1">
+    <div className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-y-6 max-xs:-ml-2">
       <div>
         <h3 className="text-2xl font-bold mb-1">Come possiamo aiutarti?</h3>
         <p className="leading-tight">

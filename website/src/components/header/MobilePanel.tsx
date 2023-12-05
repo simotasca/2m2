@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import iconLogo from "@/images/logo.svg";
 import { twMerge } from "tailwind-merge";
@@ -8,9 +10,9 @@ import iconEmail from "@/images/icons/white/mail.svg";
 import iconLocation from "@/images/icons/white/location.svg";
 import iconWhatsapp from "@/images/icons/white/whatsapp.svg";
 import useTranslation from "@/context/lang/useTranslation";
-import { openSearchModal } from "../search/SearchModal";
 import { UserData } from "./UserData";
 import Button from "../ui/Button";
+import useSearchModal from "@/context/search/useSearchModal";
 
 export default function MobilePanel() {
   return (
@@ -74,6 +76,7 @@ export default function MobilePanel() {
 }
 
 function SearchBar() {
+  const { open } = useSearchModal();
   const { t } = useTranslation();
   return (
     <div className="h-full rounded border border-neutral-500 flex items-stretch py-2">
@@ -101,7 +104,7 @@ function SearchBar() {
       </button>
       {/* <DropdownSearchFilters /> */}
       <button
-        onClick={() => openSearchModal()}
+        onClick={() => open()}
         className="h-full outline-none flex items-center px-3 text-white font-medium"
       >
         <span>{t("header.search-bar.filters.title")}</span>

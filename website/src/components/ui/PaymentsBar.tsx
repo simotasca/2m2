@@ -8,10 +8,10 @@ import { twMerge } from "tailwind-merge";
 export function PaymentsBar({ className }: { className?: string }) {
   return (
     <div className={twMerge("flex gap-1.5 items-center", className)}>
-      <Image src={iconVisa} alt="" className="w-7"></Image>
-      <Image src={iconMcard} alt="" className="w-7"></Image>
-      <Image src={iconAmex} alt="" className="w-7"></Image>
-      <Image src={iconUpay} alt="" className="w-7"></Image>
+      <Image src={iconVisa} alt="" className="w-7 sm:w-5 md:w-7"></Image>
+      <Image src={iconMcard} alt="" className="w-7 sm:w-5 md:w-7"></Image>
+      <Image src={iconAmex} alt="" className="w-7 sm:w-5 md:w-7"></Image>
+      <Image src={iconUpay} alt="" className="w-7 sm:w-5 md:w-7"></Image>
     </div>
   );
 }

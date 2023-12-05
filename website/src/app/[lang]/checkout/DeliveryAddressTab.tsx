@@ -11,6 +11,7 @@ export interface DeliveryAddress {
   zip?: string;
   street?: string;
   number?: string;
+  notes?: string;
 }
 
 export interface DeliveryInfoParams {
@@ -37,7 +38,8 @@ export const DeliveryAddressTab = forwardRef<
             !!address.city &&
             !!Number(address.zip || "err") &&
             !!address.street &&
-            !!Number(address.number || "err")
+            !!Number(address.number || "err") &&
+            (!address.notes?.length || address.notes.length < 250)
           );
         },
         focus: () => {
@@ -150,6 +152,19 @@ export const DeliveryAddressTab = forwardRef<
             required={true}
           />
         </div>
+        <WizInput
+          value={address.notes || ""}
+          onChange={(e) => setAddress({ ...address, notes: e.target.value })}
+          label="notes"
+          placeholder="Wright here your notes"
+          type="textarea"
+          name="notes"
+          errorMessage={
+            showErrors && address.notes && address.notes.length > 250
+              ? "max 250 chars"
+              : undefined
+          }
+        ></WizInput>
       </div>
     </div>
   );
