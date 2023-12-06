@@ -1,5 +1,6 @@
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
@@ -71,7 +72,7 @@ export default async function TypologyPage({
   return (
     <ServerLayout>
       <PageLayout headerSmall>
-        <div className="bg-white pb-4">
+        <div className="bg-white pb-4 xs:px-2">
           <MaxWidthContainer>
             <Breadcrumbs className="py-4" items={bread} />
 
@@ -90,6 +91,11 @@ export default async function TypologyPage({
                 typeId: typology.id,
               }}
             />
+            <div className="h-10"></div>
+            <div className="max-sm:px-3">
+              <ContactsSection></ContactsSection>
+            </div>
+            <div className="h-4"></div>
           </MaxWidthContainer>
         </div>
       </PageLayout>
