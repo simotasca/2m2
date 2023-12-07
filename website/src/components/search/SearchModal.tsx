@@ -66,8 +66,17 @@ export default function SearchModal() {
   }, []);
 
   useEffect(() => {
-    if (input.current && isOpen) {
+    if (!input.current) return;
+
+    if (isOpen) {
       input.current.focus();
+    } else {
+      setValue("");
+      setSelection(undefined);
+      setCategory(undefined);
+      setTypology(undefined);
+      setBrand(undefined);
+      setModel(undefined);
     }
   }, [isOpen, input]);
 
