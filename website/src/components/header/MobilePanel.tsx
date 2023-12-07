@@ -1,4 +1,4 @@
-"use cart";
+"use client";
 
 import Image from "next/image";
 import iconLogo from "@/images/logo.svg";
@@ -13,6 +13,7 @@ import useTranslation from "@/context/lang/useTranslation";
 import { UserData } from "./UserData";
 import Button from "../ui/Button";
 import useSearchModal from "@/context/search/useSearchModal";
+import routes from "@/lib/shared/routes";
 
 export default function MobilePanel() {
   return (
@@ -25,9 +26,15 @@ export default function MobilePanel() {
         <button className="text-2xl" onClick={() => setMobilePanelOpen(false)}>
           x
         </button>
-        <div className="absolute right-1/2 translate-x-1/2 mt-[5px]">
-          <Image className="w-12 xs:w-16" src={iconLogo} alt="logo 2m2"></Image>
-        </div>
+        <a href={routes.home()}>
+          <div className="absolute right-1/2 translate-x-1/2 mt-[5px]">
+            <Image
+              className="w-12 xs:w-16"
+              src={iconLogo}
+              alt="logo 2m2"
+            ></Image>
+          </div>
+        </a>
         <div className="ml-auto mr-0 mt-1">
           <UserData small></UserData>
         </div>
@@ -36,11 +43,11 @@ export default function MobilePanel() {
         <SearchBar></SearchBar>
       </div>
       <div className="flex flex-col gap-2 p-6">
-        <a href="#">
+        <a href={routes.home()}>
           <span className="text-white">HOME</span>
         </a>
         <div className="h-px bg-neutral-500"></div>
-        <a href="#">
+        <a href={routes.about()}>
           <span className="text-white">ABOUT</span>
         </a>
         <div className="h-px bg-neutral-500"></div>
@@ -75,18 +82,14 @@ export default function MobilePanel() {
 }
 
 function SearchBar() {
-  const { open: openSearchModal } = useSearchModal();
-
+  const { open } = useSearchModal();
   const { t } = useTranslation();
   return (
     <div className="h-full rounded border border-neutral-500 flex items-stretch py-2">
-      <label
-        htmlFor="header-search-bar"
-        className="flex-shrink-0 flex items-center h-full [@media(max-width:930px)]:hidden">
-        <Image src={iconSearch} alt="search icon" className="w-5 mx-3 mt-0.5" />
-      </label>
-      <div className="relative flex items-center flex-1 mr-2 md:mr-4">
-        <div className="absolute top-1/2 translate-y-3 w-full h-px bg-neutral-300 max-md:hidden"></div>
+      <div
+        onClick={() => open()}
+        className="relative flex items-center flex-1 mr-2"
+      >
         <input
           id="header-search-bar"
           type="text"
@@ -94,7 +97,10 @@ function SearchBar() {
           placeholder={t("header.search-bar.placeholder")}
         />
       </div>
-      <button className="flex items-center px-3 rounded-sm bg-gradient-to-br from-red-700 to-red-500 text-white font-bold">
+      <button
+        onClick={() => open()}
+        className="flex items-center px-3 rounded-sm bg-gradient-to-br from-red-700 to-red-500 text-white font-bold"
+      >
         <Image
           src={iconSearch}
           alt=""
@@ -103,8 +109,9 @@ function SearchBar() {
       </button>
       {/* <DropdownSearchFilters /> */}
       <button
-        onClick={() => openSearchModal()}
-        className="h-full outline-none flex items-center px-3 text-white font-medium">
+        onClick={() => open()}
+        className="h-full outline-none flex items-center px-3 text-white font-medium"
+      >
         <span>{t("header.search-bar.filters.title")}</span>
         <Image
           src={iconDown}

@@ -74,19 +74,21 @@ export default function SimilarProducts({
     <div className="flex flex-col gap-12">
       {!!sameItem.length && (
         <div>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="grid grid-cols-[auto_auto_1fr] sm:flex items-center gap-2 mb-4">
             <Image className="w-7 -mb-0.5" src={iconBrand} alt="" />
             <h3 className="text-xl leading-[0.9] font-bold uppercase">
               <span>Altri ricambi in</span>
               <span className="text-red-500">{product.item}</span>
             </h3>
+
             <a href={routes.item(product.category, product.type, product.item)}>
               <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 ml-8 py-0.5">
-                See All
+                spanSee All
                 <Image
                   className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
                   alt=""
-                  src={iconRight}></Image>
+                  src={iconRight}
+                ></Image>
               </Button>
             </a>
           </div>
@@ -102,15 +104,26 @@ export default function SimilarProducts({
               <span className="text-red-500">{` ${product.brand} + ${product.model}`}</span>
             </h3>
             <a href={routes.model(product.brand, product.model)}>
-              <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 ml-8 py-0.5">
-                See All
+              <Button className="max-xs:hidden group text-sm bg-transparent border border-slate-500 bg-neutral-50 flex-shrink-0 ml-8 py-0.5">
+                <span className="flex-shrink-0">See All</span>
                 <Image
-                  className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
+                  className="max-sm:hidden -translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
                   alt=""
-                  src={iconRight}></Image>
+                  src={iconRight}
+                ></Image>
               </Button>
             </a>
           </div>
+          <a href={routes.model(product.brand, product.model)}>
+            <Button className="xs:hidden group text-sm bg-transparent border border-slate-500 bg-neutral-50 flex-shrink-0 ml-auto mr-0 py-0.5 mb-2 -mt-2">
+              <span className="flex-shrink-0">See All</span>
+              <Image
+                className="max-sm:hidden -translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
+                alt=""
+                src={iconRight}
+              ></Image>
+            </Button>
+          </a>
           <ProductsGrid products={sameBrand} />
         </div>
       )}

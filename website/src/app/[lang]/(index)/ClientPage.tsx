@@ -15,6 +15,7 @@ import ContactsSection from "@/components/ui/ContactsSection";
 import Hero from "./Hero";
 import { PaymentsBar } from "@/components/ui/PaymentsBar";
 import { Fragment, useEffect, useRef, useState } from "react";
+import BrandsCarousel from "@/components/ui/BrandsCarousel";
 
 interface Props {
   latestProducts: EcodatArticle[];
@@ -39,7 +40,8 @@ export default function ClientPage({ latestProducts, categories }: Props) {
             <Image
               className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
               alt=""
-              src={iconRight}></Image>
+              src={iconRight}
+            ></Image>
           </Button>
         </div>
 
@@ -70,6 +72,9 @@ export default function ClientPage({ latestProducts, categories }: Props) {
             <PaymentsBar />
           </div>
         </MaxWidthContainer>
+      </div>
+      <div className="py-4 bg-neutral-100">
+        <BrandsCarousel></BrandsCarousel>
       </div>
     </PageLayout>
   );
@@ -150,7 +155,8 @@ function CategoryCard({ name }: { name: string }) {
         "2xl:[&:nth-child(n+17)]:hidden",
         cardColors
       )}
-      key={name}>
+      key={name}
+    >
       <img
         src={knownCategories[name].image || undefined}
         className={twMerge(

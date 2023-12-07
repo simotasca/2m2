@@ -101,23 +101,38 @@ export default async function ProductPage({ params: { slug } }: Props) {
           <MaxWidthContainer>
             <Breadcrumbs className="py-4" items={bread} />
 
-            <div className="grid grid-cols-[17fr_10fr_8fr_1fr] gap-4">
-              <PhotoSection product={product} />
+            <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_2fr] lg:grid-cols-[17fr_10fr_8fr_1fr] gap-4">
+              <div className="max-lg:order-2">
+                <PhotoSection product={product} />
+              </div>
               <ProductDetails product={product} />
-              <BuySection product={product} />
+
+              <div className="max-lg:order-3 max-sm:mt-4">
+                <BuySection product={product} />
+              </div>
               <div></div>
             </div>
+            <div className="lg:hidden h-4"></div>
           </MaxWidthContainer>
 
           <div className="h-4"></div>
 
-          <div className="bg-neutral-100 border-y border-neutral-200 py-6">
-            <div className="mx-auto w-fit flex items-center gap-8">
-              <Image src={imgLogo} alt="" className="w-16" />
-              <h4 className="font-semibold leading-tight text-xl">
+          <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
+            <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-4 lg:gap-x-8">
+              <Image
+                src={imgLogo}
+                alt=""
+                className="w-12 md:w-16 [@media(max-width:383px)]:mx-auto"
+              />
+              <h4 className="font-semibold leading-tight text-base sm:text-lg md:text-xl max-md:text-center">
                 Tutto il nostro usato è selezionato, testato e garantito!
               </h4>
-              <Image src={imgLogo} alt="" className="w-16" />
+              <div></div>
+              <Image
+                src={imgLogo}
+                alt=""
+                className="w-12 md:w-16 [@media(max-width:383px)]:hidden"
+              />
             </div>
           </div>
 
@@ -159,15 +174,15 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
     );
 
   return (
-    <div className="flex gap-1 items-start">
-      <div className="flex flex-col gap-1">
+    <div className="flex max-xs:flex-col sm:gap-1 items-start">
+      <div className="max-sm:order-2">
         {photoIdsList.slice(1).map((imageId) => (
-          <div className="p-0.5 border border-slate-300 rounded-sm">
-            <ProductImage className="w-20" photo={{ imageId }} />
+          <div className="p-0.5 border border-slate-300 rounded-sm ">
+            <ProductImage className="w-20 " photo={{ imageId }} />
           </div>
         ))}
       </div>
-      <div className="w-full p-0.5 border border-slate-300 rounded-sm">
+      <div className="w-full p-0.5 border border-slate-300 rounded-sm max-sm:order-1">
         <ProductImage big photo={{ imageId: photoIdsList[0] }} />
       </div>
     </div>
@@ -178,14 +193,22 @@ function BuySection({ product }: { product: EcodatArticle }) {
   return (
     <aside className="font-sans">
       <div className="flex gap-1 items-center -mb-1">
-        <span className="text-[#5F5C5C] text-sm mb-[2px]">Disponibile</span>
-        <Image className="w-4" src={iconAvailable} alt="available icon" />
+        <span className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm mb-[2px]">
+          Disponibile
+        </span>
+        <Image
+          className="w-4 sm:w-3 md:w-4"
+          src={iconAvailable}
+          alt="available icon"
+        />
       </div>
-      <span className="font-semibold text-4xl">
+      <span className="font-semibold text-4xl sm:text-3xl md:text-4xl">
         {product.price.toFixed(2)}€
       </span>
-      <p className="text-[#5F5C5C] text-sm">Tutti i prezzi includono l'IVA</p>
-      <p className="font-bold text-lg uppercase -mt-[6px]">
+      <p className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm">
+        Tutti i prezzi includono l'IVA
+      </p>
+      <p className="font-bold text-lg sm:text-base md:text-lg uppercase -mt-[6px]">
         <span>SPEDIZIONE IN </span>
         <span className="text-[#F03B3B]">
           24<span className="text-sm">/</span>48 ORE
@@ -193,12 +216,20 @@ function BuySection({ product }: { product: EcodatArticle }) {
       </p>
       <div className="h-3"></div>
       <div className="grid grid-cols-[auto_auto] leading-3">
-        <div className="flex items-center gap-2 max-w-[80%]">
-          <Image className="w-9" src={iconFavorite} alt="favorite icon"></Image>
+        <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
+          <Image
+            className="w-9 sm:w-5 md:w-7"
+            src={iconFavorite}
+            alt="favorite icon"
+          ></Image>
           <span className=" text-xs leading-[1.1]">Aggiungi ai preferiti</span>
         </div>
-        <div className="flex items-center gap-2 max-w-[80%]">
-          <Image className="w-6" src={iconShare} alt="share icon"></Image>
+        <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
+          <Image
+            className="w-6 sm:w-5 md:w-6"
+            src={iconShare}
+            alt="share icon"
+          ></Image>
           <span className="text-xs leading-[1.1]">Condividi</span>
         </div>
       </div>
@@ -214,7 +245,7 @@ function BuySection({ product }: { product: EcodatArticle }) {
         </div>
       </Button>
       <div className="pt-2 flex justify-end pr-2 gap-2">
-        <span className="text-sm">pagamenti:</span>
+        <span className="text-sm sm:text-xs md:text-sm">pagamenti:</span>
         <PaymentsBar className="w-fit" />
       </div>
       {/* <p className="text-[#2e2d2d] underline text-xs">

@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import imgBackground from "@/images/about-background.jpg";
@@ -7,6 +9,7 @@ import imgGarage from "@/images/officina.jpg";
 import imgSkew from "@/images/skew-dark.svg";
 import Image from "next/image";
 import ContactsSection from "@/components/ui/ContactsSection";
+import useSearchModal from "@/context/search/useSearchModal";
 
 export default function ClientPage() {
   return (
@@ -23,6 +26,7 @@ export default function ClientPage() {
 }
 
 function Hero() {
+  const { open: openSearchModal } = useSearchModal();
   return (
     <div className="relative max-sm:px-2">
       <Image
@@ -55,7 +59,10 @@ function Hero() {
               veicolo.
             </span>
           </p>
-          <Button className="bg-red-gradient px-10 py-1.5 mt-8 text-lg">
+          <Button
+            onClick={openSearchModal}
+            className="bg-red-gradient px-10 py-1.5 mt-8 text-lg"
+          >
             FAI LA TUA RICERCA
           </Button>
         </MaxWidthContainer>
