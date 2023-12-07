@@ -21,8 +21,7 @@ export default function MobilePanel() {
       className={twMerge(
         "fixed w-screen h-screen top-0 left-full bg-dark text-white transition-transform duration-300 z-[51]",
         "[.mobile-panel-open_&]:-translate-x-full"
-      )}
-    >
+      )}>
       <div className="relative flex items-start py-1 px-4">
         <button className="text-2xl" onClick={() => setMobilePanelOpen(false)}>
           x

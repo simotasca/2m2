@@ -3,7 +3,13 @@
 import useSearch from "@/hooks/useSearch";
 import imgLoad from "@/images/icons/loader.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+enum Demo {
+  UNO,
+  DUE,
+  TRE,
+}
 
 export default function SearchDemoPage() {
   const [value, setValue] = useState("");

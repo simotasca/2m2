@@ -1,7 +1,11 @@
 import { EcodatAction } from ".";
 import { JSDOM } from "jsdom";
 
-export function ecodatBodyTemplate(action: EcodatAction, xml?: string) {
+export function ecodatBodyTemplate(
+  action: EcodatAction,
+  xml?: string,
+  prefix = "Get"
+) {
   const token = process.env.ECODAT_API_TOKEN;
   if (!token)
     throw new Error(
@@ -10,17 +14,17 @@ export function ecodatBodyTemplate(action: EcodatAction, xml?: string) {
   return `<?xml version="1.0" encoding="utf-8"?>
     <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
       <soap:Body>
-        <M_Get${action} xmlns="http://ws.ecodat.it/">
-          <Token>${token}</Token>${xml || "\n"}</M_Get${action}>
+        <M_${prefix}${action} xmlns="http://ws.ecodat.it/">
+          <Token>${token}</Token>${xml || "\n"}</M_${prefix}${action}>
       </soap:Body>
     </soap:Envelope>
   `;
 }
 
-export function ecodatHeaders(action: EcodatAction) {
+export function ecodatHeaders(action: EcodatAction, prefix = "Get") {
   return {
     "Content-Type": "text/xml; charset=utf-8",
-    SOAPAction: `http://ws.ecodat.it/M_Get${action}`,
+    SOAPAction: `http://ws.ecodat.it/M_${prefix}${action}`,
   };
 }
 
