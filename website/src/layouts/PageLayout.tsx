@@ -21,8 +21,9 @@ export default function ({
       <Header small={headerSmall} extension={headerExtension} />
 
       {children}
-
-      <Footer></Footer>
+      <div>
+        <Footer></Footer>
+      </div>
     </>
   );
 }
