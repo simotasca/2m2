@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import { PropsWithChildren } from "react";
 
@@ -21,9 +22,7 @@ export default function ({
 
       {children}
 
-      <footer>
-        <div className="text-white p-10 text-center">FOOTER</div>
-      </footer>
+      <Footer></Footer>
     </>
   );
 }
