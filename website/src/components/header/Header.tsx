@@ -52,50 +52,50 @@ export default function Header({ extension, small = true }: Props) {
 
       <header
         className={twMerge(
-          "sticky top-0 bg-gradient-to-b from-neutral-700 to-neutral-900 text-white z-50 transition-transform",
-          open ? "-translate-y-0" : "-translate-y-full",
-          small ? "pt-2" : "pt-2 [@media(min-width:700px)]:pt-4"
-        )}
-      >
-        <MaxWidthContainer className="grid grid-cols-[1fr_auto_1fr] [@media(min-width:700px)]:grid-cols-[auto_1fr_auto] gap-x-5">
-          <button
-            onClick={() => setMobilePanelOpen(true)}
-            className="[@media(min-width:700px)]:hidden"
-          >
-            <Image src={iconHamburger} alt="" className="w-6  opacity-90" />
-          </button>
+          "sticky top-0 bg-gradient-to-b from-neutral-700 to-neutral-900 text-white z-50 transition-transform pt-2 md:pt-4",
+          open ? "-translate-y-0" : "-translate-y-full"
+        )}>
+        <MaxWidthContainer className="grid grid-cols-[1fr_auto_1fr] sm:grid-cols-[auto_1fr_auto] gap-x-5">
+          <Hamburger setMobilePanelOpen={setMobilePanelOpen} />
+
           <div
             className={twMerge(
-              "[@media(max-width:700px)]:justify-self-center",
+              "max-sm:justify-self-center",
               small && "-translate-y-0.5"
-            )}
-          >
+            )}>
             <Logo />
           </div>
+
           {small ? (
-            <div className="[@media(max-width:700px)]:hidden place-self-center pl-4">
+            <div className="max-xs:hidden place-self-center pl-4">
               <Navbar small={small} />
             </div>
           ) : (
-            <div className="col-span-full order-3 mt-2 [@media(min-width:700px)]:contents">
-              <SearchBar />
-            </div>
+            <SearchBar />
           )}
+
           <UserData small={small} />
         </MaxWidthContainer>
+
         {!small && (
-          <MaxWidthContainer className="pt-2.5 col-span-full">
+          <MaxWidthContainer className="pt-2.5 col-span-full max-xs:hidden">
             <Navbar small={small} />
           </MaxWidthContainer>
         )}
-        <div
-          className={twMerge(
-            small ? "h-2.5" : "h-3 [@media(min-width:700px)]:h-4"
-          )}
-        ></div>
+
+        <div className={twMerge(small ? "h-2.5" : "h-2 md:h-4")} />
+
         <div className="text-dark">{extension && extension}</div>
       </header>
     </>
+  );
+}
+
+function Hamburger({ setMobilePanelOpen }) {
+  return (
+    <button onClick={() => setMobilePanelOpen(true)} className="xs:hidden">
+      <Image src={iconHamburger} alt="" className="w-6  opacity-90" />
+    </button>
   );
 }
 
@@ -105,7 +105,7 @@ function Logo() {
       <Image
         src={imgLogo}
         alt="logo 2m2 autoricambi"
-        className="w-14 md:w-20"
+        className="w-14 md:w-20 max-w-none"
       />
     </a>
   );

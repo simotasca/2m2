@@ -20,6 +20,7 @@ import { Fragment, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
 import { getFilters } from "@/lib/client/filters";
+import { SearchParams } from "@/lib/shared/search";
 
 export default function Hero() {
   return (
@@ -117,7 +118,14 @@ function HeroFilters() {
     }
 
     // to generic results page
-    router.push(routes.products() + "?manage-filtes");
+    router.push(
+      routes.products({
+        brandId: brand?.id,
+        modelId: model?.id,
+        categoryId: category?.id,
+        typeId: typology?.id,
+      })
+    );
   };
 
   return (
@@ -148,7 +156,7 @@ function HeroFilters() {
           />
           <SearchFilter
             label="typology"
-            placeholder={category ? "Select the typology" : "..."}
+            placeholder={category ? "Select the typology" : ". . ."}
             data={mapFilterData(category?.typologies, "name")}
             disabled={!category}
             onChange={(t) => setTypology(t)}
@@ -163,7 +171,7 @@ function HeroFilters() {
           />
           <SearchFilter
             label="model"
-            placeholder="Select the model"
+            placeholder={brand ? "Select the typology" : ". . ."}
             data={mapFilterData(brand?.models, "name")}
             disabled={!brand}
             onChange={(m) => setModel(m)}

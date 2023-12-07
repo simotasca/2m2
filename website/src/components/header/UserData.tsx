@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { twJoin } from "tailwind-merge";
 import Button from "../ui/Button";
+import Link from "next/link";
 
 export function UserData({ small }: { small: boolean }) {
   const { setIsOpen, total, count } = useCart();
@@ -21,7 +22,7 @@ export function UserData({ small }: { small: boolean }) {
   return (
     <div
       className={twJoin(
-        "rounded  flex -mr-1  justify-self-end",
+        "rounded flex -mr-1 justify-self-end",
         small
           ? "lg:border lg:border-neutral-500  lg:bg-neutral-800 lg:mr-0 lg:justify-self-auto"
           : "md:border md:border-neutral-500  md:bg-neutral-800 md:mr-0 md:justify-self-auto"
@@ -30,7 +31,7 @@ export function UserData({ small }: { small: boolean }) {
         onClick={() => setIsOpen(true)}
         className={twJoin(
           "flex items-center h-full px-1 rounded-l outline-none hover:outline hover:outline-[#e0c4393a] -outline-offset-1",
-          small ? "lg:px-3" : " md:px-3"
+          small ? "lg:px-3" : "md:px-3"
         )}>
         <div
           className={twJoin(
@@ -47,13 +48,16 @@ export function UserData({ small }: { small: boolean }) {
         <Image
           src={iconCart}
           alt="search icon"
-          className={twJoin("flex-shrink-0 w-6", small ? "lg:ml-2" : "md:ml-2")}
+          className={twJoin(
+            "max-w-none flex-shrink-0 w-6",
+            small ? "lg:ml-2" : "md:ml-2"
+          )}
         />
         <Image
           src={iconDown}
           alt="dropdown icon"
           className={twJoin(
-            "hidden w-4 -ml-1.5",
+            "max-w-none flex-shrink-0 w-4 -ml-1.5 hidden",
             small ? "lg:block" : "md:block"
           )}
         />
@@ -165,7 +169,7 @@ function DropdownLogin({ small }: { small: boolean }) {
             src={iconUser}
             alt="user icon"
             className={twJoin(
-              "flex-shrink-0 w-7 ml-1",
+              "max-w-none w-7 ml-1",
               small ? "lg:ml-2" : "md:ml-2"
             )}
           />
@@ -188,9 +192,12 @@ function DropdownLogin({ small }: { small: boolean }) {
             <div className="w-80 bg-white border border-slate-400 rounded-md text-black p-4 gap-y-1">
               <div className="flex items-start justify-between">
                 <Image src={imgLogo} alt="logo 2m2" className="w-12 -mt-px" />
-                <p className="text-dark text-sm font-medium text-right leading-[1.2]">
-                  Welcome back!
-                  <br /> Please enter details.
+                <p className="text-dark text-sm font-medium text-right leading-[1.1]">
+                  <span>Welcome back!</span>
+                  <br />
+                  <span className="font-normal text-neutral-500">
+                    Please enter details.
+                  </span>
                 </p>
               </div>
 
@@ -220,12 +227,12 @@ function DropdownLogin({ small }: { small: boolean }) {
                   </button>
                 </div>
 
-                <a
+                <Link
                   className="underline text-xs -mt-1.5 text-neutral-500"
                   href="#">
                   Forgot your password?
                   {/* TODO */}
-                </a>
+                </Link>
 
                 {errorMessage && (
                   <p className="text-red-500 text-sm">{errorMessage}</p>
@@ -236,16 +243,18 @@ function DropdownLogin({ small }: { small: boolean }) {
                   Login
                 </Button>
               </form>
-              <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center text-center px-2 my-0.5 text-neutral-500">
+
+              <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center text-center px-2 text-neutral-500">
                 <hr className="translate-y-px border-neutral-400" />
                 <span>or</span>
                 <hr className="translate-y-px border-neutral-400" />
               </div>
-              <a href="/register">
+
+              <Link href="/register">
                 <Button className="w-full font-medium text-sm bg-red-gradient text-white">
                   Register
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
