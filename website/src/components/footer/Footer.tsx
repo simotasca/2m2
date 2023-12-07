@@ -13,8 +13,11 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { Database } from "@/database.types";
 
 import Button from "../ui/Button";
+import routes from "@/lib/shared/routes";
+import useCart from "@/context/cart/useCart";
 
 export default function Footer() {
+  const { setIsOpen } = useCart();
   return (
     <div className="bg-[#363636] text-white py-8 sm:py-14">
       <MaxWidthContainer className="bg-neutral-500 h-px mb-8 max-xs:mx-4"></MaxWidthContainer>
@@ -64,28 +67,40 @@ export default function Footer() {
         <div className="flex max-xs:col-span-4 max-xs:px-4">
           <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <a
+                href={routes.home()}
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 Home
               </a>
             </li>
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <a
+                href={routes.about()}
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 About Us
               </a>
             </li>
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <a
+                href={routes.products()}
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 Search
               </a>
             </li>
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <a
+                onClick={() => setIsOpen(true)}
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 Your cart
               </a>
             </li>
           </ul>
           <ul className="max-sm:hidden text-sm ml-auto mr-0">
-            <li>Powered By QuartoRaggio</li>
+            <li>© 2023 2M2 Ricambi. All rights reserved.</li>
           </ul>
         </div>
       </MaxWidthContainer>
