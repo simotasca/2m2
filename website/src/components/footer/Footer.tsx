@@ -17,11 +17,94 @@ import Button from "../ui/Button";
 export default function Footer() {
   return (
     <div className="bg-[#363636] text-white py-8 sm:py-14">
-      <div className=" grid xs:grid-cols-[3fr_3fr_auto_3fr] lg:grid-cols-[3fr_3fr_auto_3fr_auto_5fr]">
-        <div className="max-sm:col-span-4  flex sm:justify-center items-start max-sm:mb-10 max-sm:pl-6">
-          <Image className="w-20" src={logo2m2} alt=""></Image>
+      <MaxWidthContainer className="bg-neutral-500 h-px mb-8 max-xs:mx-4"></MaxWidthContainer>
+
+      <MaxWidthContainer className="grid xs:grid-cols-2 sm:grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(5rem,auto)_auto_1fr_auto] gap-4 sm:gap-16 gap-y-10 lg:px-20">
+        <div className="max-lg:col-span-full">
+          <Image className="w-20" src={logo2m2} alt="" />
         </div>
-        <div className="max-sm:col-span-3 max-lg:pl-6 ">
+
+        <div className="sm:max-md:row-span-2">
+          <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
+            Car Parts Categories
+          </h3>
+          <div className="flex flex-col gap-2 text-sm ">
+            {Object.keys(knownCategories).map((p) => (
+              <ul>
+                <li className="leading-4 whitespace-nowrap">{p}</li>
+              </ul>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
+            Our Conditions
+          </h3>
+          <ul className="flex flex-col gap-2 text-sm">
+            <li className="leading-4 whitespace-nowrap">
+              Terms and Conditions
+            </li>
+            <li className="leading-4 whitespace-nowrap">Cooky Policy</li>
+            <li className="leading-4 whitespace-nowrap">Privacy Policy</li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col gap-1 max-md:col-span-full">
+          <h3 className="uppercase font-bold">Login / Sign up</h3>
+          <div className="max-w-[400px]">
+            <DropdownLogin small />
+          </div>
+        </div>
+      </MaxWidthContainer>
+
+      <MaxWidthContainer className="bg-neutral-500 h-px mt-9 mb-3 max-xs:mx-4"></MaxWidthContainer>
+
+      <MaxWidthContainer className="lg:px-20">
+        <div className="flex max-xs:col-span-4 max-xs:px-4">
+          <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
+            <li>
+              <a className="hover:underline underline-offset-4 cursor-pointer">
+                Home
+              </a>
+            </li>
+            <li>
+              <a className="hover:underline underline-offset-4 cursor-pointer">
+                About Us
+              </a>
+            </li>
+            <li>
+              <a className="hover:underline underline-offset-4 cursor-pointer">
+                Search
+              </a>
+            </li>
+            <li>
+              <a className="hover:underline underline-offset-4 cursor-pointer">
+                Your cart
+              </a>
+            </li>
+          </ul>
+          <ul className="max-sm:hidden text-sm ml-auto mr-0">
+            <li>Powered By QuartoRaggio</li>
+          </ul>
+        </div>
+      </MaxWidthContainer>
+
+      <div className="h-12"></div>
+
+      <ContactsSection />
+    </div>
+  );
+}
+
+export function Footerc() {
+  return (
+    <div className="bg-[#363636] text-white py-8 sm:py-14">
+      <MaxWidthContainer className="grid xs:grid-cols-[3fr_3fr_auto_3fr] sm:grid-cols-[2fr_3fr_auto_3fr] md:grid-cols-[4fr_5fr_auto_5fr] lg:[3fr_3fr_3fr_4fr]">
+        <div className="max-sm:col-span-full sm:col-span-1 flex sm:justify-center items-start max-sm:mb-10 max-sm:pl-6">
+          <Image className="w-20" src={logo2m2} alt="" />
+        </div>
+        <div className="max-sm:col-span-full sm:col-span-1 md:col-span-2 lg:col-span-1 max-lg:pl-6 ">
           <h3 className="uppercase font-bold mb-2 leading-5">
             Car Parts Categories
           </h3>
@@ -33,8 +116,8 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <div className="hidden xs:w-10 lg:w-4"></div>
-        <div className="flex flex-col max-sm:col-span-4 gap-2 max-sm:px-6 sm:pr-6 max-sm:pt-8">
+        <div className="hidden sm:w-24 md:w-0 lg:hidden"></div>
+        <div className="flex flex-col max-sm:col-span-4 sm:col-span-1 gap-2 max-sm:px-6 sm:pr-6 max-sm:pt-8">
           <h3 className="uppercase font-bold">Our Conditions</h3>
           <ul className="flex flex-col gap-1 text-sm">
             <li>Terms and Conditions</li>
@@ -42,14 +125,14 @@ export default function Footer() {
             <li>Privacy Policy</li>
           </ul>
         </div>
-        <div className="max-lg:hidden max-lg:w-10 lg:w-4"></div>
+        {/* <div className="max-lg:hidden max-lg:w-10 lg:hidden"></div> */}
         <div className="flex flex-col gap-1 col-span-4 lg:col-span-1 max-lg:pt-8">
           <h3 className="uppercase font-bold max-lg:px-6">Login / Sign up</h3>
           <div className="pr-6 max-lg:pl-6">
             <DropdownLogin small />
           </div>
         </div>
-      </div>
+      </MaxWidthContainer>
       <MaxWidthContainer>
         <div className="bg-neutral-500 h-px mt-9 mb-3 max-xs:mx-4"></div>
         <div className="flex max-xs:col-span-4 max-xs:px-4">
@@ -146,8 +229,8 @@ function DropdownLogin({ small }: { small: boolean }) {
       )}
 
       {!user && (
-        <section className="pointer-events-auto">
-          <div className="w-full bg-[#363636]  text-black  gap-y-1">
+        <section className="pointer-events-auto [&_*]:[min-width:0_!important]">
+          <div className="bg-[#363636] text-black">
             <form onSubmit={handleLogin} className="flex flex-col gap-3 mt-2">
               <div className="border border-neutral-500 bg-slate-100">
                 <input
@@ -159,7 +242,7 @@ function DropdownLogin({ small }: { small: boolean }) {
               </div>
               <div className="border border-neutral-500 grid grid-cols-[1fr_auto] px-2 gap-x-2 bg-slate-100 -mt-1">
                 <input
-                  className="placeholder:text-neutral-500 py-0.5 text-sm outline-none bg-white w-full"
+                  className="placeholder:text-neutral-500 py-0.5 text-sm outline-none bg-white w-ful"
                   type={pwInputType}
                   name="password"
                   placeholder="password"
@@ -212,8 +295,8 @@ function DropdownLogin({ small }: { small: boolean }) {
 
 function ContactsSection() {
   return (
-    <div className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 max-xs:-ml-2 max-xs:px-6">
-      <div className="md:pl-6">
+    <MaxWidthContainer className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 max-xs:-ml-2 max-xs:px-6 lg:px-20">
+      <div>
         <ul className="flex flex-col gap-1 text-white">
           <li className="contents">
             <div className=" leading-tight">
@@ -284,6 +367,6 @@ function ContactsSection() {
           </li>
         </ul>
       </div>
-    </div>
+    </MaxWidthContainer>
   );
 }

@@ -1,9 +1,9 @@
-import logoHyundai from "@/images/logo-hyunday.svg";
-import logoHonda from "@/images/logo-honda.svg";
-import logoFord from "@/images/logo-ford.svg";
-import logoKia from "@/images/logo-kia.svg";
-import logoBmw from "@/images/logo-bmw.svg";
-import logoAlfaromeo from "@/images/logo-alfaromeo.svg";
+import logoHyundai from "@/images/brands/logo-hyunday.svg";
+import logoHonda from "@/images/brands/logo-honda.svg";
+import logoFord from "@/images/brands/logo-ford.svg";
+import logoKia from "@/images/brands/logo-kia.svg";
+import logoBmw from "@/images/brands/logo-bmw.svg";
+import logoAlfaromeo from "@/images/brands/logo-alfaromeo.svg";
 import Image from "next/image";
 
 export default function BrandsCarousel() {
