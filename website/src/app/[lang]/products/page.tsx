@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default async function ProductsPage({ searchParams }: Props) {
-  console.log("SEARCH", searchParams);
   const filters = parseSearchParams(searchParams);
 
   const products = await fetchEcodatArticles({
@@ -15,9 +14,7 @@ export default async function ProductsPage({ searchParams }: Props) {
     ...filters,
   });
 
-  return (
-    <SearchServerLayout products={products} title={["search", "results"]} />
-  );
+  return <SearchServerLayout products={products} />;
 }
 
 function parseSearchParams(params: { [key: string]: string }) {

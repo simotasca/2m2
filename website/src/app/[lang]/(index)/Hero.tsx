@@ -89,7 +89,6 @@ function HeroFilters() {
 
   useEffect(() => {
     getFilters().then((res) => {
-      console.log(res);
       res && setFilters(res);
     });
   }, []);

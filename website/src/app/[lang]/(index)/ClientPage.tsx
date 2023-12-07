@@ -40,8 +40,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
             <Image
               className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
               alt=""
-              src={iconRight}
-            ></Image>
+              src={iconRight}></Image>
           </Button>
         </div>
 
@@ -81,39 +80,19 @@ export default function ClientPage({ latestProducts, categories }: Props) {
 }
 
 function CategoriesSection({ categories }: { categories: string[] }) {
-  const [visible, setVisible] = useState(0);
-  const grid = useRef<HTMLDivElement[]>(null);
-
-  const length = categories.length;
-  const half = (length - (length % 2)) / 2;
-  const categoriesHalfs = [categories.slice(0, half), categories.slice(half)];
-
-  // useEffect(() => {
-  //   if (!grid.current) return;
-  //   const visibleElements = Array.from(
-  //     grid.current.querySelectorAll("[data-category-card]")
-  //   ).filter((el) => window.getComputedStyle(el).display != "none");
-  //   setVisible(visibleElements.length);
-  // }, [grid.current]);
-
   return (
     <div className="bg-neutral-700 shadow-[0px_3px_5px_#00000030] z-10">
       <div className="max-w-screen-3xl mx-auto overflow-hidden">
-        {categoriesHalfs.map((h, hKey) => (
-          <div
-            ref={grid[hKey]}
-            key={hKey}
-            className={twJoin(
-              "w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8",
-              hKey === 1 && "left-1/2 top-0 absolute+-"
-            )}>
-            {h.map((key) => (
-              <Fragment key={key}>
-                <CategoryCard name={key} />
-              </Fragment>
-            ))}
-          </div>
-        ))}
+        <div
+          className={twJoin(
+            "w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8"
+          )}>
+          {categories.map((key) => (
+            <Fragment key={key}>
+              <CategoryCard name={key} />
+            </Fragment>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -155,8 +134,7 @@ function CategoryCard({ name }: { name: string }) {
         "2xl:[&:nth-child(n+17)]:hidden",
         cardColors
       )}
-      key={name}
-    >
+      key={name}>
       <img
         src={knownCategories[name].image || undefined}
         className={twMerge(
