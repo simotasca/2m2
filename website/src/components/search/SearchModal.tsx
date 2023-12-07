@@ -20,13 +20,15 @@ import {
   MouseEventHandler,
   PropsWithChildren,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 
 export default function SearchModal() {
-  const { close, isOpen } = useSearchModal();
+  const input = useRef<HTMLInputElement>(null);
 
+  const { close, isOpen } = useSearchModal();
   const [value, setValue] = useState("");
   const [filters, setFilters] = useState<Filters>();
 
@@ -62,6 +64,12 @@ export default function SearchModal() {
   useEffect(() => {
     getFilters().then(setFilters);
   }, []);
+
+  useEffect(() => {
+    if (input.current && isOpen) {
+      input.current.focus();
+    }
+  }, [isOpen, input]);
 
   useEffect(() => {
     if (!category) setTypology(undefined);
@@ -110,6 +118,7 @@ export default function SearchModal() {
                   </div>
                 )}
                 <input
+                  ref={input}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   id="search-modal-input"
