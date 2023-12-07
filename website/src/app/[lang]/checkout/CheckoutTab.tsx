@@ -26,24 +26,24 @@ export interface CheckoutParams {
   clientSecret?: string;
   setClientSecret: Dispatch<string>;
   email?: string;
+  metadata?: any;
+  amount: number;
 }
 
 export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
-  ({ clientSecret, setClientSecret, email }, ref) => {
+  (forwardProps, ref) => {
     const [showErrors, setShowErrors] = useState(false);
     const tabRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(
       ref,
-      () => {
-        return {
-          validate: () => {
-            setShowErrors(true);
-            return true;
-          },
-          focus: () => tabRef.current?.querySelector("input")?.focus(),
-        };
-      },
+      () => ({
+        validate: () => {
+          setShowErrors(true);
+          return true;
+        },
+        focus: () => tabRef.current?.querySelector("input")?.focus(),
+      }),
       []
     );
 
@@ -55,11 +55,7 @@ export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
             Checkout
           </h4>
         </div>
-        <ElementsWrapper
-          clientSecret={clientSecret}
-          setClientSecret={setClientSecret}
-          email={email}
-        />
+        <ElementsWrapper {...forwardProps} />
       </div>
     );
   }
@@ -69,27 +65,35 @@ function ElementsWrapper({
   clientSecret,
   setClientSecret,
   email,
+  metadata,
+  amount,
 }: CheckoutParams) {
-  const [loading, setLoading] = useState(false);
+  const [totalPrice, setTotalPrice] = useState<number>();
 
   useEffect(() => {
     if (!setClientSecret) return;
     if (clientSecret != undefined) return;
+    if (!amount) return;
+    if (!metadata) return;
 
-    setLoading(true);
-    console.log("CIAO");
+    console.log("SENDIN:", metadata);
 
     fetch("/api/stripe/create-payment-intent", {
       method: "POST",
+      body: JSON.stringify({
+        amount: amount,
+        metadata: metadata,
+      }),
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => {
-        console.log("CLIENT SECRET:", data);
-        setClientSecret(data);
-      });
-  }, [setClientSecret]);
+        setTotalPrice(data.amount);
+        setClientSecret(data.secret);
+      })
+      .catch((err) => console.error("error generating payment intent", err));
+  }, [setClientSecret, amount, metadata]);
 
-  if (!clientSecret || !stripePromise) return <LoadingSpinner></LoadingSpinner>;
+  if (!clientSecret || !stripePromise) return <LoadingSpinner />;
 
   const appearance: Appearance = {
     disableAnimations: true,
@@ -110,9 +114,8 @@ function ElementsWrapper({
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance, fonts }}
-    >
-      <CheckoutForm clientSecret={clientSecret} email={email} />
+      options={{ clientSecret, appearance, fonts }}>
+      <CheckoutForm email={email} totalPrice={totalPrice} />
     </Elements>
   );
 }
@@ -125,14 +128,12 @@ const LoadingSpinner = () => {
   );
 };
 
-export default LoadingSpinner;
-
 function CheckoutForm({
-  clientSecret,
   email,
+  totalPrice,
 }: {
-  clientSecret: string;
   email?: string;
+  totalPrice?: number;
 }) {
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
@@ -144,6 +145,7 @@ function CheckoutForm({
     if (!stripe || !elements) return;
 
     setLoading(true);
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -162,9 +164,12 @@ function CheckoutForm({
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold mt-4">
-        PAGA
-      </button>
+
+      {totalPrice && (
+        <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold mt-4">
+          PAGA ${totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
+        </button>
+      )}
     </form>
   );
 }

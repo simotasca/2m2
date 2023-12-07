@@ -1,3 +1,4 @@
+import { chechEnvVariable } from "@/lib/shared/env";
 import { ecodatBodyTemplate, ecodatHeaders, XMLParser } from "./utils";
 
 export * from "./articles";
@@ -19,20 +20,20 @@ export enum EcodatAction {
   PHOTO_LIST = "ListaFoto",
   PHOTO_SMALL = "FotoSmall",
   PHOTO_BIG = "FotoBig",
+  SEND_ORDER = "InviaOrdine",
 }
 
-export async function fetchEcodat(action: EcodatAction, xml?: string) {
-  const url = process.env.ECODAT_API_URL;
-  if (!url) {
-    throw new Error(
-      "Error posting Ecodat API: missing env variable ECODAT_API_URL"
-    );
-  }
+chechEnvVariable("ECODAT_API_URL");
 
-  return await fetch(url, {
+export async function fetchEcodat(
+  action: EcodatAction,
+  xml?: string,
+  prefix = "Get"
+) {
+  return await fetch(process.env.ECODAT_API_URL!, {
     method: "POST",
-    body: ecodatBodyTemplate(action, xml),
-    headers: ecodatHeaders(action),
+    body: ecodatBodyTemplate(action, xml, prefix),
+    headers: ecodatHeaders(action, prefix),
   })
     .then((res) => res.text())
     .catch((err) => {
@@ -40,14 +41,18 @@ export async function fetchEcodat(action: EcodatAction, xml?: string) {
     })
     .then((data) => XMLParser.parse(data).documentElement)
     .then((data) => {
-      const responseWrapper = data.querySelector(`M_Get${action}Response`);
+      const responseWrapper = data.querySelector(
+        `M_${prefix}${action}Response`
+      );
       const responseData = XMLParser.getVal(
         responseWrapper,
-        `M_Get${action}Result`
+        `M_${prefix}${action}Result`
       );
       const hasError = !responseData || responseData === "false";
       if (hasError) {
-        const errorMessage = XMLParser.getVal(responseWrapper, "StrErr");
+        const errorMessage =
+          XMLParser.getVal(responseWrapper, "StrErr") ||
+          XMLParser.getVal(responseWrapper, "StrErrore");
         if (errorMessage) {
           throw new Error("Internal Error API Ecodat: " + errorMessage);
         }

@@ -1,3 +1,5 @@
+"use cart";
+
 import Image from "next/image";
 import iconLogo from "@/images/logo.svg";
 import { twMerge } from "tailwind-merge";
@@ -8,9 +10,9 @@ import iconEmail from "@/images/icons/white/mail.svg";
 import iconLocation from "@/images/icons/white/location.svg";
 import iconWhatsapp from "@/images/icons/white/whatsapp.svg";
 import useTranslation from "@/context/lang/useTranslation";
-import { openSearchModal } from "../search/SearchModal";
 import { UserData } from "./UserData";
 import Button from "../ui/Button";
+import useSearchModal from "@/context/search/useSearchModal";
 
 export default function MobilePanel() {
   return (
@@ -18,8 +20,7 @@ export default function MobilePanel() {
       className={twMerge(
         "fixed w-screen h-screen top-0 left-full bg-dark text-white transition-transform duration-300 z-[51]",
         "[.mobile-panel-open_&]:-translate-x-full"
-      )}
-    >
+      )}>
       <div className="relative flex items-start py-1 px-4">
         <button className="text-2xl" onClick={() => setMobilePanelOpen(false)}>
           x
@@ -35,11 +36,11 @@ export default function MobilePanel() {
         <SearchBar></SearchBar>
       </div>
       <div className="flex flex-col gap-2 p-6">
-        <a href="">
+        <a href="#">
           <span className="text-white">HOME</span>
         </a>
         <div className="h-px bg-neutral-500"></div>
-        <a href="">
+        <a href="#">
           <span className="text-white">ABOUT</span>
         </a>
         <div className="h-px bg-neutral-500"></div>
@@ -74,13 +75,14 @@ export default function MobilePanel() {
 }
 
 function SearchBar() {
+  const { open: openSearchModal } = useSearchModal();
+
   const { t } = useTranslation();
   return (
     <div className="h-full rounded border border-neutral-500 flex items-stretch py-2">
       <label
         htmlFor="header-search-bar"
-        className="flex-shrink-0 flex items-center h-full [@media(max-width:930px)]:hidden"
-      >
+        className="flex-shrink-0 flex items-center h-full [@media(max-width:930px)]:hidden">
         <Image src={iconSearch} alt="search icon" className="w-5 mx-3 mt-0.5" />
       </label>
       <div className="relative flex items-center flex-1 mr-2 md:mr-4">
@@ -102,8 +104,7 @@ function SearchBar() {
       {/* <DropdownSearchFilters /> */}
       <button
         onClick={() => openSearchModal()}
-        className="h-full outline-none flex items-center px-3 text-white font-medium"
-      >
+        className="h-full outline-none flex items-center px-3 text-white font-medium">
         <span>{t("header.search-bar.filters.title")}</span>
         <Image
           src={iconDown}

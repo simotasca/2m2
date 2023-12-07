@@ -1,10 +1,8 @@
 import { Database } from "@/database.types";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { isAuthorized } from "../../authorization";
 import { stripeInstance } from "../init-stripe";
-import { createClient } from "@supabase/supabase-js";
 
 export async function POST(req: NextRequest) {
   // WARN: this is a service role supabase client!!!
