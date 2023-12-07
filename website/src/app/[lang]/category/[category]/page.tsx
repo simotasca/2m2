@@ -17,14 +17,14 @@ import ServerLayout from "@/layouts/base/ServerLayout";
 import PageLayout from "@/layouts/PageLayout";
 import Title from "@/components/ui/Title";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
-import { SearchParams } from "@/lib/server/search";
+import { GenericSearchParams } from "@/lib/server/search";
 import ContactsSection from "@/components/ui/ContactsSection";
 
 interface Props {
   params: {
     category: string;
   };
-  searchParams: SearchParams;
+  searchParams: GenericSearchParams;
 }
 
 export default async function CategoryPage({

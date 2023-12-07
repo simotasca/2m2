@@ -10,7 +10,7 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import type { SearchParams } from "@/lib/server/search";
+import type { GenericSearchParams } from "@/lib/server/search";
 import { itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
@@ -22,7 +22,7 @@ interface Props {
     typology: string;
     item: string;
   };
-  searchParams?: SearchParams;
+  searchParams?: GenericSearchParams;
 }
 
 export default async function ItemPage({

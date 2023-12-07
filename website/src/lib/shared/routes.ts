@@ -1,5 +1,5 @@
 import { EcodatArticle, productName } from "./ecodat";
-import { encodeQueryParam } from "./search";
+import { SearchParams, encodeQueryParam, searchQueryString } from "./search";
 
 type UrlProduct = Pick<EcodatArticle, "item" | "brand" | "model" | "id">;
 
@@ -7,7 +7,8 @@ const routes = {
   home: () => "/",
   about: () => "/about",
 
-  products: () => "/products",
+  products: (filters?: SearchParams) =>
+    "/products" + searchQueryString(filters),
   product: (product: UrlProduct) =>
     `/products/${enc(productName(product))}-${product.id}`,
 

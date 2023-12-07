@@ -24,9 +24,13 @@ import {
   useState,
 } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SearchModal() {
   const input = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
 
   const { close, isOpen } = useSearchModal();
   const [value, setValue] = useState("");
@@ -60,6 +64,14 @@ export default function SearchModal() {
 
   const models =
     brand && filters?.brands?.find((c) => c.id === brand.id)?.models;
+
+  const productsPageLink = routes.products({
+    categoryId: category?.id,
+    typeId: typology?.id,
+    brandId: brand?.id,
+    modelId: model?.id,
+    description: value || undefined,
+  });
 
   useEffect(() => {
     getFilters().then(setFilters);
@@ -109,27 +121,35 @@ export default function SearchModal() {
           <div className="flex flex-col h-full max-h-[70vh]">
             <div className="flex-shrink-0 flex-grow-0">
               <div className="flex items-center relative">
-                {loading ? (
-                  <div className="translate-y-px scale-[0.8]">
+                <div>
+                  <div
+                    className={twJoin(
+                      "scale-[0.8] translate-y-px",
+                      !loading && "hidden"
+                    )}>
                     <Image
                       alt=""
                       src={imgLoad}
                       className="ml-4 w-5 aspect-square object-contain animate-spin z-10"
                     />
                   </div>
-                ) : (
-                  <div>
-                    <Image
-                      alt=""
-                      src={iconSearch}
-                      className="ml-4 w-5 aspect-square object-contain translate-y-0.5"
-                    />
-                  </div>
-                )}
+                  <Image
+                    alt=""
+                    src={iconSearch}
+                    className={twJoin(
+                      loading && "hidden",
+                      "ml-4 w-5 aspect-square object-contain translate-y-0.5"
+                    )}
+                  />
+                </div>
                 <input
                   ref={input}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    e.key === "Enter" && router.push(productsPageLink);
+                    e.key === "Escape" && close();
+                  }}
                   id="search-modal-input"
                   type="text"
                   className="w-full outline-none pl-3 pt-4 pb-3 pr-6 text-sm"
@@ -233,14 +253,14 @@ export default function SearchModal() {
             </div>
 
             <div className="group flex-shrink-0 flex-grow-0 px-5 py-1 bg-slate-100 rounded-b-md border-t border-slate-300">
-              <a href="/products">
-                <div className="flex items-center gap-1 pb-0.5">
+              <Link href={productsPageLink}>
+                <div className="flex items-center gap-1.5 pb-0.5">
                   <Image src={imgGoTo} alt="" className="w-3 translate-y-px" />
-                  <span className="text-xs text-slate-700 group-hover:underline">
+                  <span className="text-xs text-slate-700 translate-y-px group-hover:underline">
                     Go to products page
                   </span>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import SearchServerLayout from "@/layouts/search/SearchServerLayout";
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
-import { SearchParams } from "@/lib/server/search";
+import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
 import { notFound } from "next/navigation";
@@ -17,7 +17,7 @@ interface Props {
     brand: string;
     model: string;
   };
-  searchParams: SearchParams;
+  searchParams: GenericSearchParams;
 }
 
 export default async function ModelPage({
