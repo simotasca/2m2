@@ -52,7 +52,7 @@ function CartProvider({
     }
   };
 
-  const removeProduct = async (p: CartProduct) => {
+  const removeProduct = async (p: Pick<CartProduct, "id">) => {
     setLoading(true);
     let failed = false;
     if (!isLogged) {
@@ -70,6 +70,13 @@ function CartProvider({
     !failed && setCart((prev) => prev.filter((f) => f.id !== p.id));
     setLoading(false);
   };
+
+  const removeAll = async () => {
+    for (const id of Array.from(CookieCart.get())) {
+      await removeProduct({ id: parseInt(id) });
+    }
+  };
+
   const count = cart.length;
   const total = cart.reduce((a, b) => a + b.price, 0);
 
@@ -83,6 +90,7 @@ function CartProvider({
         hasProduct,
         addProduct,
         removeProduct,
+        removeAll,
         loading,
         setLoading,
         cart,

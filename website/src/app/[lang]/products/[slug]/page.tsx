@@ -1,7 +1,9 @@
 import ProductImage from "@/components/product/ProductImage";
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import Button from "@/components/ui/Button";
+import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import { PaymentsBar } from "@/components/ui/PaymentsBar";
 import iconAvailable from "@/images/icons/available.svg";
 import iconFavorite from "@/images/icons/favorite.svg";
 import iconShare from "@/images/icons/share.svg";
@@ -16,14 +18,14 @@ import {
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
 import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
+import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
 import SimilarProducts from "./SimilarProducts";
-import routes from "@/lib/shared/routes";
-import { PaymentsBar } from "@/components/ui/PaymentsBar";
-import imgLogo from "@/images/logo-dark.svg";
-import ContactsSection from "@/components/ui/ContactsSection";
+import SearchModalToggle from "@/components/search/SearchModalToggle";
+import SearchModal from "@/components/search/SearchModal";
+import GuaranteedUsed from "@/components/ui/GuaranteedUsed";
 
 interface Props {
   params: {
@@ -97,57 +99,54 @@ export default async function ProductPage({ params: { slug } }: Props) {
   return (
     <ServerLayout translations={{}}>
       <PageLayout headerSmall>
+        <SearchModal />
+
         <div className="bg-white min-h-full">
           <MaxWidthContainer>
-            <Breadcrumbs className="py-4" items={bread} />
-
-            <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_2fr] lg:grid-cols-[17fr_10fr_8fr_1fr] gap-4">
-              <div className="max-lg:order-2">
-                <PhotoSection product={product} />
+            <div className="pt-4 max-sm:pt-3 pb-2">
+              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                <Breadcrumbs items={bread} />
+                <SearchModalToggle />
               </div>
+            </div>
+
+            <div className="">
+              <h1 className="font-bold text-2xl leading-[1.1] max-w-screen-md">
+                <span className="text-red-500">{product.item} </span>
+                <span>{product.brand + " " + product.model}</span>
+              </h1>
+              <p className="mb-1 mt-0.5 text-sm max-w-screen-md">
+                <span className="font-medium">description:</span>
+                <span className="text-neutral-600"> {product.description}</span>
+              </p>
+            </div>
+
+            <hr className="my-3" />
+
+            <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
+              <PhotoSection product={product} />
+
               <ProductDetails product={product} />
 
-              <div className="max-lg:order-3 max-sm:mt-4">
-                <BuySection product={product} />
-              </div>
-              <div></div>
+              <BuySection product={product} />
+
+              <div className="order-last"></div>
             </div>
             <div className="lg:hidden h-4"></div>
           </MaxWidthContainer>
 
           <div className="h-4"></div>
 
-          <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
-            <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-4 lg:gap-x-8">
-              <Image
-                src={imgLogo}
-                alt=""
-                className="w-12 md:w-16 [@media(max-width:383px)]:mx-auto"
-              />
-              <h4 className="font-semibold leading-tight text-base sm:text-lg md:text-xl max-md:text-center">
-                Tutto il nostro usato è selezionato, testato e garantito!
-              </h4>
-              <div></div>
-              <Image
-                src={imgLogo}
-                alt=""
-                className="w-12 md:w-16 [@media(max-width:383px)]:hidden"
-              />
-            </div>
-          </div>
+          <GuaranteedUsed />
 
           <div className="h-10"></div>
 
           <MaxWidthContainer>
             <SimilarProducts product={product} />
 
-            <div className="h-20"></div>
-
-            <MaxWidthContainer className="max-w-6xl">
+            <MaxWidthContainer className="max-w-6xl py-20">
               <ContactsSection />
             </MaxWidthContainer>
-
-            <div className="h-20"></div>
           </MaxWidthContainer>
         </div>
       </PageLayout>
@@ -174,16 +173,25 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
     );
 
   return (
-    <div className="flex max-xs:flex-col sm:gap-1 items-start">
-      <div className="max-sm:order-2">
-        {photoIdsList.slice(1).map((imageId) => (
-          <div className="p-0.5 border border-slate-300 rounded-sm ">
-            <ProductImage className="w-20 " photo={{ imageId }} />
+    <div>
+      <div className="grid xs:grid-cols-[4rem_1fr] sm:max-md:grid-cols-1 md:grid-cols-[5rem_1fr] gap-1">
+        <div className="relative h-full max-xs:order-2 sm:max-md:order-2 max-xs:mb-14 sm:max-md:mb-14">
+          <div className="absolute w-full xs:h-full sm:max-md:h-auto top-0 left-0 max-xs:bottom-0 overflow-x-auto overflow-y-hidden xs:overflow-y-auto xs:overflow-x-hidden">
+            <div className="flex flex-col gap-1 max-xs:flex-row sm:max-md:flex-row max-xs:order-2 sm:max-md:order-2">
+              {photoIdsList.slice(1).map((imageId) => (
+                <div className="p-0.5 border border-slate-300 rounded-sm ">
+                  <ProductImage
+                    className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
+                    photo={{ imageId }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      <div className="w-full p-0.5 border border-slate-300 rounded-sm max-sm:order-1">
-        <ProductImage big photo={{ imageId: photoIdsList[0] }} />
+        </div>
+        <div className="w-full p-0.5 border border-slate-300 rounded-sm">
+          <ProductImage big photo={{ imageId: photoIdsList[0] }} />
+        </div>
       </div>
     </div>
   );
@@ -191,7 +199,7 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
 
 function BuySection({ product }: { product: EcodatArticle }) {
   return (
-    <aside className="font-sans">
+    <aside className="font-sans order-2 row-span-2">
       <div className="flex gap-1 items-center -mb-1">
         <span className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm mb-[2px]">
           Disponibile
@@ -208,7 +216,7 @@ function BuySection({ product }: { product: EcodatArticle }) {
       <p className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm">
         Tutti i prezzi includono l'IVA
       </p>
-      <p className="font-bold text-lg sm:text-base md:text-lg uppercase -mt-[6px]">
+      <p className="font-bold text-lg sm:text-base md:text-lg uppercase -mt-[6px] whitespace-nowrap">
         <span>SPEDIZIONE IN </span>
         <span className="text-[#F03B3B]">
           24<span className="text-sm">/</span>48 ORE
@@ -221,7 +229,7 @@ function BuySection({ product }: { product: EcodatArticle }) {
             className="w-9 sm:w-5 md:w-7"
             src={iconFavorite}
             alt="favorite icon"
-          ></Image>
+          />
           <span className=" text-xs leading-[1.1]">Aggiungi ai preferiti</span>
         </div>
         <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
@@ -229,7 +237,7 @@ function BuySection({ product }: { product: EcodatArticle }) {
             className="w-6 sm:w-5 md:w-6"
             src={iconShare}
             alt="share icon"
-          ></Image>
+          />
           <span className="text-xs leading-[1.1]">Condividi</span>
         </div>
       </div>

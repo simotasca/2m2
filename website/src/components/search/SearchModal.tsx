@@ -26,21 +26,29 @@ import {
 import { twJoin, twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useLogger from "@/hooks/useLogger";
 
-export default function SearchModal() {
+interface Props {
+  category?: EcodatCategory;
+}
+
+export default function SearchModal({ category: baseCategory }: Props) {
   const input = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
 
   const { close, isOpen } = useSearchModal();
+
   const [value, setValue] = useState("");
   const [filters, setFilters] = useState<Filters>();
 
   // the selected content
-  const [category, setCategory] = useState<EcodatCategory>();
-  const [typology, setTypology] = useState<EcodatTypology>();
-  const [brand, setBrand] = useState<EcodatBrand>();
-  const [model, setModel] = useState<EcodatModel>();
+  const [category, setCategory] = useState<EcodatCategory | undefined>(
+    baseCategory
+  );
+  const [typology, setTypology] = useState<EcodatTypology | undefined>();
+  const [brand, setBrand] = useState<EcodatBrand | undefined>();
+  const [model, setModel] = useState<EcodatModel | undefined>();
 
   const [selection, setSelection] = useState<{
     message: string;
@@ -85,7 +93,7 @@ export default function SearchModal() {
     } else {
       setValue("");
       setSelection(undefined);
-      setCategory(undefined);
+      setCategory(baseCategory);
       setTypology(undefined);
       setBrand(undefined);
       setModel(undefined);

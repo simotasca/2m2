@@ -1,0 +1,20 @@
+# per l'estero:
+
+comune: (somma di istat comune e provincia!), 
+provincia: le classiche 2 lettere, 
+nazione: codice nazionale come IT, ecc...
+
+== estero: ==
+
+
+== nazioni del mondo ==
+
+- tendina nazione:
+
+- se italia
+  - tendine provincia e comune
+
+- se estero
+  - semplici input testuali
+  - provincia EE
+  - comune 8565

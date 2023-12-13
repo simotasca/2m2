@@ -1,24 +1,20 @@
-import Button from "@/components/ui/Button";
+import Breadcrumbs from "@/components/search/Breadcrumbs";
+import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import SearchModal from "@/components/search/SearchModal";
+import SearchModalToggle from "@/components/search/SearchModalToggle";
+import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
-import iconRight from "@/images/icons/right.svg";
-import SearchServerLayout from "@/layouts/search/SearchServerLayout";
+import Title from "@/components/ui/Title";
+import PageLayout from "@/layouts/PageLayout";
+import ServerLayout from "@/layouts/base/ServerLayout";
 import {
-  fetchEcodatArticles,
   fetchEcodatCategories,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import { decodeQueryParam } from "@/lib/shared/search";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import CategoryTypologyProducts from "./CategoryTypologyProducts";
-import Breadcrumbs from "@/components/search/Breadcrumbs";
-import routes from "@/lib/shared/routes";
-import ServerLayout from "@/layouts/base/ServerLayout";
-import PageLayout from "@/layouts/PageLayout";
-import Title from "@/components/ui/Title";
-import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import { GenericSearchParams } from "@/lib/server/search";
-import ContactsSection from "@/components/ui/ContactsSection";
+import routes from "@/lib/shared/routes";
+import { decodeQueryParam } from "@/lib/shared/search";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: {
@@ -59,12 +55,19 @@ export default async function CategoryPage({
   return (
     <ServerLayout>
       <PageLayout headerSmall>
+        <SearchModal category={category} />
+
         <div className="bg-white pb-4">
           <MaxWidthContainer>
-            <Breadcrumbs className="py-4" items={bread} />
+            <div className="pt-4 max-sm:pt-3 pb-2">
+              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                <Breadcrumbs items={bread} />
+                <SearchModalToggle />
+              </div>
+            </div>
 
             <Title as="h1">
-              <Title.Gray>Category</Title.Gray>
+              <Title.Gray>Products Category</Title.Gray>
               <Title.Red> {category.name}</Title.Red>
             </Title>
 

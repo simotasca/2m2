@@ -3,8 +3,12 @@
 import { Database } from "@/database.types";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { PropsWithChildren } from "react";
 
-export default function LogoutForm() {
+export default function LogoutButton({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
   const supabase = createClientComponentClient<Database>();
   const router = useRouter();
 
@@ -13,5 +17,9 @@ export default function LogoutForm() {
     router.push("/");
   };
 
-  return <button onClick={handleSignOut}>Sign out</button>;
+  return (
+    <button className={className} onClick={handleSignOut}>
+      {children}
+    </button>
+  );
 }

@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
   await supabase.auth.getSession();
 
   const { pathname } = req.nextUrl;
-  let locale = i18n.locales.find(
+  let locale: string | undefined = i18n.locales.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
@@ -42,7 +42,7 @@ export async function middleware(req: NextRequest) {
 function getLocale(headers: Headers) {
   let languages = new Negotiator({
     headers: headers as unknown as Negotiator.Headers,
-  }).languages(i18n.locales);
+  }).languages(i18n.locales as [string, string]);
   return match(languages, i18n.locales, i18n.canonical);
 }
 
@@ -55,5 +55,6 @@ function isPageUrl(url: URL) {
   if (url.pathname.startsWith("/api/")) return false;
   if (url.pathname.startsWith("/favicon.ico")) return false;
   if (url.pathname.startsWith("/assets/")) return false;
+  if (url.pathname.startsWith("/fonts/")) return false;
   return true;
 }

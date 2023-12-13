@@ -183,12 +183,12 @@ function DropdownLogin({ small }: { small: boolean }) {
 
         <div
           className={twJoin(
-            "absolute right-0 w-screen flex justify-end z-50",
+            "absolute right-0 w-screen flex justify-end pointer-events-none z-50",
             open
               ? "translate-y-0 opacity-100 transition-all"
-              : "-translate-y-2 opacity-0 pointer-events-none"
+              : "-translate-y-2 opacity-0"
           )}>
-          <div className="pt-2 z-10">
+          <div className={twJoin("pt-2 z-10", open && "pointer-events-auto")}>
             <div className="w-80 bg-white border border-slate-400 rounded-md text-black p-4 gap-y-1">
               <div className="flex items-start justify-between">
                 <Image src={imgLogo} alt="logo 2m2" className="w-12 -mt-px" />
@@ -213,7 +213,8 @@ function DropdownLogin({ small }: { small: boolean }) {
                 <div className="border border-neutral-500 grid grid-cols-[1fr_auto] px-2 gap-x-2 bg-stone-100 -mt-1">
                   <input
                     className={twJoin(
-                      "placeholder:text-neutral-500 py-0.5 outline-none bg-stone-100 w-full",
+                      "py-0.5 outline-none bg-stone-100 w-full",
+                      "placeholder:text-neutral-500 placeholder:text-sm placeholder:leading-normal placeholder:tracking-normal",
                       pwInputType === "password"
                         ? "text-[0.4rem] leading-[1.3rem] tracking-[0.3em]"
                         : "text-sm"

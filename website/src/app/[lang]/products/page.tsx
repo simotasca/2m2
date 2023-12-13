@@ -31,6 +31,7 @@
 // }
 
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import SearchModalToggle from "@/components/search/SearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
@@ -51,6 +52,13 @@ export default async function ProductsPage({ searchParams }: Props) {
       <PageLayout headerSmall>
         <div className="bg-white pb-4 xs:px-2">
           <MaxWidthContainer className="pt-4">
+            <div className="pt-4 max-sm:pt-3 pb-2">
+              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                <div />
+                <SearchModalToggle />
+              </div>
+            </div>
+
             <Title as="h1">
               <Title.Gray>OUR</Title.Gray>
               <Title.Red> PRODUCTS</Title.Red>

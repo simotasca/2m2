@@ -1,41 +1,41 @@
 import { CartProduct } from "../shared/cart";
 
-export class LocalCart {
-  static get() {
-    const cart: CartProduct[] = JSON.parse(
-      localStorage.getItem("cart") || "[]"
-    );
-    return cart;
-  }
+// export class LocalCart {
+//   static get() {
+//     const cart: CartProduct[] = JSON.parse(
+//       localStorage.getItem("cart") || "[]"
+//     );
+//     return cart;
+//   }
 
-  static removeProduct(p: CartProduct) {
-    let cart = this.get();
-    cart = cart.filter((c) => c.id != p.id);
-    this.save(cart);
-    return cart;
-  }
+//   static removeProduct(p: CartProduct) {
+//     let cart = this.get();
+//     cart = cart.filter((c) => c.id != p.id);
+//     this.save(cart);
+//     return cart;
+//   }
 
-  static addProduct(p: CartProduct) {
-    const cart = this.get();
-    if (cart.find((c) => c.id === p.id)) return cart;
-    // filtro manualmente perchè solitamente il CartProduct è un EcodatArticle completo
-    const prodOk: CartProduct = {
-      id: p.id,
-      brand: p.brand,
-      item: p.item,
-      model: p.model,
-      oeCode: p.oeCode,
-      price: p.price,
-    };
-    cart.push(prodOk);
-    this.save(cart);
-    return cart;
-  }
+//   static addProduct(p: CartProduct) {
+//     const cart = this.get();
+//     if (cart.find((c) => c.id === p.id)) return cart;
+//     // filtro manualmente perchè solitamente il CartProduct è un EcodatArticle completo
+//     const prodOk: CartProduct = {
+//       id: p.id,
+//       brand: p.brand,
+//       item: p.item,
+//       model: p.model,
+//       oeCode: p.oeCode,
+//       price: p.price,
+//     };
+//     cart.push(prodOk);
+//     this.save(cart);
+//     return cart;
+//   }
 
-  private static save(cart: CartProduct[]) {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
-}
+//   private static save(cart: CartProduct[]) {
+//     localStorage.setItem("cart", JSON.stringify(cart));
+//   }
+// }
 
 export class CookieCart {
   static addProduct(p: Pick<CartProduct, "id">) {

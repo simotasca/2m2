@@ -1,13 +1,27 @@
+import nationsJson from "@/data/nations.json";
 import iconShipping from "@/images/icons/shipping.svg";
 import Image from "next/image";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import WizTabValidator from "./WizTabHandle";
-import WizInput from "./WizInput";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import WizInput from "../WizInput";
+import WizSelect, { WizSelectItem } from "../WizSelect";
+import WizTabValidator from "../WizTabHandle";
+import CityInput from "./CityInput";
+import ProvinceInput from "./ProvinceInput";
+import useLogger from "@/hooks/useLogger";
 
 export interface DeliveryAddress {
   country?: string;
+  countryCode?: string;
   province?: string;
+  provinceCode?: string;
   city?: string;
+  istat?: string;
   zip?: string;
   street?: string;
   number?: string;
@@ -18,6 +32,11 @@ export interface DeliveryInfoParams {
   address: DeliveryAddress;
   setAddress: React.Dispatch<DeliveryAddress>;
 }
+
+const nations: WizSelectItem[] = nationsJson.map((n) => ({
+  key: n.code,
+  val: n.name,
+}));
 
 export const DeliveryAddressTab = forwardRef<
   WizTabValidator,
@@ -34,8 +53,11 @@ export const DeliveryAddressTab = forwardRef<
           setShowErrors(true);
           return (
             !!address.country &&
+            !!address.countryCode &&
             !!address.province &&
+            !!address.provinceCode &&
             !!address.city &&
+            !!address.istat &&
             !!Number(address.zip || "err") &&
             !!address.street &&
             !!Number(address.number || "err") &&
@@ -49,6 +71,36 @@ export const DeliveryAddressTab = forwardRef<
     },
     [address]
   );
+
+  useEffect(() => {
+    setAddress({
+      ...address,
+      city: undefined,
+      istat: undefined,
+    });
+  }, [address.countryCode, address.provinceCode]);
+
+  useEffect(() => {
+    setAddress({
+      ...address,
+      province: undefined,
+      provinceCode: undefined,
+      city: undefined,
+      istat: undefined,
+    });
+  }, [address.countryCode]);
+
+  useEffect(() => {
+    const country = nations.find((n) => n.key === "IT");
+    setAddress({
+      ...address,
+      countryCode: country?.key,
+      country: country?.val,
+    });
+  }, []);
+
+  useLogger(address, [address]);
+
   return (
     <div ref={tabRef} className="mb-2.5">
       <div className="flex items-start gap-2 mb-2">
@@ -59,44 +111,41 @@ export const DeliveryAddressTab = forwardRef<
       </div>
 
       <div className="flex flex-col gap-1">
-        <WizInput
-          value={address.country || ""}
-          onChange={(e) => setAddress({ ...address, country: e.target.value })}
+        <WizSelect
+          items={nations}
+          value={
+            address.countryCode && address.country
+              ? {
+                  key: address.countryCode,
+                  val: address.country,
+                }
+              : undefined
+          }
+          onChange={(item) =>
+            setAddress({ ...address, countryCode: item.key, country: item.val })
+          }
           label="country"
           placeholder="Country"
-          type="text"
-          name="country"
           errorMessage={showErrors && !address.country ? "required" : undefined}
           required={true}
+          loading={false}
+          loadingError={false}
         />
-        <WizInput
-          value={address.province || ""}
-          onChange={(e) => setAddress({ ...address, province: e.target.value })}
-          label="province"
-          placeholder="Province"
-          type="text"
-          name="province"
-          errorMessage={
-            showErrors && !address.province ? "required" : undefined
-          }
-          required={true}
+        <ProvinceInput
+          address={address}
+          setAddress={setAddress}
+          showErrors={showErrors}
         />
         <div className="grid grid-cols-3 gap-x-2">
           <div className="col-span-2">
-            <WizInput
-              value={address.city || ""}
-              onChange={(e) => setAddress({ ...address, city: e.target.value })}
-              label="city"
-              placeholder="City"
-              type="text"
-              name="city"
-              errorMessage={
-                showErrors && !address.city ? "required" : undefined
-              }
-              required={true}
+            <CityInput
+              address={address}
+              setAddress={setAddress}
+              showErrors={showErrors}
             />
           </div>
           <WizInput
+            id="txt-zip"
             value={address.zip || ""}
             onChange={(e) => setAddress({ ...address, zip: e.target.value })}
             label="zip"
@@ -119,6 +168,7 @@ export const DeliveryAddressTab = forwardRef<
         <div className="grid grid-cols-4 gap-x-2">
           <div className="col-span-3">
             <WizInput
+              id="txt-street"
               value={address.street || ""}
               onChange={(e) =>
                 setAddress({ ...address, street: e.target.value })
@@ -134,6 +184,7 @@ export const DeliveryAddressTab = forwardRef<
             />
           </div>
           <WizInput
+            id="txt-number"
             value={address.number || ""}
             onChange={(e) => setAddress({ ...address, number: e.target.value })}
             label="n"
@@ -153,10 +204,11 @@ export const DeliveryAddressTab = forwardRef<
           />
         </div>
         <WizInput
+          id="txt-notes"
           value={address.notes || ""}
           onChange={(e) => setAddress({ ...address, notes: e.target.value })}
           label="notes"
-          placeholder="Wright here your notes"
+          placeholder="Write here your notes"
           type="textarea"
           name="notes"
           errorMessage={
@@ -164,7 +216,7 @@ export const DeliveryAddressTab = forwardRef<
               ? "max 250 chars"
               : undefined
           }
-        ></WizInput>
+        />
       </div>
     </div>
   );

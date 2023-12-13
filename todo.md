@@ -41,5 +41,5 @@
 # ricerca
 
 - [x] pagina tutti i prodotti con filtri
-- visualizzare filtri attivi
+- [ ] visualizzare filtri attivi
 - [ ] ogni pagina con prodotti abilitare i filtri di ricerca

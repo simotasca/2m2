@@ -11,7 +11,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { Database } from "@/database.types";
-
 import Button from "../ui/Button";
 
 export default function Footer() {
@@ -28,13 +27,13 @@ export default function Footer() {
           <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
             Car Parts Categories
           </h3>
-          <div className="flex flex-col gap-2 text-sm ">
+          <ul className="flex flex-col gap-2 text-sm">
             {Object.keys(knownCategories).map((p) => (
-              <ul>
-                <li className="leading-4 whitespace-nowrap">{p}</li>
-              </ul>
+              <li key={p} className="leading-4 whitespace-nowrap">
+                {p}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div>
@@ -252,16 +251,14 @@ function DropdownLogin({ small }: { small: boolean }) {
                   onClick={(e) => {
                     e.preventDefault();
                     togglePasswordVisibility();
-                  }}
-                >
+                  }}>
                   {pwInputType === "text" ? "hide" : "show"}
                 </button>
               </div>
 
               <a
                 className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#"
-              >
+                href="#">
                 Forgot your password?
                 {/* TODO */}
               </a>
@@ -271,8 +268,7 @@ function DropdownLogin({ small }: { small: boolean }) {
               )}
               <Button
                 type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white"
-              >
+                className="w-full font-normal text-sm bg-red-500 text-white">
                 Login
               </Button>
             </form>

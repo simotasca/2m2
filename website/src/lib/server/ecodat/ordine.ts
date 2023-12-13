@@ -1,5 +1,6 @@
 import { randomBytes } from "crypto";
 import { EcodatAction, fetchEcodat } from ".";
+import { ecodat } from "@/settings";
 
 interface OrderApi {
   /** DataOraOrdine */
@@ -23,11 +24,11 @@ interface OrderApi {
   /** CAP */
   cap: string;
   /** Comune */
-  cityId: number; // non so come averlo
+  cityIstat: string;
   /** Provincia */
-  provinceId: string; // non so come averlo
+  provinceCode: string;
   /** Nazione */
-  countryId: string; // non so come averlo
+  countryCode: string;
 
   /** RigheOrdine */
   products: OrderProducts[];
@@ -73,6 +74,7 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
   const codiceArbitrario = randomBytes(5).toString("hex").slice(0, 10);
 
   let xml = `
+    <IDDocumento>${ecodat.idDocument}</IDDocumento>
     <DataOraOrdine>${dateTimeFormat(params.dateTime)}</DataOraOrdine>
     <CodiceOrdine>${codiceArbitrario}</CodiceOrdine>
     <FlgPrivato>${params.type === "personal" ? "true" : "false"}</FlgPrivato>
@@ -81,9 +83,9 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
     <Località>${params.city}</Località>
     <NumeroCivico>${params.civic}</NumeroCivico>
     <CAP>${params.cap}</CAP>
-    <Comune>00</Comune>
-    <Provincia>00</Provincia>
-    <Nazione>00</Nazione>
+    <Comune>${params.cityIstat}</Comune>
+    <Provincia>${params.provinceCode}</Provincia>
+    <Nazione>${params.countryCode}</Nazione>
     <Telefono>${params.phone || "s"}</Telefono>
     <Email>${params.email}</Email>
     <NoteOrdine>${params.notes}</NoteOrdine>
@@ -114,10 +116,9 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
       }
     }
   }
+  console.log("ORDER XML", xml);
 
-  return fetchEcodat(EcodatAction.SEND_ORDER, xml, "").then((res) => {
-    console.log("ORDINE INVIATO: ", res);
-  });
+  return fetchEcodat(EcodatAction.SEND_ORDER, xml, "");
 
   // return await fetch(process.env.ECODAT_API_URL!, {
   //   method: "POST",
@@ -150,24 +151,26 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
 
 function rigaOrdine(p: OrderProducts) {
   return `
-    <CodiceArticolo>${p.oeCode}</CodiceArticolo>
-    <DescrizioneArticolo>${p.description}</DescrizioneArticolo>
-    <PrezzoUnitario>${p.price}</PrezzoUnitario>
-    <Quantità>${p.quantity}</Quantità>
-    <IDRicambio>${p.id}</IDRicambio>
+    <WMAGAZZINO_DatiRigaOrdine>
+      <CodiceArticolo>${p.oeCode}</CodiceArticolo>
+      <DescrizioneArticolo>${p.description}</DescrizioneArticolo>
+      <PrezzoUnitario>${p.price}</PrezzoUnitario>
+      <Quantità>${p.quantity}</Quantità>
+      <IDRicambio>${p.id}</IDRicambio>
+    </WMAGAZZINO_DatiRigaOrdine>
   `;
 }
 
 function dateTimeFormat(date: Date) {
+  console.log("FORMATTO LA DATE", date);
   return [
-    date.getDate(),
-    date.getMonth(),
-    date.getFullYear(),
-    date.getHours(),
-    date.getMinutes(),
-  ]
-    .map((d) => String(d).padStart(2, "0"))
-    .join("");
+    String(date.getDate()).padStart(2, "0"),
+    String(date.getMonth()).padStart(2, "0"),
+    String(date.getFullYear()).padStart(2, "0"),
+    " ",
+    String(date.getHours()).padStart(2, "0"),
+    String(date.getMinutes()).padStart(2, "0"),
+  ].join("");
 }
 
 // è possibile avere dati dell'azienda nella demo?

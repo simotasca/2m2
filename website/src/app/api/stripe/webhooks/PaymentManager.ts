@@ -147,15 +147,21 @@ export default class PaymentManager {
       city: "sesto san giovanni",
       cap: "20099",
       cf: "TSCSMN96E20F205S",
-      countryId: "IT",
-      provinceId: "MI",
-      cityId: 20099,
+      countryCode: "IT",
+      provinceCode: "MI",
+      cityIstat: "015209",
       dateTime: new Date(),
       email: "simo.tasca@gmail.com",
       name: "Simone",
       surname: "Tasca",
       notes: "PRIMO ORDINE DEMO",
-      products: [],
+      products: payment.products.map((p) => ({
+        id: p.id.toString(),
+        description: p.description,
+        oeCode: p.oeCode,
+        price: p.price.toString(),
+        quantity: "1",
+      })),
     })
       .then(() => {
         console.log("ORDER SENT");
@@ -169,7 +175,7 @@ export default class PaymentManager {
 
   private static async notifySellerForError(payment: Payment) {
     payment.errorMessage = "BEtteR foRMaAHT\n" + payment.errorMessage;
-    console.error("FATAL ERRROR AFTEER MAX ATTEMSP", payment.errorMessage);
+    console.error("FATAL ERRROR AFTEER MAX ATTEMSP\n", payment.errorMessage);
 
     await sendMail("simo.tasca@gmail.com", "notiffica di ERRORRR", {
       text: payment.errorMessage,
@@ -197,6 +203,7 @@ export default class PaymentManager {
   private static async emptyCart(payment: Payment) {
     // skip for now
     // throw new Error("todo");
+    payment.stage = "CART_EMPTY";
   }
 
   private static async complete(payment: Payment) {

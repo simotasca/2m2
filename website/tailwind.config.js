@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-poppins)"],
+        sans: '"Poppins", sans',
         oswald: ["var(--font-oswald)"],
       },
       colors: {

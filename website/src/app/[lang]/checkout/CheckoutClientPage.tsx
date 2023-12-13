@@ -16,7 +16,10 @@ import {
 } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import { CheckoutTab } from "./CheckoutTab";
-import { DeliveryAddress, DeliveryAddressTab } from "./DeliveryAddressTab";
+import {
+  DeliveryAddress,
+  DeliveryAddressTab,
+} from "./address/DeliveryAddressTab";
 import { PersonalInfoTab, type PersonalInfo } from "./PersonalInfoTab";
 import WizTabValidator from "./WizTabHandle";
 
@@ -96,14 +99,14 @@ export default function CheckoutClientPage({ products }: Props) {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="min-h-screen">
       <Image
         src={imgBg}
         alt="backgorund cover"
         className="fixed inset-0 w-full h-full object-cover -z-20"
       />
       <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 -z-10"></div>
-      <div className="p-8">
+      <div className="p-8 overflow-hidden">
         <div className="max-w-screen-md mx-auto flex flex-col gap-3 pt-5 py-6 px-4 md:px-8 bg-white overflow-hidden">
           <Breadcrumbs wizStep={wizStep} changeWizStep={changeWizStep} />
           {/* split panel */}
@@ -212,7 +215,7 @@ function OrderDetails({
             </p>
             <p>{deliveryAddress.country}</p>
             <p>
-              {deliveryAddress.city} ({deliveryAddress.province}),{" "}
+              {deliveryAddress.city} ({deliveryAddress.provinceCode}),{" "}
               {deliveryAddress.zip}
             </p>
             <p>

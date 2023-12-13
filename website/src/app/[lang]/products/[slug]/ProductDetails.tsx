@@ -13,18 +13,11 @@ export default function ProductDetails({ product }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <main className="relative max-lg:contents">
-      <div className="max-lg:order-1 max-lg:col-span-2">
-        <h1 className="font-bold text-xl leading-[1.1]">
-          {product.description}
-        </h1>
-        <p className="text-sm mb-1 mt-0.5">
-          <span className="font-semibold">Codice OEM:</span>
-          <span> {product.oeCode}</span>
-        </p>
-      </div>
+    <main className="relative max-lg:order-3 max-lg:col-span-full">
+      <p className="font-bold text-lg leading-[1.1]">PRODUCT DETAILS</p>
 
       <div className="grid grid-cols-[auto_1fr] max-lg:col-span-2 max-lg:order-4 text-sm ">
+        <PropertyRow name="codice OEM" value={product.oeCode} />
         <PropertyRow
           name="marca"
           value={product.brand}
@@ -44,19 +37,18 @@ export default function ProductDetails({ product }: Props) {
               .join(" - ")}
           />
         )}
-        <PropertyRow name="tipo motore" value={product.engine} />
 
         {/** expandible */}
         {!expanded ? (
           <button
             className="text-start p-1 col-span-full text-red-700"
-            onClick={() => setExpanded(true)}
-          >
+            onClick={() => setExpanded(true)}>
             <span className="underline">more </span>
             <span>+</span>
           </button>
         ) : (
           <>
+            <PropertyRow name="tipo motore" value={product.engine} />
             {product.displacement && (
               <PropertyRow name="cilindrata" value={product.displacement} />
             )}
@@ -88,8 +80,7 @@ function PropertyRow({
         className={twJoin(
           "max-lg:text-left max-lg:pl-6 text-right font-medium",
           href && "underline hover:text-red-600"
-        )}
-      >
+        )}>
         {value}
       </a>
     </div>
