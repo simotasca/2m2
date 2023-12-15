@@ -16,6 +16,7 @@ import Hero from "./Hero";
 import { PaymentsBar } from "@/components/ui/PaymentsBar";
 import { Fragment, useEffect, useRef, useState } from "react";
 import BrandsCarousel from "@/components/ui/BrandsCarousel";
+import useTranslation from "@/context/lang/useTranslation";
 
 interface Props {
   latestProducts: EcodatArticle[];
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export default function ClientPage({ latestProducts, categories }: Props) {
+  const { t, r } = useTranslation("page");
   return (
     <PageLayout>
       <Hero />
@@ -32,15 +34,15 @@ export default function ClientPage({ latestProducts, categories }: Props) {
       <MaxWidthContainer className="bg-neutral-100 pt-10 pb-10">
         <div className="flex gap-8 items-end">
           <h2 className="font-oswald text-3xl font-semibold uppercase">
-            <span className="text-red-700">Featured</span>
-            <span className="text-gray-400"> Products</span>
+            <span className="text-gray-400">{r("products-title")}</span>
           </h2>
           <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
-            More Products
+            {t("products-button")}
             <Image
               className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
               alt=""
-              src={iconRight}></Image>
+              src={iconRight}
+            ></Image>
           </Button>
         </div>
 
@@ -51,7 +53,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
         />
         <div className="mt-10 mb-6">
           <button className="block w-fit px-16 py-4 mx-auto bg-neutral-200 underline underline-offset-4">
-            See more Products
+            {t("products-button")}
           </button>
         </div>
       </MaxWidthContainer>
@@ -67,7 +69,9 @@ export default function ClientPage({ latestProducts, categories }: Props) {
       <div className="bg-slate-300 py-1">
         <MaxWidthContainer>
           <div className="flex gap-4 items-center">
-            <p className="uppercase font-bold text-slate-800">PAGAMENTI</p>
+            <p className="uppercase font-bold text-slate-800">
+              {t("payments")}
+            </p>
             <PaymentsBar />
           </div>
         </MaxWidthContainer>
@@ -86,7 +90,8 @@ function CategoriesSection({ categories }: { categories: string[] }) {
         <div
           className={twJoin(
             "w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8"
-          )}>
+          )}
+        >
           {categories.map((key) => (
             <Fragment key={key}>
               <CategoryCard name={key} />
@@ -120,6 +125,7 @@ const cardColors = [
 ];
 
 function CategoryCard({ name }: { name: string }) {
+  const { t } = useTranslation("categories");
   return (
     <Link
       data-category-card
@@ -134,7 +140,8 @@ function CategoryCard({ name }: { name: string }) {
         "2xl:[&:nth-child(n+17)]:hidden",
         cardColors
       )}
-      key={name}>
+      key={name}
+    >
       <img
         src={knownCategories[name].image || undefined}
         className={twMerge(
@@ -148,7 +155,9 @@ function CategoryCard({ name }: { name: string }) {
         className="absolute bottom-0 w-full h-full object-contain object-right-bottom mix-blend-color-dodge"
       />
       <div className="relative h-full p-4 pb-8 pr-[20%] flex flex-col justify-between uppercase leading-[1.1] z-20">
-        <p className="font-bold opacity-90 text-lg leading-[1]">{name}</p>
+        <p className="font-bold opacity-90 text-lg leading-[1]">
+          {t(name) || name}
+        </p>
         <p className="text-xs group-hover:underline underline-offset-4">
           view more
         </p>

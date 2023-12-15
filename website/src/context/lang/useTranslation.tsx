@@ -5,6 +5,7 @@ import { TranslationContext } from "./TranslationClientComponent";
 export const rich: RichTextMappers = {
   red: (slot) => <span className="text-red-500">{slot}</span>,
   br: () => <br />,
+  b: (slot) => <b>{slot}</b>,
 };
 
 export default function useTranslation(base?: string) {

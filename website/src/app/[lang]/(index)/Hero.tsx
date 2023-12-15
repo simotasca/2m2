@@ -23,6 +23,7 @@ import { getFilters } from "@/lib/client/filters";
 import { SearchParams } from "@/lib/shared/search";
 
 export default function Hero() {
+  const { t } = useTranslation("page.hero");
   return (
     <div className="relative max-md:flex flex-col">
       <HeroBg />
@@ -43,13 +44,13 @@ export default function Hero() {
               className="w-full sm:w-[90%] md:w-full md:max-w-sm [filter:drop-shadow(0px_2px_1px_#000000cc)_drop-shadow(2px_0px_1px_#000000cc)] md:[filter:drop-shadow(0px_2px_2px_black)]"
             />
             <p className="sm:max-w-md md:max-w-none text-lg [@media(min-width:347px)]:text-xl  [@media(min-width:420px)]:text-2xl sm:text-xl [@media(min-width:347px)]:leading-tight [@media(min-width:420px)]:leading-tight md:leading-tight [text-shadow:0_2px_4px_black] max-sm:text-center sm:pt-2 ">
-              Assistenza garantita su tutto.
+              {t("subtitle.line1")}
               <br className="sm:hidden md:block" />
-              Puoi contare su di noi.
+              {t("subtitle.line2")}
             </p>
           </div>
           <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
-            <span>Contattaci</span>
+            <span>{t("button")}</span>
             <Image
               src={iconSend}
               alt=""
@@ -180,7 +181,8 @@ function HeroFilters() {
             className={twMerge(
               "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
               !brand && !category && "opacity-70"
-            )}>
+            )}
+          >
             Search
           </Button>
         </div>
@@ -211,7 +213,8 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"></Image>
+            className="absolute inset-0 w-full h-full object-cover"
+          ></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>

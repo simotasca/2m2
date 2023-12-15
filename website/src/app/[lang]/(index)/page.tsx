@@ -11,7 +11,11 @@ export default async function HomePage() {
     fetchRow: { nRows: 10, lastRow: 0 },
   });
 
-  const translations = { product: "misc/product", page: "pages/home" };
+  const translations = {
+    product: "misc/product",
+    page: "pages/home",
+    categories: "misc/categories",
+  };
   const categories = shuffle(shuffle(Object.keys(knownCategories)));
 
   return (
