@@ -16,6 +16,7 @@ import { twJoin } from "tailwind-merge";
 import Button from "../ui/Button";
 import Link from "next/link";
 import routes from "@/lib/shared/routes";
+import LoadingScreen from "../ui/LoadingScreen";
 
 export function UserData({ small }: { small: boolean }) {
   const { setIsOpen, total, count } = useCart();
@@ -27,21 +28,18 @@ export function UserData({ small }: { small: boolean }) {
         small
           ? "lg:border lg:border-neutral-500  lg:bg-neutral-800 lg:mr-0 lg:justify-self-auto"
           : "md:border md:border-neutral-500  md:bg-neutral-800 md:mr-0 md:justify-self-auto"
-      )}
-    >
+      )}>
       <button
         onClick={() => setIsOpen(true)}
         className={twJoin(
           "flex items-center h-full px-1 rounded-l outline-none hover:outline hover:outline-[#e0c4393a] -outline-offset-1",
           small ? "lg:px-3" : "md:px-3"
-        )}
-      >
+        )}>
         <div
           className={twJoin(
             "h-fit text-right translate-y-px hidden",
             small ? "lg:block" : "md:block"
-          )}
-        >
+          )}>
           <p className="font-semibold text-sm leading-[1.1]">
             {total ? total.toFixed(2) + "€" : "---"}
           </p>
@@ -144,16 +142,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
   return (
     <>
-      {loading && (
-        <div className="fixed inset-0 w-screen h-screen grid place-items-center bg-black bg-opacity-60 z-50">
-          <div className="pb-20 flex flex-col items-center">
-            <Image src={gifLoader} alt="loader" className="w-12" />
-            <p className="font-semibold [text-shadow:0_0_4px_black]">
-              Login in corso...
-            </p>
-          </div>
-        </div>
-      )}
+      <LoadingScreen message="Login in corso" loading={loading} />
 
       <div className="relative h-full">
         <button
@@ -161,14 +150,12 @@ function DropdownLogin({ small }: { small: boolean }) {
           className={twJoin(
             "h-full flex items-center outline-none",
             small ? "lg:px-3" : "md:px-3"
-          )}
-        >
+          )}>
           <p
             className={twJoin(
               "overflow-hidden font-semibold text-sm max-w-[9rem] whitespace-nowrap overflow-ellipsis text-right hidden",
               small ? "lg:block" : "md:block"
-            )}
-          >
+            )}>
             {user || t("header.login")}
           </p>
           <Image
@@ -184,8 +171,7 @@ function DropdownLogin({ small }: { small: boolean }) {
         {open && (
           <div
             className="fixed z-[49] w-screen h-screen inset-0"
-            onClick={() => setOpen(false)}
-          ></div>
+            onClick={() => setOpen(false)}></div>
         )}
 
         <div
@@ -194,8 +180,7 @@ function DropdownLogin({ small }: { small: boolean }) {
             open
               ? "translate-y-0 opacity-100 transition-all"
               : "-translate-y-2 opacity-0"
-          )}
-        >
+          )}>
           <div className={twJoin("pt-2 z-10", open && "pointer-events-auto")}>
             <div className="w-80 bg-white border border-slate-400 rounded-md text-black p-4 gap-y-1">
               <div className="flex items-start justify-between">
@@ -222,10 +207,7 @@ function DropdownLogin({ small }: { small: boolean }) {
                   <input
                     className={twJoin(
                       "py-0.5 outline-none bg-stone-100 w-full",
-                      "placeholder:text-neutral-500 placeholder:text-sm placeholder:leading-normal placeholder:tracking-normal",
-                      pwInputType === "password"
-                        ? "text-[0.4rem] leading-[1.3rem] tracking-[0.3em]"
-                        : "text-sm"
+                      "placeholder:text-neutral-500 placeholder:text-sm placeholder:leading-normal placeholder:tracking-normal text-sm"
                     )}
                     type={pwInputType}
                     name="password"
@@ -236,16 +218,14 @@ function DropdownLogin({ small }: { small: boolean }) {
                     onClick={(e) => {
                       e.preventDefault();
                       togglePasswordVisibility();
-                    }}
-                  >
+                    }}>
                     {pwInputType === "text" ? "hide" : "show"}
                   </button>
                 </div>
 
                 <Link
                   className="underline text-xs -mt-1.5 text-neutral-500"
-                  href="#"
-                >
+                  href="#">
                   Forgot your password?
                   {/* TODO */}
                 </Link>
@@ -255,8 +235,7 @@ function DropdownLogin({ small }: { small: boolean }) {
                 )}
                 <Button
                   type="submit"
-                  className="w-full font-normal text-sm bg-red-500 text-white"
-                >
+                  className="w-full font-normal text-sm bg-red-500 text-white">
                   Login
                 </Button>
               </form>

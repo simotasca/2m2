@@ -1,6 +1,6 @@
 import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
-import useTranslation from "@/context/lang/useTranslation";
+import useTranslation, { rich } from "@/context/lang/useTranslation";
 import iconBrand from "@/images/icons/sell.svg";
 import iconSend from "@/images/icons/send.svg";
 import iconGuaranteed from "@/images/icons/white/guaranteed.svg";
@@ -63,7 +63,7 @@ export default function Hero() {
 }
 
 function HeroFilters() {
-  const { t, rich } = useTranslation("page.hero.filters");
+  const { t, r } = useTranslation("page.hero.filters");
 
   const router = useRouter();
 
@@ -134,17 +134,13 @@ function HeroFilters() {
         <div className="flex items-start gap-1 lg:order-1">
           <Image className="w-8" src={iconCategory} alt="" />
           <h4 className="text-xl leading-[0.9] font-bold uppercase">
-            {rich("category.title", {
-              b: (b) => <span className="text-red-500">{b}</span>,
-            })}
+            {r("category.title")}
           </h4>
         </div>
         <div className="flex items-start gap-1 max-sm:order-2 md:order-2 lg:order-2  max-sm:pt-4 md:pt-4 lg:pt-0">
           <Image className="w-8" src={iconBrand} alt="" />
           <h4 className="text-xl leading-[0.9] font-bold uppercase">
-            {rich("brand.title", {
-              b: (b) => <span className="text-red-500">{b}</span>,
-            })}
+            {r("brand.title")}
           </h4>
         </div>
         <div className="flex flex-col gap-2 lg:order-3">
@@ -224,65 +220,48 @@ function HeroBg() {
 }
 
 function QualitiesBar() {
-  const { t } = useTranslation("page.hero.qualities");
-  // const { t: asasd } = useTranslation("page.hero");
-
-  const mapQuality = (name: string) => {
-    const arr: string[] = t(name);
-
-    // console.log("ARRAY:", asasd("qualities"));
-
-    return (
-      arr &&
-      arr.map((p, i) => (
-        <Fragment key={i}>
-          <span>{p}</span>
-          {i != arr.length && <br />}
-        </Fragment>
-      ))
-    );
-  };
+  const { r } = useTranslation("page.hero.qualities");
 
   return (
     <MaxWidthContainer className="grid md:grid-cols-2 gap-x-12 px-4 xs:px-12 pb-8 md:pt-6 md:pb-4 lg:py-8 text-white uppercase font-semibold leading-[1] mx-auto">
       <div className="grid grid-cols-3 sm:flex gap-6 xs:gap-12 items-start">
         <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
-          <Image className=" w-6 lg:w-full" src={iconGuaranteed} alt="" />
+          <Image className="w-6 lg:w-full" src={iconGuaranteed} alt="" />
           <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
-            {mapQuality("reliability")}
+            {r("reliability")}
           </p>
         </div>
         <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
-          <Image className=" w-6 lg:w-full" src={iconShipping} alt="" />
+          <Image className="w-6 lg:w-full" src={iconShipping} alt="" />
           <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
-            {mapQuality("speed")}
+            {r("speed")}
           </p>
         </div>
         <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
-          <Image className=" w-6 lg:w-full" src={iconLowPrices} alt="" />
+          <Image className="w-6 lg:w-full" src={iconLowPrices} alt="" />
           <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
-            {mapQuality("low-prices")}
+            {r("low-prices")}
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-3 sm:flex gap-6 xs:gap-12 max-xs:items-start max-md:items-end md:items-start md:place-self-end sm:ml-auto md:ml-0 sm:mr-0 mt-6 mb-2 xs:mt-4 md:mt-0">
         <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
-          <Image className=" w-6 lg:w-full" src={iconSupport} alt="" />
+          <Image className="w-6 lg:w-full" src={iconSupport} alt="" />
           <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
-            {mapQuality("support")}
+            {r("support")}
           </p>
         </div>
         <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
-          <Image className=" w-6 lg:w-full" src={iconUsedTest} alt="" />
+          <Image className="w-6 lg:w-full" src={iconUsedTest} alt="" />
           <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
-            {mapQuality("test")}
+            {r("test")}
           </p>
         </div>
         <div className="flex max-xs:flex-col gap-2 lg:gap-3 items-center">
           <Image className="w-4 lg:w-fit" src={iconSecurity} alt="" />
           <p className="max-xs:text-center text-sm lg:text-md leading-3 xs:leading-4">
-            {mapQuality("security")}
+            {r("security")}
           </p>
         </div>
       </div>

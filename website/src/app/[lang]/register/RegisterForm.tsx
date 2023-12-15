@@ -187,8 +187,7 @@ export default function RegisterForm() {
                   mode === "private"
                     ? "bg-red-gradient text-white font-medium border-transparent"
                     : "bg-stone-100"
-                )}
-              >
+                )}>
                 private
               </button>
               <button
@@ -198,8 +197,7 @@ export default function RegisterForm() {
                   mode === "business"
                     ? "bg-red-gradient text-white font-medium border-transparent"
                     : "bg-stone-100"
-                )}
-              >
+                )}>
                 business
               </button>
             </div>
@@ -397,8 +395,7 @@ export default function RegisterForm() {
                     <span>I accept the </span>
                     <Link
                       href="#"
-                      className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
-                    >
+                      className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
                       terms and conditions
                     </Link>
                   </p>
@@ -406,8 +403,7 @@ export default function RegisterForm() {
 
                 <Button
                   type="submit"
-                  className="bg-red-500 text-white w-full font-medium"
-                >
+                  className="bg-red-500 text-white w-full font-medium">
                   submit
                 </Button>
 
@@ -421,8 +417,7 @@ export default function RegisterForm() {
                   <span className="text-neutral-600">Already registered? </span>
                   <Link
                     href={routes.login()}
-                    className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
-                  >
+                    className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
                     Login to account
                   </Link>
                 </p>

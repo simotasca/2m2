@@ -34,7 +34,7 @@ export function SendResetPassword() {
     setError(undefined);
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "https://b04f-217-171-67-176.ngrok-free.app/reset-password",
+      redirectTo: "https://96b8-5-179-178-59.ngrok-free.app/reset-password",
     });
 
     if (error) {
@@ -99,8 +99,7 @@ export function SendResetPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => onclick()}
-            >
+              onClick={() => onclick()}>
               Next
             </Button>
           </>

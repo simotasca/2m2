@@ -1,19 +1,19 @@
 {
   "hero": {
     "qualities": {
-      "low-prices": ["prezzi", "bassi"],
-      "speed": ["spedizione", "rapida"],
-      "reliability": ["affidabilità"],
-      "support": ["supporto", "dedicato"],
-      "test": ["usato", "testato"],
-      "security": ["acquista con", "sicurezza"]
+      "low-prices": "prezzi <br></br> bassi",
+      "speed": "spedizione <br></br> rapida",
+      "reliability": "affidabilità",
+      "support": "supporto <br></br> dedicato",
+      "test": "usato <br></br> testato",
+      "security": "acquista con <br></br> sicurezza"
     },
     "filters": {
       "category": {
-        "title": "filtra in base alla <b>categoria</b> dei ricambi"
+        "title": "filtra in base alla <red>categoria</red> dei ricambi"
       },
       "brand": {
-        "title": "filtra in base alla <b>marca</b> della tua auto"
+        "title": "filtra in base alla <red>marca</red> della tua auto"
       }
     }
   }

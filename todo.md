@@ -10,7 +10,6 @@
 # header
 
 - [x] rimuovere lingue inutili
-  - [ ] (aggiungere bandierine?)
 - [ ] link a google maps nell'indirizzo
 - [ ] link email e telefono
 - [ ] header modals ricambi e modelli
@@ -51,4 +50,4 @@
 - [ ] pagamento azienda (fattura elettronica)
 - [x] rendere non disponibili i prodotti sul gestionale
 - [x] svuotare il carrello (basandosi sui non disponibili)
-- [ ] email login con codice inutile
+- [x] email login con codice inutile
