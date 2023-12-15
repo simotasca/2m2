@@ -41,7 +41,7 @@ export async function getServerTranslation(
 }
 
 export function getCurrentLang() {
-  let lang = i18n.canonical;
+  let lang: string = i18n.canonical;
 
   if (headers().has("X-Locale-For-Next-I18N")) {
     lang = headers().get("X-Locale-For-Next-I18N")!;
