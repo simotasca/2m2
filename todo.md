@@ -4,11 +4,13 @@
 - [ ] preferiti salvabili
 - [ ] sottolineatura a tutti gli elementi clickabili
 - [ ] tradurre le categorie / tipologie / tutte le cose note del database
-- [ ] breadcrumbs pagina prodotto, l'intem del prodotto stesso non è clickabile
+- [x] breadcrumbs pagina prodotto, l'intem del prodotto stesso non è clickabile
+- [ ] prodotto condivisibile
 
 # header
 
-- [ ] rimuovere lingue inutili (aggiungere bandierine?)
+- [x] rimuovere lingue inutili
+  - [ ] (aggiungere bandierine?)
 - [ ] link a google maps nell'indirizzo
 - [ ] link email e telefono
 - [ ] header modals ricambi e modelli
@@ -24,7 +26,7 @@
 - [ ] featured products bottone sotto non funziona
 - [ ] sezione dei brand sopra quella dei pagamenti
 
-# sezione contatti
+## sezione contatti
 
 - [ ] i bottoni non fanno nulla
 
@@ -34,7 +36,7 @@
 
 # login / signup
 
-- [ ] password dimenticcata
+- [x] password dimenticata
 - [ ] registrazione
 - [ ] pagina area riservata (carrello, preferiti, anagrafica)
 
@@ -43,3 +45,10 @@
 - [x] pagina tutti i prodotti con filtri
 - [ ] visualizzare filtri attivi
 - [ ] ogni pagina con prodotti abilitare i filtri di ricerca
+
+# IMPORTANtI
+
+- [ ] pagamento azienda (fattura elettronica)
+- [x] rendere non disponibili i prodotti sul gestionale
+- [x] svuotare il carrello (basandosi sui non disponibili)
+- [ ] email login con codice inutile

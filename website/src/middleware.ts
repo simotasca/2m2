@@ -55,6 +55,7 @@ function isPageUrl(url: URL) {
   if (url.pathname.startsWith("/api/")) return false;
   if (url.pathname.startsWith("/favicon.ico")) return false;
   if (url.pathname.startsWith("/assets/")) return false;
+  if (url.pathname.startsWith("/auth-templates/")) return false;
   if (url.pathname.startsWith("/fonts/")) return false;
   return true;
 }

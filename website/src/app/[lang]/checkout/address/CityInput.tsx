@@ -3,7 +3,7 @@ import WizSelect, { WizSelectItem } from "../WizSelect";
 import { DeliveryAddress } from "./DeliveryAddressTab";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/database.types";
-import { ecodat } from "@/settings";
+import settings from "@/settings";
 import WizInput from "../WizInput";
 
 const citiesCache = new Map<string, WizSelectItem[]>();
@@ -40,7 +40,7 @@ export default function CityInput({
     address?.countryCode === "IT" &&
     address.province &&
     address.provinceCode &&
-    address.provinceCode !== ecodat.foreignProvince;
+    address.provinceCode !== settings.ecodat.foreignProvince;
 
   const loadCities = () => {
     canLoad && setLoading(true);
@@ -113,7 +113,7 @@ export default function CityInput({
         setAddress({
           ...address,
           city: e.target.value,
-          istat: ecodat.foreignIstat,
+          istat: settings.ecodat.foreignIstat,
         })
       }
       label="city"

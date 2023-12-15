@@ -8,9 +8,13 @@ export default {
   city: "Collecchio",
   province: "PR",
   country: "Italy",
-
   fullAddress() {
     return `${this.address}, ${this.cap} ${this.city} ${this.province}`;
+  },
+
+  openings: {
+    monTue: "08:30-12:30 / 14:40-17:30",
+    sat: "08:30-12:30",
   },
 
   ebay: "https://www.ebay.it/str/2m2ricambi",

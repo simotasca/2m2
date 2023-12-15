@@ -1,0 +1,19 @@
+@keyframes highlight-border {
+  0% {
+    @apply outline-transparent;
+  }
+  10% {
+    @apply outline-red-400;
+  }
+  100% {
+    @apply outline-transparent;
+  }
+}
+
+[data-box] {
+  @apply outline outline-2 -outline-offset-1 outline-transparent;
+}
+
+[data-box].highlight {
+  animation: highlight-border 1.5s cubic-bezier(1.000, 0.000, 0.465, 0.060) forwards;
+}

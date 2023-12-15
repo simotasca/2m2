@@ -46,7 +46,7 @@ export async function fetchEcodatArticles(
     <StrLoc2></StrLoc2>
     <StrLoc3></StrLoc3>
     <StrLoc4></StrLoc4>
-    <StrDisponibile></StrDisponibile>
+    <StrDisponibile>disponibile</StrDisponibile>
     <StrCodOE></StrCodOE>
     <NumeroPS></NumeroPS>
     <AnnoPs></AnnoPs>

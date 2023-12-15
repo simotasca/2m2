@@ -15,6 +15,7 @@ interface CartContext {
   removeAll: () => Promise<void>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  reload: () => Promise<void>;
 }
 
 export const CartContext = createContext<CartContext>({
@@ -30,4 +31,5 @@ export const CartContext = createContext<CartContext>({
   removeAll: async () => {},
   loading: false,
   setLoading: () => {},
+  reload: async () => {},
 });

@@ -7,11 +7,9 @@ import { redirect } from "next/navigation";
 export default async function LoginPage() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
-  if (user) redirect("/reserved");
+  if (data.user) redirect("/reserved");
 
   return <LoginForm />;
 }

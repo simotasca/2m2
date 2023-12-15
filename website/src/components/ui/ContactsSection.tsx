@@ -4,7 +4,7 @@ import iconPhone from "@/images/icons/phone-red.svg";
 import iconWhatsapp from "@/images/icons/whatsapp.svg";
 import iconTime from "@/images/icons/time.svg";
 import Button from "@/components/ui/Button";
-import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import settings from "@/settings";
 
 export default function ContactsSection() {
   return (
@@ -25,7 +25,7 @@ export default function ContactsSection() {
               <p>
                 <span className="text-sm leading-tight">Email: </span>
                 <span className="font-medium leading-tight">
-                  assistenza@2m2.com
+                  {settings.info.email}
                 </span>
               </p>
               <p className="text-sm text-neutral-500 leading-tight">
@@ -44,7 +44,7 @@ export default function ContactsSection() {
                 <span className="text-sm leading-tight">Telefono: </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium leading-tight">
-                  +39 374 9284720
+                  {settings.info.phone}
                 </span>
               </p>
               <p className="text-sm text-neutral-500 leading-tight">
@@ -63,7 +63,7 @@ export default function ContactsSection() {
                 <span className="text-sm leading-tight">Whatsapp: </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium leading-tight">
-                  +39 374 9284720
+                  {settings.info.phone}
                 </span>
               </p>
               <p className="text-sm text-neutral-500 leading-tight">
@@ -93,8 +93,9 @@ export default function ContactsSection() {
               <span> a </span>
               <b className="font-medium">Venerdì</b>
               <span className="text-neutral-600">
-                :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30 /
-                14:40-17:30
+                <span>: </span>
+                <br className="xs:hidden md:block lg:hidden" />
+                <span>{settings.info.openings.monTue}</span>
               </span>
             </p>
           </li>
@@ -106,9 +107,9 @@ export default function ContactsSection() {
             />
             <p>
               <b className="font-medium">Sabato</b>
-              <span className="text-neutral-600">
-                :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30
-              </span>
+              <span>: </span>
+              <br className="xs:hidden md:block lg:hidden" />
+              <span>{settings.info.openings.sat}</span>
             </p>
           </li>
         </ul>

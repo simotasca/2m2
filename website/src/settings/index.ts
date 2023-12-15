@@ -1,2 +1,9 @@
-export { default as info } from "./info";
-export { default as ecodat } from "./ecodat";
+import info from "./info";
+import ecodat from "./ecodat";
+
+const settings = {
+  info,
+  ecodat,
+};
+
+export default settings;

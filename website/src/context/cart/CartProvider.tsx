@@ -77,6 +77,14 @@ function CartProvider({
     }
   };
 
+  const reload = async () => {
+    fetch("/api/cart")
+      .then((res) => res.json())
+      .then((cart) => {
+        setCart(cart.products);
+      });
+  };
+
   const count = cart.length;
   const total = cart.reduce((a, b) => a + b.price, 0);
 
@@ -95,7 +103,9 @@ function CartProvider({
         setLoading,
         cart,
         setCart,
-      }}>
+        reload,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

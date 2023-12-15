@@ -1,23 +1,19 @@
 "use server";
 
+import CartList from "@/components/cart/CartList";
+import TopBar from "@/components/header/TopBar";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import CartProvider from "@/context/cart/CartProvider";
 import { Database } from "@/database.types";
-import {
-  User,
-  createServerComponentClient,
-} from "@supabase/auth-helpers-nextjs";
+import { getCart } from "@/lib/server/cart";
+import settings from "@/settings";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import imgLogo from "@/images/logo-dark.svg";
-import LogoutButton from "./LogoutButton";
-import TopBar from "@/components/header/TopBar";
-import Image from "next/image";
-import { twMerge } from "tailwind-merge";
 import { PropsWithChildren } from "react";
-import CartList from "@/components/cart/CartList";
-import CartProvider from "@/context/cart/CartProvider";
-import { getCart } from "@/lib/server/cart";
-import ContactsSection from "@/components/ui/ContactsSection";
+import { twMerge } from "tailwind-merge";
+import Header from "./Header";
+import "./box.css";
 
 export default async function ReservedPage() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -37,53 +33,88 @@ export default async function ReservedPage() {
 
       <Header user={user} />
 
-      <MaxWidthContainer className="bg-white p-8 pb-4">
-        <h1 className="uppercase font-bold text-2xl mb-6">
-          Your <span className="text-red-500">Dashboard</span>
-        </h1>
+      <MaxWidthContainer className="bg-white min-h-screen p-8 pb-4">
+        <div>
+          <h1 className="uppercase font-bold text-2xl mb-6">
+            Your <span className="text-red-500">Dashboard</span>
+          </h1>
 
-        <div className="grid grid-cols-12 gap-4">
-          {/* <Box className="col-span-12">
+          <div className="grid grid-cols-12 gap-4">
+            {/* <Box className="col-span-12">
             <BoxTitle>Elenco ordini</BoxTitle>
             <div className="grid grid-cols-5">
               <div>12/08/2012</div>
               <div>500€</div>
             </div>
           </Box> */}
-          <Box className="col-span-8">
-            <BoxTitle>I tuoi Preferiti</BoxTitle>
-          </Box>
-
-          <CartProvider cartProducts={cart.products} cartId={cart.id}>
-            <Box className="col-span-4">
-              <div className="flex items-center justify-between gap-4 mb-2">
-                <BoxTitle>Carrello</BoxTitle>
-                <p className="font-medium text-sm text-neutral-500 translate-y-px">
-                  <span className="text-xs">(</span>
-                  <span>0 products</span>
-                  <span className="text-xs">)</span>
-                </p>
-              </div>
-
-              <div className="max-h-[420px] overflow-y-auto">
-                <CartList />
-              </div>
+            <Box id="favourites" className="col-span-8">
+              <BoxTitle>I tuoi Preferiti</BoxTitle>
             </Box>
-          </CartProvider>
 
-          <Box className="col-span-6">
-            <BoxTitle>Dati utente</BoxTitle>
-          </Box>
+            <CartProvider cartProducts={cart.products} cartId={cart.id}>
+              <Box id="cart" className="col-span-4">
+                <div className="flex items-center justify-between gap-4 mb-2">
+                  <BoxTitle>Carrello</BoxTitle>
+                  <p className="font-medium text-sm text-neutral-500 translate-y-px">
+                    <span className="text-xs">(</span>
+                    <span>0 products</span>
+                    <span className="text-xs">)</span>
+                  </p>
+                </div>
 
-          <Box className="col-span-6">
-            <BoxTitle>contatti</BoxTitle>
-            <ContactsSection />
-          </Box>
+                <div className="max-h-[420px] overflow-y-auto">
+                  <CartList />
+                </div>
+              </Box>
+            </CartProvider>
+
+            <Box id="user-data" className="col-span-6">
+              <BoxTitle>Dati utente</BoxTitle>
+            </Box>
+
+            <Box id="contacts" className="col-span-6">
+              <BoxTitle>Contatti</BoxTitle>
+              <p>
+                <span className="text-sm leading-tight">Email: </span>
+                <span className="font-medium leading-tight">
+                  {settings.info.email}
+                </span>
+              </p>
+              <p>
+                <span className="text-sm leading-tight">Phone: </span>
+                <span className="font-medium leading-tight">
+                  {settings.info.phone}
+                </span>
+              </p>
+
+              <div className="h-3"></div>
+
+              <BoxTitle>Orari</BoxTitle>
+              <ul className="flex flex-col">
+                <li>
+                  Da <b className="font-medium">Lunedì</b>
+                  <span> a </span>
+                  <b className="font-medium">Venerdì</b>
+                  <span className="text-neutral-600">
+                    <span>: </span>
+                    <br className="xs:hidden md:block lg:hidden" />
+                    <span>{settings.info.openings.monTue}</span>
+                  </span>
+                </li>
+                <li>
+                  <b className="font-medium">Sabato</b>
+                  <span>: </span>
+                  <br className="xs:hidden md:block lg:hidden" />
+                  <span>{settings.info.openings.sat}</span>
+                </li>
+              </ul>
+            </Box>
+          </div>
+
+          {/* {data && <pre className="my-8">{JSON.stringify(data, null, 2)}</pre>} */}
         </div>
 
-        {data && <pre className="my-8">{JSON.stringify(data, null, 2)}</pre>}
-
-        <div className="text-center text-sm">
+        <div className="text-center text-sm mt-8">
           <span>© {new Date().getFullYear()} </span>
           <span>Autoricambi </span>
           <span>2</span>
@@ -100,38 +131,20 @@ function BoxTitle({ children }) {
 }
 
 function Box({
+  id,
   className,
   children,
-}: PropsWithChildren<{ className?: string }>) {
+}: PropsWithChildren<{ id?: string; className?: string }>) {
   return (
     <div
+      id={id}
+      data-box
       className={twMerge(
-        "border border-stone-300 bg-stone-p [box-shadow:0px_0px_3px_#00000020] p-4",
+        "border border-stone-300 bg-stone-p [box-shadow:0px_0px_3px_#00000020] p-4 w-full",
         className
-      )}>
+      )}
+    >
       {children}
-    </div>
-  );
-}
-
-function Header({ user }: { user: User }) {
-  return (
-    <div className="sticky top-0 bg-white shadow-md shadow-[#00000012] z-10">
-      <MaxWidthContainer className="flex gap-8 py-2 items-center">
-        <Image src={imgLogo} alt="logo 2emme2 autoricambi" className="w-16" />
-        <nav className="pt-1.5">
-          <ul className="flex gap-6 items-center text-sm font-medium">
-            <li>Preferiti</li>
-            <li>Carrello</li>
-            <li>Elenco ordini</li>
-            <li>Dati utente</li>
-            <li>Contatti</li>
-          </ul>
-        </nav>
-        <LogoutButton className="ml-auto pt-1.5 text-sm">
-          {user?.email}
-        </LogoutButton>
-      </MaxWidthContainer>
     </div>
   );
 }

@@ -1,6 +1,28 @@
 import { randomBytes } from "crypto";
 import { EcodatAction, fetchEcodat } from ".";
-import { ecodat } from "@/settings";
+import settings from "@/settings";
+
+/*
+  - [x] email
+  - [x] password
+  
+  - [x] cf (tax id)
+  - [x] phone
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+
+*/
 
 interface OrderApi {
   /** DataOraOrdine */
@@ -74,7 +96,7 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
   const codiceArbitrario = randomBytes(5).toString("hex").slice(0, 10);
 
   let xml = `
-    <IDDocumento>${ecodat.idDocument}</IDDocumento>
+    <IDDocumento>${settings.ecodat.idDocument}</IDDocumento>
     <DataOraOrdine>${dateTimeFormat(params.dateTime)}</DataOraOrdine>
     <CodiceOrdine>${codiceArbitrario}</CodiceOrdine>
     <FlgPrivato>${params.type === "personal" ? "true" : "false"}</FlgPrivato>
@@ -116,7 +138,6 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
       }
     }
   }
-  console.log("ORDER XML", xml);
 
   return fetchEcodat(EcodatAction.SEND_ORDER, xml, "");
 
@@ -162,7 +183,6 @@ function rigaOrdine(p: OrderProducts) {
 }
 
 function dateTimeFormat(date: Date) {
-  console.log("FORMATTO LA DATE", date);
   return [
     String(date.getDate()).padStart(2, "0"),
     String(date.getMonth()).padStart(2, "0"),

@@ -20,6 +20,11 @@ const routes = {
     `/category/${enc(category)}/${enc(name)}`,
   item: (category: string, type: string, name: string) =>
     `/category/${enc(category)}/${enc(type)}/${enc(name)}`,
+
+  login: () => "/login",
+  register: () => "/register",
+  passwordReset: () => "/reset-password",
+  reserved: () => "/reserved",
 } as const;
 
 export default routes;

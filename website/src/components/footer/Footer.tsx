@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { Database } from "@/database.types";
 import Button from "../ui/Button";
+import Link from "next/link";
+import routes from "@/lib/shared/routes";
 
 export default function Footer() {
   return (
@@ -63,24 +65,36 @@ export default function Footer() {
         <div className="flex max-xs:col-span-4 max-xs:px-4">
           <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <Link
+                href="#"
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <Link
+                href="#"
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <Link
+                href="#"
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 Search
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline underline-offset-4 cursor-pointer">
+              <Link
+                href="#"
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 Your cart
-              </a>
+              </Link>
             </li>
           </ul>
           <ul className="max-sm:hidden text-sm ml-auto mr-0">
@@ -251,24 +265,27 @@ function DropdownLogin({ small }: { small: boolean }) {
                   onClick={(e) => {
                     e.preventDefault();
                     togglePasswordVisibility();
-                  }}>
+                  }}
+                >
                   {pwInputType === "text" ? "hide" : "show"}
                 </button>
               </div>
 
-              <a
+              <Link
                 className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#">
+                href="#"
+              >
                 Forgot your password?
                 {/* TODO */}
-              </a>
+              </Link>
 
               {errorMessage && (
                 <p className="text-red-500 text-sm">{errorMessage}</p>
               )}
               <Button
                 type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white">
+                className="w-full font-normal text-sm bg-red-500 text-white"
+              >
                 Login
               </Button>
             </form>
@@ -277,11 +294,11 @@ function DropdownLogin({ small }: { small: boolean }) {
               <span className="text-neutral-400">or</span>
               <hr className="translate-y-px border-neutral-500" />
             </div>
-            <a href="/register">
+            <Link href={routes.register()}>
               <Button className="w-full font-medium text-sm bg-red-gradient text-white">
                 Register
               </Button>
-            </a>
+            </Link>
           </div>
         </section>
       )}

@@ -5,7 +5,7 @@ import { DeliveryAddress } from "./DeliveryAddressTab";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import WizSelect, { WizSelectItem } from "../WizSelect";
 import WizInput from "../WizInput";
-import { ecodat } from "@/settings";
+import settings from "@/settings";
 import { Database } from "@/database.types";
 
 export default function ProvinceInput({
@@ -85,7 +85,7 @@ export default function ProvinceInput({
         setAddress({
           ...address,
           province: e.target.value,
-          provinceCode: ecodat.foreignProvince,
+          provinceCode: settings.ecodat.foreignProvince,
         })
       }
       label="province"

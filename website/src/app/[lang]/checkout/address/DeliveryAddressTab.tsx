@@ -99,8 +99,6 @@ export const DeliveryAddressTab = forwardRef<
     });
   }, []);
 
-  useLogger(address, [address]);
-
   return (
     <div ref={tabRef} className="mb-2.5">
       <div className="flex items-start gap-2 mb-2">

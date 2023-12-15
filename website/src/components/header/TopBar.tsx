@@ -7,7 +7,7 @@ import iconPhone from "@/images/icons/white/phone.svg";
 import Image from "next/image";
 import Link from "next/link";
 import MaxWidthContainer from "../ui/MaxWidthContainer";
-import { info } from "@/settings";
+import settings from "@/settings";
 import i18n from "@/i18n";
 
 export default function TopBar() {
@@ -23,7 +23,8 @@ export default function TopBar() {
             <Link
               key={locale}
               href={"/" + locale === i18n.canonical ? "" : locale}
-              className={lang === locale ? activeLangClass : ""}>
+              className={lang === locale ? activeLangClass : ""}
+            >
               {locale}
             </Link>
           ))}
@@ -37,7 +38,7 @@ export default function TopBar() {
               alt="phone icon"
               className="w-3 opacity-80 translate-y-px"
             />
-            <p>{info.phone}</p>
+            <p>{settings.info.phone}</p>
           </div>
           <div className="flex items-center gap-1">
             <Image
@@ -45,7 +46,7 @@ export default function TopBar() {
               alt="email icon"
               className="w-4 opacity-80 translate-y-px"
             />
-            <p>{info.email}</p>
+            <p>{settings.info.email}</p>
           </div>
           <div className="flex items-center gap-1">
             <Image
@@ -53,7 +54,7 @@ export default function TopBar() {
               alt="location icon"
               className="w-4 opacity-80"
             />
-            <p>{info.fullAddress()}</p>
+            <p>{settings.info.fullAddress()}</p>
           </div>
         </div>
       </MaxWidthContainer>
