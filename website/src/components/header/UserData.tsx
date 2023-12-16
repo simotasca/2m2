@@ -225,9 +225,8 @@ function DropdownLogin({ small }: { small: boolean }) {
 
                 <Link
                   className="underline text-xs -mt-1.5 text-neutral-500"
-                  href="#">
+                  href={routes.passwordReset()}>
                   Forgot your password?
-                  {/* TODO */}
                 </Link>
 
                 {errorMessage && (

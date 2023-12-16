@@ -2,10 +2,10 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import imgLoad from "@/images/icons/loader.svg";
 import AuthLayout from "@/layouts/AuthLayout";
+import routes from "@/lib/shared/routes";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   DetailedHTMLProps,
@@ -101,21 +101,18 @@ export default function LoginForm() {
             />
           </Label>
 
-          <div className="w-full mt-3">
+          <Link
+            className="underline text-sm text-neutral-500"
+            href={routes.passwordReset()}>
+            Forgot your password?
+          </Link>
+
+          <div className="w-full mt-2">
             <Button
               type="submit"
               className="bg-red-500 text-white w-full font-medium gap-2"
               disabled={loading}>
               <span>Login</span>
-              {loading && (
-                <div className="translate-y-px">
-                  <Image
-                    alt=""
-                    src={imgLoad}
-                    className="w-4 aspect-square object-contain animate-spin filter invert"
-                  />
-                </div>
-              )}
             </Button>
 
             {errorMessage && (
@@ -126,11 +123,11 @@ export default function LoginForm() {
 
             <p className="text-sm text-center mt-4 mb-1">
               <span className="text-neutral-600">Dont have an account? </span>
-              <a
-                href="#"
-                className="font-semibold hover:underline underline-offset-[3px]">
+              <Link
+                href={routes.register()}
+                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
                 Register
-              </a>
+              </Link>
             </p>
           </div>
         </form>
