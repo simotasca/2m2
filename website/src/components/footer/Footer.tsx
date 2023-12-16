@@ -69,34 +69,30 @@ export default function Footer() {
             <li>
               <Link
                 href={routes.home()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 Home
               </Link>
             </li>
             <li>
               <Link
                 href={routes.about()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 About Us
               </Link>
             </li>
             <li>
               <Link
                 href={routes.products()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 Search
               </Link>
             </li>
             <li>
-              <Link
-                href={() => setIsOpen(true)}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+              <button
+                onClick={() => setIsOpen(true)}
+                className="hover:underline underline-offset-4 cursor-pointer">
                 Your cart
-              </Link>
+              </button>
             </li>
           </ul>
           <ul className="max-sm:hidden text-sm ml-auto mr-0">
@@ -108,62 +104,6 @@ export default function Footer() {
       <div className="h-12"></div>
 
       <ContactsSection />
-    </div>
-  );
-}
-
-export function Footerc() {
-  return (
-    <div className="bg-[#363636] text-white py-8 sm:py-14">
-      <MaxWidthContainer className="grid xs:grid-cols-[3fr_3fr_auto_3fr] sm:grid-cols-[2fr_3fr_auto_3fr] md:grid-cols-[4fr_5fr_auto_5fr] lg:[3fr_3fr_3fr_4fr]">
-        <div className="max-sm:col-span-full sm:col-span-1 flex sm:justify-center items-start max-sm:mb-10 max-sm:pl-6">
-          <Image className="w-20" src={logo2m2} alt="" />
-        </div>
-        <div className="max-sm:col-span-full sm:col-span-1 md:col-span-2 lg:col-span-1 max-lg:pl-6 ">
-          <h3 className="uppercase font-bold mb-2 leading-5">
-            Car Parts Categories
-          </h3>
-          <div className="flex flex-col gap-2 text-sm ">
-            {Object.keys(knownCategories).map((p) => (
-              <ul>
-                <li className="leading-4">{p}</li>
-              </ul>
-            ))}
-          </div>
-        </div>
-        <div className="hidden sm:w-24 md:w-0 lg:hidden"></div>
-        <div className="flex flex-col max-sm:col-span-4 sm:col-span-1 gap-2 max-sm:px-6 sm:pr-6 max-sm:pt-8">
-          <h3 className="uppercase font-bold">Our Conditions</h3>
-          <ul className="flex flex-col gap-1 text-sm">
-            <li>Terms and Conditions</li>
-            <li>Cooky Policy</li>
-            <li>Privacy Policy</li>
-          </ul>
-        </div>
-        {/* <div className="max-lg:hidden max-lg:w-10 lg:hidden"></div> */}
-        <div className="flex flex-col gap-1 col-span-4 lg:col-span-1 max-lg:pt-8">
-          <h3 className="uppercase font-bold max-lg:px-6">Login / Sign up</h3>
-          <div className="pr-6 max-lg:pl-6">
-            <DropdownLogin small />
-          </div>
-        </div>
-      </MaxWidthContainer>
-      <MaxWidthContainer>
-        <div className="bg-neutral-500 h-px mt-9 mb-3 max-xs:mx-4"></div>
-        <div className="flex max-xs:col-span-4 max-xs:px-4">
-          <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm">
-            <li>Home</li>
-            <li>About Us</li>
-            <li>Search</li>
-            <li>Your cart</li>
-          </ul>
-          <ul className="max-sm:hidden text-sm ml-auto mr-0">
-            <li>Powered By QuartoRaggio</li>
-          </ul>
-        </div>
-        <div className="h-12"></div>
-        <ContactsSection></ContactsSection>
-      </MaxWidthContainer>
     </div>
   );
 }
@@ -267,16 +207,14 @@ function DropdownLogin({ small }: { small: boolean }) {
                   onClick={(e) => {
                     e.preventDefault();
                     togglePasswordVisibility();
-                  }}
-                >
+                  }}>
                   {pwInputType === "text" ? "hide" : "show"}
                 </button>
               </div>
 
               <Link
                 className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#"
-              >
+                href="#">
                 Forgot your password?
                 {/* TODO */}
               </Link>
@@ -286,8 +224,7 @@ function DropdownLogin({ small }: { small: boolean }) {
               )}
               <Button
                 type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white"
-              >
+                className="w-full font-normal text-sm bg-red-500 text-white">
                 Login
               </Button>
             </form>
