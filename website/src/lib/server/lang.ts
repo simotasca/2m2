@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { getTranslationFactories } from "../shared/lang";
 
 export type TranslationsSpec = { [key: string]: string } | string;
+export type TranslationFactories = ReturnType<typeof getTranslationFactories>;
 
 export async function generateTranslations(
   id: TranslationsSpec,
@@ -12,7 +13,7 @@ export async function generateTranslations(
 export async function generateTranslations(
   id: TranslationsSpec,
   withFactories: true
-): Promise<[any, ReturnType<typeof getTranslationFactories>]>;
+): Promise<[any, TranslationFactories]>;
 
 export async function generateTranslations(
   id: TranslationsSpec,
