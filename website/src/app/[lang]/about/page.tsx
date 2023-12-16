@@ -8,17 +8,26 @@ import imgGarage from "@/images/officina.jpg";
 import imgSkew from "@/images/skew-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
+import { TranslationFactories, generateTranslations } from "@/lib/server/lang";
 import Image from "next/image";
 
-const translations = {};
-
 export default async function AboutPage() {
+  const [translations, { t, r }] = await generateTranslations(
+    {
+      product: "misc/product",
+      page: "pages/home",
+      categories: "misc/categories",
+      header: "misc/header",
+    },
+    true
+  );
+
   return (
     <ServerLayout translations={translations}>
       <PageLayout headerSmall={true}>
-        <Hero />
-        <MapSection />
-        <History />
+        <Hero t={t} r={r} />
+        <MapSection t={t} r={r} />
+        <History t={t} r={r} />
         <div className="bg-neutral-100 py-12 px-3 xs:px-6 [@media(min-width:847px)]:px-16 lg:px-24">
           <ContactsSection />
         </div>
@@ -27,7 +36,7 @@ export default async function AboutPage() {
   );
 }
 
-function Hero() {
+function Hero({ t, r }: TranslationFactories) {
   return (
     <div className="relative max-sm:px-2">
       <Image
@@ -71,7 +80,7 @@ function Hero() {
   );
 }
 
-function MapSection() {
+function MapSection({ t, r }: TranslationFactories) {
   return (
     <div className="relative">
       <div className="absolute w-[200%] h-full z-10 pointer-events-none [box-shadow:inset_0px_0px_12px_#000000f0] -translate-x-1/2"></div>
@@ -126,7 +135,7 @@ function MapSection() {
   );
 }
 
-function History() {
+function History({ t, r }: TranslationFactories) {
   return (
     <div className="relative">
       <div className="sm:absolute inset-0 grid grid-cols-10 -z-10">
