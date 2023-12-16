@@ -12,10 +12,12 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { Database } from "@/database.types";
 import Button from "../ui/Button";
+import useCart from "@/context/cart/useCart";
 import Link from "next/link";
 import routes from "@/lib/shared/routes";
 
 export default function Footer() {
+  const { setIsOpen } = useCart();
   return (
     <div className="bg-[#363636] text-white py-8 sm:py-14">
       <MaxWidthContainer className="bg-neutral-500 h-px mb-8 max-xs:mx-4"></MaxWidthContainer>
@@ -66,7 +68,7 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
             <li>
               <Link
-                href="#"
+                href={routes.home()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 Home
@@ -74,7 +76,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="#"
+                href={routes.about()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 About Us
@@ -82,7 +84,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="#"
+                href={routes.products()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 Search
@@ -90,7 +92,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="#"
+                href={() => setIsOpen(true)}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 Your cart
@@ -98,7 +100,7 @@ export default function Footer() {
             </li>
           </ul>
           <ul className="max-sm:hidden text-sm ml-auto mr-0">
-            <li>Powered By QuartoRaggio</li>
+            <li>© 2023 2M2 Ricambi. All rights reserved.</li>
           </ul>
         </div>
       </MaxWidthContainer>
