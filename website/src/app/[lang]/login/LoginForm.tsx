@@ -1,10 +1,9 @@
 "use client";
 
-import imgBg from "@/images/main-background-engine.jpg";
 import Button from "@/components/ui/Button";
-import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 import imgLoad from "@/images/icons/loader.svg";
-import iconLogo from "@/images/logo-dark.svg";
+import AuthLayout from "@/layouts/AuthLayout";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -70,84 +69,72 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="p-4 sm:p-8 z-10">
-        <Image
-          src={imgBg}
-          alt="backgorund cover"
-          className="fixed inset-0 w-full h-full object-cover -z-20"
-        />
-        <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 -z-10"></div>
-        <MaxWidthContainer className="max-w-sm z-20 bg-white p-4 rounded [box-shadow:0px_0px_100px_black]">
-          <Image
-            src={iconLogo}
-            alt="logo 2m2 autoricambi"
-            className="w-16 mx-auto"
-          />
+      <LoadingScreen loading={loading} message="logging in" />
 
-          <h1 className="text-xl text-center font-bold mt-3 mb-2 uppercase">
-            WELCOME <span className="text-red-500">BACK</span>
-          </h1>
+      <AuthLayout>
+        <AuthLayout.Image />
 
-          <form onSubmit={onSubmit} className="flex flex-col gap-2">
-            <Label text="email" required>
-              <Input
-                placeholder="email"
-                name="email"
-                type="email"
-                disabled={loading}
-                error={wrongCredentials}
-                onInput={() => setWrongCredentials(false)}
-              />
-            </Label>
+        <AuthLayout.Title>
+          WELCOME <span className="text-red-500">BACK</span>
+        </AuthLayout.Title>
 
-            <Label text="password" required>
-              <Input
-                placeholder="password"
-                name="password"
-                type="password"
-                disabled={loading}
-                error={wrongCredentials}
-                onInput={() => setWrongCredentials(false)}
-              />
-            </Label>
+        <form onSubmit={onSubmit} className="flex flex-col gap-2">
+          <Label text="email" required>
+            <Input
+              placeholder="email"
+              name="email"
+              type="email"
+              disabled={loading}
+              error={wrongCredentials}
+              onInput={() => setWrongCredentials(false)}
+            />
+          </Label>
 
-            <div className="w-full mt-3">
-              <Button
-                type="submit"
-                className="bg-red-500 text-white w-full font-medium gap-2"
-                disabled={loading}
-              >
-                <span>Login</span>
-                {loading && (
-                  <div className="translate-y-px">
-                    <Image
-                      alt=""
-                      src={imgLoad}
-                      className="w-4 aspect-square object-contain animate-spin filter invert"
-                    />
-                  </div>
-                )}
-              </Button>
+          <Label text="password" required>
+            <Input
+              placeholder="password"
+              name="password"
+              type="password"
+              disabled={loading}
+              error={wrongCredentials}
+              onInput={() => setWrongCredentials(false)}
+            />
+          </Label>
 
-              {errorMessage && (
-                <p className="text-red-500 mt-2 pl-px leading-tight text-sm">
-                  {errorMessage}
-                </p>
+          <div className="w-full mt-3">
+            <Button
+              type="submit"
+              className="bg-red-500 text-white w-full font-medium gap-2"
+              disabled={loading}>
+              <span>Login</span>
+              {loading && (
+                <div className="translate-y-px">
+                  <Image
+                    alt=""
+                    src={imgLoad}
+                    className="w-4 aspect-square object-contain animate-spin filter invert"
+                  />
+                </div>
               )}
+            </Button>
 
-              <p className="text-sm text-center mt-4 mb-1">
-                <span className="text-neutral-600">Dont have an account? </span>
-                <a
-                  href="#"
-                  className="font-semibold hover:underline underline-offset-[3px]"
-                >
-                  Register
-                </a>
+            {errorMessage && (
+              <p className="text-red-500 mt-2 pl-px leading-tight text-sm">
+                {errorMessage}
               </p>
-            </div>
-          </form>
-        </MaxWidthContainer>
-      </div>
+            )}
+
+            <p className="text-sm text-center mt-4 mb-1">
+              <span className="text-neutral-600">Dont have an account? </span>
+              <a
+                href="#"
+                className="font-semibold hover:underline underline-offset-[3px]">
+                Register
+              </a>
+            </p>
+          </div>
+        </form>
+      </AuthLayout>
     </>
   );
 }
