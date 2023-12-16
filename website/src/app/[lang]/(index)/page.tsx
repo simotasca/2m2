@@ -6,7 +6,7 @@ import { fetchEcodatArticles } from "@/lib/server/ecodat";
 import { shuffle } from "@/lib/shared/array";
 import { knownCategories } from "@/lib/shared/ecodat";
 
-const translations = { product: "misc/product", page: "pages/home" };
+const translations = { product: "misc/product", page: "pages/home", categories: "misc/categories" };
 
 export default async function HomePage() {
   const latestProducts = await fetchEcodatArticles({
