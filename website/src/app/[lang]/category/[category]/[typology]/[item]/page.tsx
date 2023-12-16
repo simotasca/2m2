@@ -119,7 +119,7 @@ export default async function ItemPage({
             />
             <div className="h-10"></div>
             <div className="max-sm:px-3">
-              <ContactsSection></ContactsSection>
+              <ContactsSection />
             </div>
             <div className="h-4"></div>
           </MaxWidthContainer>
