@@ -7,7 +7,6 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
-import SearchServerLayout from "@/layouts/search/SearchServerLayout";
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";

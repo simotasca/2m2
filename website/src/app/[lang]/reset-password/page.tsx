@@ -1,5 +1,8 @@
+import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
 import { SelectNewPassword } from "./SelectNewPassword";
 import { SendResetPassword } from "./SendResetPassword";
+
+const translations = {};
 
 export default async function ResetPassword({ searchParams }) {
   // if(searchParams.error) {
@@ -9,5 +12,9 @@ export default async function ResetPassword({ searchParams }) {
   //   return <ErrorSoRetry />
   // }
 
-  return searchParams.code ? <SelectNewPassword /> : <SendResetPassword />;
+  return (
+    <TranslationClientProvider id={translations}>
+      {searchParams.code ? <SelectNewPassword /> : <SendResetPassword />}
+    </TranslationClientProvider>
+  );
 }

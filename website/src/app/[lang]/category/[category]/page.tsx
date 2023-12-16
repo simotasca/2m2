@@ -67,7 +67,7 @@ export default async function CategoryPage({
             </div>
 
             <Title as="h1">
-              <Title.Gray>Products Category</Title.Gray>
+              <Title.Gray>Category</Title.Gray>
               <Title.Red> {category.name}</Title.Red>
             </Title>
 
@@ -80,8 +80,11 @@ export default async function CategoryPage({
                 categoryId: category.id,
               }}
             />
+
             <div className="h-10"></div>
-            <ContactsSection></ContactsSection>
+
+            <ContactsSection />
+
             <div className="h-4"></div>
           </MaxWidthContainer>
         </div>
@@ -89,36 +92,3 @@ export default async function CategoryPage({
     </ServerLayout>
   );
 }
-
-// function TitleSection({ category, types }) {
-//   return (
-//     <MaxWidthContainer>
-//       <div className="flex gap-6 pt-2 pb-1">
-//         <h2 className="font-oswald text-3xl font-semibold uppercase">
-//           <span className="text-red-700">category</span>
-//           <span className="text-gray-400"> {category.name}</span>
-//         </h2>
-//         <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
-//           Filters
-//           <Image
-//             className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
-//             alt=""
-//             src={iconRight}></Image>
-//         </Button>
-//         <ul className="flex gap-8  items-center font-poppins font-medium mt-auto mb-[2px] ml-auto mr-0">
-//           {types.map((t) => (
-//             <li>{t.name}</li>
-//           ))}
-//         </ul>
-//       </div>
-//     </MaxWidthContainer>
-//   );
-// }
-
-// function ProductsLine() {
-//   return (
-//     <section>
-//       <h2>Titolo a caso</h2>
-//     </section>
-//   );
-// }

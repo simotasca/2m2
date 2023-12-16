@@ -51,3 +51,5 @@
 - [x] rendere non disponibili i prodotti sul gestionale
 - [x] svuotare il carrello (basandosi sui non disponibili)
 - [x] email login con codice inutile
+
+- [ ] prodotti correlati nelle pagine di ricerca
