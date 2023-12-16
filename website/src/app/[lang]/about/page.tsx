@@ -14,10 +14,9 @@ import Image from "next/image";
 export default async function AboutPage() {
   const [translations, { t, r }] = await generateTranslations(
     {
-      product: "misc/product",
-      page: "pages/home",
-      categories: "misc/categories",
       header: "misc/header",
+      page: "pages/about",
+      contacts: "misc/contacts",
     },
     true
   );
@@ -48,32 +47,18 @@ function Hero({ t, r }: TranslationFactories) {
       <div className="min-h-[70vh] text-white grid items-end">
         <MaxWidthContainer className="py-12 ">
           <h1 className="text-4xl font-semibold max-w-2xl [text-shadow:0px_1px_8px_#00000099]">
-            Da <span className="text-red-600">50 anni</span> lavoriamo per
-            guadagnare la vostra fiducia
+            {r("page.hero.title")}
           </h1>
           <div className="h-3"></div>
           <p className="max-w-3xl [text-shadow:0px_1px_8px_black]">
-            <span>
-              Ci impegniamo a semplificare la tua esperienza nella ricerca di
-              autoricambi di alta qualità a
-            </span>
-            <b> prezzi convenienti. </b>
-            <span>
-              Grazie al nostro sistemi di ricerca, ti offriamo un servizio
-              rapido e affidabile, mettendo a tua disposizione una
-            </span>
-            <b> vasta selezione di prodotti </b>
-            <span>
-              per la tua auto. Trova ciò di cui hai bisogno con facilità,
-              velocità e la sicurezza di fare una scelta informata per il tuo
-              veicolo.
-            </span>
+            {r("page.hero.subtitle")}
           </p>
           <SearchModalToggle
-            as={Button}
-            className="bg-red-gradient px-10 py-1.5 mt-8 text-lg"
-          />
-          FAI LA TUA RICERCA
+            as="button"
+            className="bg-red-gradient px-10 py-1.5 mt-8 text-lg uppercase"
+          >
+            {r("page.hero.button")}{" "}
+          </SearchModalToggle>
         </MaxWidthContainer>
       </div>
     </div>
@@ -90,10 +75,10 @@ function MapSection({ t, r }: TranslationFactories) {
             <div className="max-lg:contents">
               <div className="[@media(max-width:700px)]:col-span-3 md:mt-auto md:mb-0 lg:my-0">
                 <h2 className="uppercase font-oswald text-5xl lg:-translate-x-0.5 md:ml-7 lg:ml-0">
-                  Dove siamo
+                  {r("page.map-section.title")}
                 </h2>
                 <p className="mt-1 mb-8 text-lg leading-tight md:ml-7 lg:ml-0">
-                  Riforniamo clienti in tutta Europa
+                  {r("page.map-section.subtitle")}
                 </p>
               </div>
 
@@ -101,25 +86,15 @@ function MapSection({ t, r }: TranslationFactories) {
                 <div className="bg-neutral-50 rounded shadow-md border border-neutral-300">
                   <ul className="grid md:grid-cols-3 lg:grid-cols-1 items-stretch px-6 py-2">
                     <li className="py-5 md:pr-4 font-bold text-lg xs:text-xl uppercase leading-[1] md:border-r border-r-px lg:border-r-0 border-r-bg-neutral-300">
-                      <span>Fino a </span>
-                      <span className="bg-red-gradient bg-clip-text text-transparent">
-                        10.912
-                      </span>
-                      <span> ordini al giorno</span>
+                      {r("page.map-section.numbers.orders")}
                     </li>
                     <li className="md:hidden lg:block h-px bg-neutral-300 md:my-4 lg:my-0"></li>
                     <li className="py-5 md:pl-4 lg:pl-0 md:pr-2 font-bold text-lg xs:text-xl uppercase leading-[1] md:border-r  border-r-px lg:border-r-0 border-r-bg-neutral-300">
-                      <span className="bg-red-gradient bg-clip-text text-transparent">
-                        + 10.912
-                      </span>
-                      <span> clienti soddisfatti</span>
+                      {r("page.map-section.numbers.clients")}
                     </li>
                     <li className="md:hidden lg:block h-px bg-neutral-300 md:my-4 lg:my-0"></li>
                     <li className="py-5 md:pl-4 lg:pl-0 font-bold text-lg xs:text-xl uppercase leading-[1]">
-                      <span className="bg-red-gradient bg-clip-text text-transparent">
-                        + 2.500.000
-                      </span>
-                      <span> ricambi di tutte le marche</span>
+                      {r("page.map-section.numbers.car-parts")}
                     </li>
                   </ul>
                 </div>
@@ -143,17 +118,9 @@ function History({ t, r }: TranslationFactories) {
           <MaxWidthContainer className="sm:hidden">
             <div className="text-white px-4 sm:px-10 max-sm:py-12 ">
               <h2 className="uppercase text-2xl font-bold mb-3">
-                LA NOSTRA STORIA
+                {t("page.history.title")}
               </h2>
-              <p>
-                Ci impegniamo a semplificare la tua esperienza nella ricerca di
-                autoricambi di alta qualità a prezzi convenienti. Grazie ai
-                nostri avanzati sistemi di ricerca, ti offriamo una scoperta
-                rapida e affidabile, mettendo a tua disposizione una vasta
-                selezione di prodotti per la tua auto. Trova ciò di cui hai
-                bisogno con facilità, velocità e la sicurezza di fare una scelta
-                informata per il tuo veicolo.
-              </p>
+              <p>{t("page.history.paragraph")}</p>
             </div>
           </MaxWidthContainer>
           <Image
@@ -174,17 +141,9 @@ function History({ t, r }: TranslationFactories) {
       <MaxWidthContainer className="max-sm:hidden grid sm:grid-cols-10 top-0">
         <div className="text-white px-10 py-24 col-span-5 lg:col-span-6 sm:mt-[20%] lg:my-0">
           <h2 className="uppercase text-2xl font-bold mb-3">
-            LA NOSTRA STORIA
+            {t("page.history.title")}
           </h2>
-          <p>
-            Ci impegniamo a semplificare la tua esperienza nella ricerca di
-            autoricambi di alta qualità a prezzi convenienti. Grazie ai nostri
-            avanzati sistemi di ricerca, ti offriamo una scoperta rapida e
-            affidabile, mettendo a tua disposizione una vasta selezione di
-            prodotti per la tua auto. Trova ciò di cui hai bisogno con facilità,
-            velocità e la sicurezza di fare una scelta informata per il tuo
-            veicolo.
-          </p>
+          <p>{t("page.history.paragraph")}</p>
         </div>
       </MaxWidthContainer>
     </div>
