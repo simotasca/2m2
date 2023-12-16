@@ -66,7 +66,7 @@ export default async function ModelPage({
   );
 
   return (
-    <ServerLayout>
+    <ServerLayout translations={translations}>
       <PageLayout headerSmall>
         <SearchModal />
 
