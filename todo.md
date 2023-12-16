@@ -53,3 +53,6 @@
 - [x] email login con codice inutile
 
 - [ ] prodotti correlati nelle pagine di ricerca
+
+- [ ] usare memo per cacheare tutte le millimila chiamate a ecodat
+      (già nextjs dovrebbe cacheare qualcosa?)

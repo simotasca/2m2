@@ -1,16 +1,37 @@
 import i18n from "@/i18n";
 import { headers } from "next/headers";
-import { walk } from "../shared/object";
+import { getTranslationFactories } from "../shared/lang";
 
-export async function getServerTranslationFactory(
-  id: string,
-  lang: string = getCurrentLang()
+export type TranslationsSpec = { [key: string]: string } | string;
+
+export async function generateTranslations(
+  id: TranslationsSpec,
+  withFactories?: false
+): Promise<[any]>;
+
+export async function generateTranslations(
+  id: TranslationsSpec,
+  withFactories: true
+): Promise<[any, ReturnType<typeof getTranslationFactories>]>;
+
+export async function generateTranslations(
+  id: TranslationsSpec,
+  withFactories = false
 ) {
-  const translations = await getServerTranslation(id, lang);
+  let value: any = {};
 
-  return function t(key: string) {
-    return walk(translations, key) || "";
-  };
+  if (typeof id === "string") {
+    value = await getServerTranslation(id);
+  } else {
+    for (const key of Object.keys(id)) {
+      value[key] = await getServerTranslation(id[key]);
+    }
+  }
+
+  value.currentLang = getCurrentLang();
+
+  if (withFactories === false) return [value];
+  else return [value, getTranslationFactories(value)];
 }
 
 const translationCache = new Map<string, Map<string, Object>>();

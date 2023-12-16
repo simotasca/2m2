@@ -1,13 +1,14 @@
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import SearchModal from "@/components/search/SearchModal";
-import SearchModalToggle from "@/components/search/SearchModalToggle";
+import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
@@ -56,8 +57,16 @@ export default async function ModelPage({
     },
   ];
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+    },
+    true
+  );
+
   return (
-    <ServerLayout>
+    <ServerLayout translations={translations}>
       <PageLayout headerSmall>
         <SearchModal />
 
@@ -66,7 +75,7 @@ export default async function ModelPage({
             <div className="pt-4 max-sm:pt-3 pb-2">
               <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
                 <Breadcrumbs items={bread} />
-                <SearchModalToggle />
+                <StyledSearchModalToggle />
               </div>
             </div>
 

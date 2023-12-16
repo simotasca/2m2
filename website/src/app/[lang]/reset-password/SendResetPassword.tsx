@@ -3,11 +3,9 @@
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { Database } from "@/database.types";
-import iconLogo from "@/images/logo-dark.svg";
 import AuthLayout from "@/layouts/AuthLayout";
 import { isEmail } from "@/lib/shared/object";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Image from "next/image";
 import { useState } from "react";
 import { Input } from "./Input";
 
@@ -52,13 +50,9 @@ export function SendResetPassword() {
       <LoadingScreen message="Loading" loading={loading} />
 
       <AuthLayout>
-        <Image
-          src={iconLogo}
-          alt="logo 2m2 autoricambi"
-          className="w-16 mx-auto"
-        />
+        <AuthLayout.Image />
 
-        <h1 className="text-xl text-center font-bold mt-4 mb-2 uppercase">
+        <AuthLayout.Title>
           {sent ? (
             <>
               <span>Check your </span>
@@ -70,7 +64,7 @@ export function SendResetPassword() {
               <span className="text-red-500">Password</span>
             </>
           )}
-        </h1>
+        </AuthLayout.Title>
 
         <p className="leading-5 mb-3 text-center">
           {sent ? (
