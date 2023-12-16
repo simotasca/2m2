@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { fetchEcodatArticle } from "@/lib/server/ecodat";
 import { EcodatArticle } from "@/lib/shared/ecodat";
 import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
+import { generateTranslations } from "@/lib/server/lang";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 
 interface Props {
   searchParams: { [key: string]: string };
 }
-
-const translations = {};
 
 export default async function CheckoutPage({ searchParams }: Props) {
   const productIds = decodeURIComponent(searchParams["p"])
@@ -30,9 +30,14 @@ export default async function CheckoutPage({ searchParams }: Props) {
     return notFound();
   }
 
+  const [translations] = await generateTranslations({
+    product: "misc/product",
+    header: "misc/header",
+  });
+
   return (
-    <TranslationClientProvider id={translations}>
+    <TranslationClientComponent value={translations}>
       <CheckoutClientPage products={products} />
-    </TranslationClientProvider>
+    </TranslationClientComponent>
   );
 }

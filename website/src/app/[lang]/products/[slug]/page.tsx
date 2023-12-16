@@ -1,10 +1,16 @@
 import ProductImage from "@/components/product/ProductImage";
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import SearchModal from "@/components/search/SearchModal";
-import SearchModalToggle from "@/components/search/SearchModalToggle";
+import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
+import Button from "@/components/ui/Button";
 import ContactsSection from "@/components/ui/ContactsSection";
 import GuaranteedUsed from "@/components/ui/GuaranteedUsed";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import { PaymentsBar } from "@/components/ui/PaymentsBar";
+import iconAvailable from "@/images/icons/available.svg";
+import iconFavorite from "@/images/icons/favorite.svg";
+import iconShare from "@/images/icons/share.svg";
+import iconCart from "@/images/icons/white/cart.svg";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import {
@@ -14,13 +20,13 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
 import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
 import SimilarProducts from "./SimilarProducts";
-import BuySection from "./BuySection";
-import TitleSection from "./TitleSection";
 
 interface Props {
   params: {
@@ -37,7 +43,6 @@ export default async function ProductPage({ params: { slug } }: Props) {
     return null;
   });
 
-  // TODO: se c'è un errore mostrare pagina di errore con status 500 anzichè not found */
   if (!product) return notFound();
 
   const categories = await fetchEcodatCategories()
@@ -91,8 +96,13 @@ export default async function ProductPage({ params: { slug } }: Props) {
     },
   ];
 
+  const [translations] = await generateTranslations({
+    product: "misc/product",
+    header: "misc/header",
+  });
+
   return (
-    <ServerLayout translations={{}}>
+    <ServerLayout translations={translations}>
       <PageLayout headerSmall>
         <SearchModal />
 
@@ -101,11 +111,20 @@ export default async function ProductPage({ params: { slug } }: Props) {
             <div className="pt-4 max-sm:pt-3 pb-2">
               <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
                 <Breadcrumbs items={bread} />
-                <SearchModalToggle />
+                <StyledSearchModalToggle />
               </div>
             </div>
 
-            <TitleSection product={product} />
+            <div>
+              <h1 className="font-bold text-2xl leading-[1.1] max-w-screen-md">
+                <span className="text-red-500">{product.item} </span>
+                <span>{product.brand + " " + product.model}</span>
+              </h1>
+              <p className="mb-1 mt-0.5 text-sm max-w-screen-md">
+                <span className="font-medium">description:</span>
+                <span className="text-neutral-600"> {product.description}</span>
+              </p>
+            </div>
 
             <hr className="my-3" />
 
@@ -181,5 +200,71 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function BuySection({ product }: { product: EcodatArticle }) {
+  return (
+    <aside className="font-sans order-2 row-span-2">
+      <div className="flex gap-1 items-center -mb-1">
+        <span className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm mb-[2px]">
+          Disponibile
+        </span>
+        <Image
+          className="w-4 sm:w-3 md:w-4"
+          src={iconAvailable}
+          alt="available icon"
+        />
+      </div>
+      <span className="font-semibold text-4xl sm:text-3xl md:text-4xl">
+        {product.price.toFixed(2)}€
+      </span>
+      <p className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm">
+        Tutti i prezzi includono l'IVA
+      </p>
+      <p className="font-bold text-lg sm:text-base md:text-lg uppercase -mt-[6px] whitespace-nowrap">
+        <span>SPEDIZIONE IN </span>
+        <span className="text-[#F03B3B]">
+          24<span className="text-sm">/</span>48 ORE
+        </span>
+      </p>
+      <div className="h-3"></div>
+      <div className="grid grid-cols-[auto_auto] leading-3">
+        <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
+          <Image
+            className="w-9 sm:w-5 md:w-7"
+            src={iconFavorite}
+            alt="favorite icon"
+          />
+          <span className=" text-xs leading-[1.1]">Aggiungi ai preferiti</span>
+        </div>
+        <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
+          <Image
+            className="w-6 sm:w-5 md:w-6"
+            src={iconShare}
+            alt="share icon"
+          />
+          <span className="text-xs leading-[1.1]">Condividi</span>
+        </div>
+      </div>
+      <div className="h-[10px]"></div>
+      <Button className="w-full text-sm bg-gradient-to-br from-red-700 to-red-500 text-white py-2 pb-1.5">
+        <div className="child:-translate-x-2 contents">
+          <Image
+            className="w-6 translate-y-px"
+            src={iconCart}
+            alt="icon-cart"
+          />
+          <span>AGGIUNGI</span>
+        </div>
+      </Button>
+      <div className="pt-2 flex justify-end pr-2 gap-2">
+        <span className="text-sm sm:text-xs md:text-sm">pagamenti:</span>
+        <PaymentsBar className="w-fit" />
+      </div>
+      {/* <p className="text-[#2e2d2d] underline text-xs">
+        puoi pagarlo alla consegna*
+      </p> */}
+    </aside>
   );
 }

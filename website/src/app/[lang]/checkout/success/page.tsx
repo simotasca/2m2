@@ -4,10 +4,13 @@ import Image from "next/image";
 import iconSuccess from "@/images/icons/success.svg";
 import routes from "@/lib/shared/routes";
 import CookieKiller from "./CookieKiller";
+import { generateTranslations } from "@/lib/server/lang";
 
 export default async function CheckoutSuccessPage({ searchParams }) {
+  const [translations] = await generateTranslations({});
+
   return (
-    <ServerLayout>
+    <ServerLayout translations={translations}>
       <PageLayout headerSmall>
         <CookieKiller />
 

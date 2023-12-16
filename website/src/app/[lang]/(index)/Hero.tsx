@@ -1,6 +1,6 @@
 import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
-import useTranslation, { rich } from "@/context/lang/useTranslation";
+import useTranslation from "@/context/lang/useTranslation";
 import iconBrand from "@/images/icons/sell.svg";
 import iconSend from "@/images/icons/send.svg";
 import iconGuaranteed from "@/images/icons/white/guaranteed.svg";
@@ -13,14 +13,13 @@ import iconCategory from "@/images/icons/widgets.svg";
 import imgLogoEsteso from "@/images/logo-esteso.svg";
 import mainBg from "@/images/main-background-engine.jpg";
 import imgSkew from "@/images/skew.svg";
+import { getFilters } from "@/lib/client/filters";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
-import { getFilters } from "@/lib/client/filters";
-import { SearchParams } from "@/lib/shared/search";
 
 export default function Hero() {
   const { t } = useTranslation("page.hero");
@@ -181,8 +180,7 @@ function HeroFilters() {
             className={twMerge(
               "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
               !brand && !category && "opacity-70"
-            )}
-          >
+            )}>
             Search
           </Button>
         </div>
@@ -213,8 +211,7 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"
-          ></Image>
+            className="absolute inset-0 w-full h-full object-cover"></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>

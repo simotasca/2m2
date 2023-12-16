@@ -6,6 +6,7 @@ import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
@@ -47,26 +48,41 @@ export default async function ModelPage({
     },
   ];
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      page: "pages/brand",
+      product: "misc/product",
+      header: "misc/header",
+    },
+    true
+  );
+
   return (
-    <ServerLayout>
+    <ServerLayout translations={translations}>
       <PageLayout headerSmall>
         <div className="bg-white pb-4 xs:px-2">
           <MaxWidthContainer>
             <Breadcrumbs className="py-4" items={bread} />
+
             <Title as="h1">
-              <Title.Gray>Brand</Title.Gray>
+              <Title.Gray>{t("page.title")}</Title.Gray>
               <Title.Red>{` ${brand.name}`}</Title.Red>
             </Title>
+
             <div className="h-4"></div>
+
             <PaginatedProductsGrid
               className="py-2"
               searchParams={searchParams}
               query={{ brandId: brand.id }}
             />
+
             <div className="h-10"></div>
+
             <div className="max-sm:px-3">
-              <ContactsSection></ContactsSection>
+              <ContactsSection />
             </div>
+
             <div className="h-4"></div>
           </MaxWidthContainer>
         </div>

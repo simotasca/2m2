@@ -1,4 +1,4 @@
-import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import { Database } from "@/database.types";
 import { getCart } from "@/lib/server/cart";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -7,9 +7,7 @@ import { PropsWithChildren } from "react";
 import ClientLayout from "./ClientLayout";
 
 type Props = PropsWithChildren<{
-  translations?: {
-    [key: string]: string;
-  };
+  translations?: any;
 }>;
 
 export default async function ServerLayout({ children, translations }: Props) {
@@ -18,10 +16,9 @@ export default async function ServerLayout({ children, translations }: Props) {
 
   return (
     <>
-      <TranslationClientProvider
-        id={{ ...(translations ?? {}), header: "misc/header" }}>
+      <TranslationClientComponent value={translations}>
         <ClientLayout cart={cart}>{children}</ClientLayout>
-      </TranslationClientProvider>
+      </TranslationClientComponent>
     </>
   );
 }

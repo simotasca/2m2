@@ -1,12 +1,13 @@
-import { TranslationClientProvider } from "@/context/lang/server";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { generateTranslations } from "@/lib/server/lang";
 import ErrorClientPage from "./ErrorClientPage";
 
 export default async function ServerErrorPage() {
-  const translations = {};
+  const [translations] = await generateTranslations({});
 
   return (
-    <TranslationClientProvider id={translations}>
+    <TranslationClientComponent value={translations}>
       <ErrorClientPage />
-    </TranslationClientProvider>
+    </TranslationClientComponent>
   );
 }

@@ -9,6 +9,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useState } from "react";
 import { Input } from "./Input";
+import Link from "next/link";
+import routes from "@/lib/shared/routes";
 
 export function SelectNewPassword() {
   const supabase = createClientComponentClient<Database>();
@@ -50,15 +52,9 @@ export function SelectNewPassword() {
       <LoadingScreen message="updating" loading={loading} />
 
       <AuthLayout>
-        <Image
-          src={iconLogo}
-          alt="logo 2m2 autoricambi"
-          className="w-16 mx-auto"
-        />
+        <AuthLayout.Image />
 
-        <h1 className="text-xl text-center font-bold mt-4 mb-3 uppercase">
-          Choose your new password
-        </h1>
+        <AuthLayout.Title>Choose your new password</AuthLayout.Title>
 
         {updated ? (
           <p className="leading-5 mb-3 text-center">updated!</p>
@@ -81,8 +77,7 @@ export function SelectNewPassword() {
                     href={new URL(
                       window.location.pathname,
                       window.origin
-                    ).toString()}
-                  >
+                    ).toString()}>
                     try again
                   </a>
                 )}
@@ -91,8 +86,7 @@ export function SelectNewPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => update()}
-            >
+              onClick={() => update()}>
               Confirm
             </Button>
           </>
