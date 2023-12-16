@@ -1,31 +1,30 @@
-import SearchServerLayout from "@/layouts/search/SearchServerLayout";
-import { fetchEcodatArticles } from "@/lib/server/ecodat";
-import { allowedParams } from "@/lib/shared/search";
+import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import SearchModalToggle from "@/components/search/SearchModalToggle";
+import ContactsSection from "@/components/ui/ContactsSection";
+import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import Title from "@/components/ui/Title";
+import PageLayout from "@/layouts/PageLayout";
+import ServerLayout from "@/layouts/base/ServerLayout";
+import { GenericSearchParams } from "@/lib/server/search";
+import { parseSearchParams } from "@/lib/shared/search";
+import { ProductsClientPage } from "./ProductsClientPage";
 
 interface Props {
-  searchParams: { [key: string]: string };
+  searchParams: GenericSearchParams;
 }
 
 export default async function ProductsPage({ searchParams }: Props) {
   const filters = parseSearchParams(searchParams);
+  const translations = {
+    page: "pages/products",
+    product: "misc/product",
+  };
 
-  const products = await fetchEcodatArticles({
-    fetchRow: { nRows: 10, lastRow: 0 },
-    ...filters,
-  });
-
-  return <SearchServerLayout products={products} />;
-}
-
-function parseSearchParams(params: { [key: string]: string }) {
-  let filters: any = {};
-  for (const allowed of allowedParams) {
-    if (allowed in params) {
-      const toInt = parseInt(params[allowed]);
-      if (!Number.isNaN(toInt)) {
-        filters[allowed] = toInt;
-      }
-    }
-  }
-  return filters;
+  return (
+    <ServerLayout translations={translations}>
+      <PageLayout headerSmall>
+        <ProductsClientPage searchParams={searchParams} filters={filters} />
+      </PageLayout>
+    </ServerLayout>
+  );
 }

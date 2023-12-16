@@ -11,10 +11,10 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { Database } from "@/database.types";
-
 import Button from "../ui/Button";
-import routes from "@/lib/shared/routes";
 import useCart from "@/context/cart/useCart";
+import Link from "next/link";
+import routes from "@/lib/shared/routes";
 
 export default function Footer() {
   const { setIsOpen } = useCart();
@@ -31,13 +31,13 @@ export default function Footer() {
           <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
             Car Parts Categories
           </h3>
-          <div className="flex flex-col gap-2 text-sm ">
+          <ul className="flex flex-col gap-2 text-sm">
             {Object.keys(knownCategories).map((p) => (
-              <ul>
-                <li className="leading-4 whitespace-nowrap">{p}</li>
-              </ul>
+              <li key={p} className="leading-4 whitespace-nowrap">
+                {p}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div>
@@ -67,36 +67,36 @@ export default function Footer() {
         <div className="flex max-xs:col-span-4 max-xs:px-4">
           <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
             <li>
-              <a
+              <Link
                 href={routes.home()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href={routes.about()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href={routes.products()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 Search
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                onClick={() => setIsOpen(true)}
+              <Link
+                href={() => setIsOpen(true)}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
                 Your cart
-              </a>
+              </Link>
             </li>
           </ul>
           <ul className="max-sm:hidden text-sm ml-auto mr-0">
@@ -273,13 +273,13 @@ function DropdownLogin({ small }: { small: boolean }) {
                 </button>
               </div>
 
-              <a
+              <Link
                 className="underline text-xs -mt-1.5 text-neutral-100"
                 href="#"
               >
                 Forgot your password?
                 {/* TODO */}
-              </a>
+              </Link>
 
               {errorMessage && (
                 <p className="text-red-500 text-sm">{errorMessage}</p>
@@ -296,11 +296,11 @@ function DropdownLogin({ small }: { small: boolean }) {
               <span className="text-neutral-400">or</span>
               <hr className="translate-y-px border-neutral-500" />
             </div>
-            <a href="/register">
+            <Link href={routes.register()}>
               <Button className="w-full font-medium text-sm bg-red-gradient text-white">
                 Register
               </Button>
-            </a>
+            </Link>
           </div>
         </section>
       )}

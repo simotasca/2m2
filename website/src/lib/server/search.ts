@@ -1,8 +1,8 @@
-export interface SearchParams {
-  [key: string]: string | string[] | undefined;
+export interface GenericSearchParams {
+  [key: string]: string | undefined;
 }
 
-export function getCurrentPage(searchParams?: SearchParams) {
+export function getCurrentPage(searchParams?: GenericSearchParams) {
   if (!searchParams) return 1;
   let pageQueryParam = searchParams["page"];
   if (pageQueryParam && typeof pageQueryParam !== "string") {

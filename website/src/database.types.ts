@@ -14,19 +14,16 @@ export interface Database {
           created_at: string
           customer_id: string | null
           id: number
-          ip: string | null
         }
         Insert: {
           created_at?: string
           customer_id?: string | null
           id?: number
-          ip?: string | null
         }
         Update: {
           created_at?: string
           customer_id?: string | null
           id?: number
-          ip?: string | null
         }
         Relationships: [
           {
@@ -95,6 +92,110 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      municipality: {
+        Row: {
+          created_at: string
+          id: number
+          id_province: number
+          istat: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          id_province: number
+          istat: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          id_province?: number
+          istat?: number
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "municipality_id_province_fkey"
+            columns: ["id_province"]
+            referencedRelation: "province"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      nation: {
+        Row: {
+          code: string
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      province: {
+        Row: {
+          code: string
+          created_at: string
+          id: number
+          id_region: number
+          istat: number
+          name: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: number
+          id_region: number
+          istat: number
+          name: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: number
+          id_region?: number
+          istat?: number
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "province_id_region_fkey"
+            columns: ["id_region"]
+            referencedRelation: "region"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      region: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
       }
     }
     Views: {

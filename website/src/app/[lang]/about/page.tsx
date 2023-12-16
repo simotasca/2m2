@@ -1,10 +1,12 @@
 import ServerLayout from "@/layouts/base/ServerLayout";
-import ClientPage from "./ClientPage";
+import AboutClientPage from "./AboutClientPage";
+
+const translations = {};
 
 export default async function AboutPage() {
   return (
-    <ServerLayout>
-      <ClientPage />
+    <ServerLayout translations={translations}>
+      <AboutClientPage />
     </ServerLayout>
   );
 }

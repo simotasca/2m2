@@ -10,27 +10,23 @@ export async function POST(req: NextRequest) {
   const metadata = body.metadata || {};
 
   if (!amount) {
-    return new Response("missing valid payment intent amount", {
-      status: 400,
-    });
+    return errorResponse(400, "missing valid payment intent amount");
   }
 
   if (!checkMetadata(metadata)) {
-    return new Response("invalid payment metadata", {
-      status: 400,
-    });
+    return errorResponse(400, "invalid payment metadata");
   }
 
   let paymentIntent: Stripe.Response<Stripe.PaymentIntent>;
   try {
     paymentIntent = await stripe.paymentIntents.create({
       currency: "eur",
-      amount,
+      amount: amount * 100,
       automatic_payment_methods: { enabled: true },
       metadata,
     });
   } catch (e: any) {
-    return new Response("Error creating payment intent", { status: 500 });
+    return errorResponse(500, "Error creating payment intent", e);
   }
 
   return new Response(
@@ -53,7 +49,28 @@ function checkMetadata(meta: any) {
     ?.map((id) => Number(id))
     ?.filter((id) => !Number.isNaN(id));
 
-  return !!prodIds?.length && !!meta.email;
+  return (
+    !!prodIds?.length &&
+    !!meta.email &&
+    !!meta.street &&
+    !!meta.number &&
+    !!meta.city &&
+    !!meta.zip &&
+    !!meta.cf &&
+    !!meta.countryCode &&
+    !!meta.provinceCode &&
+    !!meta.istat &&
+    !!meta.name &&
+    !!meta.surname
+  );
+}
+
+function errorResponse(code: number, msg: string, e?: any) {
+  e && console.error(e.message);
+  return new Response(msg, {
+    status: code,
+    statusText: msg,
+  });
 }
 
 /**

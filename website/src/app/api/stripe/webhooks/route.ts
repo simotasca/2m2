@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripeInstance } from "../init-stripe";
-import { sendEcodatOrder } from "@/lib/server/ecodat/ordine";
-import { EcodatArticle } from "@/lib/shared/ecodat";
-import { fetchEcodatArticle } from "@/lib/server/ecodat";
 import PaymentManager from "./PaymentManager";
 
 const endpointSecret = "whsec_2151H2weXnxbxL61soAAJN3uKTXNtGiO";
@@ -29,7 +26,7 @@ export async function POST(req: NextRequest) {
     );
   } catch (err: any) {
     return new NextResponse(`Webhook Error: ${err.message}`, {
-      status: 400,
+      status: 500,
     });
   }
 
@@ -55,10 +52,4 @@ async function handlePaymentIntentSucceeded(paymentIntent: any) {
   console.log(`PAYMENT RECEIVED ${paymentIntent.id}: ${paymentIntent.amount}€`);
   console.log("ocho:", paymentIntent);
   PaymentManager.add(paymentIntent);
-
-  // ottenimento prodotti dal gestionale
-  // aggiornamento gestionale
-  // email a ecodat se s'è un errore
-  // email al customer
-  // svuotare carrello
 }

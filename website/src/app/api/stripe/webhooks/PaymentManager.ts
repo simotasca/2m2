@@ -1,4 +1,5 @@
 import { fetchEcodatArticle } from "@/lib/server/ecodat";
+import { fetchEcodatAvalability } from "@/lib/server/ecodat/disponabilita";
 import { sendEcodatOrder } from "@/lib/server/ecodat/ordine";
 import { sendMail } from "@/lib/server/mail";
 import { EcodatArticle } from "@/lib/shared/ecodat";
@@ -9,6 +10,7 @@ const stages = [
   "ORDER_SENT",
   "SELLER_NOTIFIED_FOR_ERROR",
   "CUSTOMER_NOTIFIED",
+  "PRODUCTS_DISABLED",
   "CART_EMPTY",
   "ERROR",
   "COMPLETE",
@@ -26,6 +28,7 @@ interface Payment {
 
   productIds: string[];
   products: EcodatArticle[];
+  disabledIds: number[];
 }
 
 const MAX_ATTEMPTS = 5;
@@ -37,7 +40,8 @@ export default class PaymentManager {
     ["UNPROCESSED", this.obtainProducts],
     ["PRODUCTS_OBTAINED", this.sendEcodatOrder],
     ["ORDER_SENT", this.notifyCustomer],
-    ["CUSTOMER_NOTIFIED", this.emptyCart],
+    ["CUSTOMER_NOTIFIED", this.disableProducts],
+    ["PRODUCTS_DISABLED", this.emptyCart],
     ["CART_EMPTY", this.complete],
     ["ERROR", this.notifySellerForError],
     ["SELLER_NOTIFIED_FOR_ERROR", this.complete],
@@ -48,6 +52,8 @@ export default class PaymentManager {
    * this automatically starts the manager queue
    */
   public static add(paymentIntent: any) {
+    console.log("TOOK IN CHARGE:", paymentIntent);
+
     this.start();
     this.queuePayment({
       // TODO: stripe payment id
@@ -56,6 +62,7 @@ export default class PaymentManager {
       meta: paymentIntent.metadata,
       products: [],
       productIds: paymentIntent.metadata.products.split(";"),
+      disabledIds: [],
       attempts: 0,
     });
   }
@@ -139,26 +146,35 @@ export default class PaymentManager {
   }
 
   private static async sendEcodatOrder(payment: Payment) {
+    // MISSINO
+    // CF
+
     // TODO
     await sendEcodatOrder({
       type: "personal",
-      address: "via sottocorno",
-      civic: "60",
-      city: "sesto san giovanni",
-      cap: "20099",
-      cf: "TSCSMN96E20F205S",
-      countryId: "IT",
-      provinceId: "MI",
-      cityId: 20099,
+      address: payment.meta.street,
+      civic: payment.meta.number,
+      city: payment.meta.city,
+      cap: payment.meta.zip,
+      cf: payment.meta.cf,
+      countryCode: payment.meta.countryCode,
+      provinceCode: payment.meta.provinceCode,
+      cityIstat: payment.meta.istat,
       dateTime: new Date(),
-      email: "simo.tasca@gmail.com",
-      name: "Simone",
-      surname: "Tasca",
-      notes: "PRIMO ORDINE DEMO",
-      products: [],
+      email: payment.meta.email,
+      name: payment.meta.name,
+      surname: payment.meta.surname,
+      phone: payment.meta.phone || undefined,
+      notes: payment.meta.notes || undefined,
+      products: payment.products.map((p) => ({
+        id: p.id.toString(),
+        description: p.description,
+        oeCode: p.oeCode,
+        price: p.price.toString(),
+        quantity: "1",
+      })),
     })
       .then(() => {
-        console.log("ORDER SENT");
         payment.stage = "ORDER_SENT";
       })
       .catch((err) => {
@@ -169,7 +185,7 @@ export default class PaymentManager {
 
   private static async notifySellerForError(payment: Payment) {
     payment.errorMessage = "BEtteR foRMaAHT\n" + payment.errorMessage;
-    console.error("FATAL ERRROR AFTEER MAX ATTEMSP", payment.errorMessage);
+    console.error("FATAL ERRROR AFTEER MAX ATTEMSP\n", payment.errorMessage);
 
     await sendMail("simo.tasca@gmail.com", "notiffica di ERRORRR", {
       text: payment.errorMessage,
@@ -197,6 +213,23 @@ export default class PaymentManager {
   private static async emptyCart(payment: Payment) {
     // skip for now
     // throw new Error("todo");
+    payment.stage = "CART_EMPTY";
+  }
+
+  private static async disableProducts(payment: Payment) {
+    for (const product of payment.products) {
+      if (payment.disabledIds.includes(product.id)) continue;
+      try {
+        await fetchEcodatAvalability(product.id, false);
+        payment.disabledIds.push(product.id);
+      } catch (err: any) {
+        payment.errorMessage =
+          "Impossibile rendere non disponibili i prodotti acquistati: " +
+          err.message;
+        break;
+      }
+    }
+    payment.stage = "PRODUCTS_DISABLED";
   }
 
   private static async complete(payment: Payment) {

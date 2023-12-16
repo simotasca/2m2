@@ -85,12 +85,24 @@ function ElementsWrapper({
         metadata: metadata,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        switch (res.status) {
+          case 400:
+            throw new Error("Bad Request: " + res.statusText);
+          case 500:
+            throw new Error("Internal Server Error: " + res.statusText);
+          default:
+            return res.json();
+        }
+      })
       .then((data) => {
+        console.log(data);
         setTotalPrice(data.amount);
         setClientSecret(data.secret);
       })
-      .catch((err) => console.error("error generating payment intent", err));
+      .catch((err) =>
+        console.error("ERROR: could not generate payment intent:", err)
+      );
   }, [setClientSecret, amount, metadata]);
 
   if (!clientSecret || !stripePromise) return <LoadingSpinner />;
@@ -114,7 +126,8 @@ function ElementsWrapper({
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance, fonts }}>
+      options={{ clientSecret, appearance, fonts }}
+    >
       <CheckoutForm email={email} totalPrice={totalPrice} />
     </Elements>
   );

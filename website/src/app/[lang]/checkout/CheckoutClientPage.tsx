@@ -16,7 +16,10 @@ import {
 } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import { CheckoutTab } from "./CheckoutTab";
-import { DeliveryAddress, DeliveryAddressTab } from "./DeliveryAddressTab";
+import {
+  DeliveryAddress,
+  DeliveryAddressTab,
+} from "./address/DeliveryAddressTab";
 import { PersonalInfoTab, type PersonalInfo } from "./PersonalInfoTab";
 import WizTabValidator from "./WizTabHandle";
 
@@ -96,14 +99,14 @@ export default function CheckoutClientPage({ products }: Props) {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="min-h-screen">
       <Image
         src={imgBg}
         alt="backgorund cover"
         className="fixed inset-0 w-full h-full object-cover -z-20"
       />
       <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 -z-10"></div>
-      <div className="p-8">
+      <div className="p-8 overflow-hidden">
         <div className="max-w-screen-md mx-auto flex flex-col gap-3 pt-5 py-6 px-4 md:px-8 bg-white overflow-hidden">
           <Breadcrumbs wizStep={wizStep} changeWizStep={changeWizStep} />
           {/* split panel */}
@@ -113,12 +116,14 @@ export default function CheckoutClientPage({ products }: Props) {
               className={twMerge(
                 "relative transition-transform duration-200",
                 hideWiz && "-translate-x-5"
-              )}>
+              )}
+            >
               {currWizard}
               {wizStep < wizard.length - 1 && (
                 <Button
                   onClick={() => changeWizStep((s) => s + 1)}
-                  className="bg-red-gradient text-white max-sm:ml-auto mr-0">
+                  className="bg-red-gradient text-white max-sm:ml-auto mr-0"
+                >
                   Next
                 </Button>
               )}
@@ -129,7 +134,8 @@ export default function CheckoutClientPage({ products }: Props) {
                   hideWiz
                     ? "opacity-100 pointer-events-none"
                     : "opacity-0 pointer-events-none"
-                )}></div>
+                )}
+              ></div>
             </div>
             {/* order details */}
             <OrderDetails
@@ -212,7 +218,7 @@ function OrderDetails({
             </p>
             <p>{deliveryAddress.country}</p>
             <p>
-              {deliveryAddress.city} ({deliveryAddress.province}),{" "}
+              {deliveryAddress.city} ({deliveryAddress.provinceCode}),{" "}
               {deliveryAddress.zip}
             </p>
             <p>
@@ -267,7 +273,8 @@ function Breadcrumbs({ wizStep, changeWizStep }) {
         <Image
           className="max-sm:hidden w-12"
           alt="logo 2m2"
-          src={imgLogo}></Image>
+          src={imgLogo}
+        ></Image>
       </div>
     </div>
   );
@@ -287,7 +294,8 @@ function BreadcrumbStep({
         curr > n && "text-dark"
       )}
       disabled={curr <= n}
-      onClick={() => change(() => n)}>
+      onClick={() => change(() => n)}
+    >
       {children}
     </button>
   );

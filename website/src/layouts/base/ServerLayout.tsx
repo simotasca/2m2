@@ -16,12 +16,10 @@ export default async function ServerLayout({ children, translations }: Props) {
   const supabase = createServerComponentClient<Database>({ cookies: cookies });
   const cart = await getCart(supabase);
 
-  translations = translations ?? {};
-
   return (
     <>
       <TranslationClientProvider
-        id={{ ...translations, header: "misc/header" }}>
+        id={{ ...(translations ?? {}), header: "misc/header" }}>
         <ClientLayout cart={cart}>{children}</ClientLayout>
       </TranslationClientProvider>
     </>

@@ -1,8 +1,8 @@
 import iconUser from "@/images/icons/user.svg";
+import { isEmail } from "@/lib/shared/object";
 import Image from "next/image";
 import React, {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -23,8 +23,6 @@ export interface PersonalInfoParams {
   setPersonalInfo: React.Dispatch<PersonalInfo>;
 }
 
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-
 export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
   ({ personalInfo, setPersonalInfo }, ref) => {
     const [showErrors, setShowErrors] = useState(false);
@@ -40,7 +38,7 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
               !!personalInfo.name &&
               !!personalInfo.surname &&
               !!personalInfo.email &&
-              !!personalInfo.email.match(emailRegex)?.length
+              isEmail(personalInfo.email)
             );
           },
           focus: () => tabRef.current?.querySelector("input")?.focus(),
@@ -60,6 +58,7 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
 
         <div className="flex flex-col gap-1">
           <WizInput
+            id="txt-name"
             value={personalInfo.name || ""}
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, name: e.target.value })
@@ -74,6 +73,7 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             required={true}
           />
           <WizInput
+            id="txt-surname"
             value={personalInfo.surname || ""}
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, surname: e.target.value })
@@ -88,6 +88,22 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             required={true}
           />
           <WizInput
+            id="txt-cf"
+            value={personalInfo.cf || ""}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, cf: e.target.value })
+            }
+            label="cf"
+            placeholder="tax id."
+            type="text"
+            name="cf"
+            errorMessage={
+              showErrors && !personalInfo.cf ? "required" : undefined
+            }
+            required={true}
+          />
+          <WizInput
+            id="txt-email"
             value={personalInfo.email || ""}
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, email: e.target.value })
@@ -100,7 +116,7 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
               showErrors
                 ? !personalInfo.email
                   ? "required"
-                  : !personalInfo.email.match(emailRegex)?.length
+                  : !isEmail(personalInfo.email)
                   ? "invalid email"
                   : undefined
                 : undefined
@@ -108,6 +124,7 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             required={true}
           />
           <WizInput
+            id="txt-phone"
             value={personalInfo.phone || ""}
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, phone: e.target.value })

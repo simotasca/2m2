@@ -13,46 +13,45 @@ export default function SearchBar() {
   return (
     <div
       onClick={openSearchModal}
-      className="h-full rounded border border-neutral-500 bg-white flex items-stretch"
-    >
-      <label
-        htmlFor="header-search-bar"
-        className="flex-shrink-0 flex items-center h-full [@media(max-width:930px)]:hidden"
-      >
-        <Image src={iconSearch} alt="search icon" className="w-5 mx-3 mt-0.5" />
-      </label>
+      className="flex max-xs:hidden rounded border border-neutral-500 bg-white">
+      <Image
+        src={iconSearch}
+        alt="search icon"
+        className="w-5 mx-3 mt-0.5 max-lg:hidden"
+      />
+
       <div className="relative flex items-center flex-1 mr-2 md:mr-4">
-        <div className="absolute top-1/2 translate-y-3 w-full h-px bg-neutral-300 max-md:hidden [@media(max-width:930px)]:ml-2"></div>
+        <div className="absolute top-1/2 translate-y-3 w-full h-px bg-neutral-300 max-md:hidden max-lg:ml-2"></div>
         <input
           id="header-search-bar"
           type="text"
-          className=" w-full focus:outline-none placeholder:text-neutral-500 text-neutral-700 max-md:ml-2 max-xs:py-0.5 xs:py-1 md:py-0 max-sm:placeholder:text-sm [@media(max-width:930px)]:ml-2"
+          className="w-full focus:outline-none placeholder:text-neutral-500 text-neutral-700 max-lg:ml-2 max-xs:py-0.5 xs:py-1 md:py-0 max-sm:placeholder:text-sm"
           placeholder={t("header.search-bar.placeholder")}
         />
       </div>
-      <button className="flex items-center px-3 [@media(min-width:930px)]:px-6 bg-gradient-to-br from-red-700 to-red-500 text-white font-bold">
+
+      <button className="flex items-center px-3 lg:px-6 bg-gradient-to-br from-red-700 to-red-500 text-white font-bold">
         <Image
           src={iconSearch}
           alt=""
-          className="w-5 translate-y-px translate-x-px filter invert brightness-0 opacity-90"
+          className="w-5 translate-y-px translate-x-px filter invert brightness-0 opacity-90 lg:hidden"
         />
-        <span className="[@media(max-width:930px)]:hidden">
-          {t("header.search-bar.search")}
-        </span>
+        <span className="max-lg:hidden">{t("header.search-bar.search")}</span>
       </button>
-      <button className="h-full outline-none flex items-center px-3 [@media(min-width:930px)]:px-6 bg-neutral-800 text-white font-medium">
+
+      <button className="h-full outline-none flex items-center px-3 lg:px-6 bg-neutral-800 text-white font-medium">
         <Image
           src={iconFilters}
           alt=""
-          className="[@media(min-width:930px)]:hidden filters invert w-5"
+          className="lg:hidden filters invert w-5"
         />
-        <span className="[@media(max-width:930px)]:hidden">
+        <span className="max-lg:hidden">
           {t("header.search-bar.filters.title")}
         </span>
         <Image
           src={iconDown}
           alt="dropdown icon"
-          className="w-4 ml-1 translate-y-px [@media(max-width:930px)]:hidden"
+          className="w-4 ml-1 translate-y-px max-lg:hidden"
         />
       </button>
     </div>

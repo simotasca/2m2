@@ -25,8 +25,7 @@ export default function Product({ product }: Props) {
   return (
     <Link
       href={routes.product(product)}
-      className="group focus:outline-none cursor-pointer"
-    >
+      className="group focus:outline-none cursor-pointer">
       <div className="flex flex-col h-full px-3 pt-2 pb-4 bg-white shadow-md border border-neutral-300 group-hover:border-[rgb(180,180,180)] rounded group-focus:border-red-400">
         <span className="text-xs font-semibold capitalize">
           {t("code")} {"#" + (product.oeCode || "")}
@@ -39,7 +38,7 @@ export default function Product({ product }: Props) {
           {productName(product)}
         </b>
         <div className="text-red-600 text-xl font-bold my-auto text-center">
-          <p className="pb-2.5 pt-2">€{product.price.toFixed(2)}</p>
+          <p className="pb-2.5 pt-2">{product.price.toFixed(2)}€</p>
         </div>
         <div className="flex gap-1">
           <Button
@@ -55,8 +54,7 @@ export default function Product({ product }: Props) {
               hasProduct(product)
                 ? "bg-white text-red-600 border-red-600"
                 : "bg-red-gradient text-white border-0"
-            )}
-          >
+            )}>
             {hasProduct(product) ? (
               <span>Remove</span>
             ) : (
@@ -68,8 +66,7 @@ export default function Product({ product }: Props) {
           </Button>
           <Button
             onClick={(e) => e.preventDefault()}
-            className="bg-red-600 rounded-sm aspect-square relative"
-          >
+            className="bg-red-600 rounded-sm aspect-square relative">
             <Image
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%-1px)] w-[55%]"
               src={iconFavourite}

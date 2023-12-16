@@ -1,11 +1,11 @@
 import { fetchEcodatArticles } from "@/lib/server/ecodat";
-import { SearchParams, getCurrentPage } from "@/lib/server/search";
+import { GenericSearchParams, getCurrentPage } from "@/lib/server/search";
 import { RESULTS_PER_PAGE } from "@/lib/shared/search";
 import ProductsGrid from "../product/ProductsGrid";
 import Pagination from "./Pagination";
 
 interface Props {
-  searchParams?: SearchParams;
+  searchParams?: GenericSearchParams;
   query: Omit<Parameters<Awaited<typeof fetchEcodatArticles>>[0], "fetchRow">;
   className?: string;
 }

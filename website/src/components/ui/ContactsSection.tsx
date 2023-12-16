@@ -1,20 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import iconEmail from "@/images/icons/mail-red.svg";
 import iconPhone from "@/images/icons/phone-red.svg";
 import iconWhatsapp from "@/images/icons/whatsapp.svg";
 import iconTime from "@/images/icons/time.svg";
 import Button from "@/components/ui/Button";
-import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import settings from "@/settings";
+import useTranslation from "@/context/lang/useTranslation";
 
 export default function ContactsSection() {
+  const { t, r } = useTranslation("page.contacts");
   return (
     <div className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 max-xs:-ml-2">
       <div>
-        <h3 className="text-2xl font-bold mb-1">Come possiamo aiutarti?</h3>
-        <p className="leading-tight">
-          Scegli il metodo di contatto che preferisci: Numero verde,Whatsapp,
-          Email. Siamo a tua disposizione.
-        </p>
+        <h3 className="text-2xl font-bold mb-1">{t("title")}</h3>
+        <p className="leading-tight">{t("contacts.subtitle")}</p>
       </div>
       <br />
       <div className="md:pl-6">
@@ -23,17 +24,19 @@ export default function ContactsSection() {
             <Image className="max-xs:hidden" src={iconEmail} alt=""></Image>
             <div className=" leading-tight">
               <p>
-                <span className="text-sm leading-tight">Email: </span>
+                <span className="text-sm leading-tight">
+                  {t("email.title")}{" "}
+                </span>
                 <span className="font-medium leading-tight">
-                  assistenza@2m2.com
+                  {settings.info.email}
                 </span>
               </p>
               <p className="text-sm text-neutral-500 leading-tight">
-                Ti risponderemo a breve
+                {t("email.subtitle")}
               </p>
             </div>
             <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
-              Scrivici
+              {t("email.button")}
             </Button>
           </li>
           <li className="col-span-3 h-px bg-orange-200"></li>
@@ -41,18 +44,20 @@ export default function ContactsSection() {
             <Image className="max-xs:hidden" src={iconPhone} alt=""></Image>
             <div className=" leading-tight">
               <p>
-                <span className="text-sm leading-tight">Telefono: </span>
+                <span className="text-sm leading-tight">
+                  {t("telephone.title")}{" "}
+                </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium leading-tight">
-                  +39 374 9284720
+                  {settings.info.phone}
                 </span>
               </p>
               <p className="text-sm text-neutral-500 leading-tight">
-                Parla con un operatore
+                {t("telephone.subtitle")}
               </p>
             </div>
             <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
-              Chiama
+              {t("telephone.button")}
             </Button>
           </li>
           <li className="col-span-3 h-px bg-orange-200"></li>
@@ -60,25 +65,27 @@ export default function ContactsSection() {
             <Image className="max-xs:hidden" src={iconWhatsapp} alt=""></Image>
             <div className=" leading-tight">
               <p>
-                <span className="text-sm leading-tight">Whatsapp: </span>
+                <span className="text-sm leading-tight">
+                  {t("whatsapp.title")}{" "}
+                </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium leading-tight">
-                  +39 374 9284720
+                  {settings.info.phone}
                 </span>
               </p>
               <p className="text-sm text-neutral-500 leading-tight">
-                Ti risponderemo appena possibile
+                {t("whatsapp.subtitle")}
               </p>
             </div>
             <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
-              CHAT
+              {t("whatsapp.button")}
             </Button>
           </li>
         </ul>
       </div>
       <div>
         <p className="font-bold mt-2 md:-mt-4 mb-5 max-xs:max-w-[85vw]">
-          Siamo disponibili nei seguenti orari:
+          {t("timetables.title")}
         </p>
 
         <ul className="flex flex-col gap-2">
@@ -89,13 +96,9 @@ export default function ContactsSection() {
               alt=""
             />
             <p>
-              Da <b className="font-medium">Lunedì</b>
-              <span> a </span>
-              <b className="font-medium">Venerdì</b>
-              <span className="text-neutral-600">
-                :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30 /
-                14:40-17:30
-              </span>
+              {r("timetables.monday-friday")}
+              <br className="xs:hidden md:block lg:hidden" />
+              <span> {settings.info.openings.monTue}</span>
             </p>
           </li>
           <li className="flex gap-3 items-center">
@@ -105,10 +108,9 @@ export default function ContactsSection() {
               alt=""
             />
             <p>
-              <b className="font-medium">Sabato</b>
-              <span className="text-neutral-600">
-                :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30
-              </span>
+              <b>{r("timetables.saturday")}</b>:
+              <br className="xs:hidden md:block lg:hidden" />
+              <span> {settings.info.openings.sat}</span>
             </p>
           </li>
         </ul>

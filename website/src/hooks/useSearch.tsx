@@ -42,8 +42,6 @@ export default function useSearch(
     )
       return;
 
-    console.log("SEARCHIN", value, query);
-
     setLastSearch(value);
     setLastQuery(query);
 

@@ -59,8 +59,8 @@ export default function SearchFilterInner<T>({
       <Combobox.Button className="block text-left">
         <p
           className={twMerge(
-            "font-semibold text-xs mb-0.5",
-            isDisabled && "text-neutral-500"
+            "text-xs mb-0.5",
+            isDisabled ? "text-neutral-400 font-medium" : "font-semibold"
           )}>
           {label}
         </p>

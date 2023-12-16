@@ -2,6 +2,12 @@ import { walk } from "@/lib/shared/object";
 import { Fragment, useContext } from "react";
 import { TranslationContext } from "./TranslationClientComponent";
 
+export const rich: RichTextMappers = {
+  red: (slot) => <span className="text-red-500">{slot}</span>,
+  br: () => <br />,
+  b: (slot) => <b>{slot}</b>,
+};
+
 export default function useTranslation(base?: string) {
   const { currentLang, ...translation } = useContext(TranslationContext);
 
@@ -11,13 +17,13 @@ export default function useTranslation(base?: string) {
     return walk(translation, prefix + key) || "";
   }
 
-  function rich(key: string, mappers: RichTextMappers) {
+  function r(key: string, mappers: RichTextMappers = rich) {
     const val = t(key);
     const parsed = parseRich(val, mappers);
     return parsed;
   }
 
-  return { t, currentLang, rich };
+  return { t, r, currentLang };
 }
 
 interface RichTextMappers {

@@ -20,6 +20,7 @@ export enum EcodatAction {
   PHOTO_LIST = "ListaFoto",
   PHOTO_SMALL = "FotoSmall",
   PHOTO_BIG = "FotoBig",
+  DISPONIBILITA = "Disponibilita",
   SEND_ORDER = "InviaOrdine",
 }
 

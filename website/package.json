@@ -9,7 +9,8 @@
     "db:docker:down": "docker compose -f ../docker-compose.supabase.yml down",
     "db:types": "supabase gen types typescript --db-url postgres://postgres:your-super-secret-and-long-postgres-password@localhost:5432/postgres > src/database.types.ts",
     "db:cli": "PGPASSWORD=your-super-secret-and-long-postgres-password psql -h localhost -p 5432 -d postgres -U postgres",
-    "ts": "tsc --noEmit --incremental --watch"
+    "ts": "tsc --noEmit --incremental --watch",
+    "fonts": "generate-fonts ./public/fonts ./src/styles /fonts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.2",
@@ -36,7 +37,8 @@
     "stripe": "^13.10.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.2",
-    "typescript": "5.1.3"
+    "typescript": "5.1.3",
+    "generate-fonts": "github:simotasca/generate-fonts"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.4",

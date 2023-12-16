@@ -17,7 +17,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "require('http').get('http://localhost:3000/api/profile', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})",
+          "require('http').get('http://localhost:3000/api/profile', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
         ]
       timeout: 5s
       interval: 5s
@@ -90,13 +90,21 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://localhost:9999/health",
+          "http://localhost:9999/health"
         ]
       timeout: 5s
       interval: 5s
       retries: 3
     restart: unless-stopped
     environment:
+      # https://github.com/supabase/gotrue
+
+      GOTRUE_MAILER_TEMPLATES_CONFIRMATION: ${SITE_URL}/auth-templates/sign-up.html
+      GOTRUE_MAILER_SUBJECTS_CONFIRMATION: "[2M2] Confirm registration"
+
+      GOTRUE_MAILER_TEMPLATES_RECOVERY: ${SITE_URL}/auth-templates/password-reset.html
+      GOTRUE_MAILER_SUBJECTS_RECOVERY: "[2M2] Password recovery"
+
       GOTRUE_API_HOST: 0.0.0.0
       GOTRUE_API_PORT: 9999
       API_EXTERNAL_URL: ${API_EXTERNAL_URL}
@@ -163,7 +171,13 @@ services:
       analytics:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "bash", "-c", "printf \\0 > /dev/tcp/localhost/4000"]
+      test:
+        [
+          "CMD",
+          "bash",
+          "-c",
+          "printf \\0 > /dev/tcp/localhost/4000"
+        ]
       timeout: 5s
       interval: 5s
       retries: 3
@@ -206,7 +220,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://localhost:5000/status",
+          "http://localhost:5000/status"
         ]
       timeout: 5s
       interval: 5s
@@ -234,7 +248,7 @@ services:
     container_name: supabase-imgproxy
     image: darthsim/imgproxy:v3.8.0
     healthcheck:
-      test: ["CMD", "imgproxy", "health"]
+      test: [ "CMD", "imgproxy", "health" ]
       timeout: 5s
       interval: 5s
       retries: 3
@@ -290,7 +304,7 @@ services:
     container_name: supabase-analytics
     image: supabase/logflare:1.4.0
     healthcheck:
-      test: ["CMD", "curl", "http://localhost:4000/health"]
+      test: [ "CMD", "curl", "http://localhost:4000/health" ]
       # test: [ "CMD", "echo" ]
       timeout: 5s
       interval: 5s
@@ -324,7 +338,6 @@ services:
       POSTGRES_BACKEND_URL: postgresql://supabase_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       POSTGRES_BACKEND_SCHEMA: _analytics
       LOGFLARE_FEATURE_FLAG_OVERRIDE: multibackend=true
-
       # Uncomment to use Big Query backend for analytics
       # GOOGLE_PROJECT_ID: ${GOOGLE_PROJECT_ID}
       # GOOGLE_PROJECT_NUMBER: ${GOOGLE_PROJECT_NUMBER}
@@ -389,7 +402,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://vector:9001/health",
+          "http://vector:9001/health"
         ]
       timeout: 5s
       interval: 5s
@@ -398,4 +411,4 @@ services:
       - ./supabase-docker/volumes/logs/vector.yml:/etc/vector/vector.yml:ro
       - ${DOCKER_SOCKET_LOCATION}:/var/run/docker.sock:ro
 
-    command: ["--config", "etc/vector/vector.yml"]
+    command: [ "--config", "etc/vector/vector.yml" ]

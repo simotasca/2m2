@@ -11,7 +11,7 @@ import Image from "next/image";
 import ContactsSection from "@/components/ui/ContactsSection";
 import useSearchModal from "@/context/search/useSearchModal";
 
-export default function ClientPage() {
+export default function AboutClientPage() {
   return (
     <PageLayout headerSmall={true}>
       <Hero />
@@ -61,8 +61,7 @@ function Hero() {
           </p>
           <Button
             onClick={openSearchModal}
-            className="bg-red-gradient px-10 py-1.5 mt-8 text-lg"
-          >
+            className="bg-red-gradient px-10 py-1.5 mt-8 text-lg">
             FAI LA TUA RICERCA
           </Button>
         </MaxWidthContainer>
