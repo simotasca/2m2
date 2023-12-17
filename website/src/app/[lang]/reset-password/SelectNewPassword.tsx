@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Input } from "./Input";
 import Link from "next/link";
 import routes from "@/lib/shared/routes";
+import useTranslation from "@/context/lang/useTranslation";
 
 export function SelectNewPassword() {
   const supabase = createClientComponentClient<Database>();
@@ -47,6 +48,8 @@ export function SelectNewPassword() {
     setLoading(false);
   };
 
+  const { t, r } = useTranslation();
+
   return (
     <>
       <LoadingScreen message="updating" loading={loading} />
@@ -54,10 +57,12 @@ export function SelectNewPassword() {
       <AuthLayout>
         <AuthLayout.Image />
 
-        <AuthLayout.Title>Choose your new password</AuthLayout.Title>
+        <AuthLayout.Title>{t("auth.password.title")}</AuthLayout.Title>
 
         {updated ? (
-          <p className="leading-5 mb-3 text-center">updated!</p>
+          <p className="leading-5 mb-3 text-center">
+            {t("auth.password.updated")}
+          </p>
         ) : (
           <>
             <Input
@@ -77,8 +82,9 @@ export function SelectNewPassword() {
                     href={new URL(
                       window.location.pathname,
                       window.origin
-                    ).toString()}>
-                    try again
+                    ).toString()}
+                  >
+                    {t("auth.password.try-again")}
                   </a>
                 )}
               </p>
@@ -86,8 +92,9 @@ export function SelectNewPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => update()}>
-              Confirm
+              onClick={() => update()}
+            >
+              {t("auh.password.confirm")}
             </Button>
           </>
         )}

@@ -2,6 +2,7 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
 import routes from "@/lib/shared/routes";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -67,6 +68,8 @@ export default function LoginForm() {
     router.push("/reserved");
   };
 
+  const { t, r } = useTranslation("auth");
+
   return (
     <>
       <LoadingScreen loading={loading} message="logging in" />
@@ -74,9 +77,7 @@ export default function LoginForm() {
       <AuthLayout>
         <AuthLayout.Image />
 
-        <AuthLayout.Title>
-          WELCOME <span className="text-red-500">BACK</span>
-        </AuthLayout.Title>
+        <AuthLayout.Title>{r("login.title")}</AuthLayout.Title>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-2">
           <Label text="email" required>
@@ -103,15 +104,17 @@ export default function LoginForm() {
 
           <Link
             className="underline text-sm text-neutral-500"
-            href={routes.passwordReset()}>
-            Forgot your password?
+            href={routes.passwordReset()}
+          >
+            {t("login.forgot-password")}
           </Link>
 
           <div className="w-full mt-2">
             <Button
               type="submit"
               className="bg-red-500 text-white w-full font-medium gap-2"
-              disabled={loading}>
+              disabled={loading}
+            >
               <span>Login</span>
             </Button>
 
@@ -122,11 +125,14 @@ export default function LoginForm() {
             )}
 
             <p className="text-sm text-center mt-4 mb-1">
-              <span className="text-neutral-600">Dont have an account? </span>
+              <span className="text-neutral-600">
+                {t("login.new-account")}{" "}
+              </span>
               <Link
                 href={routes.register()}
-                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
-                Register
+                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+              >
+                {t("login.signup")}
               </Link>
             </p>
           </div>

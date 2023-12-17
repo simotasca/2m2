@@ -18,6 +18,11 @@ import routes from "@/lib/shared/routes";
 
 export default function Footer() {
   const { setIsOpen } = useCart();
+
+  const { t } = useTranslation("footer");
+  const { t: tCat } = useTranslation("categories");
+  const { t: tHead } = useTranslation("header");
+
   return (
     <div className="bg-[#363636] text-white py-8 sm:py-14">
       <MaxWidthContainer className="bg-neutral-500 h-px mb-8 max-xs:mx-4"></MaxWidthContainer>
@@ -29,12 +34,12 @@ export default function Footer() {
 
         <div className="sm:max-md:row-span-2">
           <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
-            Car Parts Categories
+            {t("categories.title")}
           </h3>
           <ul className="flex flex-col gap-2 text-sm">
             {Object.keys(knownCategories).map((p) => (
               <li key={p} className="leading-4 whitespace-nowrap">
-                {p}
+                {tCat(p)}
               </li>
             ))}
           </ul>
@@ -42,11 +47,11 @@ export default function Footer() {
 
         <div>
           <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
-            Our Conditions
+            {t("conditions.title")}
           </h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li className="leading-4 whitespace-nowrap">
-              Terms and Conditions
+              {t("conditions.terms-and-conditions")}
             </li>
             <li className="leading-4 whitespace-nowrap">Cooky Policy</li>
             <li className="leading-4 whitespace-nowrap">Privacy Policy</li>
@@ -54,7 +59,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-1 max-md:col-span-full">
-          <h3 className="uppercase font-bold">Login / Sign up</h3>
+          <h3 className="uppercase font-bold">Login / {t("signup")}</h3>
           <div className="max-w-[400px]">
             <DropdownLogin small />
           </div>
@@ -69,29 +74,33 @@ export default function Footer() {
             <li>
               <Link
                 href={routes.home()}
-                className="hover:underline underline-offset-4 cursor-pointer">
-                Home
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
+                {tHead("header.navbar.home")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.about()}
-                className="hover:underline underline-offset-4 cursor-pointer">
-                About Us
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
+                {tHead("header.navbar.about")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.products()}
-                className="hover:underline underline-offset-4 cursor-pointer">
-                Search
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
+                {tHead("header.search-bar.search")}
               </Link>
             </li>
             <li>
               <button
                 onClick={() => setIsOpen(true)}
-                className="hover:underline underline-offset-4 cursor-pointer">
-                Your cart
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
+                {t("your-cart")}
               </button>
             </li>
           </ul>
@@ -207,14 +216,16 @@ function DropdownLogin({ small }: { small: boolean }) {
                   onClick={(e) => {
                     e.preventDefault();
                     togglePasswordVisibility();
-                  }}>
+                  }}
+                >
                   {pwInputType === "text" ? "hide" : "show"}
                 </button>
               </div>
 
               <Link
                 className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#">
+                href="#"
+              >
                 Forgot your password?
                 {/* TODO */}
               </Link>
@@ -224,7 +235,8 @@ function DropdownLogin({ small }: { small: boolean }) {
               )}
               <Button
                 type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white">
+                className="w-full font-normal text-sm bg-red-500 text-white"
+              >
                 Login
               </Button>
             </form>
@@ -246,6 +258,8 @@ function DropdownLogin({ small }: { small: boolean }) {
 }
 
 function ContactsSection() {
+  const { t, r } = useTranslation();
+
   return (
     <MaxWidthContainer className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 max-xs:-ml-2 max-xs:px-6 lg:px-20">
       <div>
@@ -264,7 +278,9 @@ function ContactsSection() {
           <li className="contents">
             <div className=" leading-tight">
               <p>
-                <span className="text-xs leading-tight">Telefono: </span>
+                <span className="text-xs leading-tight">
+                  {t("contacts.telephone.title")}{" "}
+                </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium text-sm leading-tight">
                   +39 374 9284720
@@ -295,9 +311,7 @@ function ContactsSection() {
               alt=""
             />
             <p>
-              Da <b className="font-medium">Lunedì</b>
-              <span> a </span>
-              <b className="font-medium">Venerdì</b>
+              {r("contacts.timetables.monday-friday")}
               <span className="">
                 :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30 /
                 14:40-17:30
@@ -311,7 +325,7 @@ function ContactsSection() {
               alt=""
             />
             <p>
-              <b className="font-medium">Sabato</b>
+              <b className="font-medium">{r("contacts.timetables.saturday")}</b>
               <span className="">
                 :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30
               </span>

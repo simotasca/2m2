@@ -99,6 +99,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
   const [translations] = await generateTranslations({
     product: "misc/product",
     header: "misc/header",
+    footer: "misc/footer",
   });
 
   return (

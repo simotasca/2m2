@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import WizInput from "./WizInput";
 import WizTabValidator from "./WizTabHandle";
+import useTranslation from "@/context/lang/useTranslation";
 
 export interface PersonalInfo {
   name?: string;
@@ -46,13 +47,13 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
       },
       [personalInfo]
     );
-
+    const { t, r } = useTranslation("page.personal-info");
     return (
       <div ref={tabRef} className="mb-2.5">
         <div className="flex items-start gap-2 mb-2">
           <Image className="w-5 -translate-y-px" src={iconUser} alt="" />
           <h4 className="text-xl leading-[0.9] font-bold uppercase">
-            Personal <span className="text-red-500">Informations</span>
+            {r("title")}
           </h4>
         </div>
 
@@ -63,12 +64,14 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, name: e.target.value })
             }
-            label="name"
-            placeholder="Name"
+            label={t("name.label")}
+            placeholder={t("name.placeholder")}
             type="text"
             name="name"
             errorMessage={
-              showErrors && !personalInfo.name ? "required" : undefined
+              showErrors && !personalInfo.name
+                ? t("errors.required-error")
+                : undefined
             }
             required={true}
           />
@@ -78,12 +81,14 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, surname: e.target.value })
             }
-            label="surname"
-            placeholder="Surname"
+            label={t("surname.label")}
+            placeholder={t("surname.placeholder")}
             type="text"
             name="surname"
             errorMessage={
-              showErrors && !personalInfo.surname ? "required" : undefined
+              showErrors && !personalInfo.surname
+                ? t("errors.required-error")
+                : undefined
             }
             required={true}
           />
@@ -94,11 +99,13 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
               setPersonalInfo({ ...personalInfo, cf: e.target.value })
             }
             label="cf"
-            placeholder="tax id."
+            placeholder={t("cf.placeholder")}
             type="text"
             name="cf"
             errorMessage={
-              showErrors && !personalInfo.cf ? "required" : undefined
+              showErrors && !personalInfo.cf
+                ? t("errors.required-error")
+                : undefined
             }
             required={true}
           />
@@ -115,9 +122,9 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             errorMessage={
               showErrors
                 ? !personalInfo.email
-                  ? "required"
+                  ? t("errors.required-error")
                   : !isEmail(personalInfo.email)
-                  ? "invalid email"
+                  ? t("errors.invalid-error")
                   : undefined
                 : undefined
             }
@@ -129,8 +136,8 @@ export const PersonalInfoTab = forwardRef<WizTabValidator, PersonalInfoParams>(
             onChange={(e) =>
               setPersonalInfo({ ...personalInfo, phone: e.target.value })
             }
-            label="phone"
-            placeholder="Phone"
+            label={t("telephone.label")}
+            placeholder={t("telephone.placeholder")}
             type="text"
             name="phone"
           />

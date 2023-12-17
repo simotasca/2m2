@@ -1,0 +1,8 @@
+{
+  "required-error": "Required",
+  "invalid-error": "Invalid",
+  "max-250-chars": "Max 250 chars",
+  "required-mail-and-password": "Email and password are required",
+  "invalid-email": "Invalid email address",
+  "terms-and-conditions-error": "You must accept terms and conditions"
+}

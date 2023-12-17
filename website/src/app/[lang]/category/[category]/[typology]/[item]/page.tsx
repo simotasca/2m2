@@ -56,6 +56,7 @@ export default async function ItemPage({
     {
       product: "misc/product",
       header: "misc/header",
+      footer: "misc/footer",
       page: "pages/category/typology/item",
       categories: "misc/categories",
       typologies: "misc/typologies",

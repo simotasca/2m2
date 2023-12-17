@@ -40,6 +40,7 @@ export default async function CategoryPage({
     {
       product: "misc/product",
       header: "misc/header",
+      footer: "misc/footer",
       page: "pages/category",
       categories: "misc/categories",
       contacts: "misc/contacts",

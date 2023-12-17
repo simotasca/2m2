@@ -33,6 +33,9 @@ export default async function CheckoutPage({ searchParams }: Props) {
   const [translations] = await generateTranslations({
     product: "misc/product",
     header: "misc/header",
+    footer: "misc/footer",
+    page: "pages/checkout",
+    errors: "misc/errors",
   });
 
   return (

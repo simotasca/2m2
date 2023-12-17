@@ -5,6 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/database.types";
 import settings from "@/settings";
 import WizInput from "../WizInput";
+import useTranslation from "@/context/lang/useTranslation";
 
 const citiesCache = new Map<string, WizSelectItem[]>();
 
@@ -90,15 +91,19 @@ export default function CityInput({
     canLoad && loadCities();
   }, [address.countryCode, address.province]);
 
+  const { t } = useTranslation("page.delivery-address");
+
   return address?.countryCode === "IT" ? (
     <WizSelect
       items={municipalities}
       value={citySelectValue}
       onChange={setCitySelectValue}
-      label="city"
-      placeholder="City"
+      label={t("city.label")}
+      placeholder={t("city.placeholder")}
       errorMessage={
-        showErrors && (!address.city || !address.istat) ? "required" : undefined
+        showErrors && (!address.city || !address.istat)
+          ? t("errors.required-error")
+          : undefined
       }
       required={true}
       loadingError={loadingError}
@@ -116,11 +121,13 @@ export default function CityInput({
           istat: settings.ecodat.foreignIstat,
         })
       }
-      label="city"
-      placeholder="City"
+      label={t("city.label")}
+      placeholder={t("city.placeholder")}
       type="text"
       name="city"
-      errorMessage={showErrors && !address.city ? "required" : undefined}
+      errorMessage={
+        showErrors && !address.city ? t("errors.required-error") : undefined
+      }
       required={true}
     />
   );
