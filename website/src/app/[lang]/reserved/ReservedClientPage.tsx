@@ -14,12 +14,15 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/database.types";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import useLogger from "@/hooks/useLogger";
+import { EcodatArticle } from "@/lib/shared/ecodat";
+import Product from "@/components/product/Product";
 
 interface Props {
   cart: any;
   user: User;
   customer: Customer;
   type: string;
+  favourites: EcodatArticle[];
 }
 
 export default function ReservedClientPage({
@@ -27,6 +30,7 @@ export default function ReservedClientPage({
   user,
   type,
   customer,
+  favourites,
 }: Props) {
   const supabase = createClientComponentClient<Database>();
   const [data, setData] = useState<any>(customer || {});
@@ -95,22 +99,36 @@ export default function ReservedClientPage({
             Your <span className="text-red-500">Dashboard</span>
           </h1>
 
-          <div className="grid grid-cols-12 gap-4">
+          <div className="grid grid-cols-12 gap-4 md:gap-6 lg:gap-8">
             {/*
-            <Box className="col-span-12">
-              <BoxTitle>Elenco ordini</BoxTitle>
-              <div className="grid grid-cols-5">
-                <div>12/08/2012</div>
-                <div>500€</div>
-              </div>
-            </Box>
-          */}
-            <Box id="favourites" className="col-span-8">
+              <Box className="col-span-12">
+                <BoxTitle>Elenco ordini</BoxTitle>
+                <div className="grid grid-cols-5">
+                  <div>12/08/2012</div>
+                  <div>500€</div>
+                </div>
+              </Box>
+            */}
+            <Box id="favourites" className="col-span-full lg:col-span-8">
               <BoxTitle>I tuoi Preferiti</BoxTitle>
+
+              <div className="h-3"></div>
+
+              <div className="overflow-x-auto">
+                <div className="flex flex-nowrap w-fit gap-4">
+                  {favourites.map((p) => (
+                    <div key={p.id} className="w-60">
+                      <Product product={p} />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </Box>
 
             <CartProvider cartProducts={cart.products} cartId={cart.id}>
-              <Box id="cart" className="col-span-4">
+              <Box
+                id="cart"
+                className="col-span-full sm:col-span-6 lg:col-span-4">
                 <div className="flex items-center justify-between gap-4 mb-2">
                   <BoxTitle>Carrello</BoxTitle>
                   <p className="font-medium text-sm text-neutral-500 translate-y-px">
@@ -126,7 +144,7 @@ export default function ReservedClientPage({
               </Box>
             </CartProvider>
 
-            <Box id="user-data" className="col-span-6">
+            <Box id="user-data" className="col-span-full sm:col-span-6">
               <div className="flex justify-between gap-4">
                 <BoxTitle>
                   <span>Dati </span>
@@ -248,7 +266,9 @@ export default function ReservedClientPage({
               )}
             </Box>
 
-            <Box id="contacts" className="place-self-start col-span-6">
+            <Box
+              id="contacts"
+              className="place-self-start col-span-full lg:col-span-6">
               <BoxTitle>Contatti</BoxTitle>
               <p>
                 <span className="text-sm leading-tight">Email: </span>

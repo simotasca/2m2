@@ -4,7 +4,10 @@ import TopBar from "@/components/header/TopBar";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import { Database } from "@/database.types";
 import { getCart } from "@/lib/server/cart";
+import { fetchEcodatArticle } from "@/lib/server/ecodat";
+import { getFavourites } from "@/lib/server/favourites";
 import { generateTranslations } from "@/lib/server/lang";
+import { EcodatArticle } from "@/lib/shared/ecodat";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -39,6 +42,12 @@ export default async function ReservedPage() {
   }
 
   const cart = await getCart(supabase);
+  const favs = await getFavourites(supabase);
+  const favouriteProducts: EcodatArticle[] = [];
+  for (const id of favs) {
+    let prod = await fetchEcodatArticle(id);
+    prod && prod.available && favouriteProducts.push(prod);
+  }
 
   const [translations] = await generateTranslations({
     product: "misc/product",
@@ -50,6 +59,7 @@ export default async function ReservedPage() {
       <Header user={user} />
       <ReservedClientPage
         cart={cart}
+        favourites={favouriteProducts}
         user={user}
         type={user.user_metadata.type}
         customer={customer}

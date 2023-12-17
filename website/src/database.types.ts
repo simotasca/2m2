@@ -164,6 +164,31 @@ export interface Database {
           }
         ]
       }
+      favourites: {
+        Row: {
+          created_at: string
+          id_customer: string
+          id_product: number
+        }
+        Insert: {
+          created_at?: string
+          id_customer: string
+          id_product: number
+        }
+        Update: {
+          created_at?: string
+          id_customer?: string
+          id_product?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favourites_id_customer_fkey"
+            columns: ["id_customer"]
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       municipality: {
         Row: {
           created_at: string
