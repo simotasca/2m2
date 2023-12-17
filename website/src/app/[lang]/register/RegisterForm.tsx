@@ -26,7 +26,7 @@ interface AccessDetails {
 
 interface SharedInfo {
   phone: string;
-  taxId: string;
+  cf: string;
 }
 
 interface PrivateInfo {
@@ -41,6 +41,7 @@ interface BusinessInfo {
   sdi: string;
 }
 
+// auth
 const initialAccessDetails: AccessDetails = {
   email: "",
   password: "",
@@ -48,7 +49,7 @@ const initialAccessDetails: AccessDetails = {
 
 const initialSharedInfo: SharedInfo = {
   phone: "",
-  taxId: "",
+  cf: "",
 };
 
 const initialPrivateInfo: PrivateInfo = {
@@ -140,7 +141,7 @@ export default function RegisterForm() {
       .finally(() => setLoding(false));
   };
 
-  useEffect(() => set(setSharedInfo, "taxId", ""), [mode]);
+  useEffect(() => set(setSharedInfo, "cf", ""), [mode]);
 
   return (
     <>
@@ -267,12 +268,10 @@ export default function RegisterForm() {
 
                   <Label text="tax ID">
                     <Input
-                      value={sharedInfo.taxId}
-                      onChange={(e) =>
-                        set(setSharedInfo, "taxId", e.target.value)
-                      }
+                      value={sharedInfo.cf}
+                      onChange={(e) => set(setSharedInfo, "cf", e.target.value)}
                       placeholder="tax ID"
-                      name="tax-id"
+                      name="cf"
                       type="text"
                     />
                   </Label>
@@ -307,10 +306,8 @@ export default function RegisterForm() {
 
                   <Label text="tax ID">
                     <Input
-                      value={sharedInfo.taxId}
-                      onChange={(e) =>
-                        set(setSharedInfo, "taxId", e.target.value)
-                      }
+                      value={sharedInfo.cf}
+                      onChange={(e) => set(setSharedInfo, "cf", e.target.value)}
                       placeholder="tax ID"
                       name="tax-id"
                       type="text"
