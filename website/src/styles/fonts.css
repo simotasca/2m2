@@ -1,5 +1,41 @@
 
 @font-face {
+  font-family: "Oswald";
+  src: url("/fonts/oswald/Oswald-SemiBold.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/oswald/Oswald-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/oswald/Oswald-Medium.ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/oswald/Oswald-Light.ttf");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/oswald/Oswald-ExtraLight.ttf");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/oswald/Oswald-Bold.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
   font-family: "Poppins";
   src: url("/fonts/poppins/Poppins-ThinItalic.ttf");
   font-weight: 100;
