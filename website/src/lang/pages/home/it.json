@@ -22,32 +22,9 @@
       }
     }
   },
-  "products-title":"<red>Featured</red> Products",
+  "products-title":" Prodotti <red>Recenti</red>",
   "products-button":"Vai ai prodotti",
-  "contacts":{
-    "title":"Come possiamo aiutarti?",
-    "subtitle":"Scegli il metodo di contatto che preferisci: Numero verde, Whatsapp, Email. Siamo a tua disposizione.",
-    "email":{
-      "title":"Email",
-      "subtitle":"Ti risponderemo a breve",
-      "button":"Scrivici"
-    },
-    "telephone":{
-      "title":"Telefono",
-      "subtitle":"Parla con un operatore",
-      "button":"Chiama"
-    },
-    "whatsapp":{
-      "title":"Whatsapp",
-      "subtitle":"Ti risponderemo appena possibile",
-      "button":"Chat"
-    },
-    "timetables":{
-      "title":"Siamo disponibili nei seguenti orari:",
-      "monday-friday":"Da <b>Lunedì</b> a <b>Venerdì</b>:",
-      "saturday":"Sabato"
-    }
-  },
+  
   "payments":"pagamenti"
   }
 
