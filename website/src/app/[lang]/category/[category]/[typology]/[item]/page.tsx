@@ -52,21 +52,33 @@ export default async function ItemPage({
   });
   if (!item) return notFound();
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      page: "pages/category/typology/item",
+      categories: "misc/categories",
+      typologies: "misc/typologies",
+      contacts: "misc/contacts",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: category.name,
+      text: t(["categories", category.name], category.name),
       href: routes.category(category.name),
       dropdown: categories.map((c) => ({
-        text: c.name,
+        text: t(["categories", c.name], c.name),
         href: routes.category(c.name),
       })),
     },
     {
-      text: typology.name,
+      text: t(["typologies", typology.name], typology.name),
       href: routes.type(category.name, typology.name),
-      dropdown: types.map((t) => ({
-        text: t.name,
-        href: routes.type(category.name, t.name),
+      dropdown: types.map((ty) => ({
+        text: t(["typologies", ty.name], ty.name),
+        href: routes.type(category.name, ty.name),
       })),
     },
     {
@@ -78,14 +90,6 @@ export default async function ItemPage({
       })),
     },
   ];
-
-  const [translations, { t }] = await generateTranslations(
-    {
-      product: "misc/product",
-      header: "misc/header",
-    },
-    true
-  );
 
   return (
     <ServerLayout translations={translations}>
@@ -102,7 +106,7 @@ export default async function ItemPage({
             </div>
 
             <Title as="h1">
-              <Title.Gray>Item</Title.Gray>
+              <Title.Gray>{t("page.title")}</Title.Gray>
               <Title.Red> {itemName(item)}</Title.Red>
             </Title>
 
