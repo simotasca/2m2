@@ -26,7 +26,7 @@ const Title: TitleComponent = ({
 };
 
 Title.Red = ({ children }) => {
-  return <span className="text-red-700">{children}</span>;
+  return <span className="text-red-600">{children}</span>;
 };
 
 Title.Gray = ({ children }) => {

@@ -1,6 +1,9 @@
 "use client";
 
 import CartProvider from "@/context/cart/CartProvider";
+import FavouritesProvider, {
+  FavouritesContext,
+} from "@/context/favourites/FavouritesProvider";
 import SearchProvider from "@/context/search/SearchProvider";
 import { EcodatArticle } from "@/lib/shared/ecodat";
 import { PropsWithChildren } from "react";
@@ -10,13 +13,15 @@ interface CartInit {
   id?: number;
 }
 
-type Props = PropsWithChildren<{ cart: CartInit }>;
+type Props = PropsWithChildren<{ cart: CartInit; favourites: number[] }>;
 
-export default function ClientLayout({ cart, children }: Props) {
+export default function ClientLayout({ cart, children, favourites }: Props) {
   return (
     <>
       <CartProvider cartId={cart.id} cartProducts={cart.products}>
-        <SearchProvider>{children}</SearchProvider>
+        <FavouritesProvider initialFavourites={favourites}>
+          <SearchProvider>{children}</SearchProvider>
+        </FavouritesProvider>
       </CartProvider>
     </>
   );

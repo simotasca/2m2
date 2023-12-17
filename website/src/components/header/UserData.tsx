@@ -92,10 +92,8 @@ function DropdownLogin({ small }: { small: boolean }) {
 
   useEffect(() => {
     (async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user?.user_metadata?.username);
+      const { data } = await supabase.auth.getUser();
+      setUser(data?.user?.email);
     })();
   }, []);
 
