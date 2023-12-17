@@ -21,6 +21,7 @@ import {
   useState,
 } from "react";
 import WizTabHandle from "./WizTabHandle";
+import useTranslation from "@/context/lang/useTranslation";
 
 export interface CheckoutParams {
   clientSecret?: string;
@@ -46,6 +47,8 @@ export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
       }),
       []
     );
+
+    const { t, r } = useTranslation("page.checkout");
 
     return (
       <div ref={tabRef} className="mb-2.5">
@@ -123,10 +126,12 @@ function ElementsWrapper({
     { cssSrc: "https://fonts.googleapis.com/css2?family=Poppins&display=swap" },
   ];
 
+  const locale = "en";
+
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance, fonts }}
+      options={{ clientSecret, appearance, fonts, locale }}
     >
       <CheckoutForm email={email} totalPrice={totalPrice} />
     </Elements>
@@ -174,13 +179,16 @@ function CheckoutForm({
     setLoading(false);
   };
 
+  const { t } = useTranslation("page.checkout");
+
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
 
       {totalPrice && (
         <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold mt-4">
-          PAGA ${totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
+          {t("pay")} $
+          {totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
         </button>
       )}
     </form>

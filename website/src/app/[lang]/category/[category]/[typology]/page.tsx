@@ -45,21 +45,35 @@ export default async function TypologyPage({
 
   const items = await fetchEcodatItems(category.id, typology.id);
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      footer: "misc/footer",
+      page: "pages/category/typology",
+      contacts: "misc/contacts",
+      categories: "misc/categories",
+
+      typologies: "misc/typologies",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: category.name,
+      text: t(["categories", category.name], category.name),
       href: routes.category(category.name),
       dropdown: categories.map((c) => ({
-        text: c.name,
+        text: t(["categories", c.name], c.name),
         href: routes.category(c.name),
       })),
     },
     {
-      text: typology.name,
+      text: t(["typologies", typology.name], typology.name),
       href: routes.type(category.name, typology.name),
-      dropdown: types.map((t) => ({
-        text: t.name,
-        href: routes.type(category.name, t.name),
+      dropdown: types.map((ty) => ({
+        text: t(["typologies", ty.name], ty.name),
+        href: routes.type(category.name, ty.name),
       })),
     },
     {
@@ -69,14 +83,6 @@ export default async function TypologyPage({
       })),
     },
   ];
-
-  const [translations, { t }] = await generateTranslations(
-    {
-      product: "misc/product",
-      header: "misc/header",
-    },
-    true
-  );
 
   return (
     <ServerLayout translations={translations}>
@@ -93,8 +99,11 @@ export default async function TypologyPage({
             </div>
 
             <Title as="h1">
-              <Title.Gray>Type</Title.Gray>
-              <Title.Red> {typology.name}</Title.Red>
+              <Title.Gray>{t("page.title")}</Title.Gray>
+              <Title.Red>
+                {" "}
+                {t(["typologies", typology.name], typology.name)}
+              </Title.Red>
             </Title>
 
             <div className="h-4"></div>

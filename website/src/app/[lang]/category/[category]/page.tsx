@@ -36,12 +36,24 @@ export default async function CategoryPage({
 
   const types = await fetchEcodatTypologies(category.id);
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      footer: "misc/footer",
+      page: "pages/category",
+      categories: "misc/categories",
+      contacts: "misc/contacts",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: category.name,
+      text: t(["categories", category.name], category.name),
       href: routes.category(category.name),
       dropdown: categories.map((c) => ({
-        text: c.name,
+        text: t(["categories", c.name], c.name),
         href: routes.category(c.name),
       })),
     },
@@ -52,14 +64,6 @@ export default async function CategoryPage({
       })),
     },
   ];
-
-  const [translations, { t }] = await generateTranslations(
-    {
-      product: "misc/product",
-      header: "misc/header",
-    },
-    true
-  );
 
   return (
     <ServerLayout translations={translations}>
@@ -76,8 +80,11 @@ export default async function CategoryPage({
             </div>
 
             <Title as="h1">
-              <Title.Gray>Category</Title.Gray>
-              <Title.Red> {category.name}</Title.Red>
+              <Title.Gray>{t("page.title")}</Title.Gray>
+              <Title.Red>
+                {" "}
+                {t(["categories", category.name], category.name)}
+              </Title.Red>
             </Title>
 
             <div className="h-4"></div>

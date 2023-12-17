@@ -22,6 +22,7 @@ import {
 } from "./address/DeliveryAddressTab";
 import { PersonalInfoTab, type PersonalInfo } from "./PersonalInfoTab";
 import WizTabValidator from "./WizTabHandle";
+import useTranslation from "@/context/lang/useTranslation";
 
 interface Props {
   products: EcodatArticle[];
@@ -98,6 +99,7 @@ export default function CheckoutClientPage({ products }: Props) {
     focus && focus();
   }, []);
 
+  const { t } = useTranslation("page");
   return (
     <div className="min-h-screen">
       <Image
@@ -124,7 +126,7 @@ export default function CheckoutClientPage({ products }: Props) {
                   onClick={() => changeWizStep((s) => s + 1)}
                   className="bg-red-gradient text-white max-sm:ml-auto mr-0"
                 >
-                  Next
+                  {t("next")}
                 </Button>
               )}
               <div className="sm:hidden h-6"></div>
@@ -147,16 +149,8 @@ export default function CheckoutClientPage({ products }: Props) {
           </div>
           {/* help */}
           <div className="text-xs text-neutral-500 flex flex-col gap-2 pt-4 border-t border-neutral-200">
-            <p>
-              Hai bisogno di aiuto? Consulta le pagine d'aiuto oppure contattaci
-            </p>
-            <p>
-              Cosa succede quando si effettua un ordine? Cliccando sul pulsante
-              "Acquista ora" ti invieremo un messaggio con la conferma di
-              ricezione dell'ordine. Il contratto di acquisto di un articolo non
-              sarà perfezionato fino al ricevimento del messaggio che conferma
-              la spedizione degli articoli.
-            </p>
+            <p>{t("info.help")}</p>
+            <p>{t("info.processed-order")}</p>
           </div>
         </div>
       </div>
@@ -175,15 +169,14 @@ function OrderDetails({
   deliveryAddress: DeliveryAddress;
   isLastStep: boolean;
 }) {
+  const { t, r } = useTranslation("page.order-details");
   return (
     <div>
       <div className="flex justify-between mb-2">
         <div>
-          <h3 className="inline uppercase font-bold">
-            Your <span className="text-red-500">order</span>
-          </h3>
+          {<h3 className="inline uppercase font-bold">{r("your-order")}</h3>}
           <a href="/cart" className="text-sm ml-2 underline text-neutral-500">
-            review
+            {t("review")}
           </a>
         </div>
         <Image className="w-5 opacity-70" alt="logo 2m2" src={iconLock}></Image>
@@ -243,22 +236,18 @@ function OrderDetails({
 }
 
 function Breadcrumbs({ wizStep, changeWizStep }) {
-  const breadcrumbs = [
-    "personal informations",
-    "delivery",
-    // "billing",
-    "checkout",
-  ];
+  const { t } = useTranslation("page.breadcrumbs");
+  const breadcrumbs = [t("personal-informations"), t("delivery"), "checkout"];
   return (
     <div>
       <a href="/" className="sm:hidden underline text-dark text-sm">
-        back to shop
+        {t("backtoshop")}
       </a>
       <div className="sm:hidden h-4"></div>
       <div className="flex justify-between items-center mb-1">
         <div className="flex flex-wrap gap-y-0 gap-2 text-neutral-400 text-xs sm:text-sm">
           <a href="/" className="max-sm:hidden underline text-dark">
-            back to shop
+            {t("backtoshop")}
           </a>
           {breadcrumbs.map((b, i) => (
             <div className="flex gap-2 " key={i}>

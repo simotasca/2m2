@@ -10,8 +10,11 @@ export const defaultRich: RichTextMappers = {
 export function getTranslationFactories(translation: any, base?: string) {
   const prefix = base ? base + "." : "";
 
-  function t(key: string) {
-    return walk(translation, prefix + key) || "";
+  function t(key: string | string[], fallback?: string) {
+    if (typeof key !== "string") {
+      key = key.join(".");
+    }
+    return walk(translation, prefix + key) || fallback || "";
   }
 
   function r(key: string, mappers: RichTextMappers = defaultRich) {

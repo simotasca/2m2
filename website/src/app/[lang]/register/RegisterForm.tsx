@@ -2,6 +2,7 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
 import { isEmail } from "@/lib/shared/object";
 import routes from "@/lib/shared/routes";
@@ -91,17 +92,17 @@ export default function RegisterForm() {
     e.preventDefault();
 
     if (!access.email || !access.password) {
-      setErrorMessage("email and password are required");
+      setErrorMessage(t("misc.errors.required-mail-and-password"));
       return;
     }
 
     if (!isEmail(access.email)) {
-      setErrorMessage("invalid email");
+      setErrorMessage(t("misc.errors.invalid-email"));
       return;
     }
 
     if (!conditionsAccepted) {
-      setErrorMessage("You must accept the terms and conditions");
+      setErrorMessage(t("misc.errors.terms-and-conditions-error"));
       return;
     }
 
@@ -142,6 +143,8 @@ export default function RegisterForm() {
 
   useEffect(() => set(setSharedInfo, "taxId", ""), [mode]);
 
+  const { t, r } = useTranslation();
+
   return (
     <>
       <LoadingScreen message="Loading" loading={loading} />
@@ -151,23 +154,17 @@ export default function RegisterForm() {
 
         <AuthLayout.Title>
           {success ? (
-            <>
-              <span className="text-red-500">Email </span>
-              <span>Sent</span>
-            </>
+            <>{r("auth.email.email-sent")}</>
           ) : (
-            <>
-              <span>Create your </span>
-              <span className="text-red-500">Account</span>
-            </>
+            <>{r("auth.register.title")}</>
           )}
         </AuthLayout.Title>
 
         {success && (
           <p className="leading-5 mb-3 text-center">
-            <span>An email has been sent to </span>
+            <span>{r("auth.email.email-sent-to")} </span>
             <b className="font-semibold">{access.email}</b>
-            <span> with the confirmation link</span>
+            <span> {r("auth.email.confirmation-link")}</span>
           </p>
         )}
 
@@ -181,8 +178,9 @@ export default function RegisterForm() {
                   mode === "private"
                     ? "bg-red-gradient text-white font-medium border-transparent"
                     : "bg-stone-100"
-                )}>
-                private
+                )}
+              >
+                {t("auth.register.private")}
               </button>
               <button
                 onClick={() => setMode("business")}
@@ -191,15 +189,15 @@ export default function RegisterForm() {
                   mode === "business"
                     ? "bg-red-gradient text-white font-medium border-transparent"
                     : "bg-stone-100"
-                )}>
-                business
+                )}
+              >
+                {t("auth.register.business")}
               </button>
             </div>
 
             <form onSubmit={handleRegister} className="flex flex-col gap-2">
               <p className="uppercase font-bold mt-2 -mb-1">
-                <span className="text-red-500">ACCESS</span>
-                <span> DETAILS</span>
+                {r("auth.register.access-details.title")}
               </p>
 
               <Label text="email" required>
@@ -229,61 +227,68 @@ export default function RegisterForm() {
               </Label>
 
               <p className="text-xs leading-3 text-neutral-500 mt-2">
-                fields below are optional
+                {r("auth.register.access-details.optional-fields")}
               </p>
 
               <p className="uppercase font-bold -mb-1">
-                <span className="text-red-500">
-                  {mode === "private" ? "user" : "business"}
-                </span>
-                <span> INFO</span>
+                {mode === "private"
+                  ? r("auth.register.info.info-user.user")
+                  : r("auth.register.info.info-business.business")}
               </p>
 
               {mode === "private" && (
                 <>
-                  <Label text="name">
+                  <Label text={t("auth.register.info.info-user.name.label")}>
                     <Input
                       value={privateInfo.name}
                       onChange={(e) =>
                         set(setPrivateInfo, "name", e.target.value)
                       }
-                      placeholder="name"
+                      placeholder={t(
+                        "auth.register.info.info-user.name.placeholder"
+                      )}
                       name="name"
                       type="text"
                     />
                   </Label>
 
-                  <Label text="surname">
+                  <Label text={t("auth.register.info.info-user.surname.label")}>
                     <Input
                       value={privateInfo.surname}
                       onChange={(e) =>
                         set(setPrivateInfo, "surname", e.target.value)
                       }
-                      placeholder="surname"
+                      placeholder={t(
+                        "auth.register.info.info-user.surname.placeholder"
+                      )}
                       name="surname"
                       type="text"
                     />
                   </Label>
 
-                  <Label text="tax ID">
+                  <Label text={t("auth.register.info.info-user.cf.label")}>
                     <Input
                       value={sharedInfo.taxId}
                       onChange={(e) =>
                         set(setSharedInfo, "taxId", e.target.value)
                       }
-                      placeholder="tax ID"
+                      placeholder={t(
+                        "auth.register.info.info-user.cf.placeholder"
+                      )}
                       name="tax-id"
                       type="text"
                     />
                   </Label>
 
-                  <Label text="phone">
+                  <Label text={t("auth.register.info.info-user.phone.label")}>
                     <Input
                       value={sharedInfo.phone}
                       onChange={(e) =>
                         set(setSharedInfo, "phone", e.target.value)
                       }
-                      placeholder="phone"
+                      placeholder={t(
+                        "auth.register.info.info-user.phone.placeholder"
+                      )}
                       name="phone"
                       type="text"
                     />
@@ -293,49 +298,63 @@ export default function RegisterForm() {
 
               {mode === "business" && (
                 <>
-                  <Label text="business name">
+                  <Label
+                    text={t("auth.register.info.info-business.name.label")}
+                  >
                     <Input
                       value={businessInfo.name}
                       onChange={(e) =>
                         set(setBusinessInfo, "name", e.target.value)
                       }
-                      placeholder="business name"
+                      placeholder={t(
+                        "auth.register.info.info-business.name.placeholder"
+                      )}
                       name="business-name"
                       type="text"
                     />
                   </Label>
 
-                  <Label text="tax ID">
+                  <Label text={t("auth.register.info.info-business.cf.label")}>
                     <Input
                       value={sharedInfo.taxId}
                       onChange={(e) =>
                         set(setSharedInfo, "taxId", e.target.value)
                       }
-                      placeholder="tax ID"
+                      placeholder={t(
+                        "auth.register.info.info-business.cf.placeholder"
+                      )}
                       name="tax-id"
                       type="text"
                     />
                   </Label>
 
-                  <Label text="p. IVA">
+                  <Label
+                    text={t("auth.register.info.info-business.piva.label")}
+                  >
                     <Input
                       value={businessInfo.piva}
                       onChange={(e) =>
                         set(setBusinessInfo, "piva", e.target.value)
                       }
-                      placeholder="partita iva"
+                      placeholder={t(
+                        "auth.register.info.info-business.piva.placeholder"
+                      )}
                       name="piva"
                       type="text"
                     />
                   </Label>
 
-                  <Label text="phone">
+                  <Label
+                    text={t("auth.register.info.info-business.phone.label")}
+                  >
                     <Input
                       value={sharedInfo.phone}
                       onChange={(e) =>
                         set(setSharedInfo, "phone", e.target.value)
                       }
-                      placeholder="phone"
+                      placeholder={t(
+                        "auth.register.info.info-business.phone.placeholder"
+                      )}
                       name="phone"
                       type="text"
                     />
@@ -343,11 +362,14 @@ export default function RegisterForm() {
 
                   <div className="mt-2 -mb-1">
                     <p className="uppercase text-sm font-bold text-neutral-600 leading-4">
-                      Electronic billing data
+                      {t(
+                        "auth.register.info.info-business.electronic-data.title"
+                      )}
                     </p>
                     <p className="text-xs leading-3 text-neutral-500">
-                      these are used to send you electronic billing for your
-                      orders
+                      {t(
+                        "auth.register.info.info-business.electronic-data.paragraph"
+                      )}
                     </p>
                   </div>
 
@@ -363,13 +385,19 @@ export default function RegisterForm() {
                     />
                   </Label>
 
-                  <Label text="sdi code">
+                  <Label
+                    text={t(
+                      "auth.register.info.info-business.electronic-data.sdi-code.label"
+                    )}
+                  >
                     <Input
                       value={businessInfo.sdi}
                       onChange={(e) =>
                         set(setBusinessInfo, "sdi", e.target.value)
                       }
-                      placeholder="sdi code"
+                      placeholder={t(
+                        "auth.register.info.info-business.electronic-data.sdi-code.placeholder"
+                      )}
                       name="sdi"
                       type="email"
                     />
@@ -386,19 +414,24 @@ export default function RegisterForm() {
                     className="accent-red-500"
                   />
                   <p className="text-sm">
-                    <span>I accept the </span>
-                    <Link
-                      href="#"
-                      className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
-                      terms and conditions
-                    </Link>
+                    {r("auth.register.conditions", {
+                      link: (l) => (
+                        <Link
+                          href="#"
+                          className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+                        >
+                          {l}
+                        </Link>
+                      ),
+                    })}
                   </p>
                 </div>
 
                 <Button
                   type="submit"
-                  className="bg-red-500 text-white w-full font-medium">
-                  submit
+                  className="bg-red-500 text-white w-full font-medium"
+                >
+                  {t("auth.register.submit")}
                 </Button>
 
                 {errorMessage && (
@@ -408,11 +441,14 @@ export default function RegisterForm() {
                 )}
 
                 <p className="text-sm text-center mt-4 mb-1">
-                  <span className="text-neutral-600">Already registered? </span>
+                  <span className="text-neutral-600">
+                    {t("auth.register.already-registered")}{" "}
+                  </span>
                   <Link
                     href={routes.login()}
-                    className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
-                    Login to account
+                    className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+                  >
+                    {t("auth.register.login-account")}
                   </Link>
                 </p>
               </div>

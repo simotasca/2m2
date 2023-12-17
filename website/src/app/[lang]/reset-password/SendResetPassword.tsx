@@ -8,6 +8,7 @@ import { isEmail } from "@/lib/shared/object";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { Input } from "./Input";
+import useTranslation from "@/context/lang/useTranslation";
 
 export function SendResetPassword() {
   const supabase = createClientComponentClient<Database>();
@@ -45,6 +46,8 @@ export function SendResetPassword() {
     setLoading(false);
   };
 
+  const { t, r } = useTranslation();
+
   return (
     <>
       <LoadingScreen message="Loading" loading={loading} />
@@ -54,23 +57,18 @@ export function SendResetPassword() {
 
         <AuthLayout.Title>
           {sent ? (
-            <>
-              <span>Check your </span>
-              <span className="text-red-500">Email</span>
-            </>
+            <>{r("auth.password.send-password.check-email")}</>
           ) : (
-            <>
-              <span>Reset your </span>
-              <span className="text-red-500">Password</span>
-            </>
+            <>{r("auth.password.send-password.reset-password")}</>
           )}
         </AuthLayout.Title>
 
         <p className="leading-5 mb-3 text-center">
           {sent ? (
             <span>
-              An email has been sent to <b className="font-semibold">{email}</b>{" "}
-              with the password reset link
+              {r("auth.password.send-password.sent-email", {
+                email: () => <b className="font-semibold">{email}</b>,
+              })}
             </span>
           ) : (
             "enter the email address for which you want to recover the password"
@@ -93,8 +91,9 @@ export function SendResetPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => onclick()}>
-              Next
+              onClick={() => onclick()}
+            >
+              {t("auth.password.next")}
             </Button>
           </>
         )}
