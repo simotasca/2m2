@@ -61,6 +61,8 @@ export default async function ModelPage({
     {
       product: "misc/product",
       header: "misc/header",
+      contacts: "misc/contacts",
+      page: "pages/brand/model",
     },
     true
   );
@@ -80,7 +82,7 @@ export default async function ModelPage({
             </div>
 
             <Title as="h1">
-              <Title.Gray>Model</Title.Gray>
+              <Title.Gray>{t("page.title")}</Title.Gray>
               <Title.Red>{` ${brand.name} ${model.name}`}</Title.Red>
             </Title>
 

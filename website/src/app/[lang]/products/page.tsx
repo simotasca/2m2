@@ -5,6 +5,7 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
+import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import { parseSearchParams } from "@/lib/shared/search";
 
@@ -14,10 +15,14 @@ interface Props {
 
 export default async function ProductsPage({ searchParams }: Props) {
   const filters = parseSearchParams(searchParams);
-  const translations = {
-    page: "pages/products",
-    product: "misc/product",
-  };
+  const [translations, { t, r }] = await generateTranslations(
+    {
+      page: "pages/products",
+      product: "misc/product",
+      contacts: "misc/contacts",
+    },
+    true
+  );
 
   return (
     <ServerLayout translations={translations}>
@@ -32,8 +37,7 @@ export default async function ProductsPage({ searchParams }: Props) {
             </div>
 
             <Title as="h1">
-              <Title.Gray>OUR</Title.Gray>
-              <Title.Red> PRODUCTS</Title.Red>
+              <Title.Gray>{r("page.title")}</Title.Gray>
             </Title>
 
             <div className="h-4"></div>

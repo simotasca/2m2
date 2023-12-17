@@ -10,7 +10,7 @@ import settings from "@/settings";
 import useTranslation from "@/context/lang/useTranslation";
 
 export default function ContactsSection() {
-  const { t, r } = useTranslation("page.contacts");
+  const { t, r } = useTranslation("contacts");
   return (
     <div className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 max-xs:-ml-2">
       <div>

@@ -1,0 +1,20 @@
+{
+  "hero":{
+    "title":"Da <red>oltre 50 anni</red> lavoriamo per guadagnare la vostra fiducia",
+    "subtitle":"Ci impegniamo a semplificare la tua esperienza nella ricerca di autoricambi di alta qualità a <b>prezzi convenienti</b>. Grazie al nostro sistemi di ricerca, ti offriamo un servizio rapido e affidabile, mettendo a tua disposizione una <b>vasta selezione di prodotti</b> per la tua auto. Trova ciò di cui hai bisogno con facilità, velocità e la sicurezza di fare una scelta informata per il tuo veicolo.",
+    "button":"Fai la tua ricerca"
+  },
+  "map-section":{
+    "title":"Dove siamo",
+    "subtitle":"Riforniamo clienti in tutta Europa",
+    "numbers":{
+      "orders":"Fino a <red>10912 ordini</red> al giorno",
+      "clients":"<red>+ 10912 clienti</red> soddisfatti",
+      "car-parts":"<red>+ 2.500.000 ricambi</red> di tutte le marche"
+    }
+  },
+  "history":{
+    "title":"La nostra storia",
+    "paragraph":"Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2. Qui va scritta la storia di 2m2."
+  }
+}

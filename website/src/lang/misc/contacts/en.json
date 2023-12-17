@@ -1,0 +1,23 @@
+{
+  "title":"How can we help you? ",
+    "subtitle":"Choose the contact method you prefer: Toll-free number, Whatsapp, Email. We're at your service.",
+    "email":{
+      "title":"Email",
+      "subtitle":"We will reply to you shortly ",
+      "button":"Write"
+    },
+    "telephone":{
+      "title":"Telephone",
+      "subtitle":"Speak to an operator",
+      "button":"Call"
+    },
+    "whatsapp":{
+      "title":"Whatsapp",
+      "subtitle":"We will reply to you as soon as possible",
+      "button":"Chat"
+    },
+    "timetables":{
+      "title":"We are available at the following times:",
+      "monday-friday":"<b>Monday</b> through <b>Friday</b>:",
+      "saturday":"Saturday"}
+}
