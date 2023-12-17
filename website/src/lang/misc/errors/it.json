@@ -1,0 +1,8 @@
+{
+  "required-error": "Campo Obbligatorio",
+  "invalid-error": "Non valido",
+  "max-250-chars": "Max 250 caratteri",
+  "required-mail-and-password": "Mail e password obbligatori",
+  "invalid-email": "Indirizzo email non valido",
+  "terms-and-conditions-error": "Devi accettare i termini e condizioni"
+}

@@ -19,6 +19,7 @@ export default async function HomePage() {
     page: "pages/home",
     categories: "misc/categories",
     header: "misc/header",
+    footer: "misc/footer",
     contacts: "misc/contacts",
   });
 

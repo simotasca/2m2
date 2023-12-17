@@ -13,7 +13,9 @@ export default async function LoginPage() {
 
   if (data.user) redirect("/reserved");
 
-  const [translations] = await generateTranslations({});
+  const [translations] = await generateTranslations({
+    auth: "auth",
+  });
 
   return (
     <TranslationClientComponent value={translations}>

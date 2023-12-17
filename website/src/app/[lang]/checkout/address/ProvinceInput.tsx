@@ -7,6 +7,7 @@ import WizSelect, { WizSelectItem } from "../WizSelect";
 import WizInput from "../WizInput";
 import settings from "@/settings";
 import { Database } from "@/database.types";
+import useTranslation from "@/context/lang/useTranslation";
 
 export default function ProvinceInput({
   address,
@@ -60,16 +61,18 @@ export default function ProvinceInput({
 
   useEffect(() => loadProvinces(), []);
 
+  const { t } = useTranslation("page.delivery-address");
+
   return address?.countryCode === "IT" ? (
     <WizSelect
       items={provinces}
       value={selectValue}
       onChange={setSelectValue}
-      label="province"
-      placeholder="Province"
+      label={t("province.label")}
+      placeholder={t("province.placeholder")}
       errorMessage={
         showErrors && (!address.province || !address.provinceCode)
-          ? "required"
+          ? t("eerors.required-error")
           : undefined
       }
       required={true}
@@ -88,11 +91,13 @@ export default function ProvinceInput({
           provinceCode: settings.ecodat.foreignProvince,
         })
       }
-      label="province"
-      placeholder="Province"
+      label={t("province.label")}
+      placeholder={t("province.placeholder")}
       type="text"
       name="province"
-      errorMessage={showErrors && !address.province ? "required" : undefined}
+      errorMessage={
+        showErrors && !address.province ? t("required-error") : undefined
+      }
       required={true}
     />
   );

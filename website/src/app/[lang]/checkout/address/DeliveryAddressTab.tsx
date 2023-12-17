@@ -14,6 +14,7 @@ import WizTabValidator from "../WizTabHandle";
 import CityInput from "./CityInput";
 import ProvinceInput from "./ProvinceInput";
 import useLogger from "@/hooks/useLogger";
+import useTranslation from "@/context/lang/useTranslation";
 
 export interface DeliveryAddress {
   country?: string;
@@ -98,13 +99,13 @@ export const DeliveryAddressTab = forwardRef<
       country: country?.val,
     });
   }, []);
-
+  const { t, r } = useTranslation("page.delivery-address");
   return (
     <div ref={tabRef} className="mb-2.5">
       <div className="flex items-start gap-2 mb-2">
         <Image className="w-5 -translate-y-px" src={iconShipping} alt="" />
         <h4 className="text-xl leading-[0.9] font-bold uppercase">
-          <span className="text-red-500">Delivery</span> Address
+          {r("title")}
         </h4>
       </div>
 
@@ -122,9 +123,13 @@ export const DeliveryAddressTab = forwardRef<
           onChange={(item) =>
             setAddress({ ...address, countryCode: item.key, country: item.val })
           }
-          label="country"
-          placeholder="Country"
-          errorMessage={showErrors && !address.country ? "required" : undefined}
+          label={t("nations.label")}
+          placeholder={t("nations.placeholder")}
+          errorMessage={
+            showErrors && !address.country
+              ? t("errors.required-error")
+              : undefined
+          }
           required={true}
           loading={false}
           loadingError={false}
@@ -153,7 +158,7 @@ export const DeliveryAddressTab = forwardRef<
             errorMessage={
               showErrors
                 ? !address.zip
-                  ? "required"
+                  ? t("errors.required-error")
                   : Number.isNaN(Number(address.zip || "err"))
                   ? "invalid"
                   : undefined
@@ -171,12 +176,14 @@ export const DeliveryAddressTab = forwardRef<
               onChange={(e) =>
                 setAddress({ ...address, street: e.target.value })
               }
-              label="street"
-              placeholder="Street"
+              label={t("street.label")}
+              placeholder={t("street.placeholder")}
               type="text"
               name="street"
               errorMessage={
-                showErrors && !address.street ? "required" : undefined
+                showErrors && !address.street
+                  ? t("errors.required-error")
+                  : undefined
               }
               required={true}
             />
@@ -186,15 +193,15 @@ export const DeliveryAddressTab = forwardRef<
             value={address.number || ""}
             onChange={(e) => setAddress({ ...address, number: e.target.value })}
             label="n"
-            placeholder="Building"
+            placeholder={t("civic-number.placeholder")}
             type="text"
             name="civic"
             errorMessage={
               showErrors
                 ? !address.number
-                  ? "required"
+                  ? t("errors.required-error")
                   : Number.isNaN(Number(address.number))
-                  ? "invalid"
+                  ? t("errors.invalid-error")
                   : undefined
                 : undefined
             }
@@ -205,13 +212,13 @@ export const DeliveryAddressTab = forwardRef<
           id="txt-notes"
           value={address.notes || ""}
           onChange={(e) => setAddress({ ...address, notes: e.target.value })}
-          label="notes"
-          placeholder="Write here your notes"
+          label={t("notes.label")}
+          placeholder={t("notes.placeholder")}
           type="textarea"
           name="notes"
           errorMessage={
             showErrors && address.notes && address.notes.length > 250
-              ? "max 250 chars"
+              ? t("errors.max-250-chars")
               : undefined
           }
         />

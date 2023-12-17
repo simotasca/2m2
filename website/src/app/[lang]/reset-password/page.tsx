@@ -11,7 +11,9 @@ export default async function ResetPassword({ searchParams }) {
   //   return <ErrorSoRetry />
   // }
 
-  const [translations] = await generateTranslations({});
+  const [translations] = await generateTranslations({
+    auth: "auth",
+  });
 
   return (
     <TranslationClientComponent value={translations}>

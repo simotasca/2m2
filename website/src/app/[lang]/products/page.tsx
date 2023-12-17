@@ -20,6 +20,8 @@ export default async function ProductsPage({ searchParams }: Props) {
       page: "pages/products",
       product: "misc/product",
       contacts: "misc/contacts",
+      header: "misc/header",
+      footer: "misc/footer",
     },
     true
   );
