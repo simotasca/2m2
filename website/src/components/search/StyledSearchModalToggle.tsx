@@ -12,10 +12,11 @@ export default function StyledSearchModalToggle({
   return (
     <SearchModalToggle as="div" className="relative cursor-pointer">
       <input
+        disabled={true}
         type="text"
         placeholder="search here . . ."
         className={twMerge(
-          "text-sm outline-none border border-neutral-500 max-w-[200px] w-full py-px pl-1.5 pr-6 rounded-sm",
+          "text-sm outline-none border border-neutral-500 max-w-[200px] w-full py-px pl-1.5 pr-6 rounded-sm cursor-pointer",
           className
         )}
       />

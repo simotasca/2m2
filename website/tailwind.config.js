@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: '"Poppins", sans',
-        oswald: ["var(--font-oswald)"],
+        oswald: '"Oswald", sans',
+        // oswald: ["var(--font-oswald)"]
       },
       colors: {
         dark: "#363636",

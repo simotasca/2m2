@@ -56,3 +56,5 @@
 
 - [ ] usare memo per cacheare tutte le millimila chiamate a ecodat
       (già nextjs dovrebbe cacheare qualcosa?)
+
+- [ ] categorie not found danno pagina 500 anzichè 404
