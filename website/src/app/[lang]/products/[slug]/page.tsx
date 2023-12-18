@@ -4,13 +4,13 @@ import SearchModal from "@/components/search/SearchModal";
 import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import Button from "@/components/ui/Button";
 import ContactsSection from "@/components/ui/ContactsSection";
-import GuaranteedUsed from "@/components/ui/GuaranteedUsed";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import { PaymentsBar } from "@/components/ui/PaymentsBar";
 import iconAvailable from "@/images/icons/available.svg";
 import iconFavorite from "@/images/icons/favorite.svg";
 import iconShare from "@/images/icons/share.svg";
 import iconCart from "@/images/icons/white/cart.svg";
+import imgLogo from "@/images/logo-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
 import ServerLayout from "@/layouts/base/ServerLayout";
 import {
@@ -20,7 +20,7 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import { generateTranslations } from "@/lib/server/lang";
+import { TranslationFactories, generateTranslations } from "@/lib/server/lang";
 import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
@@ -66,41 +66,47 @@ export default async function ProductPage({ params: { slug } }: Props) {
       return undefined;
     });
 
+  const [translations, { t, r }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      search: "misc/search",
+      footer: "misc/footer",
+      contacts: "misc/contacts",
+      auth: "auth",
+      page: "pages/products/product",
+      categories: "misc/categories",
+      typologies: "misc/typologies",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: product.category,
+      text: t(["categories", product.category], product.category),
       href: routes.category(product.category),
-      dropdown: categories
-        ?.filter((c) => c !== product.category)
-        .map((c) => ({ text: c, href: routes.category(c) })),
+      dropdown: categories?.map((c) => ({
+        text: t(["categories", c], c),
+        href: routes.category(c),
+      })),
     },
     {
-      text: product.type,
+      text: t(["typologies", product.type], product.type),
       href: routes.type(product.category, product.type),
-      dropdown: types
-        ?.filter((t) => t !== product.type)
-        .map((t) => ({
-          text: t,
-          href: routes.type(product.category, t),
-        })),
+      dropdown: types?.map((ty) => ({
+        text: t(["typologies", ty], ty),
+        href: routes.type(product.category, ty),
+      })),
     },
     {
       text: product.item,
       href: routes.item(product.category, product.type, product.item),
-      dropdown: items
-        ?.filter((i) => i.id != product.itemId)
-        .map((i) => ({
-          text: itemName(i),
-          href: routes.item(product.category, product.type, itemName(i)),
-        })),
+      dropdown: items?.map((i) => ({
+        text: itemName(i),
+        href: routes.item(product.category, product.type, itemName(i)),
+      })),
     },
   ];
-
-  const [translations] = await generateTranslations({
-    product: "misc/product",
-    header: "misc/header",
-    footer: "misc/footer",
-  });
 
   return (
     <ServerLayout translations={translations}>
@@ -122,7 +128,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
                 <span>{product.brand + " " + product.model}</span>
               </h1>
               <p className="mb-1 mt-0.5 text-sm max-w-screen-md">
-                <span className="font-medium">description:</span>
+                <span className="font-medium">{t("page.title")}:</span>
                 <span className="text-neutral-600"> {product.description}</span>
               </p>
             </div>
@@ -134,7 +140,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
 
               <ProductDetails product={product} />
 
-              <BuySection product={product} />
+              <BuySection t={t} r={r} product={product} />
 
               <div className="order-last"></div>
             </div>
@@ -144,7 +150,23 @@ export default async function ProductPage({ params: { slug } }: Props) {
 
           <div className="h-4"></div>
 
-          <GuaranteedUsed />
+          <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
+            <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-4 lg:gap-x-8">
+              <Image
+                src={imgLogo}
+                alt=""
+                className="w-12 md:w-16 [@media(max-width:383px)]:mx-auto"
+              />
+              <h4 className="font-semibold leading-tight text-base sm:text-lg md:text-xl max-md:text-center">
+                {t("page.guaranteed-used")}
+              </h4>
+              <Image
+                src={imgLogo}
+                alt=""
+                className="w-12 md:w-16 [@media(max-width:383px)]:hidden"
+              />
+            </div>
+          </div>
 
           <div className="h-10"></div>
 
@@ -204,12 +226,16 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
   );
 }
 
-function BuySection({ product }: { product: EcodatArticle }) {
+function BuySection({
+  product,
+  t,
+  r,
+}: { product: EcodatArticle } & TranslationFactories) {
   return (
     <aside className="font-sans order-2 row-span-2">
       <div className="flex gap-1 items-center -mb-1">
         <span className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm mb-[2px]">
-          Disponibile
+          {t("page.buy-section.available")}
         </span>
         <Image
           className="w-4 sm:w-3 md:w-4"
@@ -221,13 +247,10 @@ function BuySection({ product }: { product: EcodatArticle }) {
         {product.price.toFixed(2)}€
       </span>
       <p className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm">
-        Tutti i prezzi includono l'IVA
+        {t("page.buy-section.iva")}
       </p>
       <p className="font-bold text-lg sm:text-base md:text-lg uppercase -mt-[6px] whitespace-nowrap">
-        <span>SPEDIZIONE IN </span>
-        <span className="text-[#F03B3B]">
-          24<span className="text-sm">/</span>48 ORE
-        </span>
+        {r("page.buy-section.delivery-time")}
       </p>
       <div className="h-3"></div>
       <div className="grid grid-cols-[auto_auto] leading-3">
@@ -237,7 +260,9 @@ function BuySection({ product }: { product: EcodatArticle }) {
             src={iconFavorite}
             alt="favorite icon"
           />
-          <span className=" text-xs leading-[1.1]">Aggiungi ai preferiti</span>
+          <span className=" text-xs leading-[1.1]">
+            {t("page.buy-section.favourites")}
+          </span>
         </div>
         <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
           <Image
@@ -245,7 +270,9 @@ function BuySection({ product }: { product: EcodatArticle }) {
             src={iconShare}
             alt="share icon"
           />
-          <span className="text-xs leading-[1.1]">Condividi</span>
+          <span className="text-xs leading-[1.1]">
+            {t("page.buy-section.share")}
+          </span>
         </div>
       </div>
       <div className="h-[10px]"></div>
@@ -256,11 +283,13 @@ function BuySection({ product }: { product: EcodatArticle }) {
             src={iconCart}
             alt="icon-cart"
           />
-          <span>AGGIUNGI</span>
+          <span>{t("page.buy-section.add-to-cart")}</span>
         </div>
       </Button>
       <div className="pt-2 flex justify-end pr-2 gap-2">
-        <span className="text-sm sm:text-xs md:text-sm">pagamenti:</span>
+        <span className="text-sm sm:text-xs md:text-sm">
+          {t("page.buy-section.payments")}:
+        </span>
         <PaymentsBar className="w-fit" />
       </div>
       {/* <p className="text-[#2e2d2d] underline text-xs">
