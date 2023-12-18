@@ -15,9 +15,11 @@ export default async function AboutPage() {
   const [translations, { t, r }] = await generateTranslations(
     {
       header: "misc/header",
+      search: "misc/search",
       footer: "misc/footer",
       page: "pages/about",
       contacts: "misc/contacts",
+      auth: "auth",
     },
     true
   );

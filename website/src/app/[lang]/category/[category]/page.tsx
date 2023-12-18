@@ -40,10 +40,12 @@ export default async function CategoryPage({
     {
       product: "misc/product",
       header: "misc/header",
+search: "misc/search",
       footer: "misc/footer",
       page: "pages/category",
       categories: "misc/categories",
       contacts: "misc/contacts",
+auth:"auth",,
     },
     true
   );

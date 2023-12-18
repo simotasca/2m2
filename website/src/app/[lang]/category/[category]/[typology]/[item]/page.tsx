@@ -56,11 +56,13 @@ export default async function ItemPage({
     {
       product: "misc/product",
       header: "misc/header",
+search: "misc/search",
       footer: "misc/footer",
       page: "pages/category/typology/item",
       categories: "misc/categories",
       typologies: "misc/typologies",
       contacts: "misc/contacts",
+auth:"auth",,
     },
     true
   );

@@ -53,6 +53,7 @@ export default async function ModelPage({
       page: "pages/brand",
       product: "misc/product",
       header: "misc/header",
+      search: "misc/search",
       footer: "misc/footer",
     },
     true

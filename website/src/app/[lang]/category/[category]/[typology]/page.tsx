@@ -49,9 +49,11 @@ export default async function TypologyPage({
     {
       product: "misc/product",
       header: "misc/header",
+search: "misc/search",
       footer: "misc/footer",
       page: "pages/category/typology",
       contacts: "misc/contacts",
+auth:"auth",,
       categories: "misc/categories",
 
       typologies: "misc/typologies",
