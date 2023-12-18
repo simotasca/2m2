@@ -38,9 +38,14 @@ export default function Footer() {
           </h3>
           <ul className="flex flex-col gap-2 text-sm">
             {Object.keys(knownCategories).map((p) => (
-              <li key={p} className="leading-4 whitespace-nowrap">
-                {tCat(p)}
-              </li>
+              <a href={routes.category(p)}>
+                <li
+                  key={p}
+                  className="leading-4 whitespace-nowrap hover:underline underline-offset-2"
+                >
+                  {tCat(p, p)}
+                </li>
+              </a>
             ))}
           </ul>
         </div>
@@ -76,7 +81,7 @@ export default function Footer() {
                 href={routes.home()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
-                {tHead("header.navbar.home")}
+                {tHead("navbar.home")}
               </Link>
             </li>
             <li>
@@ -84,7 +89,7 @@ export default function Footer() {
                 href={routes.about()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
-                {tHead("header.navbar.about")}
+                {tHead("navbar.about")}
               </Link>
             </li>
             <li>
@@ -92,7 +97,7 @@ export default function Footer() {
                 href={routes.products()}
                 className="hover:underline underline-offset-4 cursor-pointer"
               >
-                {tHead("header.search-bar.search")}
+                {tHead("search-bar.search")}
               </Link>
             </li>
             <li>
@@ -118,8 +123,8 @@ export default function Footer() {
 }
 
 function DropdownLogin({ small }: { small: boolean }) {
-  const { t } = useTranslation();
   const supabase = createClientComponentClient<Database>();
+  const { t } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -158,19 +163,18 @@ function DropdownLogin({ small }: { small: boolean }) {
     const password = data.get("password")?.toString();
 
     if (!email || !password) {
-      // TODO: i18n
-      setErrorMessage("Inserire email e password");
+      setErrorMessage(t("errors.required-mail-and-password"));
       return;
     }
 
     setLoading(true);
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error) {
-      // TODO: display better error message
       setErrorMessage(error.message + " (" + error.status + ")");
       setLoading(false);
       return;
@@ -186,7 +190,7 @@ function DropdownLogin({ small }: { small: boolean }) {
           <div className="pb-20 flex flex-col items-center">
             <Image src={gifLoader} alt="loader" className="w-12" />
             <p className="font-semibold [text-shadow:0_0_4px_black]">
-              Login in corso...
+              {t("auth.login.logging-in")}
             </p>
           </div>
         </div>
@@ -218,7 +222,9 @@ function DropdownLogin({ small }: { small: boolean }) {
                     togglePasswordVisibility();
                   }}
                 >
-                  {pwInputType === "text" ? "hide" : "show"}
+                  {pwInputType === "text"
+                    ? t("auth.login.hide-password")
+                    : t("auth.login.show-password")}
                 </button>
               </div>
 
@@ -226,7 +232,7 @@ function DropdownLogin({ small }: { small: boolean }) {
                 className="underline text-xs -mt-1.5 text-neutral-100"
                 href="#"
               >
-                Forgot your password?
+                {t("auth.login.forgot-password")}
                 {/* TODO */}
               </Link>
 
@@ -247,7 +253,7 @@ function DropdownLogin({ small }: { small: boolean }) {
             </div>
             <Link href={routes.register()}>
               <Button className="w-full font-medium text-sm bg-red-gradient text-white">
-                Register
+                {t("auth.login.signup")}
               </Button>
             </Link>
           </div>
@@ -313,7 +319,7 @@ function ContactsSection() {
             <p>
               {r("contacts.timetables.monday-friday")}
               <span className="">
-                :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30 /
+                <br className="xs:hidden md:block lg:hidden" /> 08:30-12:30 /
                 14:40-17:30
               </span>
             </p>
@@ -327,7 +333,7 @@ function ContactsSection() {
             <p>
               <b className="font-medium">{r("contacts.timetables.saturday")}</b>
               <span className="">
-                :<br className="xs:hidden md:block lg:hidden" /> 08:30-12:30
+                <br className="xs:hidden md:block lg:hidden" /> 08:30-12:30
               </span>
             </p>
           </li>
