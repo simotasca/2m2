@@ -1,16 +1,14 @@
 {
-  "categories":{
+  "categories": {
     "title": "Categorie ricambi"
   },
 
   "conditions": {
     "title": "Le nostre condizioni",
     "terms-and-conditions": "Termini e condizioni"
-    
   },
 
   "signup": "Registrati",
 
-  "your-cart": "Il tuo carrello"
-
+  "your-cart": "IL TUO CARRELLO"
 }

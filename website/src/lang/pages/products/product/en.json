@@ -1,0 +1,32 @@
+{
+  "title": "Description",
+  "product-details": {
+    "title": "Product details",
+    "oem-code": "OEM code",
+    "brand": "brand",
+    "model": "model",
+    "version": "version",
+    "year": "year",
+    "engine": "engine",
+    "engine-displacement": "displacement",
+    "fuel-system": "fuel system",
+    "notes": "notes",
+    "more": "more"
+  },
+  "buy-section": {
+    "available": "Available",
+    "iva": "All prices include VAT",
+    "delivery-time": "SHIPPING IN <red>24/48 HOURS</red>",
+    "favourites": "Add to favourites",
+    "share": "Share",
+    "add-to-cart": "Add",
+    "payments": "payments"
+  },
+  "guaranteed-used": "All used parts are tested and guaranteed.",
+
+  "similar-products": {
+    "see-all": "See all",
+    "other-item": "Other car-parts in",
+    "other-product": "Other from"
+  }
+}
