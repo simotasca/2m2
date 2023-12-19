@@ -14,14 +14,18 @@ import { UserData } from "./UserData";
 import Button from "../ui/Button";
 import useSearchModal from "@/context/search/useSearchModal";
 import routes from "@/lib/shared/routes";
+import Link from "next/link";
 
 export default function MobilePanel() {
+  const { t } = useTranslation();
+
   return (
     <div
       className={twMerge(
         "fixed w-screen h-screen top-0 left-full bg-dark text-white transition-transform duration-300 z-[51]",
         "[.mobile-panel-open_&]:-translate-x-full"
-      )}>
+      )}
+    >
       <div className="relative flex items-start py-1 px-4">
         <button className="text-2xl" onClick={() => setMobilePanelOpen(false)}>
           x
@@ -44,11 +48,15 @@ export default function MobilePanel() {
       </div>
       <div className="flex flex-col gap-2 p-6">
         <a href={routes.home()}>
-          <span className="text-white">HOME</span>
+          <span className="text-white">{t("mobile-panel.home")}</span>
         </a>
         <div className="h-px bg-neutral-500"></div>
         <a href={routes.about()}>
-          <span className="text-white">ABOUT</span>
+          <span className="text-white">{t("mobile-panel.about")}</span>
+        </a>
+        <div className="h-px bg-neutral-500"></div>
+        <a href={routes.reserved()}>
+          <span className="text-white">{t("mobile-panel.reserved")}</span>
         </a>
         <div className="h-px bg-neutral-500"></div>
         <div className="h-4"></div>
@@ -70,11 +78,15 @@ export default function MobilePanel() {
       </div>
       <div className="absolute flex items-center translate-x-1/2 right-1/2 bottom-2">
         <div className="flex gap-1">
-          <span className="text-white text-sm whitespace-nowrap">
-            Termini e condizioni
-          </span>
+          <Link href={routes.terms()}>
+            <span className="text-white text-sm whitespace-nowrap">
+              {t("mobile-panel.terms-and-conditions")}
+            </span>
+          </Link>
           <span className="text-neutral-500">|</span>
-          <span className="text-white text-sm">Login/Registrati</span>
+          <Link href={routes.privacy()}>
+            <span className="text-white text-sm">Privacy</span>
+          </Link>
         </div>
       </div>
     </div>
@@ -124,9 +136,11 @@ function SearchBar() {
 }
 
 function Contacts() {
+  const { t } = useTranslation();
+
   return (
     <div>
-      <h2 className="text-white mb-2">CONTACTS</h2>
+      <h2 className="text-white mb-2">{t("contacts.contatti")}</h2>
       <ul className="grid grid-cols-[auto_1fr_auto] gap-x-4 gap-y-2 items-center">
         <li className="contents">
           <Image className="max-xs:hidden" src={iconEmail} alt=""></Image>
@@ -138,11 +152,11 @@ function Contacts() {
               </span>
             </p>
             <p className="text-xs xs:text-sm text-neutral-200 leading-tight">
-              Ti risponderemo a breve
+              {t("contacts.email.subtitle")}
             </p>
           </div>
           <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-10 py-1.5 ml-auto mr-0">
-            Scrivici
+            {t("contacts.email.button")}
           </Button>
         </li>
         <li className="col-span-3 h-px bg-neutral-500"></li>
@@ -151,7 +165,7 @@ function Contacts() {
           <div className=" leading-tight">
             <p>
               <span className="text-xs xs:text-sm leading-tight">
-                Telefono:{" "}
+                {t("contacts.telephone.title")}:{" "}
               </span>
               <br className="xs:hidden " />
               <span className="text-sm font-medium leading-tight">
@@ -159,11 +173,11 @@ function Contacts() {
               </span>
             </p>
             <p className="text-xs xs:text-sm text-neutral-200 leading-tight">
-              Parla con un operatore
+              {t("contacts.telephone.subtitle")}
             </p>
           </div>
           <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-10 py-1.5 ml-auto mr-0">
-            Chiama
+            {t("contacts.telephone.button")}
           </Button>
         </li>
         <li className="col-span-3 h-px bg-neutral-500"></li>
@@ -180,7 +194,7 @@ function Contacts() {
               </span>
             </p>
             <p className="text-xs xs:text-sm text-neutral-200 leading-tight">
-              Ti risponderemo appena possibile
+              {t("contacts.whatsapp.subtitle")}
             </p>
           </div>
           <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-6 xs:px-10 py-1.5 ml-auto mr-0">
