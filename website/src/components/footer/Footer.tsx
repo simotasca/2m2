@@ -55,11 +55,17 @@ export default function Footer() {
             {t("conditions.title")}
           </h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li className="leading-4 whitespace-nowrap">
-              {t("conditions.terms-and-conditions")}
+            <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
+              <Link href={routes.terms()}>
+                {t("conditions.terms-and-conditions")}
+              </Link>
             </li>
-            <li className="leading-4 whitespace-nowrap">Cooky Policy</li>
-            <li className="leading-4 whitespace-nowrap">Privacy Policy</li>
+            <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
+              <Link href={routes.cookie()}>Cooky Policy</Link>
+            </li>
+            <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
+              <Link href={routes.privacy()}>Privacy Policy</Link>
+            </li>
           </ul>
         </div>
 
