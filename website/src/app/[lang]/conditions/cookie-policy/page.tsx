@@ -8,6 +8,7 @@ export default async function CookiePolicy() {
     {
       page: "pages/conditions/cookie-policy",
       header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
       contacts: "misc/contacts",
@@ -25,85 +26,83 @@ export default async function CookiePolicy() {
             <div className="px-24 py-14 bg-neutral-100 h-full">
               <h1 className="text-4xl font-bold mb-8">Cookie Policy</h1>
 
-              <p className="mb-3">Ultimo Aggiornamento: 18/12/2023</p>
+              <p className="mb-3">Last Updated: 18/12/2023</p>
 
               <p className="mb-6">
-                Benvenuto su 2M2 Ricambi. Questo sito utilizza i cookie e
-                tecnologie simili per garantire un'esperienza utente ottimale.
-                Questa Cookie Policy fornisce informazioni dettagliate su come
-                utilizziamo i cookie e come è possibile gestire le proprie
-                preferenze.
+                Welcome to 2M2 Ricambi. This site uses cookies and similar
+                technologies to ensure an optimal user experience. This Cookie
+                Policy provides detailed information on how we use cookies and
+                how you can manage your preferences.
               </p>
 
-              <h2 className="text-2xl mb-3">1. Cosa sono i Cookie?</h2>
+              <h2 className="font-bold text-2xl mb-3">What are Cookies?</h2>
               <p className="mb-6">
-                I cookie sono piccoli file di testo che vengono memorizzati sul
-                tuo dispositivo quando visiti un sito web. Sono ampiamente
-                utilizzati per rendere più efficiente l'esperienza di
-                navigazione e per fornire informazioni ai proprietari del sito.
+                Cookies are small text files that are stored on your device when
+                you visit a website. They are widely used to make the browsing
+                experience more efficient and to provide information to the site
+                owners.
               </p>
 
-              <h2 className="text-2xl mb-3">2. Tipi di Cookie Utilizzati</h2>
+              <h2 className="font-bold text-2xl mb-3">Types of Cookies Used</h2>
               <ul className="list-disc ml-6 mb-6">
-                <li>
-                  Cookie Necessari: Essenziali per il funzionamento del sito e
-                  consentono di navigare e utilizzare le sue funzioni
-                  principali.
+                <li className="mt-2">
+                  Necessary Cookies: Essential for the operation of the site and
+                  allow you to navigate and use its core functions.
                 </li>
-                <li>
-                  Cookie di Funzionalità: Migliorano la funzionalità del sito
-                  memorizzando le tue preferenze, ad esempio la lingua
-                  preferita.
+                <li className="mt-2">
+                  Functionality Cookies: Enhance the functionality of the site
+                  by storing your preferences, such as the preferred language.
                 </li>
-                <li>
-                  Cookie di Analisi: Ci aiutano a comprendere come gli utenti
-                  interagiscono con il sito, fornendo informazioni anonime
-                  sull'utilizzo e aiutandoci a migliorare.
+                <li className="mt-2">
+                  Analytics Cookies: Help us understand how users interact with
+                  the site, providing anonymous usage information and helping us
+                  improve.
                 </li>
               </ul>
 
-              <h2 className="text-2xl mb-3">3. Gestione dei Cookie</h2>
+              <h2 className="font-bold text-2xl mb-3">Cookie Management</h2>
               <p className="mb-6">
-                Puoi gestire le tue preferenze sui cookie attraverso le
-                impostazioni del tuo browser. Tuttavia, la disabilitazione dei
-                cookie potrebbe influire sulla tua esperienza di navigazione.
+                You can manage your cookie preferences through your browser
+                settings. However, disabling cookies may impact your browsing
+                experience.
               </p>
 
-              <h2 className="text-2xl mb-3">4. Cookie di Terze Parti</h2>
+              <h2 className="font-bold text-2xl mb-3">Third-Party Cookies</h2>
               <p className="mb-6">
-                Alcuni servizi e contenuti incorporati nel nostro sito, come i
-                social media e i servizi di analisi, possono utilizzare i loro
-                cookie di terze parti. Non abbiamo controllo su questi cookie e
-                consigliamo di consultare le politiche sulla privacy dei servizi
-                terzi.
+                Some services and content embedded on our site, such as social
+                media and analytics services, may use their third-party cookies.
+                We have no control over these cookies and recommend checking the
+                privacy policies of third-party services.
               </p>
 
-              <h2 className="text-2xl mb-3">5. Durata dei Cookie</h2>
+              <h2 className="font-bold text-2xl mb-3">Cookie Duration</h2>
               <ul className="list-disc ml-6 mb-6">
-                <li>
-                  Cookie di Sessione: Vengono eliminati automaticamente quando
-                  chiudi il browser.
+                <li className="mt-2">
+                  Session Cookies: Automatically deleted when you close the
+                  browser.
                 </li>
-                <li>
-                  Cookie Persistenti: Rimangono sul tuo dispositivo per un
-                  periodo definito.
+                <li className="mt-2">
+                  Persistent Cookies: Remain on your device for a defined
+                  period.
                 </li>
               </ul>
 
-              <h2 className="text-2xl mb-3">6. Consenso</h2>
+              <h2 className="font-bold text-2xl mb-3">Consent</h2>
               <p className="mb-6">
-                Continuando a utilizzare il nostro sito, acconsenti all'uso dei
-                cookie in conformità con questa Cookie Policy.
+                By continuing to use our site, you consent to the use of cookies
+                in accordance with this Cookie Policy.
               </p>
 
-              <h2 className="text-2xl mb-3">7. Modifiche alla Cookie Policy</h2>
+              <h2 className="font-bold text-2xl mb-3">
+                Changes to the Cookie Policy
+              </h2>
               <p className="mb-6">
-                Ci riserviamo il diritto di apportare modifiche a questa Cookie
-                Policy. Le modifiche saranno pubblicate sul sito e diventeranno
-                effettive dalla data di pubblicazione.
+                We reserve the right to make changes to this Cookie Policy.
+                Changes will be posted on the site and will become effective
+                from the date of publication.
               </p>
 
-              <p className="mb-3">Grazie per aver scelto 2M2 Ricambi!</p>
+              <p className="mb-3">Thank you for choosing 2M2 Ricambi!</p>
             </div>
           </MaxWidthContainer>
         </section>
