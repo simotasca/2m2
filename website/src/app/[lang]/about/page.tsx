@@ -15,6 +15,7 @@ export default async function AboutPage() {
   const [translations, { t, r }] = await generateTranslations(
     {
       header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
       page: "pages/about",

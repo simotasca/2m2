@@ -61,6 +61,7 @@ export default async function ModelPage({
     {
       product: "misc/product",
       header: "misc/header",
+"mobile-panel": "misc/mobile-panel",
 search: "misc/search",
       footer: "misc/footer",
       contacts: "misc/contacts",

@@ -22,6 +22,7 @@ export default async function ProductsPage({ searchParams }: Props) {
       contacts: "misc/contacts",
       auth: "auth",
       header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
     },
