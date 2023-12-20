@@ -3,9 +3,13 @@
 
   "login": {
     "title": "Welcome <red>Back</red>",
+    "enter-details": "Please, enter details",
     "forgot-password": "Forgot password?",
     "new-account": "Don't have an account yet?",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "logging-in": "Login in corso...",
+    "hide-password": "Nascondi",
+    "show-password": "Mostra"
   },
 
   "": "// form registrazione",

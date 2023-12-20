@@ -48,14 +48,16 @@ export default function LoginForm() {
       password,
     });
 
+    const { t } = useTranslation("errors");
+
     if (error) {
       switch (error.name) {
         case "AuthApiError":
-          setErrorMessage("Errore: controlla le tue credenziali");
+          setErrorMessage(t("control-credentials"));
           setWrongCredentials(true);
           break;
         case "AuthRetryableFetchError":
-          setErrorMessage("Errore imprevisto: Riprova!");
+          setErrorMessage(t("unexpected-error"));
           break;
         default:
           setErrorMessage(JSON.stringify(error));
@@ -72,7 +74,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <LoadingScreen loading={loading} message="logging in" />
+      <LoadingScreen loading={loading} message={t("login.logging-in")} />
 
       <AuthLayout>
         <AuthLayout.Image />

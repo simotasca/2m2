@@ -4,5 +4,9 @@
   "max-250-chars": "Max 250 caratteri",
   "required-mail-and-password": "Mail e password obbligatori",
   "invalid-email": "Indirizzo email non valido",
-  "terms-and-conditions-error": "Devi accettare i termini e condizioni"
+  "terms-and-conditions-error": "Devi accettare i termini e condizioni",
+  "control-credentials": "Errore: controlla le tue credenziali",
+  "unexpected-error": "Errore imprevisto, riprova",
+  "error-500": "ERRORE NEL CARICAMENTO",
+  "try-again": "riprova"
 }
