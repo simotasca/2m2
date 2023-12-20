@@ -1,3 +1,31 @@
+- [ ] tutte le pagine not found danno invece something went wrong
+- [ ] header: tendine ricambi e modelli
+- [ ] header: contatti mandare a contacts section
+- [ ] hero: bottone contattaci manda alla sezione contatti
+- [ ] prodotti recenti: vai ai prodotti (sopra e sotto) -> pagina dei prodotti
+- [ ] contacts section: chiama scrivi e chatta
+- [ ] contacts section: striscia pagamenti sotto loghi auto
+- [ ] footer: mancano tutti i link
+- [ ] footer: traduzione login
+- [ ] footer: non compare la navbar
+- [ ] footer: doppi :: orari
+- [ ] cambio lingua non funziona / i link non mandano alla lingua corrente
+- [ ] prodotto: search modal non compare
+- [ ] prodotto: non tradotta
+- [ ] prodotto: rimuovere condividi
+- [ ] prodotto: preferiti + carrello
+- [ ] prodotto: foto zoomabili
+- [ ] modal ricerca: non tradotto
+- [ ] sezione contatti: sempre più padding
+- [ ] testare tutta la login
+- [ ] checkout: finire di testare (i prodotti devono essere disabilitati dopo l'aquisto)
+- [ ] checkout: manca il design della mail di errore x 2m2
+- [ ] checkout: suggerire dati registrazione
+- [ ] checkout: se azienda permettere dati ffattura elettronica
+- [ ] pagine bianche di cookie, privacy
+
+### VECCHI
+
 - [ ] finire di testare la gesione del pagamento
 - [ ] i18n
 - [ ] area riservata

@@ -9,7 +9,7 @@ import { EcodatArticle } from "@/lib/shared/ecodat";
 import { PropsWithChildren } from "react";
 
 interface CartInit {
-  products: EcodatArticle[];
+  products: string[];
   id?: number;
 }
 
@@ -18,7 +18,7 @@ type Props = PropsWithChildren<{ cart: CartInit; favourites: number[] }>;
 export default function ClientLayout({ cart, children, favourites }: Props) {
   return (
     <>
-      <CartProvider cartId={cart.id} cartProducts={cart.products}>
+      <CartProvider cartId={cart.id} cartProductIds={cart.products}>
         <FavouritesProvider initialFavourites={favourites}>
           <SearchProvider>{children}</SearchProvider>
         </FavouritesProvider>
