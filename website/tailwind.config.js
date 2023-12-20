@@ -26,6 +26,7 @@ module.exports = {
     },
   },
   plugins: [
+    require("@tailwindcss/typography"),
     plugin(({ addComponents, addVariant, addBase, theme }) => {
       // remove mozilla yellow background on autofilled inputs
       addBase({

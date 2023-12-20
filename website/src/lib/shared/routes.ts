@@ -25,6 +25,9 @@ const routes = {
   register: () => "/register",
   passwordReset: () => "/reset-password",
   reserved: () => "/reserved",
+  terms: () => "/conditions/terms-and-conditions",
+  privacy: () => "/conditions/privacy",
+  cookie: () => "/conditions/cookie-policy",
 } as const;
 
 export default routes;

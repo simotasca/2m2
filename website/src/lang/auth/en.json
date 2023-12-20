@@ -1,10 +1,14 @@
 {
+  "": "// form login",
+
   "login": {
     "title": "Welcome <red>Back</red>",
     "forgot-password": "Forgot password?",
     "new-account": "Don't have an account yet?",
     "signup": "Sign up"
   },
+
+  "": "// form registrazione",
 
   "register": {
     "title": "Create your <red>account</red>",
@@ -67,11 +71,17 @@
     "already-registered": "Are you already registered?",
     "login-account": "Login to an account"
   },
+
+  "": "// email",
+
   "email": {
     "email-sent": "<red>Email</red> sent",
     "email-sent-to": "An email has been sent to:",
     "confirmation-link": "with the confirmation link "
   },
+
+  "": "// reset password",
+
   "password": {
     "title": "Choose your new password",
     "updated": "Updated!",

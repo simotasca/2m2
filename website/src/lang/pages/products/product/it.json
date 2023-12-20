@@ -1,0 +1,32 @@
+{
+  "title": "Descrizione",
+  "product-details": {
+    "title": "Dettagli articolo",
+    "oem-code": "codice OEM",
+    "brand": "marca",
+    "model": "modello",
+    "version": "versione",
+    "year": "anno",
+    "engine": "tipo motore",
+    "engine-displacement": "cilindrata",
+    "fuel-system": "alimentazione",
+    "notes": "note",
+    "more": "altro"
+  },
+  "buy-section": {
+    "available": "Disponibile",
+    "iva": "Tutti i prezzi includono l'IVA",
+    "delivery-time": "SPEDIZIONE IN <red>24/48 ORE</red>",
+    "favourites": "Aggiungi ai preferiti",
+    "share": "Condividi",
+    "add-to-cart": "Aggiungi",
+    "payments": "pagamenti"
+  },
+  "guaranteed-used": "Tutti i ricambi usati sono testati e garantiti",
+
+  "similar-products": {
+    "see-all": "Guarda tutti",
+    "other-item": "Altri ricambi in",
+    "other-product": "Altro da"
+  }
+}
