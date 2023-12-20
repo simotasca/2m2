@@ -9,6 +9,7 @@ import iconCategory from "@/images/icons/widgets.svg";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import routes from "@/lib/shared/routes";
+import useTranslation from "@/context/lang/useTranslation";
 
 export default function SimilarProducts({
   product,
@@ -70,6 +71,9 @@ export default function SimilarProducts({
         )
       );
   }, []);
+
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-12">
       {!!sameItem.length && (
@@ -79,20 +83,24 @@ export default function SimilarProducts({
               <Image className="w-7 -mb-0.5" src={iconBrand} alt="" />
 
               <h3 className="text-xl leading-[1] max-xs:text-lg max-xs:leading-[1] max-xs:mb-1 font-bold uppercase">
-                <span>Altri ricambi in </span>
+                <span>{t("page.similar-products.other-item")} </span>
                 <span className="text-red-500">{product.item}</span>
               </h3>
             </div>
 
             <a
               className="flex-shrink-0 max-xs:pl-1"
-              href={routes.item(product.category, product.type, product.item)}>
+              href={routes.item(product.category, product.type, product.item)}
+            >
               <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 ml-8 py-0.5">
-                <span className="flex-shrink-0">See All</span>
+                <span className="flex-shrink-0">
+                  {t("page.similar-products.see-all")}
+                </span>
                 <Image
                   className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
                   alt=""
-                  src={iconRight}></Image>
+                  src={iconRight}
+                ></Image>
               </Button>
             </a>
           </div>
@@ -107,20 +115,24 @@ export default function SimilarProducts({
               <Image className="w-7 -mb-0.5" src={iconBrand} alt="" />
 
               <h3 className="text-xl leading-[1] max-xs:text-lg max-xs:leading-[1] max-xs:mb-1 font-bold uppercase">
-                <span>Altro da </span>
+                <span>{t("page.similar-products.other-product")} </span>
                 <span className="text-red-500">{` ${product.brand} + ${product.model}`}</span>
               </h3>
             </div>
 
             <a
               className="flex-shrink-0 max-xs:pl-1"
-              href={routes.model(product.brand, product.model)}>
+              href={routes.model(product.brand, product.model)}
+            >
               <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50 ml-8 py-0.5">
-                <span className="flex-shrink-0">See All</span>
+                <span className="flex-shrink-0">
+                  {t("page.similar-products.see-all")}
+                </span>
                 <Image
                   className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
                   alt=""
-                  src={iconRight}></Image>
+                  src={iconRight}
+                ></Image>
               </Button>
             </a>
           </div>

@@ -27,6 +27,7 @@ import { twJoin, twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useLogger from "@/hooks/useLogger";
+import useTranslation from "@/context/lang/useTranslation";
 
 interface Props {
   category?: EcodatCategory;
@@ -108,6 +109,8 @@ export default function SearchModal({ category: baseCategory }: Props) {
     if (!brand) setModel(undefined);
   }, [brand]);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <div
@@ -115,17 +118,20 @@ export default function SearchModal({ category: baseCategory }: Props) {
         className={twJoin(
           "fixed inset-0 w-screen h-screen bg-black bg-opacity-40 z-[53]",
           !isOpen && "hidden"
-        )}></div>
+        )}
+      ></div>
       <div
         className={twJoin(
           "pointer-events-none fixed w-[800px] max-w-[95vw] max-h-[70vh] top-[15vh] left-1/2 -translate-x-1/2 z-[54]",
           isOpen ? "pointer-events-auto opacity-100" : "opacity-0"
-        )}>
+        )}
+      >
         <div
           className={twJoin(
             "text-dark bg-white w-full h-full max-h-[70vh] rounded-md shadow-md shadow-neutral-500 transition-all duration-300 ease-out",
             isOpen ? "translate-y-0" : "-translate-y-10"
-          )}>
+          )}
+        >
           <div className="flex flex-col h-full max-h-[70vh]">
             <div className="flex-shrink-0 flex-grow-0">
               <div className="flex items-center relative">
@@ -134,7 +140,8 @@ export default function SearchModal({ category: baseCategory }: Props) {
                     className={twJoin(
                       "scale-[0.8] translate-y-px",
                       !loading && "hidden"
-                    )}>
+                    )}
+                  >
                     <Image
                       alt=""
                       src={imgLoad}
@@ -161,7 +168,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
                   id="search-modal-input"
                   type="text"
                   className="w-full outline-none pl-3 pt-4 pb-3 pr-6 text-sm"
-                  placeholder="enter your search..."
+                  placeholder={t("search.placeholder")}
                 />
               </div>
 
@@ -170,7 +177,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
               <div className="px-5 py-2">
                 <div className="flex flex-wrap items-center gap-2 gap-y-0.5">
                   <SearchBadge
-                    text="Category"
+                    text={t("search.category")}
                     value={category}
                     setter={setCategory}
                     displayProp="name"
@@ -180,7 +187,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
 
                   {category && typologies?.length && typologies.length > 1 && (
                     <SearchBadge
-                      text="Type"
+                      text={t("search.typology")}
                       value={typology}
                       setter={setTypology}
                       displayProp="name"
@@ -190,7 +197,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
                   )}
 
                   <SearchBadge
-                    text="Brand"
+                    text={t("search.brand")}
                     value={brand}
                     setter={setBrand}
                     displayProp="name"
@@ -200,7 +207,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
 
                   {brand && models?.length && models.length > 1 && (
                     <SearchBadge
-                      text="Model"
+                      text={"search.model"}
                       value={model}
                       setter={setModel}
                       displayProp="name"
@@ -223,7 +230,8 @@ export default function SearchModal({ category: baseCategory }: Props) {
                             selection.setter(s.key);
                             setSelection(undefined);
                           }}
-                          className="bg-orange-500 hover:bg-gradient-to-b from-orange-600 via-orange-500 to-orange-500 text-white whitespace-nowrap">
+                          className="bg-orange-500 hover:bg-gradient-to-b from-orange-600 via-orange-500 to-orange-500 text-white whitespace-nowrap"
+                        >
                           {s.val}
                         </Badge>
                       ))}
@@ -236,7 +244,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
             <div className="px-5 max-h-full h-full flex-1 overflow-y-scroll">
               {!!value && !loading && !result.length && (
                 <p className="text-sm text-neutral-600 pb-2">
-                  No results found, please try another query
+                  {t("search.no-result")}
                 </p>
               )}
 
@@ -245,7 +253,8 @@ export default function SearchModal({ category: baseCategory }: Props) {
                   {result.map((r, i) => (
                     <li
                       className="group hover:bg-stone-200 hover:bg-opacity-80 px-5 first:-mt-2"
-                      key={i}>
+                      key={i}
+                    >
                       <a href={routes.product(r)}>
                         <p
                           className="text-sm group-last:border-b-0 leading-tight py-2"
@@ -265,7 +274,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
                 <div className="flex items-center gap-1.5 pb-0.5">
                   <Image src={imgGoTo} alt="" className="w-3 translate-y-px" />
                   <span className="text-xs text-slate-700 translate-y-px group-hover:underline">
-                    Go to products page
+                    {t("search.go-products")}
                   </span>
                 </div>
               </Link>
@@ -345,7 +354,8 @@ function SearchBadge({
                   }
             );
         }
-      }}>
+      }}
+    >
       {value ? (
         <div className="flex items-center gap-1">
           <Image
@@ -376,7 +386,8 @@ function Badge({
       className={twMerge(
         "text-xs font-medium px-2.5 pb-1 pt-0.5 rounded",
         className
-      )}>
+      )}
+    >
       {children}
     </button>
   );

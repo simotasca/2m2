@@ -20,8 +20,13 @@ export default async function HomePage() {
     page: "pages/home",
     categories: "misc/categories",
     header: "misc/header",
+    "mobile-panel": "misc/mobile-panel",
+    search: "misc/search",
     footer: "misc/footer",
     contacts: "misc/contacts",
+
+    errors: "misc/errors",
+    auth: "auth",
   });
 
   return (
