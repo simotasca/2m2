@@ -73,6 +73,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      errors: "misc/errors",
       contacts: "misc/contacts",
       auth: "auth",
       page: "pages/products/product",
@@ -123,6 +124,8 @@ export default async function ProductPage({ params: { slug } }: Props) {
               </div>
             </div>
 
+            <div className="max-sm:h-3"></div>
+
             <div>
               <h1 className="font-bold text-2xl leading-[1.1] max-w-screen-md">
                 <span className="text-red-500">{product.item} </span>
@@ -152,7 +155,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
           <div className="h-4"></div>
 
           <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
-            <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-4 lg:gap-x-8">
+            <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-8 md:gap-x-4 lg:gap-x-8">
               <Image
                 src={imgLogo}
                 alt=""
@@ -257,7 +260,7 @@ function BuySection({
       <div className="grid grid-cols-[auto_auto] leading-3">
         <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
           <Image
-            className="w-9 sm:w-5 md:w-7"
+            className="w-7 sm:w-5 md:w-7"
             src={iconFavorite}
             alt="favorite icon"
           />

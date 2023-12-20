@@ -40,13 +40,14 @@ export default async function CategoryPage({
     {
       product: "misc/product",
       header: "misc/header",
-"mobile-panel": "misc/mobile-panel",
-search: "misc/search",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
       footer: "misc/footer",
+      errors: "misc/errors",
       page: "pages/category",
       categories: "misc/categories",
       contacts: "misc/contacts",
-auth:"auth",,
+      auth: "auth",
     },
     true
   );
@@ -81,6 +82,8 @@ auth:"auth",,
                 <StyledSearchModalToggle />
               </div>
             </div>
+
+            <div className="max-sm:h-3"></div>
 
             <Title as="h1">
               <Title.Gray>{t("page.title")}</Title.Gray>

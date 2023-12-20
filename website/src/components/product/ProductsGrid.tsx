@@ -42,7 +42,7 @@ export default function ProductsGrid({
   if (products.length === 0)
     return (
       <div className={twMerge("text-sm text-neutral-500", className)}>
-        Nessun prodotto trovato . . .
+        No product found . . .
       </div>
     );
 
@@ -53,7 +53,8 @@ export default function ProductsGrid({
         ...mediaClass,
         ...hidePartialRowsClass,
         className
-      )}>
+      )}
+    >
       {products.map((p) => (
         <Product key={p.id} product={p} />
       ))}

@@ -36,14 +36,16 @@ export default function ClientPage({ latestProducts, categories }: Props) {
           <h2 className="font-oswald text-3xl font-semibold uppercase">
             <span className="text-gray-400">{r("products-title")}</span>
           </h2>
-          <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
-            {t("products-button")}
-            <Image
-              className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
-              alt=""
-              src={iconRight}
-            ></Image>
-          </Button>
+          <Link href={routes.products()}>
+            <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
+              {t("products-button")}
+              <Image
+                className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
+                alt=""
+                src={iconRight}
+              ></Image>
+            </Button>
+          </Link>
         </div>
 
         <ProductsGrid
@@ -52,9 +54,11 @@ export default function ClientPage({ latestProducts, categories }: Props) {
           className="py-6"
         />
         <div className="mt-10 mb-6">
-          <button className="block w-fit px-16 py-4 mx-auto bg-neutral-200 underline underline-offset-4">
-            {t("products-button")}
-          </button>
+          <Link href={routes.products()}>
+            <button className="block w-fit px-16 py-4 mx-auto bg-neutral-200 underline underline-offset-4">
+              {t("products-button")}
+            </button>
+          </Link>
         </div>
       </MaxWidthContainer>
 

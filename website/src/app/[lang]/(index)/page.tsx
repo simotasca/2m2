@@ -8,7 +8,6 @@ import { shuffle } from "@/lib/shared/array";
 import { knownCategories } from "@/lib/shared/ecodat";
 
 export default async function HomePage() {
-  
   const latestProducts = await fetchEcodatArticles({
     fetchRow: { nRows: 10, lastRow: 0 },
   });
@@ -23,6 +22,7 @@ export default async function HomePage() {
     "mobile-panel": "misc/mobile-panel",
     search: "misc/search",
     footer: "misc/footer",
+    errors: "misc/errors",
     contacts: "misc/contacts",
 
     errors: "misc/errors",

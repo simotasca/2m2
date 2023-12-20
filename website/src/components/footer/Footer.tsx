@@ -37,12 +37,9 @@ export default function Footer() {
             {t("categories.title")}
           </h3>
           <ul className="flex flex-col gap-2 text-sm">
-            {Object.keys(knownCategories).map((p) => (
-              <a href={routes.category(p)}>
-                <li
-                  key={p}
-                  className="leading-4 whitespace-nowrap hover:underline underline-offset-2"
-                >
+            {Object.keys(knownCategories).map((p, i) => (
+              <a href={routes.category(p)} key={i}>
+                <li className="leading-4 whitespace-nowrap hover:underline underline-offset-2">
                   {tCat(p, p)}
                 </li>
               </a>
