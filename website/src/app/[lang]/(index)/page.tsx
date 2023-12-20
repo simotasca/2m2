@@ -24,8 +24,6 @@ export default async function HomePage() {
     footer: "misc/footer",
     errors: "misc/errors",
     contacts: "misc/contacts",
-
-    errors: "misc/errors",
     auth: "auth",
   });
 

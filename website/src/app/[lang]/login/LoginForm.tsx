@@ -29,14 +29,15 @@ export default function LoginForm() {
 
     // setPwInputType("password");
 
+    const { t } = useTranslation("errors");
+
     const data = new FormData(e.target as HTMLFormElement);
 
     const email = data.get("email")?.toString();
     const password = data.get("password")?.toString();
 
     if (!email || !password) {
-      // TODO: i18n
-      setErrorMessage("Inserire email e password");
+      setErrorMessage(t("required-mail-and-password"));
       setWrongCredentials(true);
       return;
     }
@@ -47,8 +48,6 @@ export default function LoginForm() {
       email,
       password,
     });
-
-    const { t } = useTranslation("errors");
 
     if (error) {
       switch (error.name) {

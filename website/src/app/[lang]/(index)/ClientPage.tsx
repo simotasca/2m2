@@ -65,24 +65,25 @@ export default function ClientPage({ latestProducts, categories }: Props) {
       <div className="h-8"></div>
 
       <div className="bg-white">
-        <MaxWidthContainer className="pt-20 pb-20">
+        <MaxWidthContainer className="pt-10 pb-10">
           <ContactsSection />
         </MaxWidthContainer>
       </div>
-
+      <div className="py-4 bg-white">
+        <BrandsCarousel></BrandsCarousel>
+      </div>
       <div className="bg-slate-300 py-1">
         <MaxWidthContainer>
           <div className="flex gap-4 items-center">
-            <p className="uppercase font-bold text-slate-800">
+            <p className="uppercase font-bold text-slate-800 text-xs xs:text-sm md:text-base">
               {t("payments")}
             </p>
+
             <PaymentsBar />
           </div>
         </MaxWidthContainer>
       </div>
-      <div className="py-4 bg-neutral-100">
-        <BrandsCarousel></BrandsCarousel>
-      </div>
+      {/*  */}
     </PageLayout>
   );
 }

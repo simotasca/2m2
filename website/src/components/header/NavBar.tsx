@@ -23,7 +23,7 @@ export default function Navbar({ small }: { small: boolean }) {
       <DropdownCarParts small={small} />
       <DropdownModels small={small} />
       <Link href={routes.about()}>{t("header.navbar.about")}</Link>
-      <Link className={twJoin(small && "max-md:hidden")} href="#">
+      <Link className={twJoin(small && "max-md:hidden")} href="#contacts">
         {t("header.navbar.contacts")}
       </Link>
     </nav>
