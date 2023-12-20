@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import Image from "next/image";
 
 interface Props {
   photo?: { productId: number } | { imageId: number };
@@ -48,18 +49,23 @@ export default function ProductImage({ photo, big, className }: Props) {
         loading && "animate-pulse",
         !loading && !image && "opacity-60"
       )}>
-      <img
-        ref={ref}
-        className="absolute w-full h-full object-cover blur-3xl opacity-0 transition-all duration-500"
-        src={!fetching ? image || imagePlaceholder : undefined}
-        onLoad={(e) => {
-          (e.target as HTMLImageElement).classList.remove(
-            "opacity-0",
-            "blur-3xl"
-          );
-          setLoading(false);
-        }}
-      />
+      {!fetching && (
+        <Image
+          ref={ref}
+          className="absolute w-full h-full object-cover blur-3xl opacity-0 transition-all duration-500"
+          src={image || imagePlaceholder}
+          width={300}
+          height={200}
+          alt=""
+          onLoad={(e) => {
+            (e.target as HTMLImageElement).classList.remove(
+              "opacity-0",
+              "blur-3xl"
+            );
+            setLoading(false);
+          }}
+        />
+      )}
     </div>
   );
 }

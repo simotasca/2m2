@@ -7,14 +7,16 @@ interface CartContext {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   total: number;
   count: number;
-  cart: CartProduct[];
-  setCart: Dispatch<SetStateAction<any[]>>;
+  cart: string[];
+  cartProducts: CartProduct[];
+  // setCart: Dispatch<SetStateAction<any[]>>;
   hasProduct: (p: CartProduct) => boolean;
   addProduct: (p: CartProduct) => Promise<void>;
   removeProduct: (p: CartProduct) => void;
-  removeAll: () => Promise<void>;
+  // removeAll: () => Promise<void>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  isInitialized: boolean;
   reload: () => Promise<void>;
 }
 
@@ -24,12 +26,14 @@ export const CartContext = createContext<CartContext>({
   total: 0,
   count: 0,
   cart: [],
-  setCart: () => {},
+  cartProducts: [],
+  // setCart: () => {},
   hasProduct: () => false,
   addProduct: async () => {},
   removeProduct: () => {},
-  removeAll: async () => {},
+  // removeAll: async () => {},
   loading: false,
   setLoading: () => {},
+  isInitialized: false,
   reload: async () => {},
 });

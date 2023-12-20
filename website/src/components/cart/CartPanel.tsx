@@ -2,17 +2,14 @@
 
 import useCart from "@/context/cart/useCart";
 import iconClose from "@/images/icons/close.svg";
-import { productName } from "@/lib/shared/ecodat";
 import Image from "next/image";
-import qs from "qs";
 import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
 import CartList from "./CartList";
 
 export default function CartPanel() {
-  const { isOpen, setIsOpen, count, total, cart, removeProduct, loading } =
-    useCart();
+  const { isOpen, setIsOpen, count, total, cart } = useCart();
 
   useEffect(() => {
     if (isOpen) {
@@ -65,11 +62,7 @@ export default function CartPanel() {
               {total.toFixed(2)} €
             </p>
             {count > 0 && (
-              <a
-                href={
-                  "/checkout?p=" +
-                  encodeURIComponent([cart.map((p) => p.id)].join(","))
-                }>
+              <a href={"/checkout?p=" + encodeURIComponent(cart.join(","))}>
                 <Button className="block mt-2 bg-red-gradient text-white w-full uppercase">
                   CHECKOUT
                 </Button>
