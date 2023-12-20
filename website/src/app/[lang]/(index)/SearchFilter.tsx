@@ -55,13 +55,15 @@ export default function SearchFilterInner<T>({
       disabled={disabled}
       value={selected}
       onChange={setSelected}
-      nullable>
+      nullable
+    >
       <Combobox.Button className="block text-left">
         <p
           className={twMerge(
             "text-xs mb-0.5",
             isDisabled ? "text-neutral-400 font-medium" : "font-semibold"
-          )}>
+          )}
+        >
           {label}
         </p>
         <div className="relative flex gap-2 py-1 pl-2 border border-neutral-400 focus-within:border-red-400 rounded">
@@ -77,24 +79,27 @@ export default function SearchFilterInner<T>({
             onChange={(event) => setQuery(event.target.value)}
           />
           {!!filtered.length && (
-            <div className="absolute top-full left-0 pt-1 z-50 min-w-[80%]">
-              <Combobox.Options className="bg-white rounded border border-slate-300 py-1 max-h-36 overflow-y-auto">
-                {filtered.map((f) => (
-                  <Combobox.Option key={f.key} value={f}>
-                    {({ active, selected }) => (
-                      <div
-                        className={twMerge(
-                          "text-sm px-3 py-0.5 hover:bg-zinc-200 border-b last:border-b-0 border-slate-100",
-                          active && "bg-zinc-200",
-                          selected && "font-medium"
-                        )}>
-                        {f.display}
-                      </div>
-                    )}
-                  </Combobox.Option>
-                ))}
-              </Combobox.Options>
-            </div>
+            <Combobox.Options>
+              <div className="absolute top-full left-0 pt-1 z-40 min-w-[80%]">
+                <div className="bg-white rounded border border-slate-300 py-1 max-h-36 overflow-y-auto">
+                  {filtered.map((f) => (
+                    <Combobox.Option key={f.key} value={f}>
+                      {({ active, selected }) => (
+                        <div
+                          className={twMerge(
+                            "text-sm px-3 py-0.5 hover:bg-zinc-200 border-b last:border-b-0 border-slate-100",
+                            active && "bg-zinc-200",
+                            selected && "font-medium"
+                          )}
+                        >
+                          {f.display}
+                        </div>
+                      )}
+                    </Combobox.Option>
+                  ))}
+                </div>
+              </div>
+            </Combobox.Options>
           )}
           {!!selected && (
             <div
@@ -102,7 +107,8 @@ export default function SearchFilterInner<T>({
                 clear();
                 e.stopPropagation();
               }}
-              className="px-3 flex items-center">
+              className="px-3 flex items-center"
+            >
               <Image
                 src={iconClose}
                 alt="close icon"
