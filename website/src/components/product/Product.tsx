@@ -4,6 +4,7 @@ import useCart from "@/context/cart/useCart";
 import useFavourites from "@/context/favourites/useFavourites";
 import useTranslation from "@/context/lang/useTranslation";
 import iconCart from "@/images/icons/white/cart.svg";
+import iconLoader from "@/images/icons/loader.svg";
 import iconNotFavourite from "@/images/icons/white/not-favourite.svg";
 import iconFavourite from "@/images/icons/white/favourite.svg";
 import { CartProduct } from "@/lib/shared/cart";
@@ -66,7 +67,15 @@ export default function Product({ product }: Props) {
               <span>Remove</span>
             ) : (
               <>
-                <Image className="w-5 translate-y-px" src={iconCart} alt="" />
+                {loading ? (
+                  <Image
+                    className="w-5 animate-spin invert"
+                    src={iconLoader}
+                    alt=""
+                  />
+                ) : (
+                  <Image className="w-5 translate-y-px" src={iconCart} alt="" />
+                )}
                 <span>{t("addToCart")}</span>
               </>
             )}
