@@ -4,5 +4,7 @@
   "max-250-chars": "Max 250 chars",
   "required-mail-and-password": "Email and password are required",
   "invalid-email": "Invalid email address",
-  "terms-and-conditions-error": "You must accept terms and conditions"
+  "terms-and-conditions-error": "You must accept terms and conditions",
+  "control-credentials": "Error: control your credentials",
+  "unexpected-error": "Unexpected error, try again"
 }

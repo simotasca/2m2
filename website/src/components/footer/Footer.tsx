@@ -14,6 +14,10 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import Button from "../ui/Button";
 import MaxWidthContainer from "../ui/MaxWidthContainer";
+import useCart from "@/context/cart/useCart";
+import Link from "next/link";
+import routes from "@/lib/shared/routes";
+import { Filters, getFilters } from "@/lib/client/filters";
 
 export default function Footer() {
   const { setIsOpen } = useCart();
@@ -22,9 +26,15 @@ export default function Footer() {
   const { t: tCat } = useTranslation("categories");
   const { t: tHead } = useTranslation("header");
 
+  const [filters, setFilters] = useState<Filters>();
+
+  useEffect(() => {
+    getFilters().then((f) => setFilters(f));
+  }, []);
+
   return (
     <div className="bg-[#363636] text-white py-8 sm:py-14">
-      <MaxWidthContainer className="bg-neutral-500 h-px mb-8 max-xs:mx-4"></MaxWidthContainer>
+      <MaxWidthContainer className="bg-neutral-500 h-px mb-8 mx-auto max-w-[95%]"></MaxWidthContainer>
 
       <MaxWidthContainer className="grid xs:grid-cols-2 sm:grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(5rem,auto)_auto_1fr_auto] gap-4 sm:gap-16 gap-y-10 lg:px-20">
         <div className="max-lg:col-span-full">
@@ -35,15 +45,20 @@ export default function Footer() {
           <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
             {t("categories.title")}
           </h3>
-          <ul className="flex flex-col gap-2 text-sm">
-            {Object.keys(knownCategories).map((p) => (
-              <a href={routes.category(p)}>
-                <li
-                  key={p}
-                  className="leading-4 whitespace-nowrap hover:underline underline-offset-2">
-                  {tCat(p, p)}
-                </li>
-              </a>
+
+          <ul className="flex flex-col gap-2">
+            {filters?.categories?.map((c) => (
+              <li
+                key={c.id}
+                className="flex flex-col text-sm leading-4  whitespace-nowrap"
+              >
+                <a
+                  className="hover:underline underline-offset-2"
+                  href={routes.category(c.name)}
+                >
+                  {tCat(c.name, c.name)}
+                </a>
+              </li>
             ))}
           </ul>
         </div>
@@ -59,7 +74,7 @@ export default function Footer() {
               </Link>
             </li>
             <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
-              <Link href={routes.cookie()}>Cooky Policy</Link>
+              <Link href={routes.cookie()}>Cookie Policy</Link>
             </li>
             <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
               <Link href={routes.privacy()}>Privacy Policy</Link>
@@ -75,7 +90,7 @@ export default function Footer() {
         </div>
       </MaxWidthContainer>
 
-      <MaxWidthContainer className="bg-neutral-500 h-px mt-9 mb-3 max-xs:mx-4"></MaxWidthContainer>
+      <MaxWidthContainer className="bg-neutral-500 h-px mt-9 mb-3 mx-auto max-w-[95%]"></MaxWidthContainer>
 
       <MaxWidthContainer className="lg:px-20">
         <div className="flex max-xs:col-span-4 max-xs:px-4">
@@ -238,6 +253,7 @@ function DropdownLogin({ small }: { small: boolean }) {
               {errorMessage && (
                 <p className="text-red-500 text-sm">{errorMessage}</p>
               )}
+
               <Button
                 type="submit"
                 className="w-full font-normal text-sm bg-red-500 text-white">

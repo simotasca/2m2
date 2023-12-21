@@ -93,6 +93,8 @@ export default function MobilePanel() {
   );
 }
 
+// TODO: Router navigation da mettere nel componente per chiudere il menu dopo che è stata effettuata una ricerca
+
 function SearchBar() {
   const { open } = useSearchModal();
   const { t } = useTranslation();

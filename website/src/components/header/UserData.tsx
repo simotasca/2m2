@@ -18,7 +18,7 @@ import LoadingScreen from "../ui/LoadingScreen";
 
 export function UserData({ small }: { small: boolean }) {
   const { setIsOpen, total, count } = useCart();
-  const { t } = useTranslation();
+  const { t, r } = useTranslation();
   return (
     <div
       className={twJoin(
@@ -26,18 +26,21 @@ export function UserData({ small }: { small: boolean }) {
         small
           ? "lg:border lg:border-neutral-500  lg:bg-neutral-800 lg:mr-0 lg:justify-self-auto"
           : "md:border md:border-neutral-500  md:bg-neutral-800 md:mr-0 md:justify-self-auto"
-      )}>
+      )}
+    >
       <button
         onClick={() => setIsOpen(true)}
         className={twJoin(
           "flex items-center h-full px-1 rounded-l outline-none hover:outline hover:outline-[#e0c4393a] -outline-offset-1",
           small ? "lg:px-3" : "md:px-3"
-        )}>
+        )}
+      >
         <div
           className={twJoin(
             "h-fit text-right translate-y-px hidden",
             small ? "lg:block" : "md:block"
-          )}>
+          )}
+        >
           <p className="font-semibold text-sm leading-[1.1]">
             {total ? total.toFixed(2) + "€" : "---"}
           </p>
@@ -73,7 +76,7 @@ export function UserData({ small }: { small: boolean }) {
 }
 
 function DropdownLogin({ small }: { small: boolean }) {
-  const { t } = useTranslation();
+  const { t, r } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<string>();
   const [open, setOpen] = useState(false);
@@ -115,7 +118,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
     if (!email || !password) {
       // TODO: i18n
-      setErrorMessage("Inserire email e password");
+      setErrorMessage(t("errors.required-mail-and-password"));
       return;
     }
 
@@ -139,7 +142,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
   return (
     <>
-      <LoadingScreen message="Login in corso" loading={loading} />
+      <LoadingScreen message={t("auth.login.logging-in")} loading={loading} />
 
       <div className="relative h-full">
         <button
@@ -147,12 +150,14 @@ function DropdownLogin({ small }: { small: boolean }) {
           className={twJoin(
             "h-full flex items-center outline-none",
             small ? "lg:px-3" : "md:px-3"
-          )}>
+          )}
+        >
           <p
             className={twJoin(
               "overflow-hidden font-semibold text-sm max-w-[9rem] whitespace-nowrap overflow-ellipsis text-right hidden",
               small ? "lg:block" : "md:block"
-            )}>
+            )}
+          >
             {user || t("header.login")}
           </p>
           <Image
@@ -168,7 +173,8 @@ function DropdownLogin({ small }: { small: boolean }) {
         {open && (
           <div
             className="fixed z-[49] w-screen h-screen inset-0"
-            onClick={() => setOpen(false)}></div>
+            onClick={() => setOpen(false)}
+          ></div>
         )}
 
         <div
@@ -177,16 +183,17 @@ function DropdownLogin({ small }: { small: boolean }) {
             open
               ? "translate-y-0 opacity-100 transition-all"
               : "-translate-y-2 opacity-0"
-          )}>
+          )}
+        >
           <div className={twJoin("pt-2 z-10", open && "pointer-events-auto")}>
             <div className="w-80 bg-white border border-slate-400 rounded-md text-black p-4 gap-y-1">
               <div className="flex items-start justify-between">
                 <Image src={imgLogo} alt="logo 2m2" className="w-12 -mt-px" />
                 <p className="text-dark text-sm font-medium text-right leading-[1.1]">
-                  <span>Welcome back!</span>
+                  <span>{r("auth.login.title")}</span>
                   <br />
                   <span className="font-normal text-neutral-500">
-                    Please enter details.
+                    {t("auth.login.enter-details")}
                   </span>
                 </p>
               </div>
@@ -215,15 +222,19 @@ function DropdownLogin({ small }: { small: boolean }) {
                     onClick={(e) => {
                       e.preventDefault();
                       togglePasswordVisibility();
-                    }}>
-                    {pwInputType === "text" ? "hide" : "show"}
+                    }}
+                  >
+                    {pwInputType === "text"
+                      ? t("auth.login.hide-password")
+                      : t("auth.login.show-password")}
                   </button>
                 </div>
 
                 <Link
                   className="underline text-xs -mt-1.5 text-neutral-500"
-                  href={routes.passwordReset()}>
-                  Forgot your password?
+                  href={routes.passwordReset()}
+                >
+                  {t("auth.login.forgot-password")}
                 </Link>
 
                 {errorMessage && (
@@ -231,7 +242,8 @@ function DropdownLogin({ small }: { small: boolean }) {
                 )}
                 <Button
                   type="submit"
-                  className="w-full font-normal text-sm bg-red-500 text-white">
+                  className="w-full font-normal text-sm bg-red-500 text-white"
+                >
                   Login
                 </Button>
               </form>
@@ -244,7 +256,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
               <Link href={routes.register()}>
                 <Button className="w-full font-medium text-sm bg-red-gradient text-white">
-                  Register
+                  {t("auth.login.signup")}
                 </Button>
               </Link>
             </div>

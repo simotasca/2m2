@@ -59,6 +59,7 @@ export default async function ItemPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      errors: "misc/errors",
       page: "pages/category/typology/item",
       categories: "misc/categories",
       typologies: "misc/typologies",
@@ -108,6 +109,8 @@ export default async function ItemPage({
                 <StyledSearchModalToggle />
               </div>
             </div>
+
+            <div className="max-sm:h-3"></div>
 
             <Title as="h1">
               <Title.Gray>{t("page.title")}</Title.Gray>

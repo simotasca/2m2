@@ -1,20 +1,21 @@
-import useSearchModal from "@/context/search/useSearchModal";
+"use client";
 import iconSearch from "@/images/icons/search.svg";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import SearchModalToggle from "./SearchModalToggle";
+import useTranslation from "@/context/lang/useTranslation";
 
 export default function StyledSearchModalToggle({
   className,
 }: {
   className?: string;
 }) {
+  const { t } = useTranslation();
   return (
-    <SearchModalToggle as="div" className="relative cursor-pointer">
+    <SearchModalToggle as="button" className="relative cursor-pointer">
       <input
-        disabled={true}
         type="text"
-        placeholder="search here . . ."
+        placeholder={t("search.little-placeholder")}
         className={twMerge(
           "text-sm outline-none border border-neutral-500 max-w-[200px] w-full py-px pl-1.5 pr-6 rounded-sm cursor-pointer",
           className

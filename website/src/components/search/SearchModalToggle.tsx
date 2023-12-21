@@ -18,7 +18,11 @@ export default function ({
   const { open: openSearchModal } = useSearchModal();
 
   return (
-    <Component className={className} onClick={openSearchModal} {...props}>
+    <Component
+      className={className}
+      onClick={() => openSearchModal()}
+      {...props}
+    >
       {children}
     </Component>
   );

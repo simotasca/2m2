@@ -43,6 +43,7 @@ export default async function CategoryPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      errors: "misc/errors",
       page: "pages/category",
       categories: "misc/categories",
       contacts: "misc/contacts",
@@ -81,6 +82,8 @@ export default async function CategoryPage({
                 <StyledSearchModalToggle />
               </div>
             </div>
+
+            <div className="max-sm:h-3"></div>
 
             <Title as="h1">
               <Title.Gray>{t("page.title")}</Title.Gray>

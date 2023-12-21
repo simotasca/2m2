@@ -36,13 +36,15 @@ export default function ClientPage({ latestProducts, categories }: Props) {
           <h2 className="font-oswald text-3xl font-semibold uppercase">
             <span className="text-gray-400">{r("products-title")}</span>
           </h2>
-          <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
-            {t("products-button")}
-            <Image
-              className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
-              alt=""
-              src={iconRight}></Image>
-          </Button>
+          <Link href={routes.products()}>
+            <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
+              {t("products-button")}
+              <Image
+                className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
+                alt=""
+                src={iconRight} />
+            </Button>
+          </Link>
         </div>
 
         <ProductsGrid
@@ -51,32 +53,34 @@ export default function ClientPage({ latestProducts, categories }: Props) {
           className="py-6"
         />
         <div className="mt-10 mb-6">
-          <button className="block w-fit px-16 py-4 mx-auto bg-neutral-200 underline underline-offset-4">
-            {t("products-button")}
-          </button>
+          <Link href={routes.products()}>
+            <button className="block w-fit px-16 py-4 mx-auto bg-neutral-200 underline underline-offset-4">
+              {t("products-button")}
+            </button>
+          </Link>
         </div>
       </MaxWidthContainer>
 
       <div className="h-8"></div>
 
       <div className="bg-white">
-        <MaxWidthContainer className="pt-20 pb-20">
+        <MaxWidthContainer className="pt-10 pb-10">
           <ContactsSection />
         </MaxWidthContainer>
       </div>
-
+      <div className="py-4 bg-white">
+        <BrandsCarousel></BrandsCarousel>
+      </div>
       <div className="bg-slate-300 py-1">
         <MaxWidthContainer>
           <div className="flex gap-4 items-center">
-            <p className="uppercase font-bold text-slate-800">
+            <p className="uppercase font-bold text-slate-800 text-xs xs:text-sm md:text-base">
               {t("payments")}
             </p>
+
             <PaymentsBar />
           </div>
         </MaxWidthContainer>
-      </div>
-      <div className="py-4 bg-neutral-100">
-        <BrandsCarousel />
       </div>
     </PageLayout>
   );
