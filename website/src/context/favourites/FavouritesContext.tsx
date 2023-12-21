@@ -1,14 +1,8 @@
 "use client";
 
 import { createClientSideClient } from "@/lib/client/supabase";
-import { User } from "@supabase/auth-helpers-nextjs";
-import {
-  Dispatch,
-  PropsWithChildren,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, PropsWithChildren, createContext, useState } from "react";
+import useAuth from "../auth/useAuth";
 
 interface Favourite {
   id: number;
@@ -18,12 +12,14 @@ export const FavouritesContext = createContext<{
   isFavourite: (f: Favourite) => boolean;
   addFavourite: (f: Favourite) => void;
   removeFavourite: (f: Favourite) => void;
+  toggleFavourite: (f: Favourite) => void;
   loading: boolean;
   setLoading: Dispatch<boolean>;
 }>({
   isFavourite: () => false,
   addFavourite: () => {},
   removeFavourite: () => {},
+  toggleFavourite: () => {},
   loading: false,
   setLoading: () => {},
 });
@@ -35,25 +31,22 @@ export default function FavouritesProvider({
   initialFavourites,
 }: Props) {
   const [favourites, setFavourites] = useState<number[]>(initialFavourites);
-  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
+  const { session } = useAuth();
 
   const isFavourite = ({ id }: Favourite) => {
     return favourites.indexOf(id) !== -1;
   };
 
   const addFavourite = async ({ id }: Favourite) => {
-    if (!user) {
-      // open modal register claim;
-      return;
-    }
+    if (!session?.user) return;
 
     setLoading(true);
 
     const supabase = createClientSideClient();
     const { error } = await supabase.from("favourites").insert({
       id_product: id,
-      id_customer: user.id,
+      id_customer: session.user.id,
     });
 
     if (error) {
@@ -68,7 +61,7 @@ export default function FavouritesProvider({
   const removeFavourite = async ({ id }: Favourite) => {
     setLoading(true);
 
-    if (!user) return;
+    if (!session?.user) return;
 
     // can only delete mine thanx to RLS
     const supabase = createClientSideClient();
@@ -85,13 +78,9 @@ export default function FavouritesProvider({
     setLoading(false);
   };
 
-  useEffect(() => {
-    const supabase = createClientSideClient();
-    supabase.auth.getUser().then(({ data, error }) => {
-      if (error || !data?.user) return;
-      setUser(data.user);
-    });
-  }, []);
+  const toggleFavourite = (f: Favourite) => {
+    isFavourite(f) ? removeFavourite(f) : addFavourite(f);
+  };
 
   return (
     <FavouritesContext.Provider
@@ -99,6 +88,7 @@ export default function FavouritesProvider({
         isFavourite,
         addFavourite,
         removeFavourite,
+        toggleFavourite,
         loading,
         setLoading,
       }}>
