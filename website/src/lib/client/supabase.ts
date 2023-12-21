@@ -1,5 +1,5 @@
 import { parse, serialize } from "cookie";
-import { StorageAdapter } from "../shared/supabase";
+import { Database, StorageAdapter } from "../shared/supabase";
 import { createClient } from "@supabase/supabase-js";
 
 function isBrowser() {
@@ -35,8 +35,7 @@ class ClientStorageAdapter implements StorageAdapter {
   }
 }
 
-/** always singleton */
-export const supabaseClient = createClient(
+const supabaseClient = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
   {
@@ -45,3 +44,8 @@ export const supabaseClient = createClient(
     },
   }
 );
+
+/** always singleton */
+export function createClientSideClient() {
+  return supabaseClient;
+}

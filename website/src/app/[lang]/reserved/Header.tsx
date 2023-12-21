@@ -1,9 +1,8 @@
 "use client";
 
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
-import { Database } from "@/database.types";
 import imgLogo from "@/images/logo-dark.svg";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientSideClient } from "@/lib/client/supabase";
 import { User } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,10 +71,10 @@ function LogoutButton({
   children,
   className,
 }: PropsWithChildren<{ className?: string }>) {
-  const supabase = createClientComponentClient<Database>();
   const router = useRouter();
 
   const handleSignOut = async function () {
+    const supabase = createClientSideClient();
     await supabase.auth.signOut();
     router.push("/");
   };

@@ -2,20 +2,18 @@
 
 import useCart from "@/context/cart/useCart";
 import useTranslation from "@/context/lang/useTranslation";
-import { Database } from "@/database.types";
 import iconCart from "@/images/icons/cart-active.svg";
 import iconDown from "@/images/icons/white/down.svg";
 import iconUser from "@/images/icons/white/user.svg";
-import gifLoader from "@/images/loader.gif";
 import imgLogo from "@/images/logo-dark.svg";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientSideClient } from "@/lib/client/supabase";
+import routes from "@/lib/shared/routes";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { twJoin } from "tailwind-merge";
 import Button from "../ui/Button";
-import Link from "next/link";
-import routes from "@/lib/shared/routes";
 import LoadingScreen from "../ui/LoadingScreen";
 
 export function UserData({ small }: { small: boolean }) {
@@ -76,7 +74,6 @@ export function UserData({ small }: { small: boolean }) {
 
 function DropdownLogin({ small }: { small: boolean }) {
   const { t } = useTranslation();
-  const supabase = createClientComponentClient<Database>();
   const router = useRouter();
   const [user, setUser] = useState<string>();
   const [open, setOpen] = useState(false);
@@ -92,6 +89,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
   useEffect(() => {
     (async () => {
+      const supabase = createClientSideClient();
       const { data } = await supabase.auth.getUser();
       setUser(data?.user?.email);
     })();
@@ -123,6 +121,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
     setLoading(true);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,

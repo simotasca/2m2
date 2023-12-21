@@ -1,21 +1,19 @@
 "use client";
 
 import CartList from "@/components/cart/CartList";
+import Product from "@/components/product/Product";
+import Button from "@/components/ui/Button";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import CartProvider from "@/context/cart/CartProvider";
+import { createClientSideClient } from "@/lib/client/supabase";
+import { EcodatArticle } from "@/lib/shared/ecodat";
 import settings from "@/settings";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
+import { PropsWithChildren, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Input, Label } from "../reset-password/Input";
-import { User } from "@supabase/supabase-js";
 import { Customer } from "./customer";
-import Button from "@/components/ui/Button";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/database.types";
-import LoadingScreen from "@/components/ui/LoadingScreen";
-import useLogger from "@/hooks/useLogger";
-import { EcodatArticle } from "@/lib/shared/ecodat";
-import Product from "@/components/product/Product";
 
 interface Props {
   cart: any;
@@ -32,7 +30,6 @@ export default function ReservedClientPage({
   customer,
   favourites,
 }: Props) {
-  const supabase = createClientComponentClient<Database>();
   const [data, setData] = useState<any>(customer || {});
   const [initial, setInitial] = useState<any>(customer || {});
   const [error, setError] = useState<string>();
@@ -41,8 +38,7 @@ export default function ReservedClientPage({
   const saveData = async () => {
     setLoading(true);
 
-    console.log("USERIF", user.id);
-
+    const supabase = createClientSideClient();
     const query =
       type === "business"
         ? supabase
@@ -125,7 +121,7 @@ export default function ReservedClientPage({
               </div>
             </Box>
 
-            <CartProvider cartProducts={cart.products} cartId={cart.id}>
+            <CartProvider cartProductIds={cart.products} cartId={cart.id}>
               <Box
                 id="cart"
                 className="col-span-full sm:col-span-6 lg:col-span-4">

@@ -49,12 +49,12 @@ export default async function TypologyPage({
     {
       product: "misc/product",
       header: "misc/header",
-"mobile-panel": "misc/mobile-panel",
-search: "misc/search",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
       footer: "misc/footer",
       page: "pages/category/typology",
       contacts: "misc/contacts",
-auth:"auth",,
+      auth: "auth",
       categories: "misc/categories",
 
       typologies: "misc/typologies",
