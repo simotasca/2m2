@@ -5,8 +5,8 @@ import useTranslation from "@/context/lang/useTranslation";
 import iconTime from "@/images/icons/time.svg";
 import gifLoader from "@/images/loader.gif";
 import logo2m2 from "@/images/logo.svg";
+import { Filters, getFilters } from "@/lib/client/filters";
 import { createClientSideClient } from "@/lib/client/supabase";
-import { knownCategories } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,10 +14,6 @@ import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import Button from "../ui/Button";
 import MaxWidthContainer from "../ui/MaxWidthContainer";
-import useCart from "@/context/cart/useCart";
-import Link from "next/link";
-import routes from "@/lib/shared/routes";
-import { Filters, getFilters } from "@/lib/client/filters";
 
 export default function Footer() {
   const { setIsOpen } = useCart();
@@ -50,12 +46,10 @@ export default function Footer() {
             {filters?.categories?.map((c) => (
               <li
                 key={c.id}
-                className="flex flex-col text-sm leading-4  whitespace-nowrap"
-              >
+                className="flex flex-col text-sm leading-4  whitespace-nowrap">
                 <a
                   className="hover:underline underline-offset-2"
-                  href={routes.category(c.name)}
-                >
+                  href={routes.category(c.name)}>
                   {tCat(c.name, c.name)}
                 </a>
               </li>
@@ -190,9 +184,10 @@ function DropdownLogin({ small }: { small: boolean }) {
       password,
     });
 
+    setLoading(false);
+
     if (error) {
       setErrorMessage(error.message + " (" + error.status + ")");
-      setLoading(false);
       return;
     }
 
