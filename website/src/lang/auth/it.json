@@ -3,6 +3,7 @@
 
   "login": {
     "title": "Ben <red>Tornato</red>",
+    "enter-details": "Inserisci le credenziali",
     "forgot-password": "Hai dimenticato la password?",
     "new-account": "Non hai ancora un account?",
     "signup": "Registrati",

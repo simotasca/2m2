@@ -29,14 +29,15 @@ export default function LoginForm() {
 
     // setPwInputType("password");
 
+    const { t } = useTranslation("errors");
+
     const data = new FormData(e.target as HTMLFormElement);
 
     const email = data.get("email")?.toString();
     const password = data.get("password")?.toString();
 
     if (!email || !password) {
-      // TODO: i18n
-      setErrorMessage("Inserire email e password");
+      setErrorMessage(t("required-mail-and-password"));
       setWrongCredentials(true);
       return;
     }
@@ -51,11 +52,11 @@ export default function LoginForm() {
     if (error) {
       switch (error.name) {
         case "AuthApiError":
-          setErrorMessage("Errore: controlla le tue credenziali");
+          setErrorMessage(t("control-credentials"));
           setWrongCredentials(true);
           break;
         case "AuthRetryableFetchError":
-          setErrorMessage("Errore imprevisto: Riprova!");
+          setErrorMessage(t("unexpected-error"));
           break;
         default:
           setErrorMessage(JSON.stringify(error));
@@ -72,7 +73,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <LoadingScreen loading={loading} message="logging in" />
+      <LoadingScreen loading={loading} message={t("login.logging-in")} />
 
       <AuthLayout>
         <AuthLayout.Image />

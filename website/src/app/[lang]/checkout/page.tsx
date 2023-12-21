@@ -36,6 +36,7 @@ export default async function CheckoutPage({ searchParams }: Props) {
     "mobile-panel": "misc/mobile-panel",
     search: "misc/search",
     footer: "misc/footer",
+    errors: "misc/errors",
     page: "pages/checkout",
     errors: "misc/errors",
   });

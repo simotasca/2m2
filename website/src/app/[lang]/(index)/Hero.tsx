@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
+import Link from "next/link";
 
 export default function Hero() {
   const { t } = useTranslation("page.hero");
@@ -48,14 +49,16 @@ export default function Hero() {
               {t("subtitle.line2")}
             </p>
           </div>
-          <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
-            <span>{t("button")}</span>
-            <Image
-              src={iconSend}
-              alt=""
-              className="w-5 -translate-y-px -rotate-[30deg] transition-transform group-hover:-translate-y-0.5"
-            />
-          </Button>
+          <Link href="#contacts">
+            <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
+              <span>{t("button")}</span>
+              <Image
+                src={iconSend}
+                alt=""
+                className="w-5 -translate-y-px -rotate-[30deg] transition-transform group-hover:-translate-y-0.5"
+              />
+            </Button>
+          </Link>
         </main>
       </MaxWidthContainer>
     </div>
@@ -180,7 +183,8 @@ function HeroFilters() {
             className={twMerge(
               "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
               !brand && !category && "opacity-70"
-            )}>
+            )}
+          >
             Search
           </Button>
         </div>
@@ -211,7 +215,8 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"></Image>
+            className="absolute inset-0 w-full h-full object-cover"
+          ></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>
