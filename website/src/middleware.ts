@@ -4,16 +4,18 @@ import Negotiator from "negotiator";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import i18n from "./i18n";
+import { createServerSideClient } from "./lib/server/supabase";
+import { cookies } from "next/headers";
 
 export async function middleware(req: NextRequest) {
   if (!isPageUrl(req.nextUrl)) return;
 
-  console.log("MIDDLEWARE", req.nextUrl.toString());
+  // console.log("MIDDLEWARE", req.nextUrl.toString());
 
   const res = NextResponse.next();
 
   // Refresh supabase session if expired - required for Server Components
-  const supabase = createMiddlewareClient({ req, res });
+  const supabase = createServerSideClient({ cookies });
   await supabase.auth.getSession();
 
   const { pathname } = req.nextUrl;

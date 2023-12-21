@@ -2,20 +2,13 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { Database } from "@/database.types";
-import iconLogo from "@/images/logo-dark.svg";
+import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Image from "next/image";
+import { createClientSideClient } from "@/lib/client/supabase";
 import { useState } from "react";
 import { Input } from "./Input";
-import Link from "next/link";
-import routes from "@/lib/shared/routes";
-import useTranslation from "@/context/lang/useTranslation";
 
 export function SelectNewPassword() {
-  const supabase = createClientComponentClient<Database>();
-
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | undefined>();
   const [retry, setRetry] = useState(false);
@@ -28,6 +21,7 @@ export function SelectNewPassword() {
     setLoading(true);
     setError(undefined);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
@@ -82,8 +76,7 @@ export function SelectNewPassword() {
                     href={new URL(
                       window.location.pathname,
                       window.origin
-                    ).toString()}
-                  >
+                    ).toString()}>
                     {t("auth.password.try-again")}
                   </a>
                 )}
@@ -92,8 +85,7 @@ export function SelectNewPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => update()}
-            >
+              onClick={() => update()}>
               {t("auh.password.confirm")}
             </Button>
           </>

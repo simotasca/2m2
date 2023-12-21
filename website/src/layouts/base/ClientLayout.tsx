@@ -1,11 +1,8 @@
 "use client";
 
 import CartProvider from "@/context/cart/CartProvider";
-import FavouritesProvider, {
-  FavouritesContext,
-} from "@/context/favourites/FavouritesProvider";
+import FavouritesProvider from "@/context/favourites/FavouritesProvider";
 import SearchProvider from "@/context/search/SearchProvider";
-import { EcodatArticle } from "@/lib/shared/ecodat";
 import { PropsWithChildren } from "react";
 
 interface CartInit {

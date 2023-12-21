@@ -1,17 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import logo2m2 from "@/images/logo.svg";
-import gifLoader from "@/images/loader.gif";
-import iconTime from "@/images/icons/time.svg";
-import MaxWidthContainer from "../ui/MaxWidthContainer";
-import { knownCategories } from "@/lib/shared/ecodat";
+import useCart from "@/context/cart/useCart";
 import useTranslation from "@/context/lang/useTranslation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import iconTime from "@/images/icons/time.svg";
+import gifLoader from "@/images/loader.gif";
+import logo2m2 from "@/images/logo.svg";
+import { createClientSideClient } from "@/lib/client/supabase";
+import { knownCategories } from "@/lib/shared/ecodat";
+import routes from "@/lib/shared/routes";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
-import { Database } from "@/database.types";
 import Button from "../ui/Button";
+import MaxWidthContainer from "../ui/MaxWidthContainer";
 import useCart from "@/context/cart/useCart";
 import Link from "next/link";
 import routes from "@/lib/shared/routes";
@@ -59,16 +61,6 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-
-          {/* <ul className="flex flex-col gap-2 text-sm">
-            {Object.keys(knownCategories).map((p, i) => (
-              <a href={routes.category(p)} key={i}>
-                <li className="leading-4 whitespace-nowrap hover:underline underline-offset-2">
-                  {tCat(p, p)}
-                </li>
-              </a>
-            ))}
-          </ul> */}
         </div>
 
         <div>
@@ -106,32 +98,28 @@ export default function Footer() {
             <li>
               <Link
                 href={routes.home()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {tHead("navbar.home")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.about()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {tHead("navbar.about")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.products()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {tHead("search-bar.search")}
               </Link>
             </li>
             <li>
               <button
                 onClick={() => setIsOpen(true)}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {t("your-cart")}
               </button>
             </li>
@@ -150,7 +138,6 @@ export default function Footer() {
 }
 
 function DropdownLogin({ small }: { small: boolean }) {
-  const supabase = createClientComponentClient<Database>();
   const { t } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<string>();
@@ -166,6 +153,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
   useEffect(() => {
     (async () => {
+      const supabase = createClientSideClient();
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -196,6 +184,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
     setLoading(true);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -247,8 +236,7 @@ function DropdownLogin({ small }: { small: boolean }) {
                   onClick={(e) => {
                     e.preventDefault();
                     togglePasswordVisibility();
-                  }}
-                >
+                  }}>
                   {pwInputType === "text"
                     ? t("auth.login.hide-password")
                     : t("auth.login.show-password")}
@@ -257,8 +245,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
               <Link
                 className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#"
-              >
+                href="#">
                 {t("auth.login.forgot-password")}
                 {/* TODO */}
               </Link>
@@ -269,8 +256,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
               <Button
                 type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white"
-              >
+                className="w-full font-normal text-sm bg-red-500 text-white">
                 Login
               </Button>
             </form>

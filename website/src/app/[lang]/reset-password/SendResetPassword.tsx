@@ -2,17 +2,14 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { Database } from "@/database.types";
+import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
+import { createClientSideClient } from "@/lib/client/supabase";
 import { isEmail } from "@/lib/shared/object";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { Input } from "./Input";
-import useTranslation from "@/context/lang/useTranslation";
 
 export function SendResetPassword() {
-  const supabase = createClientComponentClient<Database>();
-
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
@@ -32,6 +29,7 @@ export function SendResetPassword() {
     setLoading(true);
     setError(undefined);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: "https://96b8-5-179-178-59.ngrok-free.app/reset-password",
     });
@@ -91,8 +89,7 @@ export function SendResetPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => onclick()}
-            >
+              onClick={() => onclick()}>
               {t("auth.password.next")}
             </Button>
           </>

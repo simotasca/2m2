@@ -13,13 +13,11 @@ interface Props {
 const imagePlaceholder = "/assets/placeholder-image.png";
 
 export default function ProductImage({ photo, big, className }: Props) {
-  const ref = useRef<HTMLImageElement>(null);
   const [image, setImage] = useState<string | undefined>();
   const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!ref.current) return;
     if (!photo) return;
     if (image !== undefined) return;
 
@@ -39,7 +37,7 @@ export default function ProductImage({ photo, big, className }: Props) {
       .then((src) => setImage(src))
       .catch(() => setImage(undefined))
       .finally(() => setFetching(false));
-  }, [ref, photo]);
+  }, [photo]);
 
   return (
     <div
@@ -51,7 +49,6 @@ export default function ProductImage({ photo, big, className }: Props) {
       )}>
       {!fetching && (
         <Image
-          ref={ref}
           className="absolute w-full h-full object-cover blur-3xl opacity-0 transition-all duration-500"
           src={image || imagePlaceholder}
           width={300}

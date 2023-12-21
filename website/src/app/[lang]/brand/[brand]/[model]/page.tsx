@@ -61,12 +61,12 @@ export default async function ModelPage({
     {
       product: "misc/product",
       header: "misc/header",
-"mobile-panel": "misc/mobile-panel",
-search: "misc/search",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
       footer: "misc/footer",
 errors: "misc/errors",
       contacts: "misc/contacts",
-auth:"auth",,
+      auth: "auth",
       page: "pages/brand/model",
     },
     true
