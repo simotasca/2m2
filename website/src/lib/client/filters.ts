@@ -5,7 +5,7 @@ import {
   EcodatTypology,
 } from "../shared/ecodat";
 
-export interface Filters {
+export interface EcodatData {
   categories?: (EcodatCategory & {
     typologies?: EcodatTypology[] | undefined;
   })[];
@@ -14,18 +14,16 @@ export interface Filters {
   })[];
 }
 
-let cache: Filters | undefined = undefined;
-
-export async function getFilters(): Promise<Filters | undefined> {
-  if (cache) return cache;
+async function getEcodatData(): Promise<EcodatData | undefined> {
   return await fetch("/api/ecodat/filters")
     .then((res) => res.json())
     .then((data) => {
-      cache = data;
       return data;
     })
     .catch((e) => {
-      console.error("Error fetching search filters:", e.message);
+      console.error("ERROR: fetching search filters:", e.message);
       return undefined;
     });
 }
+
+export const ecodatData = getEcodatData();

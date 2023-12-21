@@ -13,7 +13,8 @@ import iconCategory from "@/images/icons/widgets.svg";
 import imgLogoEsteso from "@/images/logo-esteso.svg";
 import mainBg from "@/images/main-background-engine.jpg";
 import imgSkew from "@/images/skew.svg";
-import { getFilters } from "@/lib/client/filters";
+import { ecodatData } from "@/lib/client/filters";
+import type { EcodatData } from "@/lib/client/filters";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -71,7 +72,7 @@ function HeroFilters() {
   const router = useRouter();
 
   // the contents of the dropdowns
-  const [filters, setFilters] = useState<any>(null);
+  const [content, setContent] = useState<any>(null);
 
   // the selected content
   const [category, setCategory] = useState<any>(null);
@@ -92,8 +93,8 @@ function HeroFilters() {
   };
 
   useEffect(() => {
-    getFilters().then((res) => {
-      res && setFilters(res);
+    ecodatData.then((res) => {
+      res && setContent(res);
     });
   }, []);
 
@@ -150,7 +151,7 @@ function HeroFilters() {
           <SearchFilter
             label="category"
             placeholder="Select the category"
-            data={mapFilterData(filters?.categories, "name")}
+            data={mapFilterData(content?.categories, "name")}
             onChange={(v) => setCategory(v)}
           />
           <SearchFilter
@@ -165,7 +166,7 @@ function HeroFilters() {
           <SearchFilter
             label="brand"
             placeholder="Select the brand"
-            data={mapFilterData(filters?.brands, "name")}
+            data={mapFilterData(content?.brands, "name")}
             onChange={(b) => setBrand(b)}
           />
           <SearchFilter
@@ -183,8 +184,7 @@ function HeroFilters() {
             className={twMerge(
               "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
               !brand && !category && "opacity-70"
-            )}
-          >
+            )}>
             Search
           </Button>
         </div>
@@ -215,8 +215,7 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"
-          ></Image>
+            className="absolute inset-0 w-full h-full object-cover"></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>
