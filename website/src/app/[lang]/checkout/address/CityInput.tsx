@@ -1,11 +1,11 @@
 import { Dispatch, useEffect, useState } from "react";
 import WizSelect, { WizSelectItem } from "../WizSelect";
 import { DeliveryAddress } from "./DeliveryAddressTab";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/database.types";
 import settings from "@/settings";
 import WizInput from "../WizInput";
 import useTranslation from "@/context/lang/useTranslation";
+import { createClientSideClient } from "@/lib/client/supabase";
 
 const citiesCache = new Map<string, WizSelectItem[]>();
 
@@ -18,8 +18,6 @@ export default function CityInput({
   setAddress: Dispatch<DeliveryAddress>;
   showErrors: boolean;
 }) {
-  const supabase = createClientComponentClient<Database>();
-
   const [municipalities, setMunicipalities] = useState<WizSelectItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingError, setloadingError] = useState(false);
@@ -63,6 +61,7 @@ export default function CityInput({
       return;
     }
 
+    const supabase = createClientSideClient();
     supabase
       .from("province")
       .select("*, municipality(*)")

@@ -42,8 +42,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
               <Image
                 className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
                 alt=""
-                src={iconRight}
-              ></Image>
+                src={iconRight} />
             </Button>
           </Link>
         </div>
@@ -83,7 +82,6 @@ export default function ClientPage({ latestProducts, categories }: Props) {
           </div>
         </MaxWidthContainer>
       </div>
-      {/*  */}
     </PageLayout>
   );
 }
@@ -95,8 +93,7 @@ function CategoriesSection({ categories }: { categories: string[] }) {
         <div
           className={twJoin(
             "w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8"
-          )}
-        >
+          )}>
           {categories.map((key) => (
             <Fragment key={key}>
               <CategoryCard name={key} />
@@ -145,8 +142,7 @@ function CategoryCard({ name }: { name: string }) {
         "2xl:[&:nth-child(n+17)]:hidden",
         cardColors
       )}
-      key={name}
-    >
+      key={name}>
       <img
         src={knownCategories[name].image || undefined}
         className={twMerge(

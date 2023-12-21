@@ -1,13 +1,12 @@
 "use client";
 
-import { Dispatch, useEffect, useState } from "react";
-import { DeliveryAddress } from "./DeliveryAddressTab";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import WizSelect, { WizSelectItem } from "../WizSelect";
-import WizInput from "../WizInput";
-import settings from "@/settings";
-import { Database } from "@/database.types";
 import useTranslation from "@/context/lang/useTranslation";
+import settings from "@/settings";
+import { Dispatch, useEffect, useState } from "react";
+import WizInput from "../WizInput";
+import WizSelect, { WizSelectItem } from "../WizSelect";
+import { DeliveryAddress } from "./DeliveryAddressTab";
+import { createClientSideClient } from "@/lib/client/supabase";
 
 export default function ProvinceInput({
   address,
@@ -18,8 +17,6 @@ export default function ProvinceInput({
   setAddress: Dispatch<DeliveryAddress>;
   showErrors: boolean;
 }) {
-  const supabase = createClientComponentClient<Database>();
-
   const [provinces, setProvinces] = useState<WizSelectItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingError, setloadingError] = useState(false);
@@ -42,6 +39,7 @@ export default function ProvinceInput({
   useEffect(() => {
     if (!loading) return;
 
+    const supabase = createClientSideClient();
     supabase
       .from("province")
       .select()

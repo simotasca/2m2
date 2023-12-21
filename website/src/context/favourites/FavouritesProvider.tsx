@@ -1,12 +1,14 @@
 "use client";
 
-import { Database } from "@/database.types";
+import { createClientSideClient } from "@/lib/client/supabase";
+import { User } from "@supabase/auth-helpers-nextjs";
 import {
-  User,
-  createClientComponentClient,
-} from "@supabase/auth-helpers-nextjs";
-import { Dispatch, PropsWithChildren, useEffect, useState } from "react";
-import { createContext } from "react";
+  Dispatch,
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface Favourite {
   id: number;
@@ -32,7 +34,6 @@ export default function FavouritesProvider({
   children,
   initialFavourites,
 }: Props) {
-  const supabase = createClientComponentClient<Database>();
   const [favourites, setFavourites] = useState<number[]>(initialFavourites);
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,7 @@ export default function FavouritesProvider({
 
     setLoading(true);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.from("favourites").insert({
       id_product: id,
       id_customer: user.id,
@@ -69,6 +71,7 @@ export default function FavouritesProvider({
     if (!user) return;
 
     // can only delete mine thanx to RLS
+    const supabase = createClientSideClient();
     const { error } = await supabase
       .from("favourites")
       .delete()
@@ -83,6 +86,7 @@ export default function FavouritesProvider({
   };
 
   useEffect(() => {
+    const supabase = createClientSideClient();
     supabase.auth.getUser().then(({ data, error }) => {
       if (error || !data?.user) return;
       setUser(data.user);

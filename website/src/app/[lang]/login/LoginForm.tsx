@@ -4,8 +4,8 @@ import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
+import { createClientSideClient } from "@/lib/client/supabase";
 import routes from "@/lib/shared/routes";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -19,7 +19,6 @@ import { twJoin } from "tailwind-merge";
 
 export default function LoginForm() {
   const router = useRouter();
-  const supabase = createClientComponentClient();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [wrongCredentials, setWrongCredentials] = useState(false);
@@ -44,6 +43,7 @@ export default function LoginForm() {
 
     setLoading(true);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -105,8 +105,7 @@ export default function LoginForm() {
 
           <Link
             className="underline text-sm text-neutral-500"
-            href={routes.passwordReset()}
-          >
+            href={routes.passwordReset()}>
             {t("login.forgot-password")}
           </Link>
 
@@ -114,8 +113,7 @@ export default function LoginForm() {
             <Button
               type="submit"
               className="bg-red-500 text-white w-full font-medium gap-2"
-              disabled={loading}
-            >
+              disabled={loading}>
               <span>Login</span>
             </Button>
 
@@ -131,8 +129,7 @@ export default function LoginForm() {
               </span>
               <Link
                 href={routes.register()}
-                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
-              >
+                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
                 {t("login.signup")}
               </Link>
             </p>

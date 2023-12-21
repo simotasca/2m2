@@ -1,11 +1,10 @@
 "use client";
 
-import { Database } from "@/database.types";
 import { CookieCart } from "@/lib/client/cart";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientSideClient } from "@/lib/client/supabase";
+import { CartProduct } from "@/lib/shared/cart";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { CartContext } from ".";
-import { CartProduct } from "@/lib/shared/cart";
 
 /**
  * NOTA!
@@ -20,8 +19,6 @@ function CartProvider({
   cartProductIds,
   cartId,
 }: PropsWithChildren<{ cartId?: number; cartProductIds: string[] }>) {
-  const supabase = createClientComponentClient<Database>();
-
   const [cart, setCart] = useState<string[]>(cartProductIds);
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +41,7 @@ function CartProvider({
     if (!isLogged) {
       CookieCart.addProduct(p);
     } else {
+      const supabase = createClientSideClient();
       const { error } = await supabase.from("cart_products").insert({
         id_cart: cartId,
         id_product: String(p.id),
@@ -67,6 +65,7 @@ function CartProvider({
     if (!isLogged) {
       CookieCart.removeProduct(p);
     } else {
+      const supabase = createClientSideClient();
       const { error } = await supabase
         .from("cart_products")
         .delete()

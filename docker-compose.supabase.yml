@@ -7,6 +7,7 @@
 version: "3.8"
 
 services:
+  # no
   studio:
     container_name: supabase-studio
     image: supabase/studio:20230912-748fd33
@@ -17,7 +18,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "require('http').get('http://localhost:3000/api/profile', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+          "require('http').get('http://localhost:3000/api/profile', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})",
         ]
       timeout: 5s
       interval: 5s
@@ -90,7 +91,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://localhost:9999/health"
+          "http://localhost:9999/health",
         ]
       timeout: 5s
       interval: 5s
@@ -161,6 +162,7 @@ services:
       PGRST_APP_SETTINGS_JWT_EXP: ${JWT_EXPIRY}
     command: "postgrest"
 
+  # no
   realtime:
     container_name: realtime-dev.supabase-realtime
     image: supabase/realtime:v2.10.1
@@ -171,13 +173,7 @@ services:
       analytics:
         condition: service_healthy
     healthcheck:
-      test:
-        [
-          "CMD",
-          "bash",
-          "-c",
-          "printf \\0 > /dev/tcp/localhost/4000"
-        ]
+      test: ["CMD", "bash", "-c", "printf \\0 > /dev/tcp/localhost/4000"]
       timeout: 5s
       interval: 5s
       retries: 3
@@ -201,6 +197,7 @@ services:
     command: >
       sh -c "/app/bin/migrate && /app/bin/realtime eval 'Realtime.Release.seeds(Realtime.Repo)' && /app/bin/server"
 
+  # no
   storage:
     container_name: supabase-storage
     image: supabase/storage-api:v0.40.4
@@ -220,7 +217,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://localhost:5000/status"
+          "http://localhost:5000/status",
         ]
       timeout: 5s
       interval: 5s
@@ -244,11 +241,12 @@ services:
     volumes:
       - ./supabase-docker/volumes/storage:/var/lib/storage:z
 
+  # no
   imgproxy:
     container_name: supabase-imgproxy
     image: darthsim/imgproxy:v3.8.0
     healthcheck:
-      test: [ "CMD", "imgproxy", "health" ]
+      test: ["CMD", "imgproxy", "health"]
       timeout: 5s
       interval: 5s
       retries: 3
@@ -260,6 +258,7 @@ services:
     volumes:
       - ./supabase-docker/volumes/storage:/var/lib/storage:z
 
+  # no
   meta:
     container_name: supabase-meta
     image: supabase/postgres-meta:v0.68.0
@@ -278,6 +277,7 @@ services:
       PG_META_DB_USER: supabase_admin
       PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
+  # no
   functions:
     container_name: supabase-edge-functions
     image: supabase/edge-runtime:v1.18.1
@@ -304,7 +304,7 @@ services:
     container_name: supabase-analytics
     image: supabase/logflare:1.4.0
     healthcheck:
-      test: [ "CMD", "curl", "http://localhost:4000/health" ]
+      test: ["CMD", "curl", "http://localhost:4000/health"]
       # test: [ "CMD", "echo" ]
       timeout: 5s
       interval: 5s
@@ -402,7 +402,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://vector:9001/health"
+          "http://vector:9001/health",
         ]
       timeout: 5s
       interval: 5s
@@ -411,4 +411,4 @@ services:
       - ./supabase-docker/volumes/logs/vector.yml:/etc/vector/vector.yml:ro
       - ${DOCKER_SOCKET_LOCATION}:/var/run/docker.sock:ro
 
-    command: [ "--config", "etc/vector/vector.yml" ]
+    command: ["--config", "etc/vector/vector.yml"]

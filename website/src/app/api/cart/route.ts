@@ -1,12 +1,11 @@
-import { Database } from "@/database.types";
 import { getCart } from "@/lib/server/cart";
 import { fetchEcodatArticle } from "@/lib/server/ecodat";
+import { createServerSideClient } from "@/lib/server/supabase";
 import { EcodatArticle } from "@/lib/shared/ecodat";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSideClient({ cookies });
   const cart = await getCart(supabase);
 
   let products: EcodatArticle[] = [];

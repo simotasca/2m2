@@ -8,7 +8,7 @@
 - [ ] footer: mancano tutti i link
 - [ ] footer: traduzione login
 - [ ] footer: non compare la navbar
-- [ ] footer: doppi :: orari
+- [x] footer: doppi :: orari
 - [ ] cambio lingua non funziona / i link non mandano alla lingua corrente
 - [ ] prodotto: search modal non compare
 - [ ] prodotto: non tradotta
@@ -23,17 +23,17 @@
 - [ ] checkout: suggerire dati registrazione
 - [ ] checkout: se azienda permettere dati ffattura elettronica
 - [ ] pagine bianche di cookie, privacy
+- [ ] reserved: se si accede dalla login la pagina non può essere clickata
 
 ### VECCHI
 
 - [ ] finire di testare la gesione del pagamento
-- [ ] i18n
+- [x] i18n
 - [ ] area riservata
 - [ ] preferiti salvabili
 - [ ] sottolineatura a tutti gli elementi clickabili
 - [ ] tradurre le categorie / tipologie / tutte le cose note del database
 - [x] breadcrumbs pagina prodotto, l'intem del prodotto stesso non è clickabile
-- [ ] prodotto condivisibile
 
 # header
 
@@ -64,8 +64,8 @@
 # login / signup
 
 - [x] password dimenticata
-- [ ] registrazione
-- [ ] pagina area riservata (carrello, preferiti, anagrafica)
+- [x] registrazione
+- [x] pagina area riservata (carrello, preferiti, anagrafica)
 
 # ricerca
 

@@ -2,13 +2,12 @@
 
 import TopBar from "@/components/header/TopBar";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
-import { Database } from "@/database.types";
 import { getCart } from "@/lib/server/cart";
 import { fetchEcodatArticle } from "@/lib/server/ecodat";
 import { getFavourites } from "@/lib/server/favourites";
 import { generateTranslations } from "@/lib/server/lang";
+import { createServerSideClient } from "@/lib/server/supabase";
 import { EcodatArticle } from "@/lib/shared/ecodat";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Header from "./Header";
@@ -17,7 +16,7 @@ import "./box.css";
 import { Customer } from "./customer";
 
 export default async function ReservedPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSideClient({ cookies });
 
   const user = await supabase.auth.getUser().then(({ data }) => data.user);
 

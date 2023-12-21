@@ -1,13 +1,12 @@
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
-import { Database } from "@/database.types";
 import { generateTranslations } from "@/lib/server/lang";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerSideClient } from "@/lib/server/supabase";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import LoginForm from "./LoginForm";
 
 export default async function LoginPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSideClient({ cookies });
 
   const { data } = await supabase.auth.getUser();
 
