@@ -26,21 +26,18 @@ export function UserData({ small }: { small: boolean }) {
         small
           ? "lg:border lg:border-neutral-500  lg:bg-neutral-800 lg:mr-0 lg:justify-self-auto"
           : "md:border md:border-neutral-500  md:bg-neutral-800 md:mr-0 md:justify-self-auto"
-      )}
-    >
+      )}>
       <button
         onClick={() => setIsOpen(true)}
         className={twJoin(
           "flex items-center h-full px-1 rounded-l outline-none hover:outline hover:outline-[#e0c4393a] -outline-offset-1",
           small ? "lg:px-3" : "md:px-3"
-        )}
-      >
+        )}>
         <div
           className={twJoin(
             "h-fit text-right translate-y-px hidden",
             small ? "lg:block" : "md:block"
-          )}
-        >
+          )}>
           <p className="font-semibold text-sm leading-[1.1]">
             {total ? total.toFixed(2) + "€" : "---"}
           </p>
@@ -130,10 +127,11 @@ function DropdownLogin({ small }: { small: boolean }) {
       password,
     });
 
+    setLoading(false);
+
     if (error) {
       // TODO: display better error message
-      setErrorMessage(error.message + " (" + error.status + ")");
-      setLoading(false);
+      setErrorMessage(error.message);
       return;
     }
 
@@ -150,14 +148,12 @@ function DropdownLogin({ small }: { small: boolean }) {
           className={twJoin(
             "h-full flex items-center outline-none",
             small ? "lg:px-3" : "md:px-3"
-          )}
-        >
+          )}>
           <p
             className={twJoin(
               "overflow-hidden font-semibold text-sm max-w-[9rem] whitespace-nowrap overflow-ellipsis text-right hidden",
               small ? "lg:block" : "md:block"
-            )}
-          >
+            )}>
             {user || t("header.login")}
           </p>
           <Image
@@ -173,8 +169,7 @@ function DropdownLogin({ small }: { small: boolean }) {
         {open && (
           <div
             className="fixed z-[49] w-screen h-screen inset-0"
-            onClick={() => setOpen(false)}
-          ></div>
+            onClick={() => setOpen(false)}></div>
         )}
 
         <div
@@ -183,8 +178,7 @@ function DropdownLogin({ small }: { small: boolean }) {
             open
               ? "translate-y-0 opacity-100 transition-all"
               : "-translate-y-2 opacity-0"
-          )}
-        >
+          )}>
           <div className={twJoin("pt-2 z-10", open && "pointer-events-auto")}>
             <div className="w-80 bg-white border border-slate-400 rounded-md text-black p-4 gap-y-1">
               <div className="flex items-start justify-between">
@@ -222,8 +216,7 @@ function DropdownLogin({ small }: { small: boolean }) {
                     onClick={(e) => {
                       e.preventDefault();
                       togglePasswordVisibility();
-                    }}
-                  >
+                    }}>
                     {pwInputType === "text"
                       ? t("auth.login.hide-password")
                       : t("auth.login.show-password")}
@@ -232,8 +225,7 @@ function DropdownLogin({ small }: { small: boolean }) {
 
                 <Link
                   className="underline text-xs -mt-1.5 text-neutral-500"
-                  href={routes.passwordReset()}
-                >
+                  href={routes.passwordReset()}>
                   {t("auth.login.forgot-password")}
                 </Link>
 
@@ -242,8 +234,7 @@ function DropdownLogin({ small }: { small: boolean }) {
                 )}
                 <Button
                   type="submit"
-                  className="w-full font-normal text-sm bg-red-500 text-white"
-                >
+                  className="w-full font-normal text-sm bg-red-500 text-white">
                   Login
                 </Button>
               </form>
