@@ -15,6 +15,7 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
 import ProductImage from "./ProductImage";
+import FavouritesToggle from "./FavouritesToggle";
 
 interface Props {
   product: CartProduct;
@@ -80,21 +81,15 @@ export default function Product({ product }: Props) {
               </>
             )}
           </Button>
-          <Button
-            disabled={favouritesLoading}
-            onClick={(e) => {
-              e.preventDefault();
-              isFavourite(product)
-                ? removeFavourite(product)
-                : addFavourite(product);
-            }}
+          <FavouritesToggle
+            product={product}
             className="bg-red-600 rounded-sm aspect-square relative">
             <Image
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%-1px)] w-[55%]"
               src={isFavourite(product) ? iconFavourite : iconNotFavourite}
               alt=""
             />
-          </Button>
+          </FavouritesToggle>
         </div>
       </div>
     </Link>

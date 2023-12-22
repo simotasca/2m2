@@ -214,7 +214,9 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
           <div className="absolute w-full xs:h-full sm:max-md:h-auto top-0 left-0 max-xs:bottom-0 overflow-x-auto overflow-y-hidden xs:overflow-y-auto xs:overflow-x-hidden">
             <div className="flex flex-col gap-1 max-xs:flex-row sm:max-md:flex-row max-xs:order-2 sm:max-md:order-2">
               {photoIdsList.slice(1).map((imageId) => (
-                <div className="p-0.5 border border-slate-300 rounded-sm ">
+                <div
+                  key={imageId}
+                  className="p-0.5 border border-slate-300 rounded-sm ">
                   <ProductImage
                     className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
                     photo={{ imageId }}

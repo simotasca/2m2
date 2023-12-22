@@ -18,7 +18,11 @@ import {
 import { twJoin } from "tailwind-merge";
 
 export default function LoginForm() {
+  const { t, r } = useTranslation("auth");
+  const { t: tErr } = useTranslation("errors");
+
   const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [wrongCredentials, setWrongCredentials] = useState(false);
@@ -26,17 +30,13 @@ export default function LoginForm() {
   const onSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
 
-    // setPwInputType("password");
-
-    const { t } = useTranslation("errors");
-
     const data = new FormData(e.target as HTMLFormElement);
 
     const email = data.get("email")?.toString();
     const password = data.get("password")?.toString();
 
     if (!email || !password) {
-      setErrorMessage(t("required-mail-and-password"));
+      setErrorMessage(tErr("required-mail-and-password"));
       setWrongCredentials(true);
       return;
     }
@@ -52,11 +52,11 @@ export default function LoginForm() {
     if (error) {
       switch (error.name) {
         case "AuthApiError":
-          setErrorMessage(t("control-credentials"));
+          setErrorMessage(tErr("control-credentials"));
           setWrongCredentials(true);
           break;
         case "AuthRetryableFetchError":
-          setErrorMessage(t("unexpected-error"));
+          setErrorMessage(tErr("unexpected-error"));
           break;
         default:
           setErrorMessage(JSON.stringify(error));
@@ -68,8 +68,6 @@ export default function LoginForm() {
 
     router.push("/reserved");
   };
-
-  const { t, r } = useTranslation("auth");
 
   return (
     <>
