@@ -1,5 +1,7 @@
-import { EcodatArticle, productName } from "./ecodat";
-import { SearchParams, encodeQueryParam, searchQueryString } from "./search";
+import type { EcodatArticle } from "./ecodat";
+import { productName } from "./ecodat";
+import type { SearchParams } from "./search";
+import { encodeQueryParam, searchQueryString } from "./search";
 
 type UrlProduct = Pick<EcodatArticle, "item" | "brand" | "model" | "id">;
 

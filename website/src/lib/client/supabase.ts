@@ -13,14 +13,13 @@ class ClientStorageAdapter implements StorageAdapter {
     if (!isBrowser()) return null;
 
     const cookies = parse(document.cookie);
-    console.log(key);
     let val = cookies[key];
     return val ? JSON.parse(cookies[key]) : null;
   }
 
   setItem(key: string, value: string) {
     if (!isBrowser()) return;
-    console.log("SETTIN", key);
+
     document.cookie = serialize(key, JSON.stringify(value), {
       httpOnly: false,
     });
@@ -28,6 +27,7 @@ class ClientStorageAdapter implements StorageAdapter {
 
   removeItem(key: string) {
     if (!isBrowser()) return;
+
     document.cookie = serialize(key, "", {
       maxAge: 0,
       httpOnly: false,

@@ -1,57 +1,58 @@
 - [ ] tutte le pagine not found danno invece something went wrong
-- [ ] header: tendine ricambi e modelli
-- [ ] header: contatti mandare a contacts section
-- [ ] hero: bottone contattaci manda alla sezione contatti
-- [ ] prodotti recenti: vai ai prodotti (sopra e sotto) -> pagina dei prodotti
+- [x] header: tendine ricambi e modelli
+- [x] header: contatti mandare a contacts section
+- [x] hero: bottone contattaci manda alla sezione contatti
+- [x] prodotti recenti: vai ai prodotti (sopra e sotto) -> pagina dei prodotti
 - [ ] contacts section: chiama scrivi e chatta
-- [ ] contacts section: striscia pagamenti sotto loghi auto
-- [ ] footer: mancano tutti i link
-- [ ] footer: traduzione login
-- [ ] footer: non compare la navbar
+- [x] contacts section: striscia pagamenti sotto loghi auto
+- [x] footer: mancano tutti i link
+- [x] footer: traduzione login
+- [x] footer: non compare la navbar
 - [x] footer: doppi :: orari
 - [ ] cambio lingua non funziona / i link non mandano alla lingua corrente
-- [ ] prodotto: search modal non compare
-- [ ] prodotto: non tradotta
-- [ ] prodotto: rimuovere condividi
-- [ ] prodotto: preferiti + carrello
+- [x] prodotto: search modal non compare
+- [x] prodotto: non tradotta
+- [x] prodotto: rimuovere condividi
+- [x] prodotto: aggiungi al carrello
+- [x] prodotto: aggiungi ai preferiti
 - [ ] prodotto: foto zoomabili
-- [ ] modal ricerca: non tradotto
-- [ ] sezione contatti: sempre più padding
+- [x] modal ricerca: non tradotto
+- [x] sezione contatti: sempre più padding
 - [ ] testare tutta la login
 - [ ] checkout: finire di testare (i prodotti devono essere disabilitati dopo l'aquisto)
 - [ ] checkout: manca il design della mail di errore x 2m2
 - [ ] checkout: suggerire dati registrazione
 - [ ] checkout: se azienda permettere dati ffattura elettronica
-- [ ] pagine bianche di cookie, privacy
-- [ ] reserved: se si accede dalla login la pagina non può essere clickata
+- [x] pagine bianche di cookie, privacy
 
 ### VECCHI
 
 - [ ] finire di testare la gesione del pagamento
-- [x] i18n
+- [x/2] i18n
 - [ ] area riservata
-- [ ] preferiti salvabili
-- [ ] sottolineatura a tutti gli elementi clickabili
-- [ ] tradurre le categorie / tipologie / tutte le cose note del database
+- [x] preferiti salvabili
+- [x?] sottolineatura a tutti gli elementi clickabili
+- [x/2] tradurre le categorie / tipologie / tutte le cose note del database
 - [x] breadcrumbs pagina prodotto, l'intem del prodotto stesso non è clickabile
+- [x] prodotto condivisibile
 
 # header
 
 - [x] rimuovere lingue inutili
 - [ ] link a google maps nell'indirizzo
 - [ ] link email e telefono
-- [ ] header modals ricambi e modelli
+- [x] header modals ricambi e modelli
 
 # footer
 
-- [ ] forgot password più chiaro
+- [x] forgot password più chiaro
 
 # homepage
 
-- [ ] tasto contattaci (scroll)
-- [ ] featured products bottone non funziona
-- [ ] featured products bottone sotto non funziona
-- [ ] sezione dei brand sopra quella dei pagamenti
+- [x] tasto contattaci (scroll)
+- [x] featured products bottone non funziona
+- [x] featured products bottone sotto non funziona
+- [x] sezione dei brand sopra quella dei pagamenti
 
 ## sezione contatti
 
@@ -60,18 +61,20 @@
 # checkout
 
 - [ ] sezione login prima del checkout
+      (usare login modal? manca x per chiudere e onSuccess configurabile)
 
 # login / signup
 
 - [x] password dimenticata
 - [x] registrazione
 - [x] pagina area riservata (carrello, preferiti, anagrafica)
+- [ ] ordini effettuati (serve una tabella o basta stripe?)
 
 # ricerca
 
 - [x] pagina tutti i prodotti con filtri
 - [ ] visualizzare filtri attivi
-- [ ] ogni pagina con prodotti abilitare i filtri di ricerca
+- [x] ogni pagina con prodotti abilitare i filtri di ricerca
 
 # IMPORTANtI
 
@@ -86,3 +89,11 @@
       (già nextjs dovrebbe cacheare qualcosa?)
 
 - [ ] categorie not found danno pagina 500 anzichè 404
+
+# ALTRI
+
+- [ ] Pagina modelli / categorie
+- [ ] Pagina con form contatti
+- [ ] filtri attivi nella pagina dei prodotti
+- [x] ecodat filters cambiare funzione in promise
+- [ ] gearchie di z-index: idealmente in tailwind.config (z-modal-login, z-header, ecc..) così da tenere controllate. questo per tutte quelle sopra il 50

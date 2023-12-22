@@ -43,10 +43,6 @@ class ServerStorageAdapter implements StorageAdapter {
 
   removeItem(key: string) {
     this.context.cookies().delete(key);
-    // document.cookie = serialize(key, "", {
-    //   maxAge: 0,
-    //   httpOnly: false,
-    // });
   }
 }
 

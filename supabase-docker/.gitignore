@@ -1,4 +1,0 @@
-volumes/
-.env
-test.http
-docker-compose.override.yml
