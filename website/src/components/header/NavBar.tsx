@@ -6,9 +6,10 @@ import type { EcodatData } from "@/lib/client/filters";
 import { ecodatData } from "@/lib/client/filters";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
+import Link from "../navigation/Link";
 
 export default function Navbar({ small }: { small: boolean }) {
   const { t } = useTranslation();
@@ -22,9 +23,9 @@ export default function Navbar({ small }: { small: boolean }) {
       <DropdownCarParts small={small} />
       <DropdownModels small={small} />
       <Link href={routes.about()}>{t("header.navbar.about")}</Link>
-      <Link className={twJoin(small && "max-md:hidden")} href="#contacts">
+      <NextLink className={twJoin(small && "max-md:hidden")} href="#contacts">
         {t("header.navbar.contacts")}
-      </Link>
+      </NextLink>
     </nav>
   );
 }
