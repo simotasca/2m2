@@ -69,6 +69,7 @@
 - [x] registrazione
 - [x] pagina area riservata (carrello, preferiti, anagrafica)
 - [ ] ordini effettuati (serve una tabella o basta stripe?)
+      const paymentIntents = await stripe.paymentIntents.list({ limit: 3 });
 
 # ricerca
 
@@ -97,3 +98,10 @@
 - [ ] filtri attivi nella pagina dei prodotti
 - [x] ecodat filters cambiare funzione in promise
 - [ ] gearchie di z-index: idealmente in tailwind.config (z-modal-login, z-header, ecc..) così da tenere controllate. questo per tutte quelle sopra il 50
+
+- [ ] Collegare il customer stripe in fase di pagamento
+      Ha senso avere un customer anon? penso di no
+
+- [ ] mettere il nuovo componente Link ovunque (da testare)
+
+- [ ] design mail per il cliente di notifica ordine avvenuto
