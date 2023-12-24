@@ -3,23 +3,19 @@
 import type { Locale } from "@/i18n";
 import i18n from "@/i18n";
 import NextLink from "next/link";
-import type { ComponentProps } from "react";
+import { useEffect, useState, type PropsWithChildren } from "react";
 
-type Props = ComponentProps<typeof NextLink> & HrefSpec;
+export type HrefSpec = { href?: string; lang?: Locale };
 
-const Link = ({ href, lang, children, ...props }: Props) => {
-  return (
-    <NextLink href={translateRoute({ href, lang })} {...props}>
-      {children}
-    </NextLink>
-  );
-};
+type Props = PropsWithChildren<HrefSpec & { className?: string }>;
 
-export default Link;
-
-export type HrefSpec =
-  | { href: string; lang?: Locale }
-  | { href?: string; lang: Locale };
+export default function Link({ href: userHref, lang, children }: Props) {
+  const [href, setHref] = useState("#");
+  useEffect(() => {
+    setHref(translateRoute({ href: userHref, lang }));
+  }, []);
+  return <NextLink href={href}>{children}</NextLink>;
+}
 
 function langHref({ href, lang }: { href?: string; lang?: string }) {
   let hrefOk = href || "";
@@ -30,7 +26,6 @@ function langHref({ href, lang }: { href?: string; lang?: string }) {
 }
 
 function currLang(): Locale {
-  if (!global.window) return i18n.canonical;
   let chunks = global.window.location.pathname.split("/");
   /* @ts-ignore */
   if (isLang(chunks[1])) return chunks[1];
@@ -52,7 +47,7 @@ export function translateRoute({ href, lang }: HrefSpec): string {
     return href;
   }
 
-  let hrefOk: string = href || window.location.pathname;
+  let hrefOk: string = href || global.window.location.pathname;
   let langOk: string | undefined = undefined;
   let chunks = hrefOk.split("/");
   let isLangInHref = (i18n.locales as readonly string[]).includes(chunks[1]);
@@ -68,8 +63,10 @@ export function translateRoute({ href, lang }: HrefSpec): string {
     langOk = undefined;
   }
 
+  lang != undefined && console.log("LANGOK", hrefOk, href, lang, langOk);
+
   if (isLangInHref) {
-    if (langOk)
+    if (lang)
       return langHref({ lang: langOk, href: chunks.slice(2).join("/") });
     else {
       return langHref({ href: hrefOk });
