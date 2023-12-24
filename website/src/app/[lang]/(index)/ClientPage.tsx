@@ -9,7 +9,7 @@ import PageLayout from "@/layouts/PageLayout";
 import { EcodatArticle, knownCategories } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { twJoin, twMerge } from "tailwind-merge";
 import ContactsSection from "@/components/ui/ContactsSection";
 import Hero from "./Hero";
@@ -42,7 +42,8 @@ export default function ClientPage({ latestProducts, categories }: Props) {
               <Image
                 className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
                 alt=""
-                src={iconRight} />
+                src={iconRight}
+              />
             </Button>
           </Link>
         </div>
@@ -93,7 +94,8 @@ function CategoriesSection({ categories }: { categories: string[] }) {
         <div
           className={twJoin(
             "w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8"
-          )}>
+          )}
+        >
           {categories.map((key) => (
             <Fragment key={key}>
               <CategoryCard name={key} />
@@ -142,7 +144,8 @@ function CategoryCard({ name }: { name: string }) {
         "2xl:[&:nth-child(n+17)]:hidden",
         cardColors
       )}
-      key={name}>
+      key={name}
+    >
       <img
         src={knownCategories[name].image || undefined}
         className={twMerge(

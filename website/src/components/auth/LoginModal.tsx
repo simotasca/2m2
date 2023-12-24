@@ -5,7 +5,7 @@ import imgLogo from "@/images/logo-dark.svg";
 import { createClientSideClient } from "@/lib/client/supabase";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { twJoin } from "tailwind-merge";
@@ -105,7 +105,8 @@ export function LoginModal({ title }: { title: JSX.Element }) {
               onClick={(e) => {
                 e.preventDefault();
                 togglePasswordVisibility();
-              }}>
+              }}
+            >
               {pwInputType === "text"
                 ? t("auth.login.hide-password")
                 : t("auth.login.show-password")}
@@ -114,7 +115,8 @@ export function LoginModal({ title }: { title: JSX.Element }) {
 
           <Link
             className="underline text-xs -mt-1.5 text-neutral-500"
-            href={routes.passwordReset()}>
+            href={routes.passwordReset()}
+          >
             {t("auth.login.forgot-password")}
           </Link>
 
@@ -123,7 +125,8 @@ export function LoginModal({ title }: { title: JSX.Element }) {
           )}
           <Button
             type="submit"
-            className="w-full font-normal text-sm bg-red-500 text-white">
+            className="w-full font-normal text-sm bg-red-500 text-white"
+          >
             Login
           </Button>
         </form>
