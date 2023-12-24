@@ -1,13 +1,16 @@
 {
-  "personal-info":{
+  "personal-info": {
     "title": "Personal <red>Informations</red>",
-    "name":{
+
+    "private": "Private",
+
+    "name": {
       "label": "name",
       "placeholder": "Name"
     },
     "surname": {
       "label": "surname",
-      "placeholder":"Surname"
+      "placeholder": "Surname"
     },
     "cf": {
       "placeholder": "Tax Id"
@@ -15,13 +18,41 @@
     "telephone": {
       "label": "phone",
       "placeholder": "Phone"
+    },
+
+    "business": "Business",
+
+    "business-info": {
+      "name": {
+        "label": "name",
+        "placeholder": "Business name"
+      },
+      "cf": {
+        "label": "tax-id",
+        "placeholder": "Tax-Id"
+      },
+      "piva": {
+        "label": "p.IVA",
+        "placeholder": "p.IVA"
+      },
+
+      "electronic-invoice": "Do you want to recive invoice?",
+
+      "pec": {
+        "label": "pec",
+        "placeholder": "PEC"
+      },
+      "sdi": {
+        "label": "sdi",
+        "placeholder": "sdi code"
+      }
     }
   },
 
-  "delivery-address":{
-    "title":"<red>Delivery</red> Address",
-    
-    "nations":{
+  "delivery-address": {
+    "title": "<red>Delivery</red> Address",
+
+    "nations": {
       "label": "country",
       "placeholder": "Country"
     },
@@ -46,25 +77,25 @@
     }
   },
 
-  "checkout":{
+  "checkout": {
     "pay": "PAY"
   },
 
-  "order-details":{
-    "your-order":"Your <red>order</red>",
+  "order-details": {
+    "your-order": "Your <red>order</red>",
     "review": "Review"
   },
 
-  "breadcrumbs":{
+  "breadcrumbs": {
     "backtoshop": "back to shop",
     "personal-informations": "personal informations",
     "delivery": "delivery"
   },
 
-  "info":{
-    "help":"Do you need help? Consult the help pages or contact us",
-    "processed-order":"What happens when you place an order? By clicking on the \"Buy now\" button we will send you a message confirming receipt of your order. The purchase contract for an item will not be finalized until the message confirming the shipment of the items has been received."
+  "info": {
+    "help": "Do you need help? Consult the help pages or contact us",
+    "processed-order": "What happens when you place an order? By clicking on the \"Buy now\" button we will send you a message confirming receipt of your order. The purchase contract for an item will not be finalized until the message confirming the shipment of the items has been received."
   },
 
-  "next":"Next"
+  "next": "Next"
 }
