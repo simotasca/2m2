@@ -10,7 +10,7 @@ import { ecodatData } from "@/lib/client/filters";
 import { createClientSideClient } from "@/lib/client/supabase";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { useRouter } from "next/navigation";
 import type { FormEventHandler } from "react";
 import { useEffect, useState } from "react";
@@ -49,10 +49,12 @@ export default function Footer() {
             {filters?.categories?.map((c) => (
               <li
                 key={c.id}
-                className="flex flex-col text-sm leading-4  whitespace-nowrap">
+                className="flex flex-col text-sm leading-4  whitespace-nowrap"
+              >
                 <a
                   className="hover:underline underline-offset-2"
-                  href={routes.category(c.name)}>
+                  href={routes.category(c.name)}
+                >
                   {tCat(c.name, c.name)}
                 </a>
               </li>
@@ -95,28 +97,32 @@ export default function Footer() {
             <li>
               <Link
                 href={routes.home()}
-                className="hover:underline underline-offset-4 cursor-pointer">
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 {tHead("navbar.home")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.about()}
-                className="hover:underline underline-offset-4 cursor-pointer">
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 {tHead("navbar.about")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.products()}
-                className="hover:underline underline-offset-4 cursor-pointer">
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 {tHead("search-bar.search")}
               </Link>
             </li>
             <li>
               <button
                 onClick={() => setIsOpen(true)}
-                className="hover:underline underline-offset-4 cursor-pointer">
+                className="hover:underline underline-offset-4 cursor-pointer"
+              >
                 {t("your-cart")}
               </button>
             </li>
@@ -224,7 +230,8 @@ function DropdownLogin() {
                   onClick={(e) => {
                     e.preventDefault();
                     togglePasswordVisibility();
-                  }}>
+                  }}
+                >
                   {pwInputType === "text"
                     ? t("auth.login.hide-password")
                     : t("auth.login.show-password")}
@@ -233,7 +240,8 @@ function DropdownLogin() {
 
               <Link
                 className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#">
+                href="#"
+              >
                 {t("auth.login.forgot-password")}
                 {/* TODO */}
               </Link>
@@ -244,7 +252,8 @@ function DropdownLogin() {
 
               <Button
                 type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white">
+                className="w-full font-normal text-sm bg-red-500 text-white"
+              >
                 Login
               </Button>
             </form>

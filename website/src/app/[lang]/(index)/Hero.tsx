@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 
 export default function Hero() {
   const { t } = useTranslation("page.hero");
@@ -184,7 +184,8 @@ function HeroFilters() {
             className={twMerge(
               "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
               !brand && !category && "opacity-70"
-            )}>
+            )}
+          >
             Search
           </Button>
         </div>
@@ -215,7 +216,8 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"></Image>
+            className="absolute inset-0 w-full h-full object-cover"
+          ></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>

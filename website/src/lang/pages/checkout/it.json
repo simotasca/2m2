@@ -1,13 +1,16 @@
 {
-  "personal-info":{
+  "personal-info": {
     "title": "<red>Informazioni</red> personali",
-    "name":{
+
+    "private": "Privato",
+
+    "name": {
       "label": "nome",
       "placeholder": "Nome"
     },
     "surname": {
       "label": "cognome",
-      "placeholder":"Cognome"
+      "placeholder": "Cognome"
     },
     "cf": {
       "placeholder": "Codice Fiscale"
@@ -15,13 +18,41 @@
     "telephone": {
       "label": "telefono",
       "placeholder": "Telefono"
+    },
+
+    "business": "Azienda",
+
+    "business-info": {
+      "name": {
+        "label": "nome",
+        "placeholder": "Nome azienda"
+      },
+      "cf": {
+        "label": "codice fiscale",
+        "placeholder": "Codice fiscale"
+      },
+      "piva": {
+        "label": "p.IVA",
+        "placeholder": "p.IVA"
+      },
+
+      "electronic-invoice": "Vuoi ricevere la fattura?",
+
+      "pec": {
+        "label": "pec",
+        "placeholder": "PEC"
+      },
+      "sdi": {
+        "label": "sdi",
+        "placeholder": "Codice sdi"
+      }
     }
   },
 
-  "delivery-address":{
-    "title":"Indirizzo di <red>Spedizione</red>",
-    
-    "nations":{
+  "delivery-address": {
+    "title": "Indirizzo di <red>Spedizione</red>",
+
+    "nations": {
       "label": "paese",
       "placeholder": "Paese"
     },
@@ -46,25 +77,25 @@
     }
   },
 
-  "checkout":{
+  "checkout": {
     "pay": "PAGA"
   },
 
-  "order-details":{
-    "your-order":"Il tuo <red>ordine</red>",
+  "order-details": {
+    "your-order": "Il tuo <red>ordine</red>",
     "review": "Revisiona"
   },
 
-  "breadcrumbs":{
+  "breadcrumbs": {
     "backtoshop": "continua lo shopping",
     "personal-informations": "informazioni personali",
     "delivery": "spedizione"
   },
 
-  "info":{
-    "help":"Hai bisogno di aiuto? Consulta le pagine d'aiuto oppure contattaci",
-    "processed-order":"Cosa succede quando si effettua un ordine? Cliccando sul pulsante \"Acquista ora\" ti invieremo un messaggio con la conferma di ricezione dell'ordine. Il contratto di acquisto di un articolo non sarà perfezionato fino al ricevimento del messaggio che conferma la spedizione degli articoli."
+  "info": {
+    "help": "Hai bisogno di aiuto? Consulta le pagine d'aiuto oppure contattaci",
+    "processed-order": "Cosa succede quando si effettua un ordine? Cliccando sul pulsante \"Acquista ora\" ti invieremo un messaggio con la conferma di ricezione dell'ordine. Il contratto di acquisto di un articolo non sarà perfezionato fino al ricevimento del messaggio che conferma la spedizione degli articoli."
   },
 
-  "next":"Prossimo"
+  "next": "Prossimo"
 }
