@@ -14,7 +14,7 @@ import { UserData } from "./UserData";
 import Button from "../ui/Button";
 import useSearchModal from "@/context/search/useSearchModal";
 import routes from "@/lib/shared/routes";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 
 export default function MobilePanel() {
   const { t } = useTranslation();

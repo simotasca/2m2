@@ -3,7 +3,7 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import imgBg from "@/images/main-background-engine.jpg";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { FC, PropsWithChildren } from "react";
 
 type TitleComponent = FC<PropsWithChildren> & {

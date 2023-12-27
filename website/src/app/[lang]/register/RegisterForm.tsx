@@ -7,7 +7,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import { createClientSideClient } from "@/lib/client/supabase";
 import { isEmail } from "@/lib/shared/object";
 import routes from "@/lib/shared/routes";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import {
   DetailedHTMLProps,
   Dispatch,
@@ -178,7 +178,8 @@ export default function RegisterForm() {
                   mode === "private"
                     ? "bg-red-gradient text-white font-medium border-transparent"
                     : "bg-stone-100"
-                )}>
+                )}
+              >
                 {t("auth.register.private")}
               </button>
               <button
@@ -188,7 +189,8 @@ export default function RegisterForm() {
                   mode === "business"
                     ? "bg-red-gradient text-white font-medium border-transparent"
                     : "bg-stone-100"
-                )}>
+                )}
+              >
                 {t("auth.register.business")}
               </button>
             </div>
@@ -295,7 +297,8 @@ export default function RegisterForm() {
               {mode === "business" && (
                 <>
                   <Label
-                    text={t("auth.register.info.info-business.name.label")}>
+                    text={t("auth.register.info.info-business.name.label")}
+                  >
                     <Input
                       value={businessInfo.name}
                       onChange={(e) =>
@@ -322,7 +325,8 @@ export default function RegisterForm() {
                   </Label>
 
                   <Label
-                    text={t("auth.register.info.info-business.piva.label")}>
+                    text={t("auth.register.info.info-business.piva.label")}
+                  >
                     <Input
                       value={businessInfo.piva}
                       onChange={(e) =>
@@ -337,7 +341,8 @@ export default function RegisterForm() {
                   </Label>
 
                   <Label
-                    text={t("auth.register.info.info-business.phone.label")}>
+                    text={t("auth.register.info.info-business.phone.label")}
+                  >
                     <Input
                       value={sharedInfo.phone}
                       onChange={(e) =>
@@ -379,7 +384,8 @@ export default function RegisterForm() {
                   <Label
                     text={t(
                       "auth.register.info.info-business.electronic-data.sdi-code.label"
-                    )}>
+                    )}
+                  >
                     <Input
                       value={businessInfo.sdi}
                       onChange={(e) =>
@@ -408,7 +414,8 @@ export default function RegisterForm() {
                       link: (l) => (
                         <Link
                           href="#"
-                          className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
+                          className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+                        >
                           {l}
                         </Link>
                       ),
@@ -418,7 +425,8 @@ export default function RegisterForm() {
 
                 <Button
                   type="submit"
-                  className="bg-red-500 text-white w-full font-medium">
+                  className="bg-red-500 text-white w-full font-medium"
+                >
                   {t("auth.register.submit")}
                 </Button>
 
@@ -434,7 +442,8 @@ export default function RegisterForm() {
                   </span>
                   <Link
                     href={routes.login()}
-                    className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
+                    className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+                  >
                     {t("auth.register.login-account")}
                   </Link>
                 </p>

@@ -5,7 +5,7 @@ import imgLogo from "@/images/logo-dark.svg";
 import { createClientSideClient } from "@/lib/client/supabase";
 import { User } from "@supabase/supabase-js";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -60,7 +60,8 @@ function HighlightHashLink({
               .querySelector<HTMLDivElement>(`#${id}[data-box]`)
               ?.classList.add("highlight");
           }, 10);
-        }}>
+        }}
+      >
         {children}
       </button>
     </li>

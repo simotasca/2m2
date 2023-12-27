@@ -9,12 +9,21 @@ export type HrefSpec = { href?: string; lang?: Locale };
 
 type Props = PropsWithChildren<HrefSpec & { className?: string }>;
 
-export default function Link({ href: userHref, lang, children }: Props) {
+export default function Link({
+  href: userHref,
+  lang,
+  children,
+  className,
+}: Props) {
   const [href, setHref] = useState("#");
   useEffect(() => {
     setHref(translateRoute({ href: userHref, lang }));
   }, []);
-  return <NextLink href={href}>{children}</NextLink>;
+  return (
+    <NextLink className={className} href={href}>
+      {children}
+    </NextLink>
+  );
 }
 
 function langHref({ href, lang }: { href?: string; lang?: string }) {

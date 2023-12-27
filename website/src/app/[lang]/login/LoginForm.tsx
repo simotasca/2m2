@@ -6,7 +6,7 @@ import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
 import { createClientSideClient } from "@/lib/client/supabase";
 import routes from "@/lib/shared/routes";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { useRouter } from "next/navigation";
 import {
   DetailedHTMLProps,
@@ -103,7 +103,8 @@ export default function LoginForm() {
 
           <Link
             className="underline text-sm text-neutral-500"
-            href={routes.passwordReset()}>
+            href={routes.passwordReset()}
+          >
             {t("login.forgot-password")}
           </Link>
 
@@ -111,7 +112,8 @@ export default function LoginForm() {
             <Button
               type="submit"
               className="bg-red-500 text-white w-full font-medium gap-2"
-              disabled={loading}>
+              disabled={loading}
+            >
               <span>Login</span>
             </Button>
 
@@ -127,7 +129,8 @@ export default function LoginForm() {
               </span>
               <Link
                 href={routes.register()}
-                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]">
+                className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+              >
                 {t("login.signup")}
               </Link>
             </p>
