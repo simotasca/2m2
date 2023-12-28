@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 style="font-size: larger; font-weight:800; text-transform: uppercase; margin-bottom: 4px; font-family: Arial, Helvetica, sans-serif;">Conferma Pagamento Ricevuto</h1>
+      
+        <h2 style="font-size: medium; font-weight: 400; ">Gentile <b>${user}</b>, confermiamo la ricezione del suo pagamento. Di seguito, i dettagli:</h2>
+        
+        <h3 style="font-size: medium; font-weight:800; font-family: Arial, Helvetica, sans-serif; ">Prodotti acquistati:</h3>
+        <table>
+          ${payment.products.map(
+            (p) =>
+              `<tr>
+                <td>${productName(p)}</td>
+                <td>${p.id}</td>               
+                <td>${p.price}€</td>
+              </tr>`
+          )}
+        </table>
+
+        <h3 style="font-size: medium; font-weight:800; font-family: Arial, Helvetica, sans-serif; ">Indirizzo:</3>
+       
+        <p style="font-size: medium; font-weight: normal;">
+        <span>${payment.meta.street}</span>
+        <span>${payment.meta.number}</span>,
+        <b> ${payment.meta.city}</b>
+        <span> ${payment.meta.zip}</span>
+        </p>
+
+        <p style="font-size: medium; font-weight: normal;">La ringraziamo per aver scelto il nostro servizio.
+
+        </p>
+        
+        <br />
+        
+
+        <i style="font-size: normal; font-weight: 100 ; color: #363636;">Questa è una risposta automatica. Per eventuali domande o assistenza, ti preghiamo di contattare il nostro servizio clienti alla mail: <b style="text-decoration: underline; font-style: normal; font-weight: 400; color: black;">2m2srl@gmail.com</b></i>
+        
+
+        <br /> <br />
+
+        --
+        <p style="font-size: medium; font-weight: 400; font-family: Arial, Helvetica, sans-serif;">Il team di  <b style="font-weight: 800; ">2M2 Ricambi</b></p>
+
+       
+
+        <ul style="font-size: medium; font-style: italic; font-weight: 400; list-style-type: none; margin-left: 0; padding-left: 0;">
+          <li>
+          {setting.info.{settings.info.fullAddress()}}
+          </li>
+          <li>
+          {settings.info.email}
+          </li>
+          <li>
+          {settings.info.phone}
+          </li>
+        </ul>
+
+
+
+
+  </body>
+</html>
