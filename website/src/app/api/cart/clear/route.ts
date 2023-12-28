@@ -37,11 +37,8 @@ export async function GET(_req: NextRequest) {
       return new Response(error.message, { status: 500 });
     }
   } else {
-    console.log("DELETE COOKIE CART", cookies().get("cart"));
     cookies().delete("cart");
   }
-
-  console.log("DELEtEDDDD");
 
   return new Response("ok", { status: 200 });
 }
