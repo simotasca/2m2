@@ -1,6 +1,7 @@
 version: "3.8"
 
 include:
+  - supabase/docker-compose.studio.yml
   - supabase/docker-compose.yml
 # services:
 #   website:

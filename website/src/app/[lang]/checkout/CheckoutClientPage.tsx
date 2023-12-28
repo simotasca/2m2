@@ -23,6 +23,9 @@ import {
 import { PersonalInfoTab, type PersonalInfo } from "./PersonalInfoTab";
 import WizTabValidator from "./WizTabHandle";
 import useTranslation from "@/context/lang/useTranslation";
+import useAuth from "@/context/auth/useAuth";
+import { createClientSideClient } from "@/lib/client/supabase";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 interface Props {
   products: EcodatArticle[];
@@ -30,8 +33,14 @@ interface Props {
 
 export default function CheckoutClientPage({ products }: Props) {
   /* TODO: pre-populate with registered user info */
+  const { session, loading: loadingAuth } = useAuth();
+  const [customer, setCustomer] = useState();
+
   // state
-  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({});
+  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
+    type: "private",
+    withInvoice: false,
+  });
   const [deliveryAddress, setDeliveryAddress] = useState<DeliveryAddress>({});
   const [paymentClientSecret, setPaymentClientSecret] = useState<string>();
 
@@ -101,15 +110,66 @@ export default function CheckoutClientPage({ products }: Props) {
     focus && focus();
   }, []);
 
+  useEffect(() => {
+    if (loadingAuth || !session?.user) return;
+
+    (async () => {
+      const supabase = createClientSideClient();
+      const { data, error } = await supabase.rpc("get_customer_data", {
+        id: session.user.id,
+      });
+
+      if (error) {
+        // TODO handle
+      }
+
+      if (!data?.at(0)) return;
+
+      const [customer] = data;
+
+      console.log("CUSTOMER", customer);
+
+      if (customer.type === "business") {
+        setPersonalInfo({
+          ...personalInfo,
+          email: customer.customer_email,
+          phone: customer.phone,
+          cf: customer.cf,
+          type: "business",
+          name: customer.business_name,
+          piva: customer.piva,
+          pec: customer.pec,
+          sdi: customer.sdi,
+        });
+      } else {
+        setPersonalInfo({
+          ...personalInfo,
+          email: customer.customer_email,
+          phone: customer.phone,
+          cf: customer.cf,
+          type: "private",
+          name: customer.name,
+          surname: customer.surname,
+        });
+      }
+    })();
+  }, [loadingAuth]);
+
   const { t } = useTranslation("page");
   return (
     <div className="min-h-screen">
+      {/* TODO: i18n */}
+      <LoadingScreen
+        loading={loadingAuth}
+        message="initializing"></LoadingScreen>
+
       <Image
         src={imgBg}
         alt="backgorund cover"
         className="fixed inset-0 w-full h-full object-cover -z-20"
       />
       <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 -z-10"></div>
+
       <div className="p-8 overflow-hidden">
         <div className="max-w-screen-md mx-auto flex flex-col gap-3 pt-5 py-6 px-4 md:px-8 bg-white overflow-hidden">
           <Breadcrumbs wizStep={wizStep} changeWizStep={changeWizStep} />
