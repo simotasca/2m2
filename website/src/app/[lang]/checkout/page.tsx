@@ -5,6 +5,7 @@ import { EcodatArticle } from "@/lib/shared/ecodat";
 import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
 import { generateTranslations } from "@/lib/server/lang";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import AuthProvider from "@/context/auth/AuthContext";
 
 interface Props {
   searchParams: { [key: string]: string };
@@ -13,7 +14,8 @@ interface Props {
 export default async function CheckoutPage({ searchParams }: Props) {
   const productIds = decodeURIComponent(searchParams["p"])
     ?.split(",")
-    ?.map((i) => parseInt(i));
+    .filter((id) => !!id)
+    ?.map((id) => parseInt(id));
 
   if (!searchParams["p"] || !productIds[0]) {
     return notFound();
@@ -42,7 +44,9 @@ export default async function CheckoutPage({ searchParams }: Props) {
 
   return (
     <TranslationClientComponent value={translations}>
-      <CheckoutClientPage products={products} />
+      <AuthProvider>
+        <CheckoutClientPage products={products} />
+      </AuthProvider>
     </TranslationClientComponent>
   );
 }
