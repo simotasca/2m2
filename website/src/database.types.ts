@@ -298,7 +298,24 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_customer_data: {
+        Args: {
+          id: string
+        }
+        Returns: {
+          customer_id: string
+          customer_email: string
+          type: string
+          cf: string
+          phone: string
+          business_name: string
+          piva: string
+          pec: string
+          sdi: string
+          name: string
+          surname: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
