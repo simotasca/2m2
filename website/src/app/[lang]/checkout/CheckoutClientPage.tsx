@@ -40,6 +40,12 @@ export default function CheckoutClientPage({ products }: Props) {
   const deliveryHandle = useRef<WizTabValidator>(null);
   const checkoutHandle = useRef<WizTabValidator>(null);
 
+  const metadata = {
+    ...personalInfo,
+    ...deliveryAddress,
+    products: products.map((p) => p.id).join(";"),
+  };
+
   // wizard management
   const [wizStep, setWizStep] = useState(0);
   const wizard = [
@@ -59,11 +65,7 @@ export default function CheckoutClientPage({ products }: Props) {
       setClientSecret={setPaymentClientSecret}
       email={personalInfo.email}
       amount={products.reduce((tot, p) => tot + p.price, 0)}
-      metadata={{
-        ...personalInfo,
-        ...deliveryAddress,
-        products: products.map((p) => p.id).join(";"),
-      }}
+      metadata={metadata}
     />,
   ];
   const wizHandles = [personalInfoHandle, deliveryHandle];
@@ -118,14 +120,12 @@ export default function CheckoutClientPage({ products }: Props) {
               className={twMerge(
                 "relative transition-transform duration-200",
                 hideWiz && "-translate-x-5"
-              )}
-            >
+              )}>
               {currWizard}
               {wizStep < wizard.length - 1 && (
                 <Button
                   onClick={() => changeWizStep((s) => s + 1)}
-                  className="bg-red-gradient text-white max-sm:ml-auto mr-0"
-                >
+                  className="bg-red-gradient text-white max-sm:ml-auto mr-0">
                   {t("next")}
                 </Button>
               )}
@@ -136,8 +136,7 @@ export default function CheckoutClientPage({ products }: Props) {
                   hideWiz
                     ? "opacity-100 pointer-events-none"
                     : "opacity-0 pointer-events-none"
-                )}
-              ></div>
+                )}></div>
             </div>
             {/* order details */}
             <OrderDetails
@@ -262,8 +261,7 @@ function Breadcrumbs({ wizStep, changeWizStep }) {
         <Image
           className="max-sm:hidden w-12"
           alt="logo 2m2"
-          src={imgLogo}
-        ></Image>
+          src={imgLogo}></Image>
       </div>
     </div>
   );
@@ -283,8 +281,7 @@ function BreadcrumbStep({
         curr > n && "text-dark"
       )}
       disabled={curr <= n}
-      onClick={() => change(() => n)}
-    >
+      onClick={() => change(() => n)}>
       {children}
     </button>
   );

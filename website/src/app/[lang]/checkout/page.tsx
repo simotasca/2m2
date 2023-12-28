@@ -38,7 +38,6 @@ export default async function CheckoutPage({ searchParams }: Props) {
     footer: "misc/footer",
     errors: "misc/errors",
     page: "pages/checkout",
-    errors: "misc/errors",
   });
 
   return (

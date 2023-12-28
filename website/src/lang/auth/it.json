@@ -48,8 +48,8 @@
         "business": "info <red>Azienda</red>",
 
         "business-name": {
-          "label": "nome azienda",
-          "placeholder": "Nome Azienda"
+          "label": "ragione fiscale",
+          "placeholder": "Ragione Fiscale"
         },
 
         "cf": {
@@ -112,6 +112,6 @@
       "sent-email": "Una mail è stata inviata a <email></email> con il link per il reset della password"
     },
 
-    "next": "Prossimo"
+    "next": "Avanti"
   }
 }

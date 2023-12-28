@@ -44,7 +44,7 @@
       },
       "sdi": {
         "label": "sdi",
-        "placeholder": "sdi code"
+        "placeholder": "SDI code"
       }
     }
   },

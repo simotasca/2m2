@@ -22,6 +22,7 @@ import {
 } from "react";
 import WizTabHandle from "./WizTabHandle";
 import useTranslation from "@/context/lang/useTranslation";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 export interface CheckoutParams {
   clientSecret?: string;
@@ -33,22 +34,16 @@ export interface CheckoutParams {
 
 export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
   (forwardProps, ref) => {
-    const [showErrors, setShowErrors] = useState(false);
     const tabRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(
       ref,
       () => ({
-        validate: () => {
-          setShowErrors(true);
-          return true;
-        },
+        validate: () => true,
         focus: () => tabRef.current?.querySelector("input")?.focus(),
       }),
       []
     );
-
-    const { t, r } = useTranslation("page.checkout");
 
     return (
       <div ref={tabRef} className="mb-2.5">
@@ -79,8 +74,6 @@ function ElementsWrapper({
     if (!amount) return;
     if (!metadata) return;
 
-    console.log("SENDIN:", metadata);
-
     fetch("/api/stripe/create-payment-intent", {
       method: "POST",
       body: JSON.stringify({
@@ -90,6 +83,9 @@ function ElementsWrapper({
     })
       .then((res) => {
         switch (res.status) {
+          // TODO se arriva un errore mettere bottone per riprovare
+          // 400 controlla i tuoi dati
+          // 500 ricarica
           case 400:
             throw new Error("Bad Request: " + res.statusText);
           case 500:
@@ -104,7 +100,7 @@ function ElementsWrapper({
         setClientSecret(data.secret);
       })
       .catch((err) =>
-        console.error("ERROR: could not generate payment intent:", err)
+        console.error("ERROR: could not generate payment intent:", err.message)
       );
   }, [setClientSecret, amount, metadata]);
 
@@ -131,8 +127,7 @@ function ElementsWrapper({
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance, fonts, locale }}
-    >
+      options={{ clientSecret, appearance, fonts, locale }}>
       <CheckoutForm email={email} totalPrice={totalPrice} />
     </Elements>
   );
@@ -172,8 +167,7 @@ function CheckoutForm({
     });
 
     if (error) {
-      // handle
-      alert("ERROR: " + error.message);
+      // TODO: handle?
     }
 
     setLoading(false);
@@ -182,15 +176,19 @@ function CheckoutForm({
   const { t } = useTranslation("page.checkout");
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
+    <>
+      {/* TODO tradurre */}
+      <LoadingScreen loading={loading} message={"processing payment"} />
+      <form onSubmit={handleSubmit}>
+        <PaymentElement />
 
-      {totalPrice && (
-        <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold mt-4">
-          {t("pay")} $
-          {totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
-        </button>
-      )}
-    </form>
+        {totalPrice && (
+          <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold mt-4">
+            {t("pay")} $
+            {totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
+          </button>
+        )}
+      </form>
+    </>
   );
 }
