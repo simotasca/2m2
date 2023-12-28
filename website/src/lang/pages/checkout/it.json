@@ -13,6 +13,7 @@
       "placeholder": "Cognome"
     },
     "cf": {
+      "label": "codice fiscale",
       "placeholder": "Codice Fiscale"
     },
     "telephone": {
@@ -24,8 +25,8 @@
 
     "business-info": {
       "name": {
-        "label": "nome",
-        "placeholder": "Nome azienda"
+        "label": "ragione fiscale",
+        "placeholder": "Ragione Fiscale"
       },
       "cf": {
         "label": "codice fiscale",
@@ -44,7 +45,7 @@
       },
       "sdi": {
         "label": "sdi",
-        "placeholder": "Codice sdi"
+        "placeholder": "Codice SDI"
       }
     }
   },
@@ -97,5 +98,5 @@
     "processed-order": "Cosa succede quando si effettua un ordine? Cliccando sul pulsante \"Acquista ora\" ti invieremo un messaggio con la conferma di ricezione dell'ordine. Il contratto di acquisto di un articolo non sarà perfezionato fino al ricevimento del messaggio che conferma la spedizione degli articoli."
   },
 
-  "next": "Prossimo"
+  "next": "Avanti"
 }

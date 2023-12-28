@@ -46,23 +46,29 @@ export async function POST(req: NextRequest) {
 function checkMetadata(meta: any) {
   const prodIds = meta.products
     ?.split(";")
-    ?.map((id) => Number(id))
-    ?.filter((id) => !Number.isNaN(id));
+    ?.map((id: string) => Number(id))
+    ?.filter((id: number) => !Number.isNaN(id));
 
-  return (
-    !!prodIds?.length &&
+  const commonFieldsValid =
+    !!meta.name &&
     !!meta.email &&
+    !!meta.cf &&
     !!meta.street &&
     !!meta.number &&
     !!meta.city &&
     !!meta.zip &&
-    !!meta.cf &&
     !!meta.countryCode &&
     !!meta.provinceCode &&
-    !!meta.istat &&
-    !!meta.name &&
-    !!meta.surname
-  );
+    !!meta.istat;
+
+  let businessPrivateValid = false;
+  if (meta.type === "business") {
+    businessPrivateValid = !!meta.piva;
+  } else {
+    businessPrivateValid = !!meta.surname;
+  }
+
+  return !!prodIds?.length && commonFieldsValid && businessPrivateValid;
 }
 
 function errorResponse(code: number, msg: string, e?: any) {

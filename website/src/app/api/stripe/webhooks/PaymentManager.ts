@@ -2,7 +2,7 @@ import { fetchEcodatArticle } from "@/lib/server/ecodat";
 import { fetchEcodatAvalability } from "@/lib/server/ecodat/disponabilita";
 import { sendEcodatOrder } from "@/lib/server/ecodat/ordine";
 import { sendMail } from "@/lib/server/mail";
-import { EcodatArticle } from "@/lib/shared/ecodat";
+import { EcodatArticle, productName } from "@/lib/shared/ecodat";
 
 const stages = [
   "UNPROCESSED",
@@ -139,41 +139,79 @@ export default class PaymentManager {
         productId = payment.productIds.pop();
       }
       payment.stage = "PRODUCTS_OBTAINED";
-    } catch {
+    } catch (e) {
       productId !== undefined && payment.productIds.push(productId);
       payment.errorMessage = "Errore nel tentativo di ottenere i prodotti";
     }
   }
 
   private static async sendEcodatOrder(payment: Payment) {
-    // MISSINO
-    // CF
+    let send: Promise<Element | null>;
 
-    // TODO
-    await sendEcodatOrder({
-      type: "personal",
-      address: payment.meta.street,
-      civic: payment.meta.number,
-      city: payment.meta.city,
-      cap: payment.meta.zip,
-      cf: payment.meta.cf,
-      countryCode: payment.meta.countryCode,
-      provinceCode: payment.meta.provinceCode,
-      cityIstat: payment.meta.istat,
-      dateTime: new Date(),
-      email: payment.meta.email,
-      name: payment.meta.name,
-      surname: payment.meta.surname,
-      phone: payment.meta.phone || undefined,
-      notes: payment.meta.notes || undefined,
-      products: payment.products.map((p) => ({
-        id: p.id.toString(),
-        description: p.description,
-        oeCode: p.oeCode,
-        price: p.price.toString(),
-        quantity: "1",
-      })),
-    })
+    let products = payment.products.map((p) => ({
+      id: p.id.toString(),
+      description: p.description,
+      oeCode: p.oeCode,
+      price: p.price.toString(),
+      quantity: "1",
+    }));
+
+    if (payment.meta.type === "business") {
+      let electronicInvoice = payment.meta.withInvoice
+        ? {
+            SDI_FE: payment.meta.sdi || undefined,
+            PEC_FE: payment.meta.pec || undefined,
+          }
+        : {};
+      send = sendEcodatOrder({
+        type: "business",
+        // order
+        products,
+        // shared info
+        email: payment.meta.email,
+        phone: payment.meta.phone || undefined,
+        notes: payment.meta.notes || undefined,
+        // business info
+        businessName: payment.meta.name,
+        piva: payment.meta.piva,
+        ...electronicInvoice,
+        // address
+        address: payment.meta.street,
+        civic: payment.meta.number,
+        city: payment.meta.city,
+        cap: payment.meta.zip,
+        cf: payment.meta.cf,
+        countryCode: payment.meta.countryCode,
+        provinceCode: payment.meta.provinceCode,
+        cityIstat: payment.meta.istat,
+        dateTime: new Date(),
+      });
+    } else {
+      send = sendEcodatOrder({
+        type: "personal",
+        // order
+        products,
+        // shared info
+        email: payment.meta.email,
+        phone: payment.meta.phone || undefined,
+        notes: payment.meta.notes || undefined,
+        // personal info
+        name: payment.meta.name,
+        surname: payment.meta.surname,
+        // address
+        address: payment.meta.street,
+        civic: payment.meta.number,
+        city: payment.meta.city,
+        cap: payment.meta.zip,
+        cf: payment.meta.cf,
+        countryCode: payment.meta.countryCode,
+        provinceCode: payment.meta.provinceCode,
+        cityIstat: payment.meta.istat,
+        dateTime: new Date(),
+      });
+    }
+
+    send
       .then(() => {
         payment.stage = "ORDER_SENT";
       })
@@ -184,26 +222,42 @@ export default class PaymentManager {
   }
 
   private static async notifySellerForError(payment: Payment) {
-    payment.errorMessage = "BEtteR foRMaAHT\n" + payment.errorMessage;
-    console.error("FATAL ERRROR AFTEER MAX ATTEMSP\n", payment.errorMessage);
+    console.error("FATAL ERRROR AFTER MAX ATTEMPTS\n", payment.errorMessage);
 
-    await sendMail("simo.tasca@gmail.com", "notiffica di ERRORRR", {
-      text: payment.errorMessage,
+    await sendMail("simo.tasca@gmail.com", "notifica di ERRORRR", {
+      html: errorMailTemplate(payment),
     })
       .then(() => {
         payment.stage = "COMPLETE";
       })
-      .catch((e) => {
+      .catch((e: any) => {
+        // se c'è un errore non faccio nulla
+        // questa fase non può essere ignorata
         console.error(e.message);
       });
   }
 
   private static async notifyCustomer(payment: Payment) {
-    await sendMail(payment.meta.email, "notifica di pagamento", {
-      text: "hai fatto un pagamento",
-    }).catch((err) => {
+    console.log("NOTIFY CUSTOMER", payment.meta.email);
+
+    await sendMail(payment.meta.email, "[2M2] notifica di pagamento", {
+      html: `
+        <h1 style="text-color: #ff0000;">hai fatto un pagamento</h1>
+        products: 
+        <table>
+          ${payment.products.map(
+            (p) =>
+              `<tr>
+                <td>${productName(p)}</td>
+                <td>${p.id}</td>
+                <td>${p.price}€</td>
+              </tr>`
+          )}
+        </table>
+      `,
+    }).catch((err: any) => {
       payment.errorMessage =
-        "Impossibile notificare il cliente per l'avvenuto pagamento: " +
+        "Impossibile notificare il cliente per l'avvenuto pagamento:\n" +
         err.message;
     });
 
@@ -211,8 +265,8 @@ export default class PaymentManager {
   }
 
   private static async emptyCart(payment: Payment) {
-    // skip for now
-    // throw new Error("todo");
+    // lo fa la pagina di success
+    // TODO: e se non lo facesse?
     payment.stage = "CART_EMPTY";
   }
 
@@ -235,4 +289,26 @@ export default class PaymentManager {
   private static async complete(payment: Payment) {
     payment.stage = "COMPLETE";
   }
+}
+
+function errorMailTemplate(payment: Payment): string {
+  let user = "";
+  if (payment.meta.type === "business") {
+    user = payment.meta.name;
+  } else {
+    user = payment.meta.name + " " + payment.meta.surname;
+  }
+
+  return `
+    <h1>ordine</h1>
+
+    <p>${payment.errorMessage}</p>
+
+    <h3>Ordine</h3>
+    tipo utente: ${payment.meta.type === "business" ? "azienda" : "privato"}
+    utente: ${user} 
+    numero: ${payment.productIds}
+    prodotti: ${payment.productIds.join(", ")}
+      
+  `;
 }
