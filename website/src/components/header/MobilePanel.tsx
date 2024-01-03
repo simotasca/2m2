@@ -157,9 +157,11 @@ function Contacts() {
               {t("contacts.email.subtitle")}
             </p>
           </div>
-          <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-10 py-1.5 ml-auto mr-0">
-            {t("contacts.email.button")}
-          </Button>
+          <a href="mailto:2m2srl@gmail.com">
+            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-10 py-1.5 ml-auto mr-0">
+              {t("contacts.email.button")}
+            </Button>
+          </a>
         </li>
         <li className="col-span-3 h-px bg-neutral-500"></li>
         <li className="contents">
@@ -178,9 +180,11 @@ function Contacts() {
               {t("contacts.telephone.subtitle")}
             </p>
           </div>
-          <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-10 py-1.5 ml-auto mr-0">
-            {t("contacts.telephone.button")}
-          </Button>
+          <a href="tel:+39 389 4468231">
+            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-10 py-1.5 ml-auto mr-0">
+              {t("contacts.telephone.button")}
+            </Button>
+          </a>
         </li>
         <li className="col-span-3 h-px bg-neutral-500"></li>
         <li className="contents">
@@ -199,9 +203,14 @@ function Contacts() {
               {t("contacts.whatsapp.subtitle")}
             </p>
           </div>
-          <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-6 xs:px-10 py-1.5 ml-auto mr-0">
-            CHAT
-          </Button>
+          <a
+            className="md:hidden"
+            href="https://api.whatsapp.com/send?phone=3894468231"
+          >
+            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white text-xs rounded-full px-6 xs:px-10 py-1.5 ml-auto mr-0">
+              CHAT
+            </Button>
+          </a>
         </li>
       </ul>
     </div>
