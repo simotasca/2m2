@@ -84,11 +84,25 @@ export default function ContactsSection() {
                 {t("whatsapp.subtitle")}
               </p>
             </div>
-            <a href="https://api.whatsapp.com/send?phone=3894468231">
-              <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
-                {t("whatsapp.button")}
-              </Button>
-            </a>
+            <div>
+              <a
+                className="max-md:hidden"
+                href="https://web.whatsapp.com/send?phone=3894468231"
+                target="_blank"
+              >
+                <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
+                  {t("whatsapp.button")}
+                </Button>
+              </a>
+              <a
+                className="md:hidden"
+                href="https://api.whatsapp.com/send?phone=3894468231"
+              >
+                <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
+                  {t("whatsapp.button")}
+                </Button>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
