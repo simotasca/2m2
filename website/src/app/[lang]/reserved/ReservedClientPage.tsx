@@ -124,7 +124,8 @@ export default function ReservedClientPage({
             <CartProvider cartProductIds={cart.products} cartId={cart.id}>
               <Box
                 id="cart"
-                className="col-span-full sm:col-span-6 lg:col-span-4">
+                className="col-span-full sm:col-span-6 lg:col-span-4"
+              >
                 <div className="flex items-center justify-between gap-4 mb-2">
                   <BoxTitle>Carrello</BoxTitle>
                   <p className="font-medium text-sm text-neutral-500 translate-y-px">
@@ -149,7 +150,8 @@ export default function ReservedClientPage({
                 {!deepEqual(data, initial) && (
                   <Button
                     onClick={() => saveData()}
-                    className="bg-red-gradient text-white font-medium rounded-md">
+                    className="bg-red-gradient text-white font-medium rounded-md"
+                  >
                     save
                   </Button>
                 )}
@@ -264,7 +266,8 @@ export default function ReservedClientPage({
 
             <Box
               id="contacts"
-              className="place-self-start col-span-full lg:col-span-6">
+              className="place-self-start col-span-full lg:col-span-6"
+            >
               <BoxTitle>Contatti</BoxTitle>
               <p>
                 <span className="text-sm leading-tight">Email: </span>
@@ -308,10 +311,12 @@ export default function ReservedClientPage({
 
         <div className="text-center text-sm mt-8">
           <span>© {new Date().getFullYear()} </span>
-          <span>Autoricambi </span>
+
           <span>2</span>
           <span>M</span>
           <span>2</span>
+
+          <span> Ricambi </span>
         </div>
       </MaxWidthContainer>
     </>
@@ -334,7 +339,8 @@ function Box({
       className={twMerge(
         "border border-stone-300 bg-stone-100 [box-shadow:0px_0px_3px_#00000020] p-4 w-full scroll-m-20",
         className
-      )}>
+      )}
+    >
       {children}
     </div>
   );
