@@ -7,6 +7,8 @@ import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
 
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
 import { generateTranslations } from "@/lib/server/lang";
@@ -73,43 +75,47 @@ export default async function ModelPage({
     true
   );
 
+  const { cart, favs } = await getServerData();
+
   return (
     <TranslationClientComponent value={translations}>
-      <PageLayout headerSmall>
-        <SearchModal />
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <SearchModal />
 
-        <div className="bg-white pb-4 xs:px-2">
-          <MaxWidthContainer>
-            <div className="pt-4 max-sm:pt-3 pb-2">
-              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
-                <Breadcrumbs items={bread} />
-                <StyledSearchModalToggle />
+          <div className="bg-white pb-4 xs:px-2">
+            <MaxWidthContainer>
+              <div className="pt-4 max-sm:pt-3 pb-2">
+                <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                  <Breadcrumbs items={bread} />
+                  <StyledSearchModalToggle />
+                </div>
               </div>
-            </div>
 
-            <Title as="h1">
-              <Title.Gray>{t("page.title")}</Title.Gray>
-              <Title.Red>{` ${brand.name} ${model.name}`}</Title.Red>
-            </Title>
+              <Title as="h1">
+                <Title.Gray>{t("page.title")}</Title.Gray>
+                <Title.Red>{` ${brand.name} ${model.name}`}</Title.Red>
+              </Title>
 
-            <div className="h-4"></div>
+              <div className="h-4"></div>
 
-            <PaginatedProductsGrid
-              className="py-2"
-              searchParams={searchParams}
-              query={{
-                brandId: brand.id,
-                modelId: model.id,
-              }}
-            />
-            <div className="h-10"></div>
-            <div className="max-sm:px-3">
-              <ContactsSection></ContactsSection>
-            </div>
-            <div className="h-4"></div>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
+              <PaginatedProductsGrid
+                className="py-2"
+                searchParams={searchParams}
+                query={{
+                  brandId: brand.id,
+                  modelId: model.id,
+                }}
+              />
+              <div className="h-10"></div>
+              <div className="max-sm:px-3">
+                <ContactsSection></ContactsSection>
+              </div>
+              <div className="h-4"></div>
+            </MaxWidthContainer>
+          </div>
+        </PageLayout>
+      </ClientLayout>
     </TranslationClientComponent>
   );
 }

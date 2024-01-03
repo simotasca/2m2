@@ -8,6 +8,8 @@ import imgMap from "@/images/europe.svg";
 import imgGarage from "@/images/officina.jpg";
 import imgSkew from "@/images/skew-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
 
 import { TranslationFactories, generateTranslations } from "@/lib/server/lang";
 import Image from "next/image";
@@ -27,16 +29,20 @@ export default async function AboutPage() {
     true
   );
 
+  const { cart, favs } = await getServerData();
+
   return (
     <TranslationClientComponent value={translations}>
-      <PageLayout headerSmall={true}>
-        <Hero t={t} r={r} />
-        <MapSection t={t} r={r} />
-        <History t={t} r={r} />
-        <div className="bg-neutral-100 py-12 px-3 xs:px-6 [@media(min-width:847px)]:px-16 lg:px-24">
-          <ContactsSection />
-        </div>
-      </PageLayout>
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall={true}>
+          <Hero t={t} r={r} />
+          <MapSection t={t} r={r} />
+          <History t={t} r={r} />
+          <div className="bg-neutral-100 py-12 px-3 xs:px-6 [@media(min-width:847px)]:px-16 lg:px-24">
+            <ContactsSection />
+          </div>
+        </PageLayout>
+      </ClientLayout>
     </TranslationClientComponent>
   );
 }

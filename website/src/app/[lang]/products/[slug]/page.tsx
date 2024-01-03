@@ -29,6 +29,8 @@ import SimilarProducts from "./SimilarProducts";
 import useCart from "@/context/cart/useCart";
 import CartButton from "./CartButton";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { getServerData } from "@/layouts/base/ServerLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
 
 interface Props {
   params: {
@@ -112,79 +114,86 @@ export default async function ProductPage({ params: { slug } }: Props) {
     },
   ];
 
+  const { cart, favs } = await getServerData();
+
   return (
     <TranslationClientComponent value={translations}>
-      <PageLayout headerSmall>
-        <SearchModal />
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <SearchModal />
 
-        <div className="bg-white min-h-full">
-          <MaxWidthContainer>
-            <div className="pt-4 max-sm:pt-3 pb-2">
-              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
-                <Breadcrumbs items={bread} />
-                <StyledSearchModalToggle />
+          <div className="bg-white min-h-full">
+            <MaxWidthContainer>
+              <div className="pt-4 max-sm:pt-3 pb-2">
+                <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                  <Breadcrumbs items={bread} />
+                  <StyledSearchModalToggle />
+                </div>
+              </div>
+
+              <div className="max-sm:h-3"></div>
+
+              <div>
+                <h1 className="font-bold text-2xl leading-[1.1] max-w-screen-md">
+                  <span className="text-red-500">{product.item} </span>
+                  <span>{product.brand + " " + product.model}</span>
+                </h1>
+                <p className="mb-1 mt-0.5 text-sm max-w-screen-md">
+                  <span className="font-medium">{t("page.title")}:</span>
+                  <span className="text-neutral-600">
+                    {" "}
+                    {product.description}
+                  </span>
+                </p>
+              </div>
+
+              <hr className="my-3" />
+
+              <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
+                <PhotoSection product={product} />
+
+                <ProductDetails product={product} />
+
+                <BuySection t={t} r={r} product={product} />
+
+                <div className="order-last"></div>
+              </div>
+
+              <div className="lg:hidden h-4"></div>
+            </MaxWidthContainer>
+
+            <div className="h-4"></div>
+
+            <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
+              <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-8 md:gap-x-4 lg:gap-x-8">
+                <Image
+                  src={imgLogo}
+                  alt=""
+                  className="w-12 md:w-16 [@media(max-width:383px)]:mx-auto"
+                />
+                <h4 className="font-semibold leading-tight text-base sm:text-lg md:text-xl max-md:text-center">
+                  {t("page.guaranteed-used")}
+                </h4>
+                <Image
+                  src={imgLogo}
+                  alt=""
+                  className="w-12 md:w-16 [@media(max-width:383px)]:hidden"
+                />
               </div>
             </div>
 
-            <div className="max-sm:h-3"></div>
+            <div className="h-10"></div>
 
-            <div>
-              <h1 className="font-bold text-2xl leading-[1.1] max-w-screen-md">
-                <span className="text-red-500">{product.item} </span>
-                <span>{product.brand + " " + product.model}</span>
-              </h1>
-              <p className="mb-1 mt-0.5 text-sm max-w-screen-md">
-                <span className="font-medium">{t("page.title")}:</span>
-                <span className="text-neutral-600"> {product.description}</span>
-              </p>
-            </div>
+            <MaxWidthContainer>
+              <SimilarProducts product={product} />
 
-            <hr className="my-3" />
-
-            <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
-              <PhotoSection product={product} />
-
-              <ProductDetails product={product} />
-
-              <BuySection t={t} r={r} product={product} />
-
-              <div className="order-last"></div>
-            </div>
-
-            <div className="lg:hidden h-4"></div>
-          </MaxWidthContainer>
-
-          <div className="h-4"></div>
-
-          <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
-            <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-8 md:gap-x-4 lg:gap-x-8">
-              <Image
-                src={imgLogo}
-                alt=""
-                className="w-12 md:w-16 [@media(max-width:383px)]:mx-auto"
-              />
-              <h4 className="font-semibold leading-tight text-base sm:text-lg md:text-xl max-md:text-center">
-                {t("page.guaranteed-used")}
-              </h4>
-              <Image
-                src={imgLogo}
-                alt=""
-                className="w-12 md:w-16 [@media(max-width:383px)]:hidden"
-              />
-            </div>
-          </div>
-
-          <div className="h-10"></div>
-
-          <MaxWidthContainer>
-            <SimilarProducts product={product} />
-
-            <MaxWidthContainer className="max-w-6xl py-20">
-              <ContactsSection />
+              <MaxWidthContainer className="max-w-6xl py-20">
+                <ContactsSection />
+              </MaxWidthContainer>
             </MaxWidthContainer>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
+          </div>
+        </PageLayout>
+      </ClientLayout>
     </TranslationClientComponent>
   );
 }
