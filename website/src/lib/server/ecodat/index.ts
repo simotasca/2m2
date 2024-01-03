@@ -31,12 +31,22 @@ export async function fetchEcodat(
   xml?: string,
   prefix = "Get"
 ) {
+  // console.log("REQUEST: =================");
+  // console.log(ecodatBodyTemplate(action, xml, prefix));
+  // console.log("==========================");
+
   return await fetch(process.env.ECODAT_API_URL!, {
     method: "POST",
     body: ecodatBodyTemplate(action, xml, prefix),
     headers: ecodatHeaders(action, prefix),
   })
     .then((res) => res.text())
+    // .then((res) => {
+    //   console.log("RESPONSE: ==============");
+    //   console.log(res);
+    //   console.log("========================");
+    //   return res;
+    // })
     .catch((err) => {
       throw new Error(`Error calling ecodat api ${action}: ` + err.message);
     })

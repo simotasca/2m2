@@ -1,11 +1,13 @@
 "use server";
 
+import { getServerData } from "@/layouts/base/ServerLayout";
 import ClientPage from "./ClientPage";
-import ServerLayout from "@/layouts/base/ServerLayout";
 import { fetchEcodatArticles } from "@/lib/server/ecodat";
 import { generateTranslations } from "@/lib/server/lang";
 import { shuffle } from "@/lib/shared/array";
 import { knownCategories } from "@/lib/shared/ecodat";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import ClientLayout from "@/layouts/base/ClientLayout";
 
 export default async function HomePage() {
   const latestProducts = await fetchEcodatArticles({
@@ -27,9 +29,13 @@ export default async function HomePage() {
     auth: "auth",
   });
 
+  const { cart, favs } = await getServerData();
+
   return (
-    <ServerLayout translations={translations}>
-      <ClientPage latestProducts={latestProducts} categories={categories} />
-    </ServerLayout>
+    <TranslationClientComponent value={translations}>
+      <ClientLayout cart={cart} favourites={favs}>
+        <ClientPage latestProducts={latestProducts} categories={categories} />
+      </ClientLayout>
+    </TranslationClientComponent>
   );
 }

@@ -125,15 +125,13 @@ export async function sendEcodatOrder(params: PersonalOrder | BusinessOrder) {
     xml += `
       <RagioneSociale>${params.businessName}</RagioneSociale>
       <Piva>${params.piva}</Piva>
-      ${params.electronicInvoice}
     `;
 
     if (params.electronicInvoice) {
-      if (Object.hasOwn(params.electronicInvoice, "PEC_FE")) {
-        /** @ts-ignore */
+      if ("PEC_FE" in params.electronicInvoice) {
         xml += `<PEC_FE>${params.electronicInvoice.PEC_FE}</PEC_FE>`;
-      } else {
-        /** @ts-ignore */
+      }
+      if ("SDI_FE" in params.electronicInvoice) {
         xml += `<SDI_FE>${params.electronicInvoice.SDI_FE}</SDI_FE>`;
       }
     }
