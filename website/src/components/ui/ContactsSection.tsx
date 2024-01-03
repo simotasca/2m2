@@ -38,9 +38,11 @@ export default function ContactsSection() {
                 {t("email.subtitle")}
               </p>
             </div>
-            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
-              {t("email.button")}
-            </Button>
+            <a href="mailto:2m2srl@gmail.com">
+              <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
+                {t("email.button")}
+              </Button>
+            </a>
           </li>
           <li className="col-span-3 h-px bg-orange-200"></li>
           <li className="contents">
@@ -59,9 +61,11 @@ export default function ContactsSection() {
                 {t("telephone.subtitle")}
               </p>
             </div>
-            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
-              {t("telephone.button")}
-            </Button>
+            <a href="tel:+39 389 4468231">
+              <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
+                {t("telephone.button")}
+              </Button>
+            </a>
           </li>
           <li className="col-span-3 h-px bg-orange-200"></li>
           <li className="contents">
@@ -80,9 +84,11 @@ export default function ContactsSection() {
                 {t("whatsapp.subtitle")}
               </p>
             </div>
-            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
-              {t("whatsapp.button")}
-            </Button>
+            <a href="https://api.whatsapp.com/send?phone=3894468231">
+              <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
+                {t("whatsapp.button")}
+              </Button>
+            </a>
           </li>
         </ul>
       </div>
