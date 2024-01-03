@@ -13,7 +13,7 @@ import { twJoin } from "tailwind-merge";
 import { LoginModal } from "../auth/LoginModal";
 
 export function UserData({ small }: { small: boolean }) {
-  const { setIsOpen, total, count } = useCart();
+  const { setIsOpen, total, count, isInitialized } = useCart();
   const { t } = useTranslation();
   return (
     <div
@@ -34,12 +34,24 @@ export function UserData({ small }: { small: boolean }) {
             "h-fit text-right translate-y-px hidden",
             small ? "lg:block" : "md:block"
           )}>
-          <p className="font-semibold text-sm leading-[1.1]">
-            {total ? total.toFixed(2) + "€" : "---"}
-          </p>
-          <p className="text-neutral-400 text-xs leading-[1]">
-            {count} {t("header.cart.products.many")}
-          </p>
+          {!isInitialized ? (
+            <p className="text-neutral-400 text-sm -translate-y-px">
+              {/* TODO: i18n */}
+              loading...
+            </p>
+          ) : (
+            <>
+              <p className="font-semibold text-sm leading-[1.1]">
+                {total ? total.toFixed(2) + "€" : "---"}
+              </p>
+              <p className="text-neutral-400 text-xs leading-[1]">
+                {count}{" "}
+                {count > 1
+                  ? t("header.cart.products.many")
+                  : t("header.cart.products.single")}
+              </p>
+            </>
+          )}
         </div>
         <Image
           src={iconCart}

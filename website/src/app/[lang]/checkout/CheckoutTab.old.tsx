@@ -10,12 +10,10 @@ import type {
   Appearance,
   CssFontSource,
   CustomFontSource,
-  StripeElementsOptions,
 } from "@stripe/stripe-js";
 import Image from "next/image";
 import {
   Dispatch,
-  FormEvent,
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -25,7 +23,6 @@ import {
 import WizTabHandle from "./WizTabHandle";
 import useTranslation from "@/context/lang/useTranslation";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import useLogger from "@/hooks/useLogger";
 
 export interface CheckoutParams {
   email?: string;
@@ -46,8 +43,6 @@ export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
       []
     );
 
-    useLogger("AMOUNTS " + forwardProps.amount, forwardProps.amount);
-
     return (
       <div ref={tabRef} className="mb-2.5">
         <div className="flex items-start gap-2 mb-2">
@@ -63,36 +58,70 @@ export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
 );
 
 function ElementsWrapper({ email, metadata, amount }: CheckoutParams) {
-  if (!stripePromise || !amount || !metadata) return <LoadingSpinner />;
+  const [totalPrice, setTotalPrice] = useState<number>();
+  const [clientSecret, setClientSecret] = useState<string>();
 
-  const options: StripeElementsOptions = {
-    mode: "payment",
-    amount,
-    currency: "eur",
-    paymentMethodCreation: "manual",
-    appearance: {
-      disableAnimations: true,
-      theme: "stripe",
-      labels: "above",
-      variables: {
-        fontFamily: "Poppins",
-        fontSizeBase: "14px",
-        spacingUnit: "2px",
-        borderRadius: "2px",
-      },
+  useEffect(() => {
+    if (clientSecret != undefined) return;
+    if (!amount) return;
+    if (!metadata) return;
+
+    fetch("/api/stripe/create-payment-intent", {
+      method: "POST",
+      body: JSON.stringify({
+        amount: amount,
+        metadata: metadata,
+      }),
+    })
+      .then((res) => {
+        switch (res.status) {
+          // TODO se arriva un errore mettere bottone per riprovare
+          // 400 controlla i tuoi dati
+          // 500 ricarica
+          case 400:
+            throw new Error("Bad Request: " + res.statusText);
+          case 500:
+            throw new Error("Internal Server Error: " + res.statusText);
+          default:
+            return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setTotalPrice(data.amount);
+        setClientSecret(data.secret);
+      })
+      .catch((err) =>
+        // TODO handle error
+        console.error("ERROR: could not generate payment intent:", err.message)
+      );
+  }, [setClientSecret, amount, metadata]);
+
+  if (!clientSecret || !stripePromise) return <LoadingSpinner />;
+
+  const appearance: Appearance = {
+    disableAnimations: true,
+    theme: "stripe",
+    labels: "above",
+    variables: {
+      fontFamily: "Poppins",
+      fontSizeBase: "14px",
+      spacingUnit: "2px",
+      borderRadius: "2px",
     },
-    fonts: [
-      {
-        cssSrc: "https://fonts.googleapis.com/css2?family=Poppins&display=swap",
-      },
-    ],
-    // TODO non necessario
-    locale: "en",
   };
 
+  const fonts: (CssFontSource | CustomFontSource)[] = [
+    { cssSrc: "https://fonts.googleapis.com/css2?family=Poppins&display=swap" },
+  ];
+
+  const locale = "en";
+
   return (
-    <Elements stripe={stripePromise} options={options}>
-      <CheckoutForm metadata={metadata} email={email} totalPrice={amount} />
+    <Elements
+      stripe={stripePromise}
+      options={{ clientSecret, appearance, fonts, locale }}>
+      <CheckoutForm email={email} totalPrice={totalPrice} />
     </Elements>
   );
 }
@@ -108,77 +137,32 @@ const LoadingSpinner = () => {
 function CheckoutForm({
   email,
   totalPrice,
-  metadata,
 }: {
   email?: string;
   totalPrice?: number;
-  metadata: any;
 }) {
   const [loading, setLoading] = useState(false);
-  // TODO: display
-  const [errorMessage, setErrorMessage] = useState<string>();
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleError = (error) => {
-    setLoading(false);
-    setErrorMessage(error.message);
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) return;
 
     setLoading(true);
 
-    // Trigger form validation and wallet collection
-    const { error: submitError } = await elements.submit();
-    if (submitError) {
-      handleError(submitError);
-      return;
-    }
+    await fetch("/api");
 
-    const { error: paymentMethodError, paymentMethod } =
-      await stripe.createPaymentMethod({
-        elements,
-        params: { metadata },
-      });
-
-    if (paymentMethodError) {
-      // This point is only reached if there's an immediate error when
-      // creating the PaymentMethod. Show the error to your customer (for example, payment details incomplete)
-      handleError(paymentMethodError);
-      return;
-    }
-
-    const res = await fetch("/api/stripe/confirm-payment", {
-      method: "POST",
-      body: JSON.stringify({
-        paymentMethodId: paymentMethod.id,
-        amount: Number(totalPrice),
-        metadata,
-      }),
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin + "/checkout/success?email=" + email,
+      },
     });
 
-    if (res.status != 200) {
-      handleError({ message: await res.text() });
-      return;
-    }
-
-    const data = await res.json();
-
-    if (data.status === "requires_action") {
-      // Use Stripe.js to handle the required next action
-      const { error, paymentIntent } = await stripe.handleNextAction({
-        clientSecret: data.client_secret,
-      });
-
-      if (error) {
-        // Show error from Stripe.js in payment form
-        handleError(error);
-        return;
-      }
+    if (error) {
+      // TODO: handle?
     }
 
     setLoading(false);
@@ -201,8 +185,6 @@ function CheckoutForm({
           </button>
         )}
       </form>
-
-      {errorMessage && <p className="text-red-400">{errorMessage}</p>}
     </>
   );
 }
