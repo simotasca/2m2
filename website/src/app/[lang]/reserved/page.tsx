@@ -20,6 +20,8 @@ export default async function ReservedPage() {
 
   const user = await supabase.auth.getUser().then(({ data }) => data.user);
 
+  console.log;
+
   if (!user) redirect("/login");
 
   // const { data: customer } = await supabase.from("customers").select().single();
