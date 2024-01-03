@@ -4,8 +4,9 @@ import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import { parseSearchParams } from "@/lib/shared/search";
@@ -32,7 +33,7 @@ export default async function ProductsPage({ searchParams }: Props) {
   );
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <SearchModal></SearchModal>
       <PageLayout headerSmall>
         <div className="bg-white pb-4 xs:px-2">
@@ -68,6 +69,6 @@ export default async function ProductsPage({ searchParams }: Props) {
           </MaxWidthContainer>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }

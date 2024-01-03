@@ -2,12 +2,13 @@ import SearchModalToggle from "@/components/search/SearchModalToggle";
 import Button from "@/components/ui/Button";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import imgBackground from "@/images/about-background.jpg";
 import imgMap from "@/images/europe.svg";
 import imgGarage from "@/images/officina.jpg";
 import imgSkew from "@/images/skew-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import { TranslationFactories, generateTranslations } from "@/lib/server/lang";
 import Image from "next/image";
 
@@ -27,7 +28,7 @@ export default async function AboutPage() {
   );
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall={true}>
         <Hero t={t} r={r} />
         <MapSection t={t} r={r} />
@@ -36,7 +37,7 @@ export default async function AboutPage() {
           <ContactsSection />
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }
 

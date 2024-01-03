@@ -5,8 +5,9 @@ import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import {
   fetchEcodatCategories,
   fetchEcodatItems,
@@ -97,7 +98,7 @@ export default async function ItemPage({
   ];
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall>
         <SearchModal />
 
@@ -136,6 +137,6 @@ export default async function ItemPage({
           </MaxWidthContainer>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }

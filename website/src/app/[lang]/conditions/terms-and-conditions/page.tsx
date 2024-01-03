@@ -1,6 +1,7 @@
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import { generateTranslations } from "@/lib/server/lang";
 
 export default async function CookiePolicy() {
@@ -20,7 +21,7 @@ export default async function CookiePolicy() {
   );
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall={true}>
         <section className="bg-[#363636]">
           <MaxWidthContainer>
@@ -386,6 +387,6 @@ export default async function CookiePolicy() {
           </MaxWidthContainer>
         </section>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }

@@ -5,8 +5,9 @@ import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
 import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
@@ -64,7 +65,7 @@ export default async function ModelPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
-errors: "misc/errors",
+      errors: "misc/errors",
       contacts: "misc/contacts",
       auth: "auth",
       page: "pages/brand/model",
@@ -73,7 +74,7 @@ errors: "misc/errors",
   );
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall>
         <SearchModal />
 
@@ -109,6 +110,6 @@ errors: "misc/errors",
           </MaxWidthContainer>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }

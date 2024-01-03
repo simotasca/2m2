@@ -5,8 +5,9 @@ import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import {
   fetchEcodatCategories,
   fetchEcodatTypologies,
@@ -70,7 +71,7 @@ export default async function CategoryPage({
   ];
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall>
         <SearchModal category={category} />
 
@@ -111,6 +112,6 @@ export default async function CategoryPage({
           </MaxWidthContainer>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }

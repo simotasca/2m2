@@ -12,7 +12,6 @@ import iconShare from "@/images/icons/share.svg";
 import iconCart from "@/images/icons/white/cart.svg";
 import imgLogo from "@/images/logo-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
 import {
   fetchEcodatArticle,
   fetchEcodatArticlePhotoList,
@@ -29,6 +28,7 @@ import ProductDetails from "./ProductDetails";
 import SimilarProducts from "./SimilarProducts";
 import useCart from "@/context/cart/useCart";
 import CartButton from "./CartButton";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 
 interface Props {
   params: {
@@ -113,7 +113,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
   ];
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall>
         <SearchModal />
 
@@ -185,7 +185,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
           </MaxWidthContainer>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }
 
@@ -216,7 +216,8 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
               {photoIdsList.slice(1).map((imageId) => (
                 <div
                   key={imageId}
-                  className="p-0.5 border border-slate-300 rounded-sm ">
+                  className="p-0.5 border border-slate-300 rounded-sm "
+                >
                   <ProductImage
                     className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
                     photo={{ imageId }}

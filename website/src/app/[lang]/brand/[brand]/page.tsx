@@ -3,8 +3,9 @@ import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
 import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
@@ -62,7 +63,7 @@ export default async function ModelPage({
   );
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall>
         <div className="bg-white pb-4 xs:px-2">
           <MaxWidthContainer>
@@ -91,6 +92,6 @@ export default async function ModelPage({
           </MaxWidthContainer>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }
