@@ -32,9 +32,7 @@ interface Props {
 }
 
 export default function CheckoutClientPage({ products }: Props) {
-  /* TODO: pre-populate with registered user info */
   const { session, loading: loadingAuth } = useAuth();
-  const [customer, setCustomer] = useState();
 
   // state
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
@@ -42,7 +40,6 @@ export default function CheckoutClientPage({ products }: Props) {
     withInvoice: false,
   });
   const [deliveryAddress, setDeliveryAddress] = useState<DeliveryAddress>({});
-  const [paymentClientSecret, setPaymentClientSecret] = useState<string>();
 
   // imperative handles for validation
   const personalInfoHandle = useRef<WizTabValidator>(null);
@@ -70,8 +67,6 @@ export default function CheckoutClientPage({ products }: Props) {
     />,
     <CheckoutTab
       ref={checkoutHandle}
-      clientSecret={paymentClientSecret}
-      setClientSecret={setPaymentClientSecret}
       email={personalInfo.email}
       amount={products.reduce((tot, p) => tot + p.price, 0)}
       metadata={metadata}
@@ -126,8 +121,6 @@ export default function CheckoutClientPage({ products }: Props) {
       if (!data?.at(0)) return;
 
       const [customer] = data;
-
-      console.log("CUSTOMER", customer);
 
       if (customer.type === "business") {
         setPersonalInfo({

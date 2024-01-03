@@ -3,10 +3,11 @@ version: "3.8"
 include:
   - supabase/docker-compose.studio.yml
   - supabase/docker-compose.yml
-# services:
-#   website:
-#     build:
-#       context: ./website
-#       dockerfile: Dockerfile
-#     ports:
-#       - "3000:3000"
+
+services:
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"

@@ -1,5 +1,5 @@
 import { fetchEcodatArticle } from "@/lib/server/ecodat";
-import { fetchEcodatAvalability } from "@/lib/server/ecodat/disponabilita";
+import { setEcodatAvalability } from "@/lib/server/ecodat/disponabilita";
 import { sendEcodatOrder } from "@/lib/server/ecodat/ordine";
 import { sendMail } from "@/lib/server/mail";
 import { EcodatArticle, productName } from "@/lib/shared/ecodat";
@@ -163,7 +163,7 @@ export default class PaymentManager {
             PEC_FE: payment.meta.pec || undefined,
           }
         : {};
-      send = sendEcodatOrder({
+      await sendEcodatOrder({
         type: "business",
         // order
         products,
@@ -185,9 +185,16 @@ export default class PaymentManager {
         provinceCode: payment.meta.provinceCode,
         cityIstat: payment.meta.istat,
         dateTime: new Date(),
-      });
+      })
+        .then(() => {
+          payment.stage = "ORDER_SENT";
+        })
+        .catch((err) => {
+          payment.errorMessage =
+            "Errore nell'invio del pagamento al gestionale: " + err.message;
+        });
     } else {
-      send = sendEcodatOrder({
+      await sendEcodatOrder({
         type: "personal",
         // order
         products,
@@ -208,17 +215,15 @@ export default class PaymentManager {
         provinceCode: payment.meta.provinceCode,
         cityIstat: payment.meta.istat,
         dateTime: new Date(),
-      });
-    }
-
-    send
-      .then(() => {
-        payment.stage = "ORDER_SENT";
       })
-      .catch((err) => {
-        payment.errorMessage =
-          "Errore nell'invio del pagamento al gestionale: " + err.message;
-      });
+        .then(() => {
+          payment.stage = "ORDER_SENT";
+        })
+        .catch((err) => {
+          payment.errorMessage =
+            "Errore nell'invio del pagamento al gestionale: " + err.message;
+        });
+    }
   }
 
   private static async notifySellerForError(payment: Payment) {
@@ -323,7 +328,7 @@ export default class PaymentManager {
     for (const product of payment.products) {
       if (payment.disabledIds.includes(product.id)) continue;
       try {
-        await fetchEcodatAvalability(product.id, false);
+        await setEcodatAvalability(product.id, false);
         payment.disabledIds.push(product.id);
       } catch (err: any) {
         payment.errorMessage =
