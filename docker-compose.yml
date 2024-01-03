@@ -11,3 +11,6 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
+    volumes:
+      - ./website/src/:/app/src/
+      - ./website/.env.development:/app/.env.development
