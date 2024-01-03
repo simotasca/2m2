@@ -206,70 +206,68 @@ function DropdownLogin() {
         </div>
       )}
 
-      {!session?.user && (
-        <section className="pointer-events-auto [&_*]:[min-width:0_!important]">
-          <div className="bg-[#363636] text-black">
-            <form onSubmit={handleLogin} className="flex flex-col gap-3 mt-2">
-              <div className="border border-neutral-500 bg-slate-100">
-                <input
-                  className="placeholder:text-neutral-500 py-0.5 px-2 text-sm outline-none"
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                />
-              </div>
-              <div className="border border-neutral-500 grid grid-cols-[1fr_auto] px-2 gap-x-2 bg-slate-100 -mt-1">
-                <input
-                  className="placeholder:text-neutral-500 py-0.5 text-sm outline-none bg-white w-ful"
-                  type={pwInputType}
-                  name="password"
-                  placeholder="password"
-                />
-                <button
-                  className="text-xs text-neutral-500"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    togglePasswordVisibility();
-                  }}
-                >
-                  {pwInputType === "text"
-                    ? t("auth.login.hide-password")
-                    : t("auth.login.show-password")}
-                </button>
-              </div>
-
-              <Link
-                className="underline text-xs -mt-1.5 text-neutral-100"
-                href="#"
-              >
-                {t("auth.login.forgot-password")}
-                {/* TODO */}
-              </Link>
-
-              {errorMessage && (
-                <p className="text-red-500 text-sm">{errorMessage}</p>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full font-normal text-sm bg-red-500 text-white"
-              >
-                Login
-              </Button>
-            </form>
-            <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center text-center px-2 my-1.5 text-neutral-500">
-              <hr className="translate-y-px border-neutral-500" />
-              <span className="text-neutral-400">or</span>
-              <hr className="translate-y-px border-neutral-500" />
+      <section className="pointer-events-auto [&_*]:[min-width:0_!important]">
+        <div className="bg-[#363636] text-black">
+          <form onSubmit={handleLogin} className="flex flex-col gap-3 mt-2">
+            <div className="border border-neutral-500 bg-slate-100">
+              <input
+                className="placeholder:text-neutral-500 py-0.5 px-2 text-sm outline-none"
+                type="email"
+                name="email"
+                placeholder="email"
+              />
             </div>
-            <Link href={routes.register()}>
-              <Button className="w-full font-medium text-sm bg-red-gradient text-white">
-                {t("auth.login.signup")}
-              </Button>
+            <div className="border border-neutral-500 grid grid-cols-[1fr_auto] px-2 gap-x-2 bg-slate-100 -mt-1">
+              <input
+                className="placeholder:text-neutral-500 py-0.5 text-sm outline-none bg-white w-ful"
+                type={pwInputType}
+                name="password"
+                placeholder="password"
+              />
+              <button
+                className="text-xs text-neutral-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  togglePasswordVisibility();
+                }}
+              >
+                {pwInputType === "text"
+                  ? t("auth.login.hide-password")
+                  : t("auth.login.show-password")}
+              </button>
+            </div>
+
+            <Link
+              className="underline text-xs -mt-1.5 text-neutral-200"
+              href={routes.passwordReset()}
+            >
+              {t("auth.login.forgot-password")}
+              {/* TODO */}
             </Link>
+
+            {errorMessage && (
+              <p className="text-red-500 text-sm">{errorMessage}</p>
+            )}
+
+            <Button
+              type="submit"
+              className="w-full font-normal text-sm bg-red-500 text-white"
+            >
+              Login
+            </Button>
+          </form>
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center text-center px-2 my-1.5 text-neutral-500">
+            <hr className="translate-y-px border-neutral-500" />
+            <span className="text-neutral-400">or</span>
+            <hr className="translate-y-px border-neutral-500" />
           </div>
-        </section>
-      )}
+          <Link href={routes.register()}>
+            <Button className="w-full font-medium text-sm bg-red-gradient text-white">
+              {t("auth.login.signup")}
+            </Button>
+          </Link>
+        </div>
+      </section>
     </>
   );
 }
