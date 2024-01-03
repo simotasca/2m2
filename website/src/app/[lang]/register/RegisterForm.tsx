@@ -409,18 +409,25 @@ export default function RegisterForm() {
                     onChange={(e) => setConditionsAccepted(e.target.checked)}
                     className="accent-red-500"
                   />
-                  <p className="text-sm">
+                  <span className="text-[13px] leading-[1.2]">
                     {r("auth.register.conditions", {
                       link: (l) => (
                         <Link
-                          href="#"
+                          href={routes.terms()}
                           className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
                         >
                           {l}
                         </Link>
                       ),
                     })}
-                  </p>
+                    &nbsp;<span>e la</span>{" "}
+                    <Link
+                      href={routes.privacy()}
+                      className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
+                    >
+                      <b className="font-semibold"> privacy policy</b>
+                    </Link>
+                  </span>
                 </div>
 
                 <Button
@@ -436,7 +443,7 @@ export default function RegisterForm() {
                   </p>
                 )}
 
-                <p className="text-sm text-center mt-4 mb-1">
+                <p className="text-[13px] text-center mt-4 mb-1">
                   <span className="text-neutral-600">
                     {t("auth.register.already-registered")}{" "}
                   </span>
