@@ -10,10 +10,12 @@ import { createClientSideClient } from "@/lib/client/supabase";
 import { EcodatArticle } from "@/lib/shared/ecodat";
 import settings from "@/settings";
 import { User } from "@supabase/supabase-js";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Input, Label } from "../reset-password/Input";
 import { Customer } from "./customer";
+import useFavourites from "@/context/favourites/useFavourites";
+import useCart from "@/context/cart/useCart";
 
 interface Props {
   cart: any;
@@ -34,6 +36,9 @@ export default function ReservedClientPage({
   const [initial, setInitial] = useState<any>(customer || {});
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
+
+  const { isFavourite } = useFavourites();
+  const { count } = useCart();
 
   const saveData = async () => {
     setLoading(true);
@@ -112,33 +117,34 @@ export default function ReservedClientPage({
 
               <div className="overflow-x-auto">
                 <div className="flex flex-nowrap w-fit gap-4">
-                  {favourites.map((p) => (
-                    <div key={p.id} className="w-60">
-                      <Product product={p} />
-                    </div>
-                  ))}
+                  {favourites.map(
+                    (p) =>
+                      isFavourite(p) && (
+                        <div key={p.id} className="w-60">
+                          <Product product={p} />
+                        </div>
+                      )
+                  )}
                 </div>
               </div>
             </Box>
 
-            <CartProvider cartProductIds={cart.products} cartId={cart.id}>
-              <Box
-                id="cart"
-                className="col-span-full sm:col-span-6 lg:col-span-4">
-                <div className="flex items-center justify-between gap-4 mb-2">
-                  <BoxTitle>Carrello</BoxTitle>
-                  <p className="font-medium text-sm text-neutral-500 translate-y-px">
-                    <span className="text-xs">(</span>
-                    <span>0 products</span>
-                    <span className="text-xs">)</span>
-                  </p>
-                </div>
+            <Box
+              id="cart"
+              className="col-span-full sm:col-span-6 lg:col-span-4">
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <BoxTitle>Carrello</BoxTitle>
+                <p className="font-medium text-sm text-neutral-500 translate-y-px">
+                  <span className="text-xs">(</span>
+                  <span>{count} products</span>
+                  <span className="text-xs">)</span>
+                </p>
+              </div>
 
-                <div className="max-h-[420px] overflow-y-auto">
-                  <CartList />
-                </div>
-              </Box>
-            </CartProvider>
+              <div className="max-h-[420px] overflow-y-auto">
+                <CartList />
+              </div>
+            </Box>
 
             <Box id="user-data" className="col-span-full sm:col-span-6">
               <div className="flex justify-between gap-4">
