@@ -3,8 +3,11 @@ import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
+
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
 import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
@@ -61,36 +64,40 @@ export default async function ModelPage({
     true
   );
 
+  const { cart, favs } = await getServerData();
+
   return (
-    <ServerLayout translations={translations}>
-      <PageLayout headerSmall>
-        <div className="bg-white pb-4 xs:px-2">
-          <MaxWidthContainer>
-            <Breadcrumbs className="py-4" items={bread} />
+    <TranslationClientComponent value={translations}>
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <div className="bg-white pb-4 xs:px-2">
+            <MaxWidthContainer>
+              <Breadcrumbs className="py-4" items={bread} />
 
-            <Title as="h1">
-              <Title.Gray>{t("page.title")}</Title.Gray>
-              <Title.Red>{` ${brand.name}`}</Title.Red>
-            </Title>
+              <Title as="h1">
+                <Title.Gray>{t("page.title")}</Title.Gray>
+                <Title.Red>{` ${brand.name}`}</Title.Red>
+              </Title>
 
-            <div className="h-4"></div>
+              <div className="h-4"></div>
 
-            <PaginatedProductsGrid
-              className="py-2"
-              searchParams={searchParams}
-              query={{ brandId: brand.id }}
-            />
+              <PaginatedProductsGrid
+                className="py-2"
+                searchParams={searchParams}
+                query={{ brandId: brand.id }}
+              />
 
-            <div className="h-10"></div>
+              <div className="h-10"></div>
 
-            <div className="max-sm:px-3">
-              <ContactsSection />
-            </div>
+              <div className="max-sm:px-3">
+                <ContactsSection />
+              </div>
 
-            <div className="h-4"></div>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
-    </ServerLayout>
+              <div className="h-4"></div>
+            </MaxWidthContainer>
+          </div>
+        </PageLayout>
+      </ClientLayout>
+    </TranslationClientComponent>
   );
 }

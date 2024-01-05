@@ -1,16 +1,17 @@
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+
 import Image from "next/image";
 import iconSuccess from "@/images/icons/success.svg";
 import routes from "@/lib/shared/routes";
 import CookieKiller from "./CookieKiller";
 import { generateTranslations } from "@/lib/server/lang";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 
 export default async function CheckoutSuccessPage({ searchParams }) {
   const [translations] = await generateTranslations({});
 
   return (
-    <ServerLayout translations={translations}>
+    <TranslationClientComponent value={translations}>
       <PageLayout headerSmall>
         <CookieKiller />
 
@@ -32,6 +33,6 @@ export default async function CheckoutSuccessPage({ searchParams }) {
           </a>
         </div>
       </PageLayout>
-    </ServerLayout>
+    </TranslationClientComponent>
   );
 }
