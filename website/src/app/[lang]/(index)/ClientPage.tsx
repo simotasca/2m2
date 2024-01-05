@@ -37,7 +37,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
             <span className="text-gray-400">{r("products-title")}</span>
           </h2>
           <Link href={routes.products()}>
-            <Button className="group text-sm bg-transparent border border-slate-500 bg-neutral-50">
+            <Button className="group text-sm leading-[1.1] bg-transparent border border-slate-500 bg-neutral-50">
               {t("products-button")}
               <Image
                 className="-translate-y-px group-hover:translate-x-0.5 transition-transform duration-100"
