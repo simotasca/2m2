@@ -1,15 +1,15 @@
-- [ ] tutte le pagine not found danno invece something went wrong
+- [x] tutte le pagine not found danno invece something went wrong
 - [x] header: tendine ricambi e modelli
 - [x] header: contatti mandare a contacts section
 - [x] hero: bottone contattaci manda alla sezione contatti
 - [x] prodotti recenti: vai ai prodotti (sopra e sotto) -> pagina dei prodotti
-- [ ] contacts section: chiama scrivi e chatta
+- [x] contacts section: chiama scrivi e chatta
 - [x] contacts section: striscia pagamenti sotto loghi auto
 - [x] footer: mancano tutti i link
 - [x] footer: traduzione login
 - [x] footer: non compare la navbar
 - [x] footer: doppi :: orari
-- [ ] cambio lingua non funziona / i link non mandano alla lingua corrente
+- [x] cambio lingua non funziona / i link non mandano alla lingua corrente
 - [x] prodotto: search modal non compare
 - [x] prodotto: non tradotta
 - [x] prodotto: rimuovere condividi

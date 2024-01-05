@@ -14,13 +14,14 @@ import Header from "./Header";
 import ReservedClientPage from "./ReservedClientPage";
 import "./box.css";
 import { Customer } from "./customer";
+import FavouritesProvider from "@/context/favourites/FavouritesContext";
+import AuthProvider from "@/context/auth/AuthContext";
+import CartProvider from "@/context/cart/CartProvider";
 
 export default async function ReservedPage() {
   const supabase = createServerSideClient({ cookies });
 
   const user = await supabase.auth.getUser().then(({ data }) => data.user);
-
-  console.log;
 
   if (!user) redirect("/login");
 
@@ -56,15 +57,21 @@ export default async function ReservedPage() {
 
   return (
     <TranslationClientComponent value={translations}>
-      <TopBar />
-      <Header user={user} />
-      <ReservedClientPage
-        cart={cart}
-        favourites={favouriteProducts}
-        user={user}
-        type={user.user_metadata.type}
-        customer={customer}
-      />
+      <AuthProvider>
+        <CartProvider cartId={cart.id} cartProductIds={cart.products}>
+          <FavouritesProvider initialFavourites={favs}>
+            <TopBar />
+            <Header user={user} />
+            <ReservedClientPage
+              cart={cart}
+              favourites={favouriteProducts}
+              user={user}
+              type={user.user_metadata.type}
+              customer={customer}
+            />
+          </FavouritesProvider>
+        </CartProvider>
+      </AuthProvider>
     </TranslationClientComponent>
   );
 }
