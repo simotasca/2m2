@@ -120,6 +120,7 @@ export default async function TypologyPage({
 
               <div className="h-4"></div>
 
+              {/* @ts-expect-error Server Component */}
               <PaginatedProductsGrid
                 className="py-2"
                 searchParams={searchParams}

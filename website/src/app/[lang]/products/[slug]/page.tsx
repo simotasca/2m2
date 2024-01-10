@@ -150,6 +150,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
               <hr className="my-3" />
 
               <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
+                {/* @ts-expect-error Server Component */}
                 <PhotoSection product={product} />
 
                 <ProductDetails product={product} />
@@ -225,8 +226,7 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
               {photoIdsList.slice(1).map((imageId) => (
                 <div
                   key={imageId}
-                  className="p-0.5 border border-slate-300 rounded-sm "
-                >
+                  className="p-0.5 border border-slate-300 rounded-sm ">
                   <ProductImage
                     className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
                     photo={{ imageId }}

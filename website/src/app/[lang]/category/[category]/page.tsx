@@ -73,6 +73,7 @@ export default async function CategoryPage({
   ];
 
   const { cart, favs } = await getServerData();
+
   return (
     <TranslationClientComponent value={translations}>
       <ClientLayout cart={cart} favourites={favs}>
@@ -100,6 +101,7 @@ export default async function CategoryPage({
 
               <div className="h-4"></div>
 
+              {/* @ts-expect-error Server Component */}
               <PaginatedProductsGrid
                 className="py-2"
                 searchParams={searchParams}
