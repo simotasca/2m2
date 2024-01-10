@@ -43,7 +43,7 @@ export function Input({
   return (
     <input
       className={twJoin(
-        "w-full border border-neutral-300 outline-none px-2 py-1 placeholder:text-neutral-500 rounded-sm text-sm cursor-text",
+        "w-full border border-neutral-300 bg-white outline-none px-2 py-1 placeholder:text-neutral-500 rounded-sm text-sm cursor-text",
         errorMessage !== undefined &&
           "outline outline-1 outline-red-500 -outline-offset-1"
       )}
