@@ -32,7 +32,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <div className="bg-[#363636] text-white py-8 sm:py-14">
+    <div className="bg-[#363636] text-white px-2 py-8 sm:py-14">
       <MaxWidthContainer className="bg-neutral-500 h-px mb-8 mx-auto max-w-[95%]"></MaxWidthContainer>
 
       <MaxWidthContainer className="grid xs:grid-cols-2 sm:grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(5rem,auto)_auto_1fr_auto] gap-4 sm:gap-16 gap-y-10 lg:px-20">
@@ -92,7 +92,7 @@ export default function Footer() {
       <MaxWidthContainer className="bg-neutral-500 h-px mt-9 mb-3 mx-auto max-w-[95%]"></MaxWidthContainer>
 
       <MaxWidthContainer className="lg:px-20">
-        <div className="flex max-xs:col-span-4 max-xs:px-4">
+        <div className="flex max-xs:col-span-4 ">
           <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
             <li>
               <Link
