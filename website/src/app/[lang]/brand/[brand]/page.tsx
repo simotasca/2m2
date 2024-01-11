@@ -59,6 +59,7 @@ export default async function ModelPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
     },
     true

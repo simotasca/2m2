@@ -63,6 +63,7 @@ export default async function ItemPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       page: "pages/category/typology/item",
       categories: "misc/categories",

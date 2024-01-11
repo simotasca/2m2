@@ -18,12 +18,13 @@ export default function Navbar({ small }: { small: boolean }) {
       className={twMerge(
         "flex items-center justify-center gap-x-4 font-medium max-md:text-sm",
         small ? "translate-y-px lg:gap-x-8" : "md:gap-x-8"
-      )}>
+      )}
+    >
       <Link href={routes.home()}>{t("header.navbar.home")}</Link>
       <DropdownCarParts small={small} />
       <DropdownModels small={small} />
       <Link href={routes.about()}>{t("header.navbar.about")}</Link>
-      <NextLink className={twJoin(small && "max-md:hidden")} href="#contacts">
+      <NextLink className={twJoin(small && "max-sm:hidden")} href="#contacts">
         {t("header.navbar.contacts")}
       </NextLink>
     </nav>
@@ -45,7 +46,8 @@ function DropdownCarParts({ small }) {
       className={twMerge(
         "group relative outline-none flex items-center gap-1 border border-[#DA8D6C] bg-[linear-gradient(180deg,#DB5F06_30%,#D20404_180%)] rounded pl-3 pr-1.5 sm:pl-5 sm:pr-4 py-1",
         !small && "md:py-2"
-      )}>
+      )}
+    >
       <span>{t("header.navbar.parts.title")}</span>
       <Image src={iconDown} alt="dropdown icon" className="w-4 mt-0.5" />
       <div className="absolute hidden group-hover:block top-full left-0 text-left">
@@ -55,10 +57,12 @@ function DropdownCarParts({ small }) {
               {content?.categories?.map((c) => (
                 <li
                   key={c.id}
-                  className="flex flex-col text-sm leading-4  whitespace-nowrap">
+                  className="flex flex-col text-sm leading-4  whitespace-nowrap"
+                >
                   <a
                     className="hover:underline underline-offset-2"
-                    href={routes.category(c.name)}>
+                    href={routes.category(c.name)}
+                  >
                     {tCat(c.name, c.name)}
                   </a>
                   {!!c.typologies?.length && (
@@ -68,7 +72,8 @@ function DropdownCarParts({ small }) {
                           <span className="lowercase">
                             <a
                               className="hover:underline underline-offset-2"
-                              href={routes.type(c.name, t.name)}>
+                              href={routes.type(c.name, t.name)}
+                            >
                               {t.name}
                             </a>
                           </span>
@@ -101,7 +106,8 @@ function DropdownModels({ small }) {
       className={twMerge(
         "group relative outline-none flex items-center gap-1 px-1 py-1",
         small ? "relative max-md:hidden" : "relative md:py-2"
-      )}>
+      )}
+    >
       <span>{t("header.navbar.models.title")}</span>
       <Image src={iconDown} alt="dropdown icon" className="w-4 mt-0.5" />
       <div className="absolute hidden group-hover:block top-full left-0 text-left">
@@ -111,10 +117,12 @@ function DropdownModels({ small }) {
               {content?.brands?.map((b) => (
                 <li
                   key={b.id}
-                  className="flex flex-col text-sm leading-4  whitespace-nowrap">
+                  className="flex flex-col text-sm leading-4  whitespace-nowrap"
+                >
                   <a
                     className="hover:underline underline-offset-2"
-                    href={routes.brand(b.name)}>
+                    href={routes.brand(b.name)}
+                  >
                     {b.name}
                   </a>
                   {!!b.models?.length && (
@@ -124,7 +132,8 @@ function DropdownModels({ small }) {
                           <span className="lowercase">
                             <a
                               className="hover:underline underline-offset-2"
-                              href={routes.model(b.name, m.name)}>
+                              href={routes.model(b.name, m.name)}
+                            >
                               {m.name}
                             </a>
                           </span>

@@ -47,6 +47,7 @@ export default async function CategoryPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       page: "pages/category",
       categories: "misc/categories",
