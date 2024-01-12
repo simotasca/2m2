@@ -22,9 +22,8 @@ export default function TopBar() {
           {i18n.locales.map((locale) => (
             <Link
               key={locale}
-              href={"/" + locale === i18n.canonical ? "" : locale}
-              className={lang === locale ? activeLangClass : ""}
-            >
+              lang={locale}
+              className={lang === locale ? activeLangClass : ""}>
               {locale}
             </Link>
           ))}

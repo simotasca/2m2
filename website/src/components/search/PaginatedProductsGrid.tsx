@@ -1,3 +1,5 @@
+"use server";
+
 import { fetchEcodatArticles } from "@/lib/server/ecodat";
 import { GenericSearchParams, getCurrentPage } from "@/lib/server/search";
 import { RESULTS_PER_PAGE } from "@/lib/shared/search";

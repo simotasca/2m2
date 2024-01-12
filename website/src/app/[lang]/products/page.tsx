@@ -64,6 +64,7 @@ export default async function ProductsPage({ searchParams }: Props) {
 
               <div className="h-4"></div>
 
+              {/* @ts-expect-error Server Component */}
               <PaginatedProductsGrid
                 className="py-2"
                 searchParams={searchParams}
