@@ -14,3 +14,4 @@ services:
     volumes:
       - ./website/src/:/app/src/
       - ./website/.env.development:/app/.env.development
+      - ./website/tailwind.config.js:/app/tailwind.config.js

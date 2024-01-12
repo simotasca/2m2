@@ -14,6 +14,7 @@ export default async function CookiePolicy() {
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       contacts: "misc/contacts",
       auth: "auth",

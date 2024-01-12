@@ -21,6 +21,7 @@ export default async function AboutPage() {
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       page: "pages/about",
       contacts: "misc/contacts",
