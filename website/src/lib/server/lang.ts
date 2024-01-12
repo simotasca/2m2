@@ -56,7 +56,7 @@ export async function getServerTranslation(
 
   const translationWithCanonicalFallback = recursiveAssign(
     canonicalTranslation,
-    translations.get(lang)
+    translations.get(lang) || {}
   );
 
   return translationWithCanonicalFallback;

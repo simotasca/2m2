@@ -9,7 +9,6 @@ import { generateTranslations } from "@/lib/server/lang";
 export default async function CookiePolicy() {
   const [translations] = await generateTranslations(
     {
-      page: "pages/conditions/cookie-policy",
       header: "misc/header",
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",

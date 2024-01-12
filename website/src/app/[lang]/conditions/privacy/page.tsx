@@ -10,7 +10,6 @@ import { twJoin } from "tailwind-merge";
 export default async function CookiePolicy() {
   const [translations] = await generateTranslations(
     {
-      page: "pages/conditions/cookie-policy",
       header: "misc/header",
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
@@ -18,7 +17,6 @@ export default async function CookiePolicy() {
       "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       contacts: "misc/contacts",
-
       auth: "auth",
     },
     true
@@ -39,8 +37,7 @@ export default async function CookiePolicy() {
                     "prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12",
                     "prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-4",
                     "prose-p:mb-6"
-                  )}
-                >
+                  )}>
                   <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
                   <p>Last updated: December 19, 2023</p>
                   <p>
@@ -151,8 +148,7 @@ export default async function CookiePolicy() {
                         <a
                           href="https//:www.2m2.com"
                           rel="external nofollow noopener"
-                          target="_blank"
-                        >
+                          target="_blank">
                           https//:www.2m2.com
                         </a>
                       </p>
@@ -256,8 +252,7 @@ export default async function CookiePolicy() {
                     more about cookies on this{" "}
                     <a
                       href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_Cookies_And_Tracking"
-                      target="_blank"
-                    >
+                      target="_blank">
                       Link
                     </a>{" "}
                   </p>
