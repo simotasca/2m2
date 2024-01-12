@@ -1,4 +1,4 @@
-import { EcodatCategory } from "@/lib/shared/ecodat";
+import { EcodatCategory, knownCategories } from "@/lib/shared/ecodat";
 import { EcodatAction, fetchEcodat } from ".";
 import { XMLParser } from "./utils";
 
@@ -8,7 +8,9 @@ export async function fetchEcodatCategories(): Promise<EcodatCategory[]> {
     const categories = res.querySelectorAll(
       "ArrCategorie > WMAGAZZINO_Categorie"
     );
-    return Array.from(categories).map(parseCategory);
+    return Array.from(categories)
+      .map(parseCategory)
+      .filter((c) => c.name in knownCategories);
   });
 }
 

@@ -32,15 +32,15 @@ export default function Footer() {
   }, []);
 
   return (
-    <div className="bg-[#363636] text-white py-8 sm:py-14">
+    <div className="bg-[#363636] text-white px-2 py-8 sm:py-14">
       <MaxWidthContainer className="bg-neutral-500 h-px mb-8 mx-auto max-w-[95%]"></MaxWidthContainer>
 
-      <MaxWidthContainer className="grid xs:grid-cols-2 sm:grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(5rem,auto)_auto_1fr_auto] gap-4 sm:gap-16 gap-y-10 lg:px-20">
+      <MaxWidthContainer className="grid xs:grid-cols-2 md:grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(5rem,auto)_auto_1fr_auto] gap-4 sm:gap-16 gap-y-10 lg:px-20">
         <div className="max-lg:col-span-full">
           <Image className="w-20" src={logo2m2} alt="" />
         </div>
 
-        <div className="sm:max-md:row-span-2">
+        <div className="">
           <h3 className="uppercase font-bold mb-2 leading-5 whitespace-nowrap">
             {t("categories.title")}
           </h3>
@@ -81,7 +81,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-1 max-md:col-span-full">
+        <div className="flex flex-col gap-1 max-sm:col-span-full">
           <h3 className="uppercase font-bold">Login / {t("signup")}</h3>
           <div className="max-w-[400px]">
             <DropdownLogin />
@@ -92,7 +92,7 @@ export default function Footer() {
       <MaxWidthContainer className="bg-neutral-500 h-px mt-9 mb-3 mx-auto max-w-[95%]"></MaxWidthContainer>
 
       <MaxWidthContainer className="lg:px-20">
-        <div className="flex max-xs:col-span-4 max-xs:px-4">
+        <div className="flex max-xs:col-span-4 ">
           <ul className="flex flex-wrap gap-y-2 gap-x-10 text-sm uppercase">
             <li>
               <Link

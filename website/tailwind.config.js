@@ -20,7 +20,9 @@ module.exports = {
         )}, ${theme("colors.red.500")})`,
       }),
       screens: {
+        xxs: "380px",
         xs: "480px",
+        mg: "960px",
         "3xl": "1800px",
       },
     },
@@ -59,6 +61,15 @@ module.exports = {
         },
         ".search-open": {
           overflow: "hidden",
+        },
+        ".full-bleed": {
+          width: "calc(100vw + 2px)",
+          position: "relative",
+          left: "50%",
+          transform: "translateX(calc(-50vw - 1px))",
+        },
+        ".text-shadow": {
+          "text-shadow": "1px 1px 2px #363636",
         },
       });
       addVariant("child", "&>*");

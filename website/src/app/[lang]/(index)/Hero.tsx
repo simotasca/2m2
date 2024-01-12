@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import useTranslation from "@/context/lang/useTranslation";

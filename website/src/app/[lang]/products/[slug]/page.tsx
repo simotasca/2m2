@@ -77,6 +77,7 @@ export default async function ProductPage({ params: { slug } }: Props) {
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       contacts: "misc/contacts",
       auth: "auth",

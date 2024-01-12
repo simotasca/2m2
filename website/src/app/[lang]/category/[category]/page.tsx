@@ -3,6 +3,7 @@ import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import SearchModal from "@/components/search/SearchModal";
 import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
+import EngineAssistance from "@/components/ui/EngineAssistance";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
@@ -46,6 +47,7 @@ export default async function CategoryPage({
       "mobile-panel": "misc/mobile-panel",
       search: "misc/search",
       footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
       errors: "misc/errors",
       page: "pages/category",
       categories: "misc/categories",
@@ -97,6 +99,12 @@ export default async function CategoryPage({
                   {t(["categories", category.name], category.name)}
                 </Title.Red>
               </Title>
+
+              {category.name === "MOTORE" && (
+                <div className="pt-6">
+                  <EngineAssistance />
+                </div>
+              )}
 
               <div className="h-4"></div>
 
