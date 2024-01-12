@@ -1,10 +1,10 @@
 import nodemailer from "nodemailer";
-import { chechEnvVariable } from "../shared/env";
+import { checkEnvVariable } from "../shared/env";
 
-chechEnvVariable("MAILER_HOST", "Error creating nodemailer transport");
-chechEnvVariable("MAILER_PORT", "Error creating nodemailer transport");
-chechEnvVariable("MAILER_USER", "Error creating nodemailer transport");
-chechEnvVariable("MAILER_PASS", "Error creating nodemailer transport");
+checkEnvVariable("MAILER_HOST", "Error creating nodemailer transport");
+checkEnvVariable("MAILER_PORT", "Error creating nodemailer transport");
+checkEnvVariable("MAILER_USER", "Error creating nodemailer transport");
+checkEnvVariable("MAILER_PASS", "Error creating nodemailer transport");
 
 const mailer = nodemailer.createTransport({
   // host: process.env.MAILER_HOST,
@@ -20,11 +20,7 @@ const mailer = nodemailer.createTransport({
   auth: { user: "simo.tasca@gmail.com", pass: "khep vooi uxsn tymz" },
 });
 
-export function sendMail(
-  to: string,
-  subject: string,
-  content: { text?: string; html?: string }
-) {
+export function sendMail(to: string, subject: string, content: { text?: string; html?: string }) {
   return mailer.sendMail({
     // from: process.env.MAILER_USER,
     from: "simo.tasca@gmail.com",

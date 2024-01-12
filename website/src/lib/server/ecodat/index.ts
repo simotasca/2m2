@@ -1,4 +1,4 @@
-import { chechEnvVariable } from "@/lib/shared/env";
+import { checkEnvVariable } from "@/lib/shared/env";
 import { ecodatBodyTemplate, ecodatHeaders, XMLParser } from "./utils";
 
 export * from "./articles";
@@ -24,13 +24,9 @@ export enum EcodatAction {
   SEND_ORDER = "InviaOrdine",
 }
 
-chechEnvVariable("ECODAT_API_URL");
+checkEnvVariable("ECODAT_API_URL");
 
-export async function fetchEcodat(
-  action: EcodatAction,
-  xml?: string,
-  prefix = "Get"
-) {
+export async function fetchEcodat(action: EcodatAction, xml?: string, prefix = "Get") {
   // console.log("REQUEST: =================");
   // console.log(ecodatBodyTemplate(action, xml, prefix));
   // console.log("==========================");
@@ -52,18 +48,12 @@ export async function fetchEcodat(
     })
     .then((data) => XMLParser.parse(data).documentElement)
     .then((data) => {
-      const responseWrapper = data.querySelector(
-        `M_${prefix}${action}Response`
-      );
-      const responseData = XMLParser.getVal(
-        responseWrapper,
-        `M_${prefix}${action}Result`
-      );
+      const responseWrapper = data.querySelector(`M_${prefix}${action}Response`);
+      const responseData = XMLParser.getVal(responseWrapper, `M_${prefix}${action}Result`);
       const hasError = !responseData || responseData === "false";
       if (hasError) {
         const errorMessage =
-          XMLParser.getVal(responseWrapper, "StrErr") ||
-          XMLParser.getVal(responseWrapper, "StrErrore");
+          XMLParser.getVal(responseWrapper, "StrErr") || XMLParser.getVal(responseWrapper, "StrErrore");
         if (errorMessage) {
           throw new Error("Internal Error API Ecodat: " + errorMessage);
         }
