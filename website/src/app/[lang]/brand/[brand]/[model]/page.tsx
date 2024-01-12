@@ -82,7 +82,7 @@ export default async function ModelPage({
     <TranslationClientComponent value={translations}>
       <ClientLayout cart={cart} favourites={favs}>
         <PageLayout headerSmall>
-          <SearchModal />
+          <SearchModal model={model} />
 
           <div className="bg-white pb-4 xs:px-2">
             <MaxWidthContainer>
