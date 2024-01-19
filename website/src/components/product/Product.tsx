@@ -16,6 +16,7 @@ import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
 import FavouritesToggle from "./FavouritesToggle";
 import ProductImage from "./ProductImage";
+import { useEffect } from "react";
 
 interface Props {
   product: CartProduct;
