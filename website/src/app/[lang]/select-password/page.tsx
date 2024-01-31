@@ -1,15 +1,19 @@
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import { generateTranslations } from "@/lib/server/lang";
-import { SendResetPassword } from "./SendResetPassword";
+import { SelectNewPassword } from "./SelectNewPassword";
 
-export default async function ResetPassword({ searchParams }) {
+interface Props {
+  searchParams: any;
+}
+
+export default async function SelectPasswordPage({ searchParams }: Props) {
   const [translations] = await generateTranslations({
     auth: "auth",
   });
 
   return (
     <TranslationClientComponent value={translations}>
-      <SendResetPassword />
+      <SelectNewPassword />
     </TranslationClientComponent>
   );
 }

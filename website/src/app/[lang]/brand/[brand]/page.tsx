@@ -1,7 +1,5 @@
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
-import SearchModal from "@/components/search/SearchModal";
-import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
@@ -73,13 +71,9 @@ export default async function ModelPage({
     <TranslationClientComponent value={translations}>
       <ClientLayout cart={cart} favourites={favs}>
         <PageLayout headerSmall>
-          <SearchModal brand={brand} />
           <div className="bg-white pb-4 xs:px-2">
             <MaxWidthContainer>
-              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start py-4">
-                <Breadcrumbs items={bread} />
-                <StyledSearchModalToggle />
-              </div>
+              <Breadcrumbs className="py-4" items={bread} />
 
               <Title as="h1">
                 <Title.Gray>{t("page.title")}</Title.Gray>

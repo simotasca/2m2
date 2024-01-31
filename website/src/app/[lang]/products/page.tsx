@@ -15,20 +15,11 @@ import { GenericSearchParams } from "@/lib/server/search";
 import { parseSearchParams } from "@/lib/shared/search";
 
 interface Props {
-  // params: {
-  //   category: string;
-  //   typology: string;
-  //   brand: string;
-  //   model: string;
-  // };
   searchParams: GenericSearchParams;
 }
 
 export default async function ProductsPage({ searchParams }: Props) {
   const filters = parseSearchParams(searchParams);
-  console.log(searchParams);
-  console.log(filters);
-
   const [translations, { t, r }] = await generateTranslations(
     {
       page: "pages/products",

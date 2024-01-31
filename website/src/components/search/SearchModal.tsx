@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "@/components/navigation/Link";
 import useTranslation from "@/context/lang/useTranslation";
 import useSearchModal from "@/context/search/useSearchModal";
-import useNavigate from "@/hooks/useNavigate";
 import useSearch from "@/hooks/useSearch";
 import iconClose from "@/images/icons/close.svg";
 import imgLoad from "@/images/icons/loader.svg";
@@ -18,26 +18,19 @@ import {
 } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import type { Dispatch, MouseEventHandler, PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 
 interface Props {
   category?: EcodatCategory;
-  type?: EcodatTypology;
-  brand?: EcodatBrand;
-  model?: EcodatModel;
 }
 
-export default function SearchModal({
-  category: baseCategory,
-  type: baseType,
-  brand: baseBrand,
-  model: baseModel,
-}: Props) {
+export default function SearchModal({ category: baseCategory }: Props) {
   const input = useRef<HTMLInputElement>(null);
 
-  const { navigate } = useNavigate();
+  const router = useRouter();
 
   const { close, isOpen } = useSearchModal();
 
@@ -48,11 +41,9 @@ export default function SearchModal({
   const [category, setCategory] = useState<EcodatCategory | undefined>(
     baseCategory
   );
-  const [typology, setTypology] = useState<EcodatTypology | undefined>(
-    baseType
-  );
-  const [brand, setBrand] = useState<EcodatBrand | undefined>(baseBrand);
-  const [model, setModel] = useState<EcodatModel | undefined>(baseModel);
+  const [typology, setTypology] = useState<EcodatTypology | undefined>();
+  const [brand, setBrand] = useState<EcodatBrand | undefined>();
+  const [model, setModel] = useState<EcodatModel | undefined>();
 
   const [selection, setSelection] = useState<{
     message: string;
@@ -77,17 +68,13 @@ export default function SearchModal({
   const models =
     brand && filters?.brands?.find((c) => c.id === brand.id)?.models;
 
-  const search = () => {
-    const productsPageLink = routes.products({
-      categoryId: category?.id,
-      typeId: typology?.id,
-      brandId: brand?.id,
-      modelId: model?.id,
-      description: value || undefined,
-    });
-    close();
-    navigate(productsPageLink);
-  };
+  const productsPageLink = routes.products({
+    categoryId: category?.id,
+    typeId: typology?.id,
+    brandId: brand?.id,
+    modelId: model?.id,
+    description: value || undefined,
+  });
 
   useEffect(() => {
     ecodatData.then(setFilters);
@@ -102,9 +89,9 @@ export default function SearchModal({
       setValue("");
       setSelection(undefined);
       setCategory(baseCategory);
-      setTypology(baseType);
-      setBrand(baseBrand);
-      setModel(baseModel);
+      setTypology(undefined);
+      setBrand(undefined);
+      setModel(undefined);
     }
   }, [isOpen, input]);
 
@@ -125,20 +112,17 @@ export default function SearchModal({
         className={twJoin(
           "fixed inset-0 w-screen h-screen bg-black bg-opacity-40 z-[53]",
           !isOpen && "hidden"
-        )}
-      ></div>
+        )}></div>
       <div
         className={twJoin(
           "pointer-events-none fixed w-[800px] max-w-[95vw] max-h-[70vh] top-[15vh] left-1/2 -translate-x-1/2 z-[54]",
           isOpen ? "pointer-events-auto opacity-100" : "opacity-0"
-        )}
-      >
+        )}>
         <div
           className={twJoin(
             "text-dark bg-white w-full h-full max-h-[70vh] rounded-md shadow-md shadow-neutral-500 transition-all duration-300 ease-out",
             isOpen ? "translate-y-0" : "-translate-y-10"
-          )}
-        >
+          )}>
           <div className="flex flex-col h-full max-h-[70vh]">
             <div className="flex-shrink-0 flex-grow-0">
               <div className="flex items-center relative">
@@ -147,8 +131,7 @@ export default function SearchModal({
                     className={twJoin(
                       "scale-[0.8] translate-y-px",
                       !loading && "hidden"
-                    )}
-                  >
+                    )}>
                     <Image
                       alt=""
                       src={imgLoad}
@@ -169,7 +152,7 @@ export default function SearchModal({
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   onKeyDown={(e) => {
-                    e.key === "Enter" && search();
+                    e.key === "Enter" && router.push(productsPageLink);
                     e.key === "Escape" && close();
                   }}
                   id="search-modal-input"
@@ -237,8 +220,7 @@ export default function SearchModal({
                             selection.setter(s.key);
                             setSelection(undefined);
                           }}
-                          className="bg-orange-500 hover:bg-gradient-to-b from-orange-600 via-orange-500 to-orange-500 text-white whitespace-nowrap"
-                        >
+                          className="bg-orange-500 hover:bg-gradient-to-b from-orange-600 via-orange-500 to-orange-500 text-white whitespace-nowrap">
                           {s.val}
                         </Badge>
                       ))}
@@ -260,8 +242,7 @@ export default function SearchModal({
                   {result.map((r, i) => (
                     <li
                       className="group hover:bg-stone-200 hover:bg-opacity-80 px-5 first:-mt-2"
-                      key={i}
-                    >
+                      key={i}>
                       <a href={routes.product(r)}>
                         <p
                           className="text-sm group-last:border-b-0 leading-tight py-2"
@@ -277,14 +258,14 @@ export default function SearchModal({
             </div>
 
             <div className="group flex-shrink-0 flex-grow-0 px-5 py-1 bg-slate-100 rounded-b-md border-t border-slate-300">
-              <button onClick={search}>
+              <Link href={productsPageLink}>
                 <div className="flex items-center gap-1.5 pb-0.5">
                   <Image src={imgGoTo} alt="" className="w-3 translate-y-px" />
                   <span className="text-xs text-slate-700 translate-y-px group-hover:underline">
                     {t("search.go-products")}
                   </span>
                 </div>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -361,8 +342,7 @@ function SearchBadge({
                   }
             );
         }
-      }}
-    >
+      }}>
       {value ? (
         <div className="flex items-center gap-1">
           <Image
@@ -393,8 +373,7 @@ function Badge({
       className={twMerge(
         "text-xs font-medium px-2.5 pb-1 pt-0.5 rounded",
         className
-      )}
-    >
+      )}>
       {children}
     </button>
   );

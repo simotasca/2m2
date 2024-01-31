@@ -99,7 +99,7 @@ export default async function TypologyPage({
     <TranslationClientComponent value={translations}>
       <ClientLayout cart={cart} favourites={favs}>
         <PageLayout headerSmall>
-          <SearchModal category={category} type={typology} />
+          <SearchModal />
 
           <div className="bg-white pb-4 xs:px-2">
             <MaxWidthContainer>

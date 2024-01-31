@@ -1,7 +1,11 @@
 <h2>Confirm Registration</h2>
 
 <p>Follow this link to confirm your registration:</p>
-<p><a href="{{ .ConfirmationURL }}">Confirm Sign Up</a></p>
+<p>
+  <a href="https://supabase.2m2.it/auth/v1/verify?token={{ .TokenHash }}&type=signup&redirect_to=https://www.2m2.it/api/auth/callback">
+    Confirm Sign Up
+  </a>
+</p>
 
 --
 
