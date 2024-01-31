@@ -4,11 +4,12 @@
 - [ ] checkout: manca il design della mail di errore x 2m2
 - [ ] checkout: suggerire dati registrazione
 - [ ] prodotto: foto zoomabili
-- [ ] footer: non sono giusti i contatti (sono giusti quelli della barra rossa in alto)
+- [ ] pagina tipologie: bread category
+- [x] footer: non sono giusti i contatti (sono giusti quelli della barra rossa in alto)
 - [ ] i18n: verificare che tutto il sito sia tradotto (i nomi dei prodotti sicuramente non lo sono)
 - [ ] login: mancano messaggi di errore (si colorano solo di rosso i campi)
 - [ ] registrazione: mancano messaggi di errore termini e condizioni
-- [ ] termini e condizioni: il link dovrebbe essere target=_blank
+- [x] termini e condizioni: il link dovrebbe essere target=_blank
 - [x] tutte le pagine not found danno invece something went wrong
 - [x] header: tendine ricambi e modelli
 - [x] header: contatti mandare a contacts section
@@ -44,8 +45,8 @@
 # header
 
 - [x] rimuovere lingue inutili
-- [ ] link a google maps nell'indirizzo
-- [ ] link email e telefono
+- [x] link a google maps nell'indirizzo
+- [x] link email e telefono
 - [x] header modals ricambi e modelli
 
 # footer

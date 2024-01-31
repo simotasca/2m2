@@ -137,6 +137,7 @@ export default function ContactsSection() {
             </p>
           </li>
         </ul>
+        <a href="https://maps.app.goo.gl/369MXv5mJpvhDNP86"><p className="mt-6 hover:underline cursor-pointer">{settings.info.fullAddress()}</p></a>
       </div>
     </div>
   );
