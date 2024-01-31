@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
   const customer = await stripe.customers.create({
     email: record.email,
-    name: record.username,
+    name: record.email,
   });
 
   // WARN: this is a service role supabase client!!!
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     // TODO: manage error
-    console.log("Errror", error);
+    console.log("Error", error);
   }
 
   return new NextResponse(`Created new customer ${customer.id}`, {

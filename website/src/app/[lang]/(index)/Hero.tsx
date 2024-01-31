@@ -1,6 +1,8 @@
+"use client";
+
 import Button from "@/components/ui/Button";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
-import useTranslation, { rich } from "@/context/lang/useTranslation";
+import useTranslation from "@/context/lang/useTranslation";
 import iconBrand from "@/images/icons/sell.svg";
 import iconSend from "@/images/icons/send.svg";
 import iconGuaranteed from "@/images/icons/white/guaranteed.svg";
@@ -13,14 +15,15 @@ import iconCategory from "@/images/icons/widgets.svg";
 import imgLogoEsteso from "@/images/logo-esteso.svg";
 import mainBg from "@/images/main-background-engine.jpg";
 import imgSkew from "@/images/skew.svg";
+import { ecodatData } from "@/lib/client/filters";
+import type { EcodatData } from "@/lib/client/filters";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
-import { getFilters } from "@/lib/client/filters";
-import { SearchParams } from "@/lib/shared/search";
+import Link from "@/components/navigation/Link";
 
 export default function Hero() {
   const { t } = useTranslation("page.hero");
@@ -49,14 +52,16 @@ export default function Hero() {
               {t("subtitle.line2")}
             </p>
           </div>
-          <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
-            <span>{t("button")}</span>
-            <Image
-              src={iconSend}
-              alt=""
-              className="w-5 -translate-y-px -rotate-[30deg] transition-transform group-hover:-translate-y-0.5"
-            />
-          </Button>
+          <Link href="#contacts">
+            <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
+              <span>{t("button")}</span>
+              <Image
+                src={iconSend}
+                alt=""
+                className="w-5 -translate-y-px -rotate-[30deg] transition-transform group-hover:-translate-y-0.5"
+              />
+            </Button>
+          </Link>
         </main>
       </MaxWidthContainer>
     </div>
@@ -69,7 +74,7 @@ function HeroFilters() {
   const router = useRouter();
 
   // the contents of the dropdowns
-  const [filters, setFilters] = useState<any>(null);
+  const [content, setContent] = useState<any>(null);
 
   // the selected content
   const [category, setCategory] = useState<any>(null);
@@ -90,8 +95,8 @@ function HeroFilters() {
   };
 
   useEffect(() => {
-    getFilters().then((res) => {
-      res && setFilters(res);
+    ecodatData.then((res) => {
+      res && setContent(res);
     });
   }, []);
 
@@ -148,7 +153,7 @@ function HeroFilters() {
           <SearchFilter
             label="category"
             placeholder="Select the category"
-            data={mapFilterData(filters?.categories, "name")}
+            data={mapFilterData(content?.categories, "name")}
             onChange={(v) => setCategory(v)}
           />
           <SearchFilter
@@ -163,7 +168,7 @@ function HeroFilters() {
           <SearchFilter
             label="brand"
             placeholder="Select the brand"
-            data={mapFilterData(filters?.brands, "name")}
+            data={mapFilterData(content?.brands, "name")}
             onChange={(b) => setBrand(b)}
           />
           <SearchFilter

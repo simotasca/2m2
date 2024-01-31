@@ -2,17 +2,13 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { Database } from "@/database.types";
-import iconLogo from "@/images/logo-dark.svg";
+import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Image from "next/image";
+import { createClientSideClient } from "@/lib/client/supabase";
 import { useState } from "react";
 import { Input } from "./Input";
 
 export function SelectNewPassword() {
-  const supabase = createClientComponentClient<Database>();
-
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | undefined>();
   const [retry, setRetry] = useState(false);
@@ -25,6 +21,7 @@ export function SelectNewPassword() {
     setLoading(true);
     setError(undefined);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
@@ -45,23 +42,21 @@ export function SelectNewPassword() {
     setLoading(false);
   };
 
+  const { t, r } = useTranslation();
+
   return (
     <>
       <LoadingScreen message="updating" loading={loading} />
 
       <AuthLayout>
-        <Image
-          src={iconLogo}
-          alt="logo 2m2 autoricambi"
-          className="w-16 mx-auto"
-        />
+        <AuthLayout.Image />
 
-        <h1 className="text-xl text-center font-bold mt-4 mb-3 uppercase">
-          Choose your new password
-        </h1>
+        <AuthLayout.Title>{t("auth.password.title")}</AuthLayout.Title>
 
         {updated ? (
-          <p className="leading-5 mb-3 text-center">updated!</p>
+          <p className="leading-5 mb-3 text-center">
+            {t("auth.password.updated")}
+          </p>
         ) : (
           <>
             <Input
@@ -81,9 +76,8 @@ export function SelectNewPassword() {
                     href={new URL(
                       window.location.pathname,
                       window.origin
-                    ).toString()}
-                  >
-                    try again
+                    ).toString()}>
+                    {t("auth.password.try-again")}
                   </a>
                 )}
               </p>
@@ -91,9 +85,8 @@ export function SelectNewPassword() {
 
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
-              onClick={() => update()}
-            >
-              Confirm
+              onClick={() => update()}>
+              {t("auh.password.confirm")}
             </Button>
           </>
         )}

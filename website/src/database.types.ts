@@ -62,27 +62,98 @@ export interface Database {
           }
         ]
       }
+      customer_business: {
+        Row: {
+          cf: string | null
+          created_at: string
+          id_customer: string
+          name: string | null
+          pec: string | null
+          phone: string | null
+          piva: string | null
+          sdi: string | null
+        }
+        Insert: {
+          cf?: string | null
+          created_at?: string
+          id_customer: string
+          name?: string | null
+          pec?: string | null
+          phone?: string | null
+          piva?: string | null
+          sdi?: string | null
+        }
+        Update: {
+          cf?: string | null
+          created_at?: string
+          id_customer?: string
+          name?: string | null
+          pec?: string | null
+          phone?: string | null
+          piva?: string | null
+          sdi?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_business_id_customer_fkey"
+            columns: ["id_customer"]
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      customer_private: {
+        Row: {
+          cf: string | null
+          created_at: string
+          id_customer: string
+          name: string | null
+          phone: string | null
+          surname: string | null
+        }
+        Insert: {
+          cf?: string | null
+          created_at?: string
+          id_customer: string
+          name?: string | null
+          phone?: string | null
+          surname?: string | null
+        }
+        Update: {
+          cf?: string | null
+          created_at?: string
+          id_customer?: string
+          name?: string | null
+          phone?: string | null
+          surname?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_private_id_customer_fkey"
+            columns: ["id_customer"]
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       customers: {
         Row: {
           created_at: string
           email: string
           id: string
           stripe_customer: string | null
-          username: string
         }
         Insert: {
           created_at?: string
           email?: string
           id: string
           stripe_customer?: string | null
-          username: string
         }
         Update: {
           created_at?: string
           email?: string
           id?: string
           stripe_customer?: string | null
-          username?: string
         }
         Relationships: [
           {
@@ -93,26 +164,51 @@ export interface Database {
           }
         ]
       }
+      favourites: {
+        Row: {
+          created_at: string
+          id_customer: string
+          id_product: number
+        }
+        Insert: {
+          created_at?: string
+          id_customer: string
+          id_product: number
+        }
+        Update: {
+          created_at?: string
+          id_customer?: string
+          id_product?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favourites_id_customer_fkey"
+            columns: ["id_customer"]
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       municipality: {
         Row: {
           created_at: string
           id: number
           id_province: number
-          istat: number
+          istat: string
           name: string
         }
         Insert: {
           created_at?: string
           id?: number
           id_province: number
-          istat: number
+          istat: string
           name: string
         }
         Update: {
           created_at?: string
           id?: number
           id_province?: number
-          istat?: number
+          istat?: string
           name?: string
         }
         Relationships: [
@@ -202,7 +298,24 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_customer_data: {
+        Args: {
+          id: string
+        }
+        Returns: {
+          customer_id: string
+          customer_email: string
+          type: string
+          cf: string
+          phone: string
+          business_name: string
+          piva: string
+          pec: string
+          sdi: string
+          name: string
+          surname: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

@@ -1,18 +1,22 @@
 "use client";
 
+import Link from "@/components/navigation/Link";
 import useCart from "@/context/cart/useCart";
+import useFavourites from "@/context/favourites/useFavourites";
 import useTranslation from "@/context/lang/useTranslation";
+import iconLoader from "@/images/icons/loader.svg";
 import iconCart from "@/images/icons/white/cart.svg";
 import iconFavourite from "@/images/icons/white/favourite.svg";
+import iconNotFavourite from "@/images/icons/white/not-favourite.svg";
 import { CartProduct } from "@/lib/shared/cart";
 import { productName } from "@/lib/shared/ecodat";
-import { encodeQueryParam } from "@/lib/shared/search";
+import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
+import FavouritesToggle from "./FavouritesToggle";
 import ProductImage from "./ProductImage";
-import routes from "@/lib/shared/routes";
+import { useEffect } from "react";
 
 interface Props {
   product: CartProduct;
@@ -21,6 +25,7 @@ interface Props {
 export default function Product({ product }: Props) {
   const { t } = useTranslation("product");
   const { addProduct, removeProduct, hasProduct, loading } = useCart();
+  const { isFavourite } = useFavourites();
 
   return (
     <Link
@@ -59,20 +64,28 @@ export default function Product({ product }: Props) {
               <span>Remove</span>
             ) : (
               <>
-                <Image className="w-5 translate-y-px" src={iconCart} alt="" />
+                {loading ? (
+                  <Image
+                    className="w-5 animate-spin invert"
+                    src={iconLoader}
+                    alt=""
+                  />
+                ) : (
+                  <Image className="w-5 translate-y-px" src={iconCart} alt="" />
+                )}
                 <span>{t("addToCart")}</span>
               </>
             )}
           </Button>
-          <Button
-            onClick={(e) => e.preventDefault()}
+          <FavouritesToggle
+            product={product}
             className="bg-red-600 rounded-sm aspect-square relative">
             <Image
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%-1px)] w-[55%]"
-              src={iconFavourite}
+              src={isFavourite(product) ? iconFavourite : iconNotFavourite}
               alt=""
             />
-          </Button>
+          </FavouritesToggle>
         </div>
       </div>
     </Link>

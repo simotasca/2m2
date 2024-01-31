@@ -5,7 +5,7 @@ import iconLocation from "@/images/icons/white/location.svg";
 import iconEmail from "@/images/icons/white/mail.svg";
 import iconPhone from "@/images/icons/white/phone.svg";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import MaxWidthContainer from "../ui/MaxWidthContainer";
 import settings from "@/settings";
 import i18n from "@/i18n";
@@ -22,9 +22,8 @@ export default function TopBar() {
           {i18n.locales.map((locale) => (
             <Link
               key={locale}
-              href={"/" + locale === i18n.canonical ? "" : locale}
-              className={lang === locale ? activeLangClass : ""}
-            >
+              lang={locale}
+              className={lang === locale ? activeLangClass : ""}>
               {locale}
             </Link>
           ))}

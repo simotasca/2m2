@@ -8,13 +8,13 @@ import Image from "next/image";
 
 export default function BrandsCarousel() {
   return (
-    <div className="flex gap-10 justify-center items-center">
-      <Image className="w-12" src={logoHonda} alt=""></Image>
-      <Image className="w-12" src={logoHyundai} alt=""></Image>
-      <Image className="w-12" src={logoFord} alt=""></Image>
-      <Image className="w-12" src={logoBmw} alt=""></Image>
-      <Image className="w-12" src={logoKia} alt=""></Image>
-      <Image className="w-12" src={logoAlfaromeo} alt=""></Image>
+    <div className="flex gap-6 xs:gap-8 sm:gap-10 justify-center items-center max-w-full">
+      <Image className="w-7 xs:w-10 sm:w-12" src={logoHonda} alt=""></Image>
+      <Image className="w-7 xs:w-10 sm:w-12" src={logoHyundai} alt=""></Image>
+      <Image className="w-7 xs:w-10 sm:w-12" src={logoFord} alt=""></Image>
+      <Image className="w-7 xs:w-10 sm:w-12" src={logoBmw} alt=""></Image>
+      <Image className="w-7 xs:w-10 sm:w-12" src={logoKia} alt=""></Image>
+      <Image className="w-7 xs:w-10 sm:w-12" src={logoAlfaromeo} alt=""></Image>
     </div>
   );
 }

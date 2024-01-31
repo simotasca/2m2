@@ -1,8 +1,7 @@
-import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { generateTranslations } from "@/lib/server/lang";
 import { SelectNewPassword } from "./SelectNewPassword";
 import { SendResetPassword } from "./SendResetPassword";
-
-const translations = {};
 
 export default async function ResetPassword({ searchParams }) {
   // if(searchParams.error) {
@@ -12,9 +11,13 @@ export default async function ResetPassword({ searchParams }) {
   //   return <ErrorSoRetry />
   // }
 
+  const [translations] = await generateTranslations({
+    auth: "auth",
+  });
+
   return (
-    <TranslationClientProvider id={translations}>
+    <TranslationClientComponent value={translations}>
       {searchParams.code ? <SelectNewPassword /> : <SendResetPassword />}
-    </TranslationClientProvider>
+    </TranslationClientComponent>
   );
 }

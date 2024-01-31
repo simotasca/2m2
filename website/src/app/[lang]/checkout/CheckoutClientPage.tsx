@@ -22,22 +22,35 @@ import {
 } from "./address/DeliveryAddressTab";
 import { PersonalInfoTab, type PersonalInfo } from "./PersonalInfoTab";
 import WizTabValidator from "./WizTabHandle";
+import useTranslation from "@/context/lang/useTranslation";
+import useAuth from "@/context/auth/useAuth";
+import { createClientSideClient } from "@/lib/client/supabase";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 interface Props {
   products: EcodatArticle[];
 }
 
 export default function CheckoutClientPage({ products }: Props) {
-  /* TODO: pre-populate with registered user info */
+  const { session, loading: loadingAuth } = useAuth();
+
   // state
-  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({});
+  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
+    type: "private",
+    withInvoice: false,
+  });
   const [deliveryAddress, setDeliveryAddress] = useState<DeliveryAddress>({});
-  const [paymentClientSecret, setPaymentClientSecret] = useState<string>();
 
   // imperative handles for validation
   const personalInfoHandle = useRef<WizTabValidator>(null);
   const deliveryHandle = useRef<WizTabValidator>(null);
   const checkoutHandle = useRef<WizTabValidator>(null);
+
+  const metadata = {
+    ...personalInfo,
+    ...deliveryAddress,
+    products: products.map((p) => p.id).join(";"),
+  };
 
   // wizard management
   const [wizStep, setWizStep] = useState(0);
@@ -54,15 +67,9 @@ export default function CheckoutClientPage({ products }: Props) {
     />,
     <CheckoutTab
       ref={checkoutHandle}
-      clientSecret={paymentClientSecret}
-      setClientSecret={setPaymentClientSecret}
       email={personalInfo.email}
       amount={products.reduce((tot, p) => tot + p.price, 0)}
-      metadata={{
-        ...personalInfo,
-        ...deliveryAddress,
-        products: products.map((p) => p.id).join(";"),
-      }}
+      metadata={metadata}
     />,
   ];
   const wizHandles = [personalInfoHandle, deliveryHandle];
@@ -98,14 +105,64 @@ export default function CheckoutClientPage({ products }: Props) {
     focus && focus();
   }, []);
 
+  useEffect(() => {
+    if (loadingAuth || !session?.user) return;
+
+    (async () => {
+      const supabase = createClientSideClient();
+      const { data, error } = await supabase.rpc("get_customer_data", {
+        id: session.user.id,
+      });
+
+      if (error) {
+        // TODO handle
+      }
+
+      if (!data?.at(0)) return;
+
+      const [customer] = data;
+
+      if (customer.type === "business") {
+        setPersonalInfo({
+          ...personalInfo,
+          email: customer.customer_email,
+          phone: customer.phone,
+          cf: customer.cf,
+          type: "business",
+          name: customer.business_name,
+          piva: customer.piva,
+          pec: customer.pec,
+          sdi: customer.sdi,
+        });
+      } else {
+        setPersonalInfo({
+          ...personalInfo,
+          email: customer.customer_email,
+          phone: customer.phone,
+          cf: customer.cf,
+          type: "private",
+          name: customer.name,
+          surname: customer.surname,
+        });
+      }
+    })();
+  }, [loadingAuth]);
+
+  const { t } = useTranslation("page");
   return (
     <div className="min-h-screen">
+      {/* TODO: i18n */}
+      <LoadingScreen
+        loading={loadingAuth}
+        message="initializing"></LoadingScreen>
+
       <Image
         src={imgBg}
         alt="backgorund cover"
         className="fixed inset-0 w-full h-full object-cover -z-20"
       />
       <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 -z-10"></div>
+
       <div className="p-8 overflow-hidden">
         <div className="max-w-screen-md mx-auto flex flex-col gap-3 pt-5 py-6 px-4 md:px-8 bg-white overflow-hidden">
           <Breadcrumbs wizStep={wizStep} changeWizStep={changeWizStep} />
@@ -116,15 +173,13 @@ export default function CheckoutClientPage({ products }: Props) {
               className={twMerge(
                 "relative transition-transform duration-200",
                 hideWiz && "-translate-x-5"
-              )}
-            >
+              )}>
               {currWizard}
               {wizStep < wizard.length - 1 && (
                 <Button
                   onClick={() => changeWizStep((s) => s + 1)}
-                  className="bg-red-gradient text-white max-sm:ml-auto mr-0"
-                >
-                  Next
+                  className="bg-red-gradient text-white max-sm:ml-auto mr-0">
+                  {t("next")}
                 </Button>
               )}
               <div className="sm:hidden h-6"></div>
@@ -134,8 +189,7 @@ export default function CheckoutClientPage({ products }: Props) {
                   hideWiz
                     ? "opacity-100 pointer-events-none"
                     : "opacity-0 pointer-events-none"
-                )}
-              ></div>
+                )}></div>
             </div>
             {/* order details */}
             <OrderDetails
@@ -147,16 +201,8 @@ export default function CheckoutClientPage({ products }: Props) {
           </div>
           {/* help */}
           <div className="text-xs text-neutral-500 flex flex-col gap-2 pt-4 border-t border-neutral-200">
-            <p>
-              Hai bisogno di aiuto? Consulta le pagine d'aiuto oppure contattaci
-            </p>
-            <p>
-              Cosa succede quando si effettua un ordine? Cliccando sul pulsante
-              "Acquista ora" ti invieremo un messaggio con la conferma di
-              ricezione dell'ordine. Il contratto di acquisto di un articolo non
-              sarà perfezionato fino al ricevimento del messaggio che conferma
-              la spedizione degli articoli.
-            </p>
+            <p>{t("info.help")}</p>
+            <p>{t("info.processed-order")}</p>
           </div>
         </div>
       </div>
@@ -175,15 +221,14 @@ function OrderDetails({
   deliveryAddress: DeliveryAddress;
   isLastStep: boolean;
 }) {
+  const { t, r } = useTranslation("page.order-details");
   return (
     <div>
       <div className="flex justify-between mb-2">
         <div>
-          <h3 className="inline uppercase font-bold">
-            Your <span className="text-red-500">order</span>
-          </h3>
+          {<h3 className="inline uppercase font-bold">{r("your-order")}</h3>}
           <a href="/cart" className="text-sm ml-2 underline text-neutral-500">
-            review
+            {t("review")}
           </a>
         </div>
         <Image className="w-5 opacity-70" alt="logo 2m2" src={iconLock}></Image>
@@ -243,22 +288,18 @@ function OrderDetails({
 }
 
 function Breadcrumbs({ wizStep, changeWizStep }) {
-  const breadcrumbs = [
-    "personal informations",
-    "delivery",
-    // "billing",
-    "checkout",
-  ];
+  const { t } = useTranslation("page.breadcrumbs");
+  const breadcrumbs = [t("personal-informations"), t("delivery"), "checkout"];
   return (
     <div>
       <a href="/" className="sm:hidden underline text-dark text-sm">
-        back to shop
+        {t("backtoshop")}
       </a>
       <div className="sm:hidden h-4"></div>
       <div className="flex justify-between items-center mb-1">
         <div className="flex flex-wrap gap-y-0 gap-2 text-neutral-400 text-xs sm:text-sm">
           <a href="/" className="max-sm:hidden underline text-dark">
-            back to shop
+            {t("backtoshop")}
           </a>
           {breadcrumbs.map((b, i) => (
             <div className="flex gap-2 " key={i}>
@@ -273,8 +314,7 @@ function Breadcrumbs({ wizStep, changeWizStep }) {
         <Image
           className="max-sm:hidden w-12"
           alt="logo 2m2"
-          src={imgLogo}
-        ></Image>
+          src={imgLogo}></Image>
       </div>
     </div>
   );
@@ -294,8 +334,7 @@ function BreadcrumbStep({
         curr > n && "text-dark"
       )}
       disabled={curr <= n}
-      onClick={() => change(() => n)}
-    >
+      onClick={() => change(() => n)}>
       {children}
     </button>
   );

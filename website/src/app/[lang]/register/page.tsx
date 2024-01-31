@@ -1,12 +1,16 @@
-import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { generateTranslations } from "@/lib/server/lang";
 import RegisterForm from "./RegisterForm";
 
-const translations = {};
+export default async function RegisterPage() {
+  const [translations] = await generateTranslations({
+    auth: "auth",
+    errors: "misc/errors",
+  });
 
-export default function RegisterPage() {
   return (
-    <TranslationClientProvider id={translations}>
+    <TranslationClientComponent value={translations}>
       <RegisterForm />
-    </TranslationClientProvider>
+    </TranslationClientComponent>
   );
 }

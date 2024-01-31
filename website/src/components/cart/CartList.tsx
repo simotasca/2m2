@@ -6,14 +6,19 @@ import { productName } from "@/lib/shared/ecodat";
 import Image from "next/image";
 
 export default function CartList() {
-  const { count, cart, removeProduct } = useCart();
+  const { count, cartProducts, removeProduct, isInitialized } = useCart();
+
+  if (!isInitialized) {
+    return <p className="text-sm text-neutral-600 ml-1">loading . . .</p>;
+  }
+
   return (
     <>
       <div className="flex flex-col gap-2">
         {count === 0 && (
           <p className="text-sm text-neutral-600 ml-1">your cart is empty</p>
         )}
-        {cart.map((product) => (
+        {cartProducts.map((product) => (
           <div
             key={product.id}
             className="group grid grid-cols-[1fr_auto_auto] gap-2 pr-3">

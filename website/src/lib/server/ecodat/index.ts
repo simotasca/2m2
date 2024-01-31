@@ -1,4 +1,4 @@
-import { chechEnvVariable } from "@/lib/shared/env";
+import { checkEnvVariable } from "@/lib/shared/env";
 import { ecodatBodyTemplate, ecodatHeaders, XMLParser } from "./utils";
 
 export * from "./articles";
@@ -24,36 +24,36 @@ export enum EcodatAction {
   SEND_ORDER = "InviaOrdine",
 }
 
-chechEnvVariable("ECODAT_API_URL");
+checkEnvVariable("ECODAT_API_URL");
 
-export async function fetchEcodat(
-  action: EcodatAction,
-  xml?: string,
-  prefix = "Get"
-) {
+export async function fetchEcodat(action: EcodatAction, xml?: string, prefix = "Get") {
+  // console.log("REQUEST: =================");
+  // console.log(ecodatBodyTemplate(action, xml, prefix));
+  // console.log("==========================");
+
   return await fetch(process.env.ECODAT_API_URL!, {
     method: "POST",
     body: ecodatBodyTemplate(action, xml, prefix),
     headers: ecodatHeaders(action, prefix),
   })
     .then((res) => res.text())
+    // .then((res) => {
+    //   console.log("RESPONSE: ==============");
+    //   console.log(res);
+    //   console.log("========================");
+    //   return res;
+    // })
     .catch((err) => {
       throw new Error(`Error calling ecodat api ${action}: ` + err.message);
     })
     .then((data) => XMLParser.parse(data).documentElement)
     .then((data) => {
-      const responseWrapper = data.querySelector(
-        `M_${prefix}${action}Response`
-      );
-      const responseData = XMLParser.getVal(
-        responseWrapper,
-        `M_${prefix}${action}Result`
-      );
+      const responseWrapper = data.querySelector(`M_${prefix}${action}Response`);
+      const responseData = XMLParser.getVal(responseWrapper, `M_${prefix}${action}Result`);
       const hasError = !responseData || responseData === "false";
       if (hasError) {
         const errorMessage =
-          XMLParser.getVal(responseWrapper, "StrErr") ||
-          XMLParser.getVal(responseWrapper, "StrErrore");
+          XMLParser.getVal(responseWrapper, "StrErr") || XMLParser.getVal(responseWrapper, "StrErrore");
         if (errorMessage) {
           throw new Error("Internal Error API Ecodat: " + errorMessage);
         }

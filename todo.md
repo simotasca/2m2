@@ -1,55 +1,28 @@
-- [ ] finire di testare la gesione del pagamento
-- [ ] i18n
-- [ ] area riservata
-- [ ] preferiti salvabili
-- [ ] sottolineatura a tutti gli elementi clickabili
-- [ ] tradurre le categorie / tipologie / tutte le cose note del database
-- [x] breadcrumbs pagina prodotto, l'intem del prodotto stesso non è clickabile
-- [ ] prodotto condivisibile
+- [x] creare tutte le pagine
+- [ ] newsletter
+- [ ] organizzazioni filtrate per sede
 
-# header
+- [ ] i18n:
 
-- [x] rimuovere lingue inutili
-- [ ] link a google maps nell'indirizzo
-- [ ] link email e telefono
-- [ ] header modals ricambi e modelli
+  - [ ] sito tradotto
+    - [~] italiano
+    - [~] inglese
+    - [ ] ebraico
+  - [ ] traduzione articoli
+    - [ ] gli articoli devono essere per forza in italiano ed essere tradotti
 
-# footer
+- [ ] header:
+  - [ ]
+- [ ] footer:
 
-- [ ] forgot password più chiaro
-
-# homepage
-
-- [ ] tasto contattaci (scroll)
-- [ ] featured products bottone non funziona
-- [ ] featured products bottone sotto non funziona
-- [ ] sezione dei brand sopra quella dei pagamenti
-
-## sezione contatti
-
-- [ ] i bottoni non fanno nulla
-
-# checkout
-
-- [ ] sezione login prima del checkout
-
-# login / signup
-
-- [x] password dimenticata
-- [ ] registrazione
-- [ ] pagina area riservata (carrello, preferiti, anagrafica)
-
-# ricerca
-
-- [x] pagina tutti i prodotti con filtri
-- [ ] visualizzare filtri attivi
-- [ ] ogni pagina con prodotti abilitare i filtri di ricerca
-
-# IMPORTANtI
-
-- [ ] pagamento azienda (fattura elettronica)
-- [x] rendere non disponibili i prodotti sul gestionale
-- [x] svuotare il carrello (basandosi sui non disponibili)
-- [x] email login con codice inutile
-
-- [ ] prodotti correlati nelle pagine di ricerca
+- io non riesco a rimanere responsabile per tutti i progetti perchè al contempo devo anche lavorarci.
+- inoltre quando si fa un progetto ritengo indispensabile avere chiaro quello che si fa
+  (e a questo proposito sai quali sono i miei problemi con chabad)
+- detto ciò mi rendo conto di non poter pretendere che tu sia responsabile del progetto chabad
+  (sottolineo che pur nell'implicita richiesta di renderti responsabile di chabad non ho mai pensato di non aiutarti in quello che fai)
+- so che il mio modo di pormi non è il migliore possibile,
+  ma da parte mia c'è solo l'interesse a raggiungere un obbiettivo,
+  che è quello di riuscire a mettere in piedi questo progetto
+  e penso che funzioni.
+- quando parlo di responsabilità parlo di autonomia e ripeto so di non potertela chiedere anche in questi termini.
+-

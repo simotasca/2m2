@@ -1,0 +1,117 @@
+{
+  "": "// form login",
+
+  "login": {
+    "title": "Ben <red>Tornato</red>",
+    "enter-details": "Inserisci le credenziali",
+    "forgot-password": "Hai dimenticato la password?",
+    "new-account": "Non hai ancora un account?",
+    "signup": "Registrati",
+    "logging-in": "Login in corso...",
+    "hide-password": "Nascondi",
+    "show-password": "Mostra"
+  },
+
+  "": "// form registrazione",
+
+  "register": {
+    "title": "Crea il tuo <red>account</red>",
+    "private": "Privato",
+    "business": "Azienda",
+
+    "info": {
+      "info-user": {
+        "user": "info <red>Utente</red>",
+
+        "name": {
+          "label": "nome",
+          "placeholder": "Nome"
+        },
+
+        "surname": {
+          "label": "cognome",
+          "placeholder": "Cognome"
+        },
+
+        "cf": {
+          "label": "cf",
+          "placeholder": "Codice Fiscale"
+        },
+
+        "phone": {
+          "label": "telefono",
+          "placeholder": "Telefono"
+        }
+      },
+
+      "info-business": {
+        "business": "info <red>Azienda</red>",
+
+        "business-name": {
+          "label": "ragione fiscale",
+          "placeholder": "Ragione Fiscale"
+        },
+
+        "cf": {
+          "label": "cf",
+          "placeholder": "Codice Fiscale"
+        },
+
+        "piva": {
+          "label": "p.IVA",
+          "placeholder": "p.IVA"
+        },
+
+        "phone": {
+          "label": "telefono",
+          "placeholder": "Telefono"
+        },
+
+        "electronic-data": {
+          "title": "Dati di fatturazione elettronica",
+          "paragraph": "Questi vengono utilizzati per inviarti la fatturazione elettronica per i tuoi ordini",
+
+          "sdi-code": {
+            "label": "codice sdi",
+            "placeholder": "Codice sdi"
+          }
+        }
+      }
+    },
+    "conditions": "Accetto i <link>termini e condizioni</link>",
+
+    "access-details": {
+      "title": "Dettagli di <red>Accesso</red>",
+      "optional-fields": "I seguenti campi sono opzionali"
+    },
+
+    "submit": "Invia",
+    "already-registered": "Già registrato?",
+    "login-account": "Accedi ad un account"
+  },
+
+  "": "// email",
+
+  "email": {
+    "email-sent": "<red>Email</red> inviata",
+    "email-sent-to": "Una mail è stata inviata a: ",
+    "confirmation-link": "con il link di conferma"
+  },
+
+  "": "// reset password",
+
+  "password": {
+    "title": "Scegli una nuova password",
+    "updated": "Aggiornata!",
+    "try-again": "Prova di nuovo",
+    "confirm": "Conferma",
+
+    "send-password": {
+      "check-email": "Verifica la tua casella di <red>posta elettronica</red>",
+      "reset-password": "Reimposta <red>password</red>",
+      "sent-email": "Una mail è stata inviata a <email></email> con il link per il reset della password"
+    },
+
+    "next": "Avanti"
+  }
+}

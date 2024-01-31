@@ -1,0 +1,101 @@
+{
+  "": "// form login",
+
+  "login": {
+    "title": "Welcome <red>Back</red>",
+    "enter-details": "Please, enter details",
+    "forgot-password": "Forgot password?",
+    "new-account": "Don't have an account yet?",
+    "signup": "Sign up",
+    "logging-in": "Login in corso...",
+    "hide-password": "Nascondi",
+    "show-password": "Mostra"
+  },
+
+  "": "// form registrazione",
+
+  "register": {
+    "title": "Create your <red>account</red>",
+    "private": "Private",
+    "business": "Business",
+    "info": {
+      "info-user": {
+        "user": "<red>User</red> info",
+        "name": {
+          "label": "name",
+          "placeholder": "Name"
+        },
+        "surname": {
+          "label": "surname",
+          "placeholder": "Surname"
+        },
+        "cf": {
+          "label": "cf",
+          "placeholder": "Tax Id"
+        },
+        "phone": {
+          "label": "phone",
+          "placeholder": "Phone"
+        }
+      },
+      "info-business": {
+        "business": "<red>Business</red> info ",
+        "business-name": {
+          "label": "business name",
+          "placeholder": "Business Name"
+        },
+        "cf": {
+          "label": "cf",
+          "placeholder": "Tax Id"
+        },
+        "piva": {
+          "label": "p.IVA",
+          "placeholder": "p.IVA"
+        },
+        "phone": {
+          "label": "phone",
+          "placeholder": "Phone"
+        },
+        "electronic-data": {
+          "title": "Electronic invoicing data",
+          "paragraph": "These are used to send you electronic invoicing for your orders",
+          "sdi-code": {
+            "label": "sdi code",
+            "placeholder": "sdi code"
+          }
+        }
+      }
+    },
+    "conditions": "I accept <link>Terms and Conditions</link>",
+    "access-details": {
+      "title": "<red>Access</red> details",
+      "optional-fields": "Fields below are optionals"
+    },
+    "submit": "Submit",
+    "already-registered": "Are you already registered?",
+    "login-account": "Login to an account"
+  },
+
+  "": "// email",
+
+  "email": {
+    "email-sent": "<red>Email</red> sent",
+    "email-sent-to": "An email has been sent to:",
+    "confirmation-link": "with the confirmation link "
+  },
+
+  "": "// reset password",
+
+  "password": {
+    "title": "Choose your new password",
+    "updated": "Updated!",
+    "try-again": "Try again",
+    "confirm": "Confirm",
+    "send-password": {
+      "check-email": "Check your <red>email</red> inbox",
+      "reset-password": "Reset <red>password</red>",
+      "sent-email": "An email has been sent to <email></email> With the link for password reset."
+    },
+    "next": "Next"
+  }
+}

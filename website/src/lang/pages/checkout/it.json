@@ -1,0 +1,102 @@
+{
+  "personal-info": {
+    "title": "<red>Informazioni</red> personali",
+
+    "private": "Privato",
+
+    "name": {
+      "label": "nome",
+      "placeholder": "Nome"
+    },
+    "surname": {
+      "label": "cognome",
+      "placeholder": "Cognome"
+    },
+    "cf": {
+      "label": "codice fiscale",
+      "placeholder": "Codice Fiscale"
+    },
+    "telephone": {
+      "label": "telefono",
+      "placeholder": "Telefono"
+    },
+
+    "business": "Azienda",
+
+    "business-info": {
+      "name": {
+        "label": "ragione fiscale",
+        "placeholder": "Ragione Fiscale"
+      },
+      "cf": {
+        "label": "codice fiscale",
+        "placeholder": "Codice fiscale"
+      },
+      "piva": {
+        "label": "p.IVA",
+        "placeholder": "p.IVA"
+      },
+
+      "electronic-invoice": "Vuoi ricevere la fattura?",
+
+      "pec": {
+        "label": "pec",
+        "placeholder": "PEC"
+      },
+      "sdi": {
+        "label": "sdi",
+        "placeholder": "Codice SDI"
+      }
+    }
+  },
+
+  "delivery-address": {
+    "title": "Indirizzo di <red>Spedizione</red>",
+
+    "nations": {
+      "label": "paese",
+      "placeholder": "Paese"
+    },
+    "province": {
+      "label": "provincia",
+      "placeholder": "Provincia"
+    },
+    "city": {
+      "label": "città",
+      "placeholder": "Città"
+    },
+    "street": {
+      "label": "via",
+      "placeholder": "Via"
+    },
+    "civic-number": {
+      "placeholder": "Numero civico"
+    },
+    "notes": {
+      "label": "note",
+      "placeholder": "Scrivi qui le tue note"
+    }
+  },
+
+  "checkout": {
+    "pay": "PAGA"
+  },
+
+  "order-details": {
+    "your-order": "Il tuo <red>ordine</red>",
+    "review": "Revisiona"
+  },
+
+  "breadcrumbs": {
+    "backtoshop": "continua lo shopping",
+    "personal-informations": "informazioni personali",
+    "delivery": "spedizione"
+  },
+
+  "info": {
+    "help": "Hai bisogno di aiuto? Consulta le pagine d'aiuto oppure contattaci",
+    "processed-order": "Cosa succede quando si effettua un ordine? Cliccando sul pulsante \"Acquista ora\" ti invieremo un messaggio con la conferma di ricezione dell'ordine. Il contratto di acquisto di un articolo non sarà perfezionato fino al ricevimento del messaggio che conferma la spedizione degli articoli."
+  },
+
+  "next": "Avanti"
+}

@@ -1,0 +1,6 @@
+- Webhook per la sincronizzazione (quando viene aggunto un brand dal gestionale chiamare una nostra api)
+  - Mirco: 055 96 0482 interno 2
+
+- Dove vengono visualizzate nel gestionale gli ordini fatti con M_InviaOrdine
+
+- Per la chiamata alle api codice articolo sarebbe l'id?

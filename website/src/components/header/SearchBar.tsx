@@ -13,7 +13,8 @@ export default function SearchBar() {
   return (
     <div
       onClick={openSearchModal}
-      className="flex max-xs:hidden rounded border border-neutral-500 bg-white">
+      className="flex max-sm:hidden rounded border border-neutral-500 bg-white"
+    >
       <Image
         src={iconSearch}
         alt="search icon"

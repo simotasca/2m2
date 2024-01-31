@@ -1,25 +1,19 @@
 "use client";
 
+import useAuth from "@/context/auth/useAuth";
 import useCart from "@/context/cart/useCart";
 import useTranslation from "@/context/lang/useTranslation";
-import { Database } from "@/database.types";
 import iconCart from "@/images/icons/cart-active.svg";
 import iconDown from "@/images/icons/white/down.svg";
 import iconUser from "@/images/icons/white/user.svg";
-import gifLoader from "@/images/loader.gif";
-import imgLogo from "@/images/logo-dark.svg";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FormEventHandler, useEffect, useState } from "react";
+import { useState } from "react";
 import { twJoin } from "tailwind-merge";
-import Button from "../ui/Button";
-import Link from "next/link";
-import routes from "@/lib/shared/routes";
-import LoadingScreen from "../ui/LoadingScreen";
+import { LoginModal } from "../auth/LoginModal";
 
 export function UserData({ small }: { small: boolean }) {
-  const { setIsOpen, total, count } = useCart();
+  const { setIsOpen, total, count, isInitialized } = useCart();
   const { t } = useTranslation();
   return (
     <div
@@ -40,12 +34,24 @@ export function UserData({ small }: { small: boolean }) {
             "h-fit text-right translate-y-px hidden",
             small ? "lg:block" : "md:block"
           )}>
-          <p className="font-semibold text-sm leading-[1.1]">
-            {total ? total.toFixed(2) + "€" : "---"}
-          </p>
-          <p className="text-neutral-400 text-xs leading-[1]">
-            {count} {t("header.cart.products.many")}
-          </p>
+          {!isInitialized ? (
+            <p className="text-neutral-400 text-sm -translate-y-px">
+              {/* TODO: i18n */}
+              loading...
+            </p>
+          ) : (
+            <>
+              <p className="font-semibold text-sm leading-[1.1]">
+                {total ? total.toFixed(2) + "€" : "---"}
+              </p>
+              <p className="text-neutral-400 text-xs leading-[1]">
+                {count}{" "}
+                {count > 1
+                  ? t("header.cart.products.many")
+                  : t("header.cart.products.single")}
+              </p>
+            </>
+          )}
         </div>
         <Image
           src={iconCart}
@@ -75,78 +81,18 @@ export function UserData({ small }: { small: boolean }) {
 }
 
 function DropdownLogin({ small }: { small: boolean }) {
-  const { t } = useTranslation();
-  const supabase = createClientComponentClient<Database>();
+  const { t, r } = useTranslation();
   const router = useRouter();
-  const [user, setUser] = useState<string>();
+  const { session } = useAuth();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const [pwInputType, setPwInputType] = useState<"password" | "text">(
-    "password"
-  );
-
-  const togglePasswordVisibility = () => {
-    setPwInputType(pwInputType === "password" ? "text" : "password");
-  };
-
-  useEffect(() => {
-    (async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user?.user_metadata?.username);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (loading) {
-      document.body.classList.add("login-is-loading");
-    } else {
-      document.body.classList.remove("login-is-loading");
-    }
-  }, [loading]);
-
-  const handleLogin: FormEventHandler = async (e) => {
-    e.preventDefault();
-
-    setPwInputType("password");
-
-    const data = new FormData(e.target as HTMLFormElement);
-
-    const email = data.get("email")?.toString();
-    const password = data.get("password")?.toString();
-
-    if (!email || !password) {
-      // TODO: i18n
-      setErrorMessage("Inserire email e password");
-      return;
-    }
-
-    setLoading(true);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      // TODO: display better error message
-      setErrorMessage(error.message + " (" + error.status + ")");
-      setLoading(false);
-      return;
-    }
-
-    router.push("/reserved");
-  };
 
   return (
     <>
-      <LoadingScreen message="Login in corso" loading={loading} />
-
       <div className="relative h-full">
         <button
-          onClick={() => (user ? router.push("/reserved") : setOpen((o) => !o))}
+          onClick={() =>
+            session?.user ? router.push("/reserved") : setOpen((o) => !o)
+          }
           className={twJoin(
             "h-full flex items-center outline-none",
             small ? "lg:px-3" : "md:px-3"
@@ -156,7 +102,7 @@ function DropdownLogin({ small }: { small: boolean }) {
               "overflow-hidden font-semibold text-sm max-w-[9rem] whitespace-nowrap overflow-ellipsis text-right hidden",
               small ? "lg:block" : "md:block"
             )}>
-            {user || t("header.login")}
+            {session?.user?.email || t("header.login")}
           </p>
           <Image
             src={iconUser}
@@ -182,76 +128,17 @@ function DropdownLogin({ small }: { small: boolean }) {
               : "-translate-y-2 opacity-0"
           )}>
           <div className={twJoin("pt-2 z-10", open && "pointer-events-auto")}>
-            <div className="w-80 bg-white border border-slate-400 rounded-md text-black p-4 gap-y-1">
-              <div className="flex items-start justify-between">
-                <Image src={imgLogo} alt="logo 2m2" className="w-12 -mt-px" />
+            <LoginModal
+              title={
                 <p className="text-dark text-sm font-medium text-right leading-[1.1]">
-                  <span>Welcome back!</span>
+                  <span>{r("auth.login.title")}</span>
                   <br />
                   <span className="font-normal text-neutral-500">
-                    Please enter details.
+                    {t("auth.login.enter-details")}
                   </span>
                 </p>
-              </div>
-
-              <form onSubmit={handleLogin} className="flex flex-col gap-3 mt-2">
-                <div className="border border-neutral-500 bg-stone-100">
-                  <input
-                    className="placeholder:text-neutral-500 py-0.5 px-2 text-sm outline-none"
-                    type="email"
-                    name="email"
-                    placeholder="email"
-                  />
-                </div>
-                <div className="border border-neutral-500 grid grid-cols-[1fr_auto] px-2 gap-x-2 bg-stone-100 -mt-1">
-                  <input
-                    className={twJoin(
-                      "py-0.5 outline-none bg-stone-100 w-full",
-                      "placeholder:text-neutral-500 placeholder:text-sm placeholder:leading-normal placeholder:tracking-normal text-sm"
-                    )}
-                    type={pwInputType}
-                    name="password"
-                    placeholder="password"
-                  />
-                  <button
-                    className="text-xs text-neutral-500"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      togglePasswordVisibility();
-                    }}>
-                    {pwInputType === "text" ? "hide" : "show"}
-                  </button>
-                </div>
-
-                <Link
-                  className="underline text-xs -mt-1.5 text-neutral-500"
-                  href="#">
-                  Forgot your password?
-                  {/* TODO */}
-                </Link>
-
-                {errorMessage && (
-                  <p className="text-red-500 text-sm">{errorMessage}</p>
-                )}
-                <Button
-                  type="submit"
-                  className="w-full font-normal text-sm bg-red-500 text-white">
-                  Login
-                </Button>
-              </form>
-
-              <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center text-center px-2 text-neutral-500">
-                <hr className="translate-y-px border-neutral-400" />
-                <span>or</span>
-                <hr className="translate-y-px border-neutral-400" />
-              </div>
-
-              <Link href={routes.register()}>
-                <Button className="w-full font-medium text-sm bg-red-gradient text-white">
-                  Register
-                </Button>
-              </Link>
-            </div>
+              }
+            />
           </div>
         </div>
       </div>

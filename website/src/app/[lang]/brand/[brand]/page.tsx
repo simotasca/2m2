@@ -1,11 +1,17 @@
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
+import SearchModal from "@/components/search/SearchModal";
+import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
+
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
@@ -47,30 +53,59 @@ export default async function ModelPage({
     },
   ];
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      page: "pages/brand",
+      product: "misc/product",
+      header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
+      footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
+      errors: "misc/errors",
+    },
+    true
+  );
+
+  const { cart, favs } = await getServerData();
+
   return (
-    <ServerLayout>
-      <PageLayout headerSmall>
-        <div className="bg-white pb-4 xs:px-2">
-          <MaxWidthContainer>
-            <Breadcrumbs className="py-4" items={bread} />
-            <Title as="h1">
-              <Title.Gray>Brand</Title.Gray>
-              <Title.Red>{` ${brand.name}`}</Title.Red>
-            </Title>
-            <div className="h-4"></div>
-            <PaginatedProductsGrid
-              className="py-2"
-              searchParams={searchParams}
-              query={{ brandId: brand.id }}
-            />
-            <div className="h-10"></div>
-            <div className="max-sm:px-3">
-              <ContactsSection></ContactsSection>
-            </div>
-            <div className="h-4"></div>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
-    </ServerLayout>
+    <TranslationClientComponent value={translations}>
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <SearchModal brand={brand} />
+          <div className="bg-white pb-4 xs:px-2">
+            <MaxWidthContainer>
+              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start py-4">
+                <Breadcrumbs items={bread} />
+                <StyledSearchModalToggle />
+              </div>
+
+              <Title as="h1">
+                <Title.Gray>{t("page.title")}</Title.Gray>
+                <Title.Red>{` ${brand.name}`}</Title.Red>
+              </Title>
+
+              <div className="h-4"></div>
+
+              {/* @ts-expect-error Server Component */}
+              <PaginatedProductsGrid
+                className="py-2"
+                searchParams={searchParams}
+                query={{ brandId: brand.id }}
+              />
+
+              <div className="h-10"></div>
+
+              <div className="max-sm:px-3">
+                <ContactsSection />
+              </div>
+
+              <div className="h-4"></div>
+            </MaxWidthContainer>
+          </div>
+        </PageLayout>
+      </ClientLayout>
+    </TranslationClientComponent>
   );
 }

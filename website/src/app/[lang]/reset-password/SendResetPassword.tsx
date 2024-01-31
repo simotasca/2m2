@@ -2,18 +2,14 @@
 
 import Button from "@/components/ui/Button";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { Database } from "@/database.types";
-import iconLogo from "@/images/logo-dark.svg";
+import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
+import { createClientSideClient } from "@/lib/client/supabase";
 import { isEmail } from "@/lib/shared/object";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Image from "next/image";
 import { useState } from "react";
 import { Input } from "./Input";
 
 export function SendResetPassword() {
-  const supabase = createClientComponentClient<Database>();
-
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
@@ -33,6 +29,7 @@ export function SendResetPassword() {
     setLoading(true);
     setError(undefined);
 
+    const supabase = createClientSideClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: "https://96b8-5-179-178-59.ngrok-free.app/reset-password",
     });
@@ -47,36 +44,29 @@ export function SendResetPassword() {
     setLoading(false);
   };
 
+  const { t, r } = useTranslation();
+
   return (
     <>
       <LoadingScreen message="Loading" loading={loading} />
 
       <AuthLayout>
-        <Image
-          src={iconLogo}
-          alt="logo 2m2 autoricambi"
-          className="w-16 mx-auto"
-        />
+        <AuthLayout.Image />
 
-        <h1 className="text-xl text-center font-bold mt-4 mb-2 uppercase">
+        <AuthLayout.Title>
           {sent ? (
-            <>
-              <span>Check your </span>
-              <span className="text-red-500">Email</span>
-            </>
+            <>{r("auth.password.send-password.check-email")}</>
           ) : (
-            <>
-              <span>Reset your </span>
-              <span className="text-red-500">Password</span>
-            </>
+            <>{r("auth.password.send-password.reset-password")}</>
           )}
-        </h1>
+        </AuthLayout.Title>
 
         <p className="leading-5 mb-3 text-center">
           {sent ? (
             <span>
-              An email has been sent to <b className="font-semibold">{email}</b>{" "}
-              with the password reset link
+              {r("auth.password.send-password.sent-email", {
+                email: () => <b className="font-semibold">{email}</b>,
+              })}
             </span>
           ) : (
             "enter the email address for which you want to recover the password"
@@ -100,7 +90,7 @@ export function SendResetPassword() {
             <Button
               className="bg-red-gradient text-white font-medium mt-3 ml-auto"
               onClick={() => onclick()}>
-              Next
+              {t("auth.password.next")}
             </Button>
           </>
         )}

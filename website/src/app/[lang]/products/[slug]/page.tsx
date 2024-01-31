@@ -1,12 +1,17 @@
 import ProductImage from "@/components/product/ProductImage";
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import SearchModal from "@/components/search/SearchModal";
-import SearchModalToggle from "@/components/search/SearchModalToggle";
+import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
+import Button from "@/components/ui/Button";
 import ContactsSection from "@/components/ui/ContactsSection";
-import GuaranteedUsed from "@/components/ui/GuaranteedUsed";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import { PaymentsBar } from "@/components/ui/PaymentsBar";
+import iconAvailable from "@/images/icons/available.svg";
+import iconFavorite from "@/images/icons/favorite.svg";
+import iconShare from "@/images/icons/share.svg";
+import iconCart from "@/images/icons/white/cart.svg";
+import imgLogo from "@/images/logo-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
 import {
   fetchEcodatArticle,
   fetchEcodatArticlePhotoList,
@@ -14,13 +19,18 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
+import { TranslationFactories, generateTranslations } from "@/lib/server/lang";
 import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
 import SimilarProducts from "./SimilarProducts";
-import BuySection from "./BuySection";
-import TitleSection from "./TitleSection";
+import useCart from "@/context/cart/useCart";
+import CartButton from "./CartButton";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { getServerData } from "@/layouts/base/ServerLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
 
 interface Props {
   params: {
@@ -37,7 +47,6 @@ export default async function ProductPage({ params: { slug } }: Props) {
     return null;
   });
 
-  // TODO: se c'è un errore mostrare pagina di errore con status 500 anzichè not found */
   if (!product) return notFound();
 
   const categories = await fetchEcodatCategories()
@@ -61,83 +70,133 @@ export default async function ProductPage({ params: { slug } }: Props) {
       return undefined;
     });
 
+  const [translations, { t, r }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
+      footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
+      errors: "misc/errors",
+      contacts: "misc/contacts",
+      auth: "auth",
+      page: "pages/products/product",
+      categories: "misc/categories",
+      typologies: "misc/typologies",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: product.category,
+      text: t(["categories", product.category], product.category),
       href: routes.category(product.category),
-      dropdown: categories
-        ?.filter((c) => c !== product.category)
-        .map((c) => ({ text: c, href: routes.category(c) })),
+      dropdown: categories?.map((c) => ({
+        text: t(["categories", c], c),
+        href: routes.category(c),
+      })),
     },
     {
-      text: product.type,
+      text: t(["typologies", product.type], product.type),
       href: routes.type(product.category, product.type),
-      dropdown: types
-        ?.filter((t) => t !== product.type)
-        .map((t) => ({
-          text: t,
-          href: routes.type(product.category, t),
-        })),
+      dropdown: types?.map((ty) => ({
+        text: t(["typologies", ty], ty),
+        href: routes.type(product.category, ty),
+      })),
     },
     {
       text: product.item,
       href: routes.item(product.category, product.type, product.item),
-      dropdown: items
-        ?.filter((i) => i.id != product.itemId)
-        .map((i) => ({
-          text: itemName(i),
-          href: routes.item(product.category, product.type, itemName(i)),
-        })),
+      dropdown: items?.map((i) => ({
+        text: itemName(i),
+        href: routes.item(product.category, product.type, itemName(i)),
+      })),
     },
   ];
 
-  return (
-    <ServerLayout translations={{}}>
-      <PageLayout headerSmall>
-        <SearchModal />
+  const { cart, favs } = await getServerData();
 
-        <div className="bg-white min-h-full">
-          <MaxWidthContainer>
-            <div className="pt-4 max-sm:pt-3 pb-2">
-              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
-                <Breadcrumbs items={bread} />
-                <SearchModalToggle />
+  return (
+    <TranslationClientComponent value={translations}>
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <SearchModal />
+
+          <div className="bg-white min-h-full">
+            <MaxWidthContainer>
+              <div className="pt-4 max-sm:pt-3 pb-2">
+                <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                  <Breadcrumbs items={bread} />
+                  <StyledSearchModalToggle />
+                </div>
+              </div>
+
+              <div className="max-sm:h-3"></div>
+
+              <div>
+                <h1 className="font-bold text-2xl leading-[1.1] max-w-screen-md">
+                  <span className="text-red-500">{product.item} </span>
+                  <span>{product.brand + " " + product.model}</span>
+                </h1>
+                <p className="mb-1 mt-0.5 text-sm max-w-screen-md">
+                  <span className="font-medium">{t("page.title")}:</span>
+                  <span className="text-neutral-600">
+                    {" "}
+                    {product.description}
+                  </span>
+                </p>
+              </div>
+
+              <hr className="my-3" />
+
+              <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
+                {/* @ts-expect-error Server Component */}
+                <PhotoSection product={product} />
+
+                <ProductDetails product={product} />
+
+                <BuySection t={t} r={r} product={product} />
+
+                <div className="order-last"></div>
+              </div>
+
+              <div className="lg:hidden h-4"></div>
+            </MaxWidthContainer>
+
+            <div className="h-4"></div>
+
+            <div className="bg-neutral-100 border-y border-neutral-200 py-6 px-4 md:px-2 lg:px-0 ">
+              <div className="mx-auto w-fit flex [@media(max-width:383px)]:flex-col gap-y-3 items-start md:items-center gap-x-8 md:gap-x-4 lg:gap-x-8">
+                <Image
+                  src={imgLogo}
+                  alt=""
+                  className="w-12 md:w-16 [@media(max-width:383px)]:mx-auto"
+                />
+                <h4 className="font-semibold leading-tight text-base sm:text-lg md:text-xl max-md:text-center">
+                  {t("page.guaranteed-used")}
+                </h4>
+                <Image
+                  src={imgLogo}
+                  alt=""
+                  className="w-12 md:w-16 [@media(max-width:383px)]:hidden"
+                />
               </div>
             </div>
 
-            <TitleSection product={product} />
+            <div className="h-10"></div>
 
-            <hr className="my-3" />
+            <MaxWidthContainer>
+              <SimilarProducts product={product} />
 
-            <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
-              <PhotoSection product={product} />
-
-              <ProductDetails product={product} />
-
-              <BuySection product={product} />
-
-              <div className="order-last"></div>
-            </div>
-
-            <div className="lg:hidden h-4"></div>
-          </MaxWidthContainer>
-
-          <div className="h-4"></div>
-
-          <GuaranteedUsed />
-
-          <div className="h-10"></div>
-
-          <MaxWidthContainer>
-            <SimilarProducts product={product} />
-
-            <MaxWidthContainer className="max-w-6xl py-20">
-              <ContactsSection />
+              <MaxWidthContainer className="max-w-6xl py-20">
+                <ContactsSection />
+              </MaxWidthContainer>
             </MaxWidthContainer>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
-    </ServerLayout>
+          </div>
+        </PageLayout>
+      </ClientLayout>
+    </TranslationClientComponent>
   );
 }
 
@@ -166,7 +225,9 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
           <div className="absolute w-full xs:h-full sm:max-md:h-auto top-0 left-0 max-xs:bottom-0 overflow-x-auto overflow-y-hidden xs:overflow-y-auto xs:overflow-x-hidden">
             <div className="flex flex-col gap-1 max-xs:flex-row sm:max-md:flex-row max-xs:order-2 sm:max-md:order-2">
               {photoIdsList.slice(1).map((imageId) => (
-                <div className="p-0.5 border border-slate-300 rounded-sm ">
+                <div
+                  key={imageId}
+                  className="p-0.5 border border-slate-300 rounded-sm ">
                   <ProductImage
                     className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
                     photo={{ imageId }}
@@ -181,5 +242,72 @@ async function PhotoSection({ product }: { product: EcodatArticle }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function BuySection({
+  product,
+  t,
+  r,
+}: { product: EcodatArticle } & TranslationFactories) {
+  return (
+    <aside className="font-sans order-2 row-span-2">
+      <div className="flex gap-1 items-center -mb-1">
+        <span className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm mb-[2px]">
+          {t("page.buy-section.available")}
+        </span>
+        <Image
+          className="w-4 sm:w-3 md:w-4"
+          src={iconAvailable}
+          alt="available icon"
+        />
+      </div>
+      <span className="font-semibold text-4xl sm:text-3xl md:text-4xl">
+        {product.price.toFixed(2)}€
+      </span>
+      <p className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm">
+        {t("page.buy-section.iva")}
+      </p>
+      <p className="font-bold text-lg sm:text-base md:text-lg uppercase -mt-[6px] whitespace-nowrap">
+        {r("page.buy-section.delivery-time")}
+      </p>
+      <div className="h-3"></div>
+      <div className="grid grid-cols-[auto_auto] leading-3">
+        <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
+          <Image
+            className="w-7 sm:w-5 md:w-7"
+            src={iconFavorite}
+            alt="favorite icon"
+          />
+          <span className=" text-xs leading-[1.1]">
+            {t("page.buy-section.favourites")}
+          </span>
+        </div>
+        {/* <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
+          <Image
+            className="w-6 sm:w-5 md:w-6"
+            src={iconShare}
+            alt="share icon"
+          />
+          <span className="text-xs leading-[1.1]">
+            {t("page.buy-section.share")}
+          </span>
+        </div> */}
+      </div>
+
+      <div className="h-[10px]"></div>
+
+      <CartButton product={product} />
+
+      <div className="pt-2 flex justify-end pr-2 gap-2">
+        <span className="text-sm sm:text-xs md:text-sm">
+          {t("page.buy-section.payments")}:
+        </span>
+        <PaymentsBar className="w-fit" />
+      </div>
+      {/* <p className="text-[#2e2d2d] underline text-xs">
+        puoi pagarlo alla consegna*
+      </p> */}
+    </aside>
   );
 }

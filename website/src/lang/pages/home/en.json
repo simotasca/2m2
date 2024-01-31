@@ -1,20 +1,29 @@
 {
   "hero": {
+    "subtitle": {
+      "line1":"Guaranteed assistance on everything.",
+      "line2":"You can count on us."
+    },
+    "button":"Contact us",
     "qualities": {
-      "low-prices": ["low", "prices"],
-      "speed": ["fast", "delivery"],
-      "reliability": ["reliability"],
-      "support": ["dedicated", "support"],
-      "test": ["used", "tested"],
-      "security": ["buy with", "confidence"]
+      "low-prices": "Low <br></br> prices",
+      "speed": "fast <br></br> delivery",
+      "reliability": "reliability ",
+      "support": "dedicated <br></br> support",
+      "test": "used <br></br> tested",
+      "security": "buy whith <br></br> confidence"
     },
     "filters": {
       "category": {
-        "title": "filter by spare parts <b>category</b>"
+        "title": "filter by auto parts <red>category</red>"
       },
       "brand": {
-        "title": "filter based on the <b>brand</b> of your car"
+        "title": "filter based on the <red>brand</red> of your car "
       }
     }
+  },
+  "products-title":"<red>Featured</red> Products",
+  "products-button":"View More Products",
+  
+  "payments":"payments"
   }
-}

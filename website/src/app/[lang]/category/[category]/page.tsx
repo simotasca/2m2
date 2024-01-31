@@ -1,16 +1,21 @@
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import SearchModal from "@/components/search/SearchModal";
-import SearchModalToggle from "@/components/search/SearchModalToggle";
+import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
+import EngineAssistance from "@/components/ui/EngineAssistance";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
+
 import {
   fetchEcodatCategories,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
@@ -35,12 +40,29 @@ export default async function CategoryPage({
 
   const types = await fetchEcodatTypologies(category.id);
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
+      footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
+      errors: "misc/errors",
+      page: "pages/category",
+      categories: "misc/categories",
+      contacts: "misc/contacts",
+      auth: "auth",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: category.name,
+      text: t(["categories", category.name], category.name),
       href: routes.category(category.name),
       dropdown: categories.map((c) => ({
-        text: c.name,
+        text: t(["categories", c.name], c.name),
         href: routes.category(c.name),
       })),
     },
@@ -52,43 +74,59 @@ export default async function CategoryPage({
     },
   ];
 
+  const { cart, favs } = await getServerData();
+
   return (
-    <ServerLayout>
-      <PageLayout headerSmall>
-        <SearchModal category={category} />
+    <TranslationClientComponent value={translations}>
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <SearchModal category={category} />
 
-        <div className="bg-white pb-4">
-          <MaxWidthContainer>
-            <div className="pt-4 max-sm:pt-3 pb-2">
-              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
-                <Breadcrumbs items={bread} />
-                <SearchModalToggle />
+          <div className="bg-white pb-4">
+            <MaxWidthContainer>
+              <div className="pt-4 max-sm:pt-3 pb-2">
+                <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                  <Breadcrumbs items={bread} />
+                  <StyledSearchModalToggle />
+                </div>
               </div>
-            </div>
 
-            <Title as="h1">
-              <Title.Gray>Category</Title.Gray>
-              <Title.Red> {category.name}</Title.Red>
-            </Title>
+              <div className="max-sm:h-3"></div>
 
-            <div className="h-4"></div>
+              <Title as="h1">
+                <Title.Gray>{t("page.title")}</Title.Gray>
+                <Title.Red>
+                  {" "}
+                  {t(["categories", category.name], category.name)}
+                </Title.Red>
+              </Title>
 
-            <PaginatedProductsGrid
-              className="py-2"
-              searchParams={searchParams}
-              query={{
-                categoryId: category.id,
-              }}
-            />
+              {category.name === "MOTORE" && (
+                <div className="pt-6">
+                  <EngineAssistance />
+                </div>
+              )}
 
-            <div className="h-10"></div>
+              <div className="h-4"></div>
 
-            <ContactsSection />
+              {/* @ts-expect-error Server Component */}
+              <PaginatedProductsGrid
+                className="py-2"
+                searchParams={searchParams}
+                query={{
+                  categoryId: category.id,
+                }}
+              />
 
-            <div className="h-4"></div>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
-    </ServerLayout>
+              <div className="h-10"></div>
+
+              <ContactsSection />
+
+              <div className="h-4"></div>
+            </MaxWidthContainer>
+          </div>
+        </PageLayout>
+      </ClientLayout>
+    </TranslationClientComponent>
   );
 }

@@ -1,10 +1,11 @@
 import { Dispatch, useEffect, useState } from "react";
 import WizSelect, { WizSelectItem } from "../WizSelect";
 import { DeliveryAddress } from "./DeliveryAddressTab";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/database.types";
 import settings from "@/settings";
 import WizInput from "../WizInput";
+import useTranslation from "@/context/lang/useTranslation";
+import { createClientSideClient } from "@/lib/client/supabase";
 
 const citiesCache = new Map<string, WizSelectItem[]>();
 
@@ -17,8 +18,6 @@ export default function CityInput({
   setAddress: Dispatch<DeliveryAddress>;
   showErrors: boolean;
 }) {
-  const supabase = createClientComponentClient<Database>();
-
   const [municipalities, setMunicipalities] = useState<WizSelectItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingError, setloadingError] = useState(false);
@@ -62,6 +61,7 @@ export default function CityInput({
       return;
     }
 
+    const supabase = createClientSideClient();
     supabase
       .from("province")
       .select("*, municipality(*)")
@@ -90,15 +90,19 @@ export default function CityInput({
     canLoad && loadCities();
   }, [address.countryCode, address.province]);
 
+  const { t } = useTranslation("page.delivery-address");
+
   return address?.countryCode === "IT" ? (
     <WizSelect
       items={municipalities}
       value={citySelectValue}
       onChange={setCitySelectValue}
-      label="city"
-      placeholder="City"
+      label={t("city.label")}
+      placeholder={t("city.placeholder")}
       errorMessage={
-        showErrors && (!address.city || !address.istat) ? "required" : undefined
+        showErrors && (!address.city || !address.istat)
+          ? t("errors.required-error")
+          : undefined
       }
       required={true}
       loadingError={loadingError}
@@ -116,11 +120,13 @@ export default function CityInput({
           istat: settings.ecodat.foreignIstat,
         })
       }
-      label="city"
-      placeholder="City"
+      label={t("city.label")}
+      placeholder={t("city.placeholder")}
       type="text"
       name="city"
-      errorMessage={showErrors && !address.city ? "required" : undefined}
+      errorMessage={
+        showErrors && !address.city ? t("errors.required-error") : undefined
+      }
       required={true}
     />
   );

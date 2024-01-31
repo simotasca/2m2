@@ -1,3 +1,8 @@
+/**
+ * @param fn funzione di cui si creare la versione con cache
+ * @param lifetime quanto durano i risultati nella cahce
+ * @returns versone con cache della funzione passata in input
+ */
 export function memoize<T extends (...args: any) => any>(
   fn: T,
   lifetime: number = 1000 * 60 * 30

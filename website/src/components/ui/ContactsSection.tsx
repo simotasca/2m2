@@ -10,9 +10,12 @@ import settings from "@/settings";
 import useTranslation from "@/context/lang/useTranslation";
 
 export default function ContactsSection() {
-  const { t, r } = useTranslation("page.contacts");
+  const { t, r } = useTranslation("contacts");
   return (
-    <div className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 max-xs:-ml-2">
+    <div
+      id="contacts"
+      className="grid md:grid-cols-[3fr_2fr] lg:grid-cols-2 gap-x-12 gap-y-6 py-6 max-md:px-2"
+    >
       <div>
         <h3 className="text-2xl font-bold mb-1">{t("title")}</h3>
         <p className="leading-tight">{t("contacts.subtitle")}</p>
@@ -35,9 +38,11 @@ export default function ContactsSection() {
                 {t("email.subtitle")}
               </p>
             </div>
-            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
-              {t("email.button")}
-            </Button>
+            <a href="mailto:2m2srl@gmail.com">
+              <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
+                {t("email.button")}
+              </Button>
+            </a>
           </li>
           <li className="col-span-3 h-px bg-orange-200"></li>
           <li className="contents">
@@ -56,9 +61,11 @@ export default function ContactsSection() {
                 {t("telephone.subtitle")}
               </p>
             </div>
-            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
-              {t("telephone.button")}
-            </Button>
+            <a href="tel:+39 389 4468231">
+              <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-10 py-1.5">
+                {t("telephone.button")}
+              </Button>
+            </a>
           </li>
           <li className="col-span-3 h-px bg-orange-200"></li>
           <li className="contents">
@@ -77,9 +84,25 @@ export default function ContactsSection() {
                 {t("whatsapp.subtitle")}
               </p>
             </div>
-            <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
-              {t("whatsapp.button")}
-            </Button>
+            <div>
+              <a
+                className="max-md:hidden"
+                href="https://web.whatsapp.com/send?phone=3894468231"
+                target="_blank"
+              >
+                <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
+                  {t("whatsapp.button")}
+                </Button>
+              </a>
+              <a
+                className="md:hidden"
+                href="https://api.whatsapp.com/send?phone=3894468231"
+              >
+                <Button className="w-full max-xs:max-w-[30vw] uppercase bg-orange-500 text-white max-xs:text-sm rounded-full px-6 xs:px-10 py-1.5 ">
+                  {t("whatsapp.button")}
+                </Button>
+              </a>
+            </div>
           </li>
         </ul>
       </div>

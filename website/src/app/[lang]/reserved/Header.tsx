@@ -1,12 +1,11 @@
 "use client";
 
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
-import { Database } from "@/database.types";
 import imgLogo from "@/images/logo-dark.svg";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientSideClient } from "@/lib/client/supabase";
 import { User } from "@supabase/supabase-js";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/Link";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -19,24 +18,16 @@ export default function Header({ user }: { user: User }) {
         </Link>
         <nav className="pt-1.5">
           <ul className="flex gap-6 items-center text-sm font-medium">
-            <li className="hover:underline underline-offset-2">
+            <li className="leading-4 hover:underline hover:text-red-500 underline-offset-2">
               <Link href="/">Back to website</Link>
             </li>
-            <li>
-              <HighlightHashLink id="favourites">Preferiti</HighlightHashLink>
-            </li>
-            <li>
-              <HighlightHashLink id="cart">Carrello</HighlightHashLink>
-            </li>
-            <li>
+            <HighlightHashLink id="favourites">Preferiti</HighlightHashLink>
+            <HighlightHashLink id="cart">Carrello</HighlightHashLink>
+            {/*
               <HighlightHashLink id="orders">Elenco ordini</HighlightHashLink>
-            </li>
-            <li>
-              <HighlightHashLink id="user-data">Dati utente</HighlightHashLink>
-            </li>
-            <li>
-              <HighlightHashLink id="contacts">Contatti</HighlightHashLink>
-            </li>
+             */}
+            <HighlightHashLink id="user-data">Dati utente</HighlightHashLink>
+            <HighlightHashLink id="contacts">Contatti</HighlightHashLink>
           </ul>
         </nav>
 
@@ -56,22 +47,24 @@ function HighlightHashLink({
   children,
 }: PropsWithChildren<{ id: string }>) {
   return (
-    <button
-      className="hover:underline underline-offset-2"
-      onClick={() => {
-        window.location.hash = id;
-        document
-          .querySelectorAll<HTMLDivElement>("[data-box]")
-          .forEach((box) => box.classList.remove("highlight"));
-        setTimeout(() => {
+    <li>
+      <button
+        className="leading-4 hover:underline hover:text-red-500 underline-offset-2"
+        onClick={() => {
+          window.location.hash = id;
           document
-            .querySelector<HTMLDivElement>(`#${id}[data-box]`)
-            ?.classList.add("highlight");
-        }, 10);
-      }}
-    >
-      {children}
-    </button>
+            .querySelectorAll<HTMLDivElement>("[data-box]")
+            .forEach((box) => box.classList.remove("highlight"));
+          setTimeout(() => {
+            document
+              .querySelector<HTMLDivElement>(`#${id}[data-box]`)
+              ?.classList.add("highlight");
+          }, 10);
+        }}
+      >
+        {children}
+      </button>
+    </li>
   );
 }
 
@@ -79,10 +72,10 @@ function LogoutButton({
   children,
   className,
 }: PropsWithChildren<{ className?: string }>) {
-  const supabase = createClientComponentClient<Database>();
   const router = useRouter();
 
   const handleSignOut = async function () {
+    const supabase = createClientSideClient();
     await supabase.auth.signOut();
     router.push("/");
   };

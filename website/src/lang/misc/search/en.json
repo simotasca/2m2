@@ -1,0 +1,10 @@
+{
+  "placeholder": "enter you search...",
+  "little-placeholder": "search here",
+  "category": "Category",
+  "typology": "Type",
+  "brand": "Brand",
+  "model": "Model",
+  "no-result": "No result found. Try again with another query",
+  "go-products": "go to products"
+}

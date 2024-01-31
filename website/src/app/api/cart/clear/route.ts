@@ -3,7 +3,7 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const supabase = createRouteHandlerClient<Database>({ cookies });
   const customer = (await supabase.auth.getUser()).data.user;
 
@@ -37,11 +37,8 @@ export async function GET(req: NextRequest) {
       return new Response(error.message, { status: 500 });
     }
   } else {
-    console.log("DELETE COOKIE CART", cookies().get("cart"));
     cookies().delete("cart");
   }
-
-  console.log("DELEtEDDDD");
 
   return new Response("ok", { status: 200 });
 }

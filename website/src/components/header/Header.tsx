@@ -51,18 +51,20 @@ export default function Header({ extension, small = true }: Props) {
           "sticky top-0 bg-gradient-to-b from-neutral-700 to-neutral-900 text-white z-50 transition-transform",
           open ? "-translate-y-0" : "-translate-y-full",
           small ? " pt-3" : "pt-2 md:pt-4"
-        )}>
+        )}
+      >
         <MaxWidthContainer
           className={twJoin(
             "grid grid-cols-[1fr_auto_1fr] sm:grid-cols-[auto_1fr_auto] gap-x-5",
             small && "max-sm:items-center"
-          )}>
+          )}
+        >
           <Hamburger setMobilePanelOpen={setMobilePanelOpen} />
 
           <Logo small={small} />
 
           {small ? (
-            <div className="max-xs:hidden place-self-center pl-4">
+            <div className="max-sm:hidden place-self-center pl-4">
               <Navbar small={small} />
             </div>
           ) : (
@@ -73,7 +75,7 @@ export default function Header({ extension, small = true }: Props) {
         </MaxWidthContainer>
 
         {!small && (
-          <MaxWidthContainer className="pt-2.5 col-span-full max-xs:hidden">
+          <MaxWidthContainer className="pt-2.5 col-span-full max-sm:hidden">
             <Navbar small={small} />
           </MaxWidthContainer>
         )}
@@ -88,7 +90,7 @@ export default function Header({ extension, small = true }: Props) {
 
 function Hamburger({ setMobilePanelOpen }) {
   return (
-    <button onClick={() => setMobilePanelOpen(true)} className="xs:hidden">
+    <button onClick={() => setMobilePanelOpen(true)} className="sm:hidden">
       <Image src={iconHamburger} alt="" className="w-6  opacity-90" />
     </button>
   );
@@ -102,7 +104,8 @@ function Logo({ small }) {
         small
           ? "-translate-y-0.5 max-xs:justify-self-center"
           : "max-sm:justify-self-center"
-      )}>
+      )}
+    >
       <Image
         src={imgLogo}
         alt="logo 2m2 autoricambi"

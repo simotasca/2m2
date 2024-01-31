@@ -1,5 +1,6 @@
 "use client";
 
+import useTranslation from "@/context/lang/useTranslation";
 import { Fragment } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 
@@ -40,7 +41,8 @@ export default function Breadcrumbs({ items, className }: Params) {
                     "whitespace-nowrap max-md:text-xs underline-offset-[3px] group-hover:underline",
                     lastIdx === idx && "font-semibold text-neutral-800",
                     item.href && "group-hover:text-red-600 cursor-pointer"
-                  )}>
+                  )}
+                >
                   {item.text}
                 </a>
               ) : (
@@ -50,7 +52,8 @@ export default function Breadcrumbs({ items, className }: Params) {
                 className={twJoin(
                   "absolute pt-2 hidden group-hover:block top-full z-50 ",
                   !!item.text && "left-1"
-                )}>
+                )}
+              >
                 {!!item.dropdown?.length && (
                   <div className="bg-white rounded border border-slate-300 p-4 w-fit">
                     <ul className="flex flex-col gap-2 text-sm leading-[1] whitespace-nowrap pr-1">

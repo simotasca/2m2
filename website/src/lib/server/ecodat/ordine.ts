@@ -28,7 +28,7 @@ interface OrderApi {
   /** DataOraOrdine */
   dateTime: Date;
   /** FlgPrivato */
-  type: "personal" | "agency";
+  type: "personal" | "business";
   /** CF */
   cf: string;
   /** Email */
@@ -64,21 +64,8 @@ interface PersonalOrder extends OrderApi {
   name: string;
 }
 
-interface OrderProducts {
-  /** IDRicambio */
-  id: string;
-  /** CodiceArticolo */
-  oeCode: string;
-  /** DescrizioneArticolo */
-  description: string;
-  /** PrezzoUnitario */
-  price: string;
-  /** Quantità */
-  quantity: string;
-}
-
-interface AgencyOrder extends OrderApi {
-  type: "agency";
+interface BusinessOrder extends OrderApi {
+  type: "business";
   /** RagioneSociale */
   businessName: string;
   /** Piva */
@@ -92,7 +79,20 @@ interface AgencyOrder extends OrderApi {
       };
 }
 
-export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
+interface OrderProducts {
+  /** IDRicambio */
+  id: string;
+  /** CodiceArticolo */
+  oeCode: string;
+  /** DescrizioneArticolo */
+  description: string;
+  /** PrezzoUnitario */
+  price: string;
+  /** Quantità */
+  quantity: string;
+}
+
+export async function sendEcodatOrder(params: PersonalOrder | BusinessOrder) {
   const codiceArbitrario = randomBytes(5).toString("hex").slice(0, 10);
 
   let xml = `
@@ -125,15 +125,13 @@ export async function sendEcodatOrder(params: PersonalOrder | AgencyOrder) {
     xml += `
       <RagioneSociale>${params.businessName}</RagioneSociale>
       <Piva>${params.piva}</Piva>
-      ${params.electronicInvoice}
     `;
 
     if (params.electronicInvoice) {
-      if (Object.hasOwn(params.electronicInvoice, "PEC_FE")) {
-        /** @ts-ignore */
+      if ("PEC_FE" in params.electronicInvoice) {
         xml += `<PEC_FE>${params.electronicInvoice.PEC_FE}</PEC_FE>`;
-      } else {
-        /** @ts-ignore */
+      }
+      if ("SDI_FE" in params.electronicInvoice) {
         xml += `<SDI_FE>${params.electronicInvoice.SDI_FE}</SDI_FE>`;
       }
     }

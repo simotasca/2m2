@@ -1,9 +1,17 @@
+import iconLogo from "@/images/logo-dark.svg";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import imgBg from "@/images/main-background-engine.jpg";
+import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import { PropsWithChildren } from "react";
+import Link from "@/components/navigation/Link";
+import { FC, PropsWithChildren } from "react";
 
-export default function AuthLayout({ children }: PropsWithChildren) {
+type TitleComponent = FC<PropsWithChildren> & {
+  Image: FC;
+  Title: FC<PropsWithChildren>;
+};
+
+const AuthLayout: TitleComponent = ({ children }) => {
   return (
     <div className="p-4 sm:p-8 z-10">
       <Image
@@ -18,4 +26,26 @@ export default function AuthLayout({ children }: PropsWithChildren) {
       </MaxWidthContainer>
     </div>
   );
-}
+};
+
+AuthLayout.Image = () => {
+  return (
+    <Link href={routes.home()}>
+      <Image
+        src={iconLogo}
+        alt="logo 2m2 autoricambi"
+        className="w-16 mx-auto"
+      />
+    </Link>
+  );
+};
+
+AuthLayout.Title = ({ children }) => {
+  return (
+    <h1 className="text-xl text-center font-bold mt-3 mb-2 uppercase">
+      {children}
+    </h1>
+  );
+};
+
+export default AuthLayout;

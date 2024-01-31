@@ -1,6 +1,6 @@
 import { EcodatAction, fetchEcodat } from ".";
 
-export async function fetchEcodatAvalability(
+export async function setEcodatAvalability(
   articleId: string | number,
   available: boolean
 ) {

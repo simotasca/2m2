@@ -1,19 +1,22 @@
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import PaginatedProductsGrid from "@/components/search/PaginatedProductsGrid";
 import SearchModal from "@/components/search/SearchModal";
-import SearchModalToggle from "@/components/search/SearchModalToggle";
+import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
 import ContactsSection from "@/components/ui/ContactsSection";
+import EngineAssistance from "@/components/ui/EngineAssistance";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import PageLayout from "@/layouts/PageLayout";
-import ServerLayout from "@/layouts/base/ServerLayout";
-import SearchServerLayout from "@/layouts/search/SearchServerLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
+
 import {
-  fetchEcodatArticles,
   fetchEcodatCategories,
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import { itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
@@ -46,21 +49,40 @@ export default async function TypologyPage({
 
   const items = await fetchEcodatItems(category.id, typology.id);
 
+  const [translations, { t }] = await generateTranslations(
+    {
+      product: "misc/product",
+      header: "misc/header",
+      "mobile-panel": "misc/mobile-panel",
+      search: "misc/search",
+      footer: "misc/footer",
+      "engine-assistance": "misc/engine-assistance",
+      errors: "misc/errors",
+      page: "pages/category/typology",
+      contacts: "misc/contacts",
+      auth: "auth",
+      categories: "misc/categories",
+
+      typologies: "misc/typologies",
+    },
+    true
+  );
+
   const bread = [
     {
-      text: category.name,
+      text: t(["categories", category.name], category.name),
       href: routes.category(category.name),
       dropdown: categories.map((c) => ({
-        text: c.name,
+        text: t(["categories", c.name], c.name),
         href: routes.category(c.name),
       })),
     },
     {
-      text: typology.name,
+      text: t(["typologies", typology.name], typology.name),
       href: routes.type(category.name, typology.name),
-      dropdown: types.map((t) => ({
-        text: t.name,
-        href: routes.type(category.name, t.name),
+      dropdown: types.map((ty) => ({
+        text: t(["typologies", ty.name], ty.name),
+        href: routes.type(category.name, ty.name),
       })),
     },
     {
@@ -71,43 +93,59 @@ export default async function TypologyPage({
     },
   ];
 
+  const { cart, favs } = await getServerData();
+
   return (
-    <ServerLayout>
-      <PageLayout headerSmall>
-        <SearchModal />
+    <TranslationClientComponent value={translations}>
+      <ClientLayout cart={cart} favourites={favs}>
+        <PageLayout headerSmall>
+          <SearchModal category={category} type={typology} />
 
-        <div className="bg-white pb-4 xs:px-2">
-          <MaxWidthContainer>
-            <div className="pt-4 max-sm:pt-3 pb-2">
-              <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
-                <Breadcrumbs items={bread} />
-                <SearchModalToggle />
+          <div className="bg-white pb-4 xs:px-2">
+            <MaxWidthContainer>
+              <div className="pt-4 max-sm:pt-3 pb-2">
+                <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
+                  <Breadcrumbs items={bread} />
+                  <StyledSearchModalToggle />
+                </div>
               </div>
-            </div>
 
-            <Title as="h1">
-              <Title.Gray>Type</Title.Gray>
-              <Title.Red> {typology.name}</Title.Red>
-            </Title>
+              <div className="max-sm:h-3"></div>
 
-            <div className="h-4"></div>
+              <Title as="h1">
+                <Title.Gray>{t("page.title")}</Title.Gray>
+                <Title.Red>
+                  {" "}
+                  {t(["typologies", typology.name], typology.name)}
+                </Title.Red>
+              </Title>
 
-            <PaginatedProductsGrid
-              className="py-2"
-              searchParams={searchParams}
-              query={{
-                categoryId: category.id,
-                typeId: typology.id,
-              }}
-            />
-            <div className="h-10"></div>
-            <div className="max-sm:px-3">
-              <ContactsSection></ContactsSection>
-            </div>
-            <div className="h-4"></div>
-          </MaxWidthContainer>
-        </div>
-      </PageLayout>
-    </ServerLayout>
+              {category.name === "MOTORE" && (
+                <div className="pt-6">
+                  <EngineAssistance />
+                </div>
+              )}
+
+              <div className="h-4"></div>
+
+              {/* @ts-expect-error Server Component */}
+              <PaginatedProductsGrid
+                className="py-2"
+                searchParams={searchParams}
+                query={{
+                  categoryId: category.id,
+                  typeId: typology.id,
+                }}
+              />
+              <div className="h-10"></div>
+              <div className="max-sm:px-3">
+                <ContactsSection></ContactsSection>
+              </div>
+              <div className="h-4"></div>
+            </MaxWidthContainer>
+          </div>
+        </PageLayout>
+      </ClientLayout>
+    </TranslationClientComponent>
   );
 }
