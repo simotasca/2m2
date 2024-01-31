@@ -1,22 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 import { cookies as nextCookies } from "next/headers";
-import { chechEnvVariable } from "../shared/env";
+import { checkEnvVariable } from "../shared/env";
 import { Database, StorageAdapter } from "../shared/supabase";
 
-chechEnvVariable(
-  "INTERNAL_SUPABASE_URL",
-  "Error creating server side supabase client"
-);
-chechEnvVariable(
-  "NEXT_PUBLIC_SUPABASE_URL",
-  "Error creating server side supabase client"
-);
-chechEnvVariable(
-  "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-  "Error creating server side supabase client"
-);
-chechEnvVariable(
-  "SUPABASE_SERVICE_ROLE_KEY",
+checkEnvVariable(
+  [
+    "INTERNAL_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_HOST_FIX",
+  ],
   "Error creating server side supabase client"
 );
 
@@ -32,7 +26,7 @@ class ServerStorageAdapter implements StorageAdapter {
 
   // TODO: THIS IS BAD!!!
   getItem(key: string) {
-    key = key.replace("kong", "localhost");
+    key = key.replace("kong", process.env.SUPABASE_HOST_FIX!);
     let val = this.context.cookies().get(key)?.value;
     return val ? JSON.parse(val) : null;
   }
@@ -49,13 +43,9 @@ class ServerStorageAdapter implements StorageAdapter {
 }
 
 export function createServerSideClient({ cookies }: ServerStorageContext) {
-  return createClient<Database>(
-    process.env.INTERNAL_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      auth: {
-        storage: new ServerStorageAdapter({ cookies }),
-      },
-    }
-  );
+  return createClient<Database>(process.env.INTERNAL_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+    auth: {
+      storage: new ServerStorageAdapter({ cookies }),
+    },
+  });
 }
