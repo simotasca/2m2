@@ -68,21 +68,25 @@ export function itemName(item: Pick<EcodatItem, "name" | "position" | "side">) {
   return [item.name, item.position, item.side].join(" ").trim();
 }
 
+// [
+//   "Assale",
+//   "Lamierati esterni",
+//   "Fanaleria",
+//   "Motore",
+//   "Cambio e Trasmissione",
+//   "Selleria",
+//   "Cristalli",
+//   "Manutenzione Ordinaria",
+// ];
+
 export const knownCategories = {
   ASSALE: { image: "/assets/category-images/assale.png" },
   "CAMBIO E TRASMISSIONE": { image: "/assets/category-images/cambio.png" },
   CRISTALLI: { image: "/assets/category-images/cristalli.png" },
   FANALERIA: { image: "/assets/category-images/fanaleria.png" },
-
-  "LAMIERATI ESTERNI": {
-    image: "/assets/category-images/lamierati-esterni.png",
-  },
-
-  "MANUTENZIONE ORDINARIA": {
-    image: "/assets/category-images/manutenzione.png",
-  },
+  "LAMIERATI ESTERNI": { image: "/assets/category-images/lamierati-esterni.png" },
+  "MANUTENZIONE ORDINARIA": { image: "/assets/category-images/manutenzione.png" },
   MOTORE: { image: "/assets/category-images/motore.png" },
-
   SELLERIA: { image: "/assets/category-images/selleria.png" },
 } as const;
 

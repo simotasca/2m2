@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import MaxWidthContainer from "../ui/MaxWidthContainer";
 import useAuth from "@/context/auth/useAuth";
+import settings from "@/settings";
 
 export default function Footer() {
   const { setIsOpen } = useCart();
@@ -68,15 +69,15 @@ export default function Footer() {
           </h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
-              <Link href={routes.terms()}>
+              <Link href={routes.terms()} target="_blank">
                 {t("conditions.terms-and-conditions")}
               </Link>
             </li>
             <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
-              <Link href={routes.cookie()}>Cookie Policy</Link>
+              <Link href={routes.cookie()} target="_blank" >Cookie Policy</Link>
             </li>
             <li className="leading-4 whitespace-nowrap hover:underline underline-offset-4 cursor-pointer">
-              <Link href={routes.privacy()}>Privacy Policy</Link>
+              <Link href={routes.privacy()} target="_blank">Privacy Policy</Link>
             </li>
           </ul>
         </div>
@@ -281,38 +282,60 @@ function ContactsSection() {
         <ul className="flex flex-col gap-1 text-white">
           <li className="contents">
             <div className=" leading-tight">
-              <p>
-                <span className="text-xs leading-tight">Email: </span>
-                <span className="font-medium text-sm leading-tight">
-                  assistenza@2m2.com
-                </span>
-              </p>
+              <a href="mailto:2m2srl@gmail.com">
+                <p>
+                  <span className="text-xs leading-tight">Email: </span>
+                  <span className="font-medium text-sm leading-tight">
+                  {settings.info.email}
+                  </span>
+                </p>
+              </a>
             </div>
           </li>
           <li className=" h-px bg-neutral-600"></li>
           <li className="contents">
             <div className=" leading-tight">
-              <p>
-                <span className="text-xs leading-tight">
-                  {t("contacts.telephone.title")}{" "}
-                </span>
-                <br className="xs:hidden md:block lg:hidden" />
-                <span className="font-medium text-sm leading-tight">
-                  +39 374 9284720
-                </span>
-              </p>
+              <a href="tel:+39 389 4468231">
+                <p>
+                  <span className="text-xs leading-tight">
+                    {t("contacts.telephone.title")}{" "}
+                  </span>
+                  <br className="xs:hidden md:block lg:hidden" />
+                  <span className="font-medium text-sm leading-tight">
+                  {settings.info.phone}
+                  </span>
+                </p>
+              </a>
             </div>
           </li>
           <li className="col-span-3 h-px bg-neutral-600"></li>
           <li className="contents">
             <div className=" leading-tight">
-              <p>
-                <span className="text-xs leading-tight">Whatsapp: </span>
-                <br className="xs:hidden md:block lg:hidden" />
-                <span className="font-medium text-sm leading-tight">
-                  +39 374 9284720
-                </span>
-              </p>
+              <a
+                className="max-md:hidden"
+                href="https://web.whatsapp.com/send?phone=3894468231"
+                target="_blank"
+              >
+                <p>
+                  <span className="text-xs leading-tight">Whatsapp: </span>
+                  <br className="xs:hidden md:block lg:hidden" />
+                  <span className="font-medium text-sm leading-tight">
+                  {settings.info.phone}
+                  </span>
+                </p>
+              </a>
+              <a
+                className="md:hidden"
+                href="https://api.whatsapp.com/send?phone=3894468231"
+              >
+                <p>
+                  <span className="text-xs leading-tight">Whatsapp: </span>
+                  <br className="xs:hidden md:block lg:hidden" />
+                  <span className="font-medium text-sm leading-tight">
+                  {settings.info.phone}
+                  </span>
+                </p>
+              </a>
             </div>
           </li>
         </ul>
@@ -347,6 +370,7 @@ function ContactsSection() {
             </p>
           </li>
         </ul>
+        <a href="https://maps.app.goo.gl/369MXv5mJpvhDNP86"><p className="text-sm mt-4 hover:underline cursor-pointer">{settings.info.fullAddress()}</p></a>
       </div>
     </MaxWidthContainer>
   );

@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
 import Link from "@/components/navigation/Link";
+import { translateRoute } from "@/lib/client/lang";
 
 export default function Hero() {
   const { t } = useTranslation("page.hero");
@@ -70,6 +71,7 @@ export default function Hero() {
 
 function HeroFilters() {
   const { t, r } = useTranslation("page.hero.filters");
+  const { t: tCat } = useTranslation("categories");
 
   const router = useRouter();
 
@@ -84,13 +86,13 @@ function HeroFilters() {
 
   const mapFilterData = (
     filterData: any[] | undefined,
-    displayProp: string
+    display: (d: any) => string
   ) => {
     if (!filterData) return [];
     return filterData.map((fd) => ({
       key: fd.id,
       value: fd,
-      display: fd[displayProp],
+      display: display(fd),
     }));
   };
 
@@ -100,6 +102,10 @@ function HeroFilters() {
     });
   }, []);
 
+  const routerPushTranslated = (route: string) => {
+    router.push(translateRoute({ href: route }));
+  };
+
   const doSearch = () => {
     if (!category && !brand) {
       return;
@@ -107,24 +113,24 @@ function HeroFilters() {
 
     if (!category) {
       if (!model) {
-        router.push(routes.brand(brand.name));
+        routerPushTranslated(routes.brand(brand.name));
         return;
       }
-      router.push(routes.model(brand.name, model.name));
+      routerPushTranslated(routes.model(brand.name, model.name));
       return;
     }
 
     if (!brand) {
       if (!typology) {
-        router.push(routes.category(category.name));
+        routerPushTranslated(routes.category(category.name));
         return;
       }
-      router.push(routes.type(category.name, typology.name));
+      routerPushTranslated(routes.type(category.name, typology.name));
       return;
     }
 
     // to generic results page
-    router.push(
+    routerPushTranslated(
       routes.products({
         brandId: brand?.id,
         modelId: model?.id,
@@ -153,13 +159,13 @@ function HeroFilters() {
           <SearchFilter
             label="category"
             placeholder="Select the category"
-            data={mapFilterData(content?.categories, "name")}
+            data={mapFilterData(content?.categories, (c) => tCat(c.name))}
             onChange={(v) => setCategory(v)}
           />
           <SearchFilter
             label="typology"
             placeholder={category ? "Select the typology" : ". . ."}
-            data={mapFilterData(category?.typologies, "name")}
+            data={mapFilterData(category?.typologies, (t) => t["name"])}
             disabled={!category}
             onChange={(t) => setTypology(t)}
           />
@@ -168,13 +174,13 @@ function HeroFilters() {
           <SearchFilter
             label="brand"
             placeholder="Select the brand"
-            data={mapFilterData(content?.brands, "name")}
+            data={mapFilterData(content?.brands, (b) => b["name"])}
             onChange={(b) => setBrand(b)}
           />
           <SearchFilter
             label="model"
             placeholder={brand ? "Select the typology" : ". . ."}
-            data={mapFilterData(brand?.models, "name")}
+            data={mapFilterData(brand?.models, (m) => m["name"])}
             disabled={!brand}
             onChange={(m) => setModel(m)}
           />

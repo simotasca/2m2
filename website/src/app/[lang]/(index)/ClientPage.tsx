@@ -24,17 +24,6 @@ interface Props {
   categories: string[];
 }
 
-const selectedCategories = [
-  "Assale",
-  "Lamierati esterni",
-  "Fanaleria",
-  "Motore",
-  "Cambio e Trasmissione",
-  "Selleria",
-  "Cristalli",
-  "Manutenzione Ordinaria",
-];
-
 export default function ClientPage({ latestProducts, categories }: Props) {
   const { t, r } = useTranslation("page");
   return (
@@ -42,6 +31,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
       <Hero />
 
       <CategoriesSection categories={categories} />
+      
       <EngineAssistance></EngineAssistance>
 
       <MaxWidthContainer className="bg-neutral-100 pt-10 pb-10">
@@ -101,15 +91,12 @@ export default function ClientPage({ latestProducts, categories }: Props) {
 }
 
 function CategoriesSection({ categories }: { categories: string[] }) {
-  const filteredCategories = categories.filter((category) =>
-    selectedCategories.includes(category)
-  );
   return (
     <div className="bg-gradient-to-b from-neutral-700 to-neutral-900 shadow-[0px_3px_5px_#00000030] z-10">
       <div className="max-w-screen-3xl mx-auto overflow-hidden">
         <div
           className={twJoin(
-            "max-w-7xl grid xxs:grid-cols-2 md:grid-cols-4 3xl:grid-cols-8 mx-auto"
+            "max-w-[76rem] grid xxs:grid-cols-2 md:grid-cols-4 3xl:grid-cols-8 mx-auto"
           )}
         >
           {categories.map((key) => (
@@ -176,7 +163,7 @@ function CategoryCard({ name }: { name: string }) {
       />
       <div className="relative h-full px-4 pt-6  xxs:pt-3 xs:pt-6 md:p-4 pb-4 sm:pb-8 pr-[20%] flex flex-col justify-between uppercase  z-20">
         <p className="font-bold opacity-90 text-xl xxs:text-base xs:text-xl md:text-base mg:text-xl lg:text-xl leading-5">
-          {t(name) || name}
+          {t(name, name)}
         </p>
         <p className="text-base xxs:text-xs xs:text-sm md:text-xs lg:text-base group-hover:underline underline-offset-4">
           view more
