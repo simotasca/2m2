@@ -1,3 +1,14 @@
+- [ ] testare tutta la login
+- [ ] registrazione non funziona la confrma dell mail
+- [ ] checkout: finire di testare (i prodotti devono essere disabilitati dopo l'aquisto)
+- [ ] checkout: manca il design della mail di errore x 2m2
+- [ ] checkout: suggerire dati registrazione
+- [ ] prodotto: foto zoomabili
+- [ ] footer: non sono giusti i contatti (sono giusti quelli della barra rossa in alto)
+- [ ] i18n: verificare che tutto il sito sia tradotto (i nomi dei prodotti sicuramente non lo sono)
+- [ ] login: mancano messaggi di errore (si colorano solo di rosso i campi)
+- [ ] registrazione: mancano messaggi di errore termini e condizioni
+- [ ] termini e condizioni: il link dovrebbe essere target=_blank
 - [x] tutte le pagine not found danno invece something went wrong
 - [x] header: tendine ricambi e modelli
 - [x] header: contatti mandare a contacts section
@@ -15,24 +26,18 @@
 - [x] prodotto: rimuovere condividi
 - [x] prodotto: aggiungi al carrello
 - [x] prodotto: aggiungi ai preferiti
-- [ ] prodotto: foto zoomabili
 - [x] modal ricerca: non tradotto
 - [x] sezione contatti: sempre più padding
-- [ ] testare tutta la login
-- [ ] checkout: finire di testare (i prodotti devono essere disabilitati dopo l'aquisto)
-- [ ] checkout: manca il design della mail di errore x 2m2
-- [ ] checkout: suggerire dati registrazione
-- [ ] checkout: se azienda permettere dati ffattura elettronica
+- [x] checkout: se azienda permettere dati fattura elettronica
 - [x] pagine bianche di cookie, privacy
 
 ### VECCHI
 
-- [ ] finire di testare la gesione del pagamento
-- [x/2] i18n
-- [ ] area riservata
+- [x] i18n
+- [x] area riservata
 - [x] preferiti salvabili
-- [x?] sottolineatura a tutti gli elementi clickabili
-- [x/2] tradurre le categorie / tipologie / tutte le cose note del database
+- [x] sottolineatura a tutti gli elementi clickabili
+- [x] tradurre le categorie / tipologie / tutte le cose note del database
 - [x] breadcrumbs pagina prodotto, l'intem del prodotto stesso non è clickabile
 - [x] prodotto condivisibile
 
@@ -74,12 +79,12 @@
 # ricerca
 
 - [x] pagina tutti i prodotti con filtri
-- [ ] visualizzare filtri attivi
+- [x] visualizzare filtri attivi
 - [x] ogni pagina con prodotti abilitare i filtri di ricerca
 
 # IMPORTANtI
 
-- [ ] pagamento azienda (fattura elettronica)
+- [x] pagamento azienda (fattura elettronica)
 - [x] rendere non disponibili i prodotti sul gestionale
 - [x] svuotare il carrello (basandosi sui non disponibili)
 - [x] email login con codice inutile
