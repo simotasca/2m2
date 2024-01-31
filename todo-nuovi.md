@@ -1,3 +1,5 @@
+- [ ] filtri attivi nella pagina dei prodotti
+      solo negli elenchi (i prodotti non disponibili devono essere raggiungibili tramite link)
 - [x] testare tutta la login
 - [x] Nella pagina "reimposta nuova password" il bottone manca di scritta
   - [x] dopo aver impostato la password manca il tasto di redirect al sito
@@ -6,7 +8,7 @@
 - [x] registrazione non funziona la confrma dell mail
 - [ ] checkout: finire di testare (i prodotti devono essere disabilitati dopo l'aquisto)
 - [ ] checkout: manca il design della mail di errore x 2m2
-- [ ] checkout: suggerire dati registrazione
+- [x] checkout: suggerire dati registrazione
 - [ ] Prodotti: manca notifica che attesti l'aggiunta ai preferiti
 - [ ] prodotto: foto zoomabili
 - [ ] pagina tipologie: bread category non è tradotto
@@ -97,22 +99,21 @@
 
 - [ ] prodotti correlati nelle pagine di ricerca
 
-- [ ] usare memo per cacheare tutte le millimila chiamate a ecodat
+- [~] usare memo per cacheare tutte le millimila chiamate a ecodat
       (già nextjs dovrebbe cacheare qualcosa?)
 
 - [ ] categorie not found danno pagina 500 anzichè 404
 
 # ALTRI
 
-- [ ] Pagina modelli / categorie
+- [x] Pagina modelli / categorie
 - [ ] Pagina con form contatti
-- [ ] filtri attivi nella pagina dei prodotti
 - [x] ecodat filters cambiare funzione in promise
 - [ ] gearchie di z-index: idealmente in tailwind.config (z-modal-login, z-header, ecc..) così da tenere controllate. questo per tutte quelle sopra il 50
 
-- [ ] Collegare il customer stripe in fase di pagamento
+- [x] Collegare il customer stripe in fase di pagamento
       Ha senso avere un customer anon? penso di no
 
 - [ ] mettere il nuovo componente Link ovunque (da testare)
 
-- [ ] design mail per il cliente di notifica ordine avvenuto
+- [x] design mail per il cliente di notifica ordine avvenuto

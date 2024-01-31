@@ -6,7 +6,7 @@ import useTranslation from "@/context/lang/useTranslation";
 import AuthLayout from "@/layouts/AuthLayout";
 import { createClientSideClient } from "@/lib/client/supabase";
 import { useState } from "react";
-import { Input } from "./Input";
+import { Input } from "../reset-password/Input";
 
 export function SelectNewPassword() {
   const [password, setPassword] = useState("");

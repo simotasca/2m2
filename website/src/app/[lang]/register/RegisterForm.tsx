@@ -121,7 +121,7 @@ export default function RegisterForm() {
         email: access.email,
         password: access.password,
         options: {
-          emailRedirectTo: `${location.origin}/api/auth/callback`,
+          emailRedirectTo: `www.2m2.it/api/auth/callback`,
           data: metadata,
         },
       })
