@@ -55,7 +55,7 @@ export default function Hero() {
           </div>
           <Link href="#contacts">
             <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
-              <span>{t("button")}</span>
+              <span className="whitespace-nowrap">{t("button")}</span>
               <Image
                 src={iconSend}
                 alt=""

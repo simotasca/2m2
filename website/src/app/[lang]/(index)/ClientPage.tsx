@@ -31,7 +31,7 @@ export default function ClientPage({ latestProducts, categories }: Props) {
       <Hero />
 
       <CategoriesSection categories={categories} />
-      
+
       <EngineAssistance></EngineAssistance>
 
       <MaxWidthContainer className="bg-neutral-100 pt-10 pb-10">
@@ -92,11 +92,21 @@ export default function ClientPage({ latestProducts, categories }: Props) {
 
 function CategoriesSection({ categories }: { categories: string[] }) {
   return (
-    <div className="bg-gradient-to-b from-neutral-700 to-neutral-900 shadow-[0px_3px_5px_#00000030] z-10">
-      <div className="max-w-screen-3xl mx-auto overflow-hidden">
+    <div className="bg-gradient-to-b from-neutral-800 to-neutral-900 shadow-[0px_3px_5px_#00000030] z-10">
+      <div className="relative max-3xl:max-w-6xl 3xl:max-w-[1700px] mx-auto">
+        <Image
+          src={imgCarbonFiber}
+          alt=""
+          className="absolute w-[18%] h-[200%] top-0 left-0 -translate-x-1/2 -translate-y-1/2 mix-blend-color-dodge "
+        />
+        <Image
+          src={imgCarbonFiber}
+          alt=""
+          className="absolute  w-[15%] h-[200%] top-0 right-0 translate-x-1/2 -translate-y-1/2  mix-blend-color-dodge"
+        />
         <div
           className={twJoin(
-            "max-w-[76rem] grid xxs:grid-cols-2 md:grid-cols-4 3xl:grid-cols-8 mx-auto"
+            "grid xxs:grid-cols-2 md:grid-cols-4 3xl:grid-cols-8"
           )}
         >
           {categories.map((key) => (
