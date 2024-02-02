@@ -1,14 +1,19 @@
 - [ ] filtri attivi nella pagina dei prodotti
       solo negli elenchi (i prodotti non disponibili devono essere raggiungibili tramite link)
-- [ ] testare tutta la login
-- [ ] registrazione non funziona la conferma della mail
+- [x] testare tutta la login
+- [x] Nella pagina "reimposta nuova password" il bottone manca di scritta
+  - [x] dopo aver impostato la password manca il tasto di redirect al sito
+- [?] Strano che nell'area riservata alla prima registrazione non mi abbia salvato i dati utente, i quali non erano modificabili, mentre a una seconda e a una terza registrazione me li ha presi e funziona bene, bo
+- [x] Il primo campo di info azienda nella form di registrazione non ha label
+- [x] registrazione non funziona la confrma dell mail
 - [ ] checkout: finire di testare (i prodotti devono essere disabilitati dopo l'aquisto)
 - [ ] checkout: manca il design della mail di errore x 2m2
 - [x] checkout: suggerire dati registrazione
+- [ ] Prodotti: manca notifica che attesti l'aggiunta ai preferiti
 - [ ] prodotto: foto zoomabili
-- [ ] pagina tipologie: bread category
+- [ ] pagina tipologie: bread category non è tradotto
 - [x] footer: non sono giusti i contatti (sono giusti quelli della barra rossa in alto)
-- [ ] i18n: verificare che tutto il sito sia tradotto (i nomi dei prodotti sicuramente non lo sono)
+- [x] i18n: verificare che tutto il sito sia tradotto (i nomi dei prodotti sicuramente non lo sono)
 - [ ] login: mancano messaggi di errore (si colorano solo di rosso i campi)
 - [ ] registrazione: mancano messaggi di errore termini e condizioni
 - [x] termini e condizioni: il link dovrebbe essere target=_blank

@@ -40,7 +40,7 @@
       },
       "info-business": {
         "business": "<red>Business</red> info ",
-        "business-name": {
+        "name": {
           "label": "business name",
           "placeholder": "Business Name"
         },

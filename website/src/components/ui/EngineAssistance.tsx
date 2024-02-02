@@ -33,8 +33,8 @@ export default function EngineAssistance() {
             </Button>
           </Link>
           <div className="h-[22px]"></div>
-          <div className="bg-white h-px w-full mb-1"></div>
-          <p className="text-sm leading-[1.1] ">
+          <div className="bg-white bg-opacity-40 h-px w-full mb-1"></div>
+          <p className="text-opacity-40 text-sm leading-[1.1] ">
             {t("engine-assistance.paragraph")}
           </p>
         </div>
