@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2M2 Sync Portal</title>
+    <style>
+      button {
+        margin-top: 0.5rem;
+        padding: 0.15rem 0.5rem 0.1rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="max-width: 600px; padding: 0 1rem">
+      <h1 style="margin-bottom: 5px">2M2 Sync Portal</h1>
+      <h3 style="margin: 5px 0">Ebay to Ecodat syncronization portal for 2M2</h3>
+      <p style="line-height: 1.5">
+        Per avviare il servizio di sincronizzazione inserire la password e premere il tasto
+        <i>"Avvia Sincronizzazione"</i>.
+      </p>
+      <div>
+        <p style="margin-bottom: 3px"><b>Password:</b></p>
+        <input type="password" value="" />
+      </div>
+      <div>
+        <button id="btn-start-sync">Avvia sincronizzazione</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    const availableEndpoints = {
+      "Ebay User Authentication": "",
+    };
+
+    const passwordInput = document.querySelector("input");
+    document.querySelector("#btn-start-sync")?.addEventListener("click", () => {
+      if (!passwordInput.value) {
+        alert("Insert a token before navigation!");
+        return;
+      }
+      window.location = "/auth/get-user-token?access-token=" + passwordInput.value;
+    });
+  </script>
+</html>
