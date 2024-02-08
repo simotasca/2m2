@@ -1,13 +1,7 @@
 import nationsJson from "@/data/nations.json";
 import iconShipping from "@/images/icons/shipping.svg";
 import Image from "next/image";
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import WizInput from "../WizInput";
 import WizSelect, { WizSelectItem } from "../WizSelect";
 import WizTabValidator from "../WizTabHandle";
@@ -39,10 +33,7 @@ const nations: WizSelectItem[] = nationsJson.map((n) => ({
   val: n.name,
 }));
 
-export const DeliveryAddressTab = forwardRef<
-  WizTabValidator,
-  DeliveryInfoParams
->(({ address, setAddress }, ref) => {
+export const DeliveryAddressTab = forwardRef<WizTabValidator, DeliveryInfoParams>(({ address, setAddress }, ref) => {
   const [showErrors, setShowErrors] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +50,7 @@ export const DeliveryAddressTab = forwardRef<
             !!address.provinceCode &&
             !!address.city &&
             !!address.istat &&
-            !!Number(address.zip || "err") &&
+            !!address.zip &&
             !!address.street &&
             !!Number(address.number || "err") &&
             (!address.notes?.length || address.notes.length < 250)
@@ -104,9 +95,7 @@ export const DeliveryAddressTab = forwardRef<
     <div ref={tabRef} className="mb-2.5">
       <div className="flex items-start gap-2 mb-2">
         <Image className="w-5 -translate-y-px" src={iconShipping} alt="" />
-        <h4 className="text-xl leading-[0.9] font-bold uppercase">
-          {r("title")}
-        </h4>
+        <h4 className="text-xl leading-[0.9] font-bold uppercase">{r("title")}</h4>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -120,32 +109,18 @@ export const DeliveryAddressTab = forwardRef<
                 }
               : undefined
           }
-          onChange={(item) =>
-            setAddress({ ...address, countryCode: item.key, country: item.val })
-          }
+          onChange={(item) => setAddress({ ...address, countryCode: item.key, country: item.val })}
           label={t("nations.label")}
           placeholder={t("nations.placeholder")}
-          errorMessage={
-            showErrors && !address.country
-              ? t("errors.required-error")
-              : undefined
-          }
+          errorMessage={showErrors && !address.country ? t("errors.required-error") : undefined}
           required={true}
           loading={false}
           loadingError={false}
         />
-        <ProvinceInput
-          address={address}
-          setAddress={setAddress}
-          showErrors={showErrors}
-        />
+        <ProvinceInput address={address} setAddress={setAddress} showErrors={showErrors} />
         <div className="grid grid-cols-3 gap-x-2">
           <div className="col-span-2">
-            <CityInput
-              address={address}
-              setAddress={setAddress}
-              showErrors={showErrors}
-            />
+            <CityInput address={address} setAddress={setAddress} showErrors={showErrors} />
           </div>
           <WizInput
             id="txt-zip"
@@ -155,15 +130,7 @@ export const DeliveryAddressTab = forwardRef<
             placeholder="Zip"
             type="text"
             name="zip"
-            errorMessage={
-              showErrors
-                ? !address.zip
-                  ? t("errors.required-error")
-                  : Number.isNaN(Number(address.zip || "err"))
-                  ? "invalid"
-                  : undefined
-                : undefined
-            }
+            errorMessage={showErrors && !address.zip ? t("errors.required-error") : undefined}
             required={true}
           />
         </div>
@@ -173,18 +140,12 @@ export const DeliveryAddressTab = forwardRef<
             <WizInput
               id="txt-street"
               value={address.street || ""}
-              onChange={(e) =>
-                setAddress({ ...address, street: e.target.value })
-              }
+              onChange={(e) => setAddress({ ...address, street: e.target.value })}
               label={t("street.label")}
               placeholder={t("street.placeholder")}
               type="text"
               name="street"
-              errorMessage={
-                showErrors && !address.street
-                  ? t("errors.required-error")
-                  : undefined
-              }
+              errorMessage={showErrors && !address.street ? t("errors.required-error") : undefined}
               required={true}
             />
           </div>
@@ -217,9 +178,7 @@ export const DeliveryAddressTab = forwardRef<
           type="textarea"
           name="notes"
           errorMessage={
-            showErrors && address.notes && address.notes.length > 250
-              ? t("errors.max-250-chars")
-              : undefined
+            showErrors && address.notes && address.notes.length > 250 ? t("errors.max-250-chars") : undefined
           }
         />
       </div>

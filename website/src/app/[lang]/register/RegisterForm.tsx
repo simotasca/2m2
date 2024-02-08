@@ -414,7 +414,6 @@ export default function RegisterForm() {
                       link: (l) => (
                         <Link
                           href={routes.terms()}
-                          target="_blank"
                           className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
                         >
                           {l}
@@ -424,7 +423,6 @@ export default function RegisterForm() {
                     &nbsp;<span>e la</span>{" "}
                     <Link
                       href={routes.privacy()}
-                      target="_blank"
                       className="font-semibold hover:text-red-500 hover:underline underline-offset-[3px]"
                     >
                       <b className="font-semibold"> privacy policy</b>

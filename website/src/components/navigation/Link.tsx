@@ -7,21 +7,20 @@ import { useEffect, useState, type PropsWithChildren } from "react";
 
 export type HrefSpec = { href?: string; lang?: Locale };
 
-type Props = PropsWithChildren<HrefSpec & { className?: string, target?:string }>;
+type Props = PropsWithChildren<HrefSpec & { className?: string }>;
 
 export default function Link({
   href: userHref,
   lang,
   children,
   className,
-  target,
 }: Props) {
   const [href, setHref] = useState("#");
   useEffect(() => {
     setHref(translateRoute({ href: userHref, lang }));
   }, []);
   return (
-    <NextLink className={className} href={href} target={target}>
+    <NextLink className={className} href={href}>
       {children}
     </NextLink>
   );

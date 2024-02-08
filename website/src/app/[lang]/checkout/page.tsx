@@ -23,7 +23,7 @@ export default async function CheckoutPage({ searchParams }: Props) {
 
   const products: EcodatArticle[] = [];
   for (const id of productIds) {
-    const product = await fetchEcodatArticle(id);
+    const product = await fetchEcodatArticle(id).catch(() => null);
     if (!product) continue;
     products.push(product);
   }

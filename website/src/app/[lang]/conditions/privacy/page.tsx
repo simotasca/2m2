@@ -33,8 +33,7 @@ export default async function CookiePolicy() {
               <div className="px-24 py-14 bg-neutral-100 h-full">
                 <div
                   className={twJoin(
-                    "prose max-w-full",
-                    
+                    "prose",
                     "prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12",
                     "prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-4",
                     "prose-p:mb-6"

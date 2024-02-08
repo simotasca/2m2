@@ -31,18 +31,25 @@ export async function fetchEcodat(action: EcodatAction, xml?: string, prefix = "
   // console.log(ecodatBodyTemplate(action, xml, prefix));
   // console.log("==========================");
 
-  return await fetch(process.env.ECODAT_API_URL!, {
+  console.log("ECODATTio", process.env.ECODAT_API_URL)
+
+  const fetcher = fetch(process.env.ECODAT_API_URL!, {
     method: "POST",
     body: ecodatBodyTemplate(action, xml, prefix),
     headers: ecodatHeaders(action, prefix),
   })
-    .then((res) => res.text())
-    // .then((res) => {
-    //   console.log("RESPONSE: ==============");
-    //   console.log(res);
-    //   console.log("========================");
-    //   return res;
-    // })
+  console.log("TUTTOBBENEBBRO")
+  
+  return await fetcher.then((res) => {
+      console.log("DEMODMEO", res);
+      return res.text()
+    })
+    .then((res) => {
+      console.log("RESPONSE: ==============");
+      console.log(res);
+      console.log("========================");
+      return res;
+    })
     .catch((err) => {
       throw new Error(`Error calling ecodat api ${action}: ` + err.message);
     })

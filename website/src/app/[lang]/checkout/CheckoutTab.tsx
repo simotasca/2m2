@@ -1,27 +1,9 @@
 import iconPayment from "@/images/icons/payment.svg";
 import { stripePromise } from "@/lib/stripe";
-import {
-  Elements,
-  PaymentElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import type {
-  Appearance,
-  CssFontSource,
-  CustomFontSource,
-  StripeElementsOptions,
-} from "@stripe/stripe-js";
+import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import type { Appearance, CssFontSource, CustomFontSource, StripeElementsOptions } from "@stripe/stripe-js";
 import Image from "next/image";
-import {
-  Dispatch,
-  FormEvent,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, FormEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import WizTabHandle from "./WizTabHandle";
 import useTranslation from "@/context/lang/useTranslation";
 import LoadingScreen from "@/components/ui/LoadingScreen";
@@ -33,41 +15,35 @@ export interface CheckoutParams {
   amount: number;
 }
 
-export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
-  (forwardProps, ref) => {
-    const tabRef = useRef<HTMLDivElement>(null);
+export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>((forwardProps, ref) => {
+  const tabRef = useRef<HTMLDivElement>(null);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        validate: () => true,
-        focus: () => tabRef.current?.querySelector("input")?.focus(),
-      }),
-      []
-    );
+  useImperativeHandle(
+    ref,
+    () => ({
+      validate: () => true,
+      focus: () => tabRef.current?.querySelector("input")?.focus(),
+    }),
+    []
+  );
 
-    useLogger("AMOUNTS " + forwardProps.amount, forwardProps.amount);
-
-    return (
-      <div ref={tabRef} className="mb-2.5">
-        <div className="flex items-start gap-2 mb-2">
-          <Image className="w-5 -translate-y-px" src={iconPayment} alt="" />
-          <h4 className="text-xl leading-[0.9] font-bold uppercase">
-            Checkout
-          </h4>
-        </div>
-        <ElementsWrapper {...forwardProps} />
+  return (
+    <div ref={tabRef} className="mb-2.5">
+      <div className="flex items-start gap-2 mb-2">
+        <Image className="w-5 -translate-y-px" src={iconPayment} alt="" />
+        <h4 className="text-xl leading-[0.9] font-bold uppercase">Checkout</h4>
       </div>
-    );
-  }
-);
+      <ElementsWrapper {...forwardProps} />
+    </div>
+  );
+});
 
 function ElementsWrapper({ email, metadata, amount }: CheckoutParams) {
   if (!stripePromise || !amount || !metadata) return <LoadingSpinner />;
 
   const options: StripeElementsOptions = {
     mode: "payment",
-    amount,
+    amount: amount * 100,
     currency: "eur",
     paymentMethodCreation: "manual",
     appearance: {
@@ -87,7 +63,7 @@ function ElementsWrapper({ email, metadata, amount }: CheckoutParams) {
       },
     ],
     // TODO non necessario
-    locale: "en",
+    // locale: "en",
   };
 
   return (
@@ -105,15 +81,7 @@ const LoadingSpinner = () => {
   );
 };
 
-function CheckoutForm({
-  email,
-  totalPrice,
-  metadata,
-}: {
-  email?: string;
-  totalPrice?: number;
-  metadata: any;
-}) {
+function CheckoutForm({ email, totalPrice, metadata }: { email?: string; totalPrice?: number; metadata: any }) {
   const [loading, setLoading] = useState(false);
   // TODO: display
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -139,11 +107,11 @@ function CheckoutForm({
       return;
     }
 
-    const { error: paymentMethodError, paymentMethod } =
-      await stripe.createPaymentMethod({
-        elements,
-        params: { metadata },
-      });
+    const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
+      elements,
+      params: { metadata },
+      
+    });
 
     if (paymentMethodError) {
       // This point is only reached if there's an immediate error when
@@ -194,15 +162,14 @@ function CheckoutForm({
       <form onSubmit={handleSubmit}>
         <PaymentElement />
 
+        {errorMessage && <p className=" my-2 text-red-400">{errorMessage}</p>}
+
         {totalPrice && (
-          <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold mt-4">
-            {t("pay")} $
-            {totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
+          <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold m4-2">
+            {t("pay")} ${totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
           </button>
         )}
       </form>
-
-      {errorMessage && <p className="text-red-400">{errorMessage}</p>}
     </>
   );
 }

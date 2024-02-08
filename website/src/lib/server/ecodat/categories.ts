@@ -8,8 +8,9 @@ export async function fetchEcodatCategories(): Promise<EcodatCategory[]> {
     const categories = res.querySelectorAll(
       "ArrCategorie > WMAGAZZINO_Categorie"
     );
-    const categorie = Array.from(categories).map(parseCategory);
-    return categorie.filter((c) => c.name in knownCategories);
+    return Array.from(categories)
+      .map(parseCategory)
+      .filter((c) => c.name in knownCategories);
   });
 }
 

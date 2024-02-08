@@ -66,7 +66,7 @@ export default function LoginForm() {
       return;
     }
 
-    router.push("/reserved");
+    router.push("/");
   };
 
   return (

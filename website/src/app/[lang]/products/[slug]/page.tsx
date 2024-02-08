@@ -31,6 +31,7 @@ import CartButton from "./CartButton";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import { getServerData } from "@/layouts/base/ServerLayout";
 import ClientLayout from "@/layouts/base/ClientLayout";
+import PhotoSection from "./PhotoSection";
 
 interface Props {
   params: {
@@ -151,7 +152,6 @@ export default async function ProductPage({ params: { slug } }: Props) {
               <hr className="my-3" />
 
               <div className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr] md:grid-cols-[3fr_auto] lg:grid-cols-[17fr_10fr_auto] gap-4 md:max-lg:gap-x-8">
-                {/* @ts-expect-error Server Component */}
                 <PhotoSection product={product} />
 
                 <ProductDetails product={product} />
@@ -197,51 +197,6 @@ export default async function ProductPage({ params: { slug } }: Props) {
         </PageLayout>
       </ClientLayout>
     </TranslationClientComponent>
-  );
-}
-
-async function PhotoSection({ product }: { product: EcodatArticle }) {
-  const photoIdsList: number[] = await fetchEcodatArticlePhotoList({
-    articleId: product.id,
-  }).catch((e) => {
-    console.error("Error fetching photo list, for product", product.id, ":", e);
-    return [];
-  });
-
-  if (photoIdsList.length === 0)
-    return (
-      <div className="aspect-[3/2] bg-slate-200">
-        <img
-          src="/assets/placeholder-image.png"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    );
-
-  return (
-    <div>
-      <div className="grid xs:grid-cols-[4rem_1fr] sm:max-md:grid-cols-1 md:grid-cols-[5rem_1fr] gap-1">
-        <div className="relative h-full max-xs:order-2 sm:max-md:order-2 max-xs:mb-14 sm:max-md:mb-14">
-          <div className="absolute w-full xs:h-full sm:max-md:h-auto top-0 left-0 max-xs:bottom-0 overflow-x-auto overflow-y-hidden xs:overflow-y-auto xs:overflow-x-hidden">
-            <div className="flex flex-col gap-1 max-xs:flex-row sm:max-md:flex-row max-xs:order-2 sm:max-md:order-2">
-              {photoIdsList.slice(1).map((imageId) => (
-                <div
-                  key={imageId}
-                  className="p-0.5 border border-slate-300 rounded-sm ">
-                  <ProductImage
-                    className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
-                    photo={{ imageId }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="w-full p-0.5 border border-slate-300 rounded-sm">
-          <ProductImage big photo={{ imageId: photoIdsList[0] }} />
-        </div>
-      </div>
-    </div>
   );
 }
 

@@ -24,7 +24,6 @@ import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SearchFilter from "./SearchFilter";
 import Link from "@/components/navigation/Link";
-import { translateRoute } from "@/lib/client/lang";
 
 export default function Hero() {
   const { t } = useTranslation("page.hero");
@@ -55,7 +54,7 @@ export default function Hero() {
           </div>
           <Link href="#contacts">
             <Button className="group mt-2 sm:mt-6 bg-white text-red-600 h-fit pl-12 sm:pl-8 pr-10 sm:pr-7 py-1.5 sm:py-[8px] md:py-1.5 tracking-wide max-sm:mx-auto sm:ml-auto sm:mr-0 md:mx-0">
-              <span className="whitespace-nowrap">{t("button")}</span>
+              <span>{t("button")}</span>
               <Image
                 src={iconSend}
                 alt=""
@@ -71,7 +70,6 @@ export default function Hero() {
 
 function HeroFilters() {
   const { t, r } = useTranslation("page.hero.filters");
-  const { t: tCat } = useTranslation("categories");
 
   const router = useRouter();
 
@@ -86,13 +84,13 @@ function HeroFilters() {
 
   const mapFilterData = (
     filterData: any[] | undefined,
-    display: (d: any) => string
+    displayProp: string
   ) => {
     if (!filterData) return [];
     return filterData.map((fd) => ({
       key: fd.id,
       value: fd,
-      display: display(fd),
+      display: fd[displayProp],
     }));
   };
 
@@ -102,10 +100,6 @@ function HeroFilters() {
     });
   }, []);
 
-  const routerPushTranslated = (route: string) => {
-    router.push(translateRoute({ href: route }));
-  };
-
   const doSearch = () => {
     if (!category && !brand) {
       return;
@@ -113,24 +107,24 @@ function HeroFilters() {
 
     if (!category) {
       if (!model) {
-        routerPushTranslated(routes.brand(brand.name));
+        router.push(routes.brand(brand.name));
         return;
       }
-      routerPushTranslated(routes.model(brand.name, model.name));
+      router.push(routes.model(brand.name, model.name));
       return;
     }
 
     if (!brand) {
       if (!typology) {
-        routerPushTranslated(routes.category(category.name));
+        router.push(routes.category(category.name));
         return;
       }
-      routerPushTranslated(routes.type(category.name, typology.name));
+      router.push(routes.type(category.name, typology.name));
       return;
     }
 
     // to generic results page
-    routerPushTranslated(
+    router.push(
       routes.products({
         brandId: brand?.id,
         modelId: model?.id,
@@ -159,13 +153,13 @@ function HeroFilters() {
           <SearchFilter
             label="category"
             placeholder="Select the category"
-            data={mapFilterData(content?.categories, (c) => tCat(c.name))}
+            data={mapFilterData(content?.categories, "name")}
             onChange={(v) => setCategory(v)}
           />
           <SearchFilter
             label="typology"
             placeholder={category ? "Select the typology" : ". . ."}
-            data={mapFilterData(category?.typologies, (t) => t["name"])}
+            data={mapFilterData(category?.typologies, "name")}
             disabled={!category}
             onChange={(t) => setTypology(t)}
           />
@@ -174,13 +168,13 @@ function HeroFilters() {
           <SearchFilter
             label="brand"
             placeholder="Select the brand"
-            data={mapFilterData(content?.brands, (b) => b["name"])}
+            data={mapFilterData(content?.brands, "name")}
             onChange={(b) => setBrand(b)}
           />
           <SearchFilter
             label="model"
             placeholder={brand ? "Select the typology" : ". . ."}
-            data={mapFilterData(brand?.models, (m) => m["name"])}
+            data={mapFilterData(brand?.models, "name")}
             disabled={!brand}
             onChange={(m) => setModel(m)}
           />

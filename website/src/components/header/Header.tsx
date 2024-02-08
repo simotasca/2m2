@@ -14,7 +14,6 @@ import Navbar from "./NavBar";
 import SearchBar from "./SearchBar";
 import { UserData } from "./UserData";
 import TopBar from "./TopBar";
-import Link from "../navigation/Link";
 
 interface Props {
   extension?: React.ReactNode;
@@ -99,7 +98,7 @@ function Hamburger({ setMobilePanelOpen }) {
 
 function Logo({ small }) {
   return (
-    <Link
+    <a
       href={routes.home()}
       className={twMerge(
         small
@@ -112,6 +111,6 @@ function Logo({ small }) {
         alt="logo 2m2 autoricambi"
         className={"w-14 max-w-none md:w-20"}
       />
-    </Link>
+    </a>
   );
 }

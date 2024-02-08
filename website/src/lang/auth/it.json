@@ -47,7 +47,7 @@
       "info-business": {
         "business": "info <red>Azienda</red>",
 
-        "name": {
+        "business-name": {
           "label": "ragione fiscale",
           "placeholder": "Ragione Fiscale"
         },

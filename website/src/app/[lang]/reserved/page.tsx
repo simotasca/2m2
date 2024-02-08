@@ -47,7 +47,7 @@ export default async function ReservedPage() {
   const favs = await getFavourites(supabase);
   const favouriteProducts: EcodatArticle[] = [];
   for (const id of favs) {
-    let prod = await fetchEcodatArticle(id);
+    let prod = await fetchEcodatArticle(id).catch(() => null);
     prod && prod.available && favouriteProducts.push(prod);
   }
 
