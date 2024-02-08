@@ -227,69 +227,149 @@ async function notifyCustomer(
 
   return await sendMail(meta.email, "[2M2] notifica di pagamento", {
     html: `
-    <h1 style="font-size: larger; font-weight:800; text-transform: uppercase; margin-bottom: 4px; font-family: Arial, Helvetica, sans-serif;">Conferma Pagamento Ricevuto</h1>
-    
-      <h2 style="font-size: medium; font-weight: 400; ">Gentile <b>${user}</b>, confermiamo la ricezione del suo pagamento. Di seguito, i dettagli:</h2>
-      
-      <h3 style="font-size: medium; font-weight:800; font-family: Arial, Helvetica, sans-serif; ">Prodotti acquistati:</h3>
+    <body>
+    <h1
+      style="
+        font-size: larger;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        font-family: Arial, Helvetica, sans-serif;
+      "
+    >
+      Conferma Pagamento Ricevuto
+    </h1>
+
+    <p
+      style="
+        font-size: medium;
+        font-weight: 400;
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+      "
+    >
+      Gentile <b>${user}</b>, confermiamo la ricezione del suo pagamento. Di
+      seguito, i dettagli:
+    </p>
+    <section style="max-width: 56rem; padding-bottom: 1rem">
+      <h2
+        style="
+          text-transform: uppercase;
+          font-size: medium;
+          font-weight: 800;
+          font-family: Arial, Helvetica, sans-serif;
+          margin-bottom: 6px;
+        "
+      >
+        Prodotti acquistati:
+      </h2>
+
       <table>
-        ${products.map(
-          (p) =>
-            `<tr>
-              <td>${productName(p)}</td>
-              <td>${p.id}</td>               
-              <td>${p.price}€</td>
-            </tr>`
-        )}
+        <colgroup>
+          <col style="width: 100px" />
+          <col style="width: 100px" />
+          <col style="width: 100px" />
+        </colgroup>
+        <thead
+          style="
+            text-align: left;
+            font-weight: 800;
+            text-transform: lowercase;
+            color: #363636;
+          "
+        >
+          <th>NAME</th>
+          <th style="width: 10px"></th>
+          <th>OEM CODE</th>
+          <th style="width: 20px"></th>
+          <th>PRICE</th>
+        </thead>
+
+        <tbody style="text-align: left">
+          <tr>
+            <td style="height: 4px"></td>
+          </tr>
+
+          ${products.map(
+            (p) =>
+              `<tr>
+                  <td>${productName(p)}</td>
+                  <td style="width: 10px"></td>
+                  <td>${p.id}</td>
+                  <td style="width: 20px"></td>
+                  <td><b>${p.price}€</b></td>
+                </tr>
+                <tr>
+                  <td style="height: 4px"></td>
+                </tr>`
+          )}
+          
+        </tbody>
       </table>
+    </section>
 
-      <h3 style="font-size: medium; font-weight:800; font-family: Arial, Helvetica, sans-serif; ">Indirizzo:</3>
-     
-      <p style="font-size: medium; font-weight: normal;">
-      <span>${meta.street}</span>
-      <span>${meta.number}</span>,
-      <b> ${meta.city}</b>
-      <span> ${meta.zip}</span>
-      </p>
+    <div style="margin-bottom: 3rem">
+      <span
+        style="
+          color: #363636;
+          font-size: medium;
+          font-weight: 800;
+          font-family: Arial, Helvetica, sans-serif;
+          margin: 0;
+        "
+      >
+        Indirizzo di spedizione:
+      </span>
 
-      <p style="font-size: medium; font-weight: normal;">
-        La ringraziamo per aver scelto il nostro servizio.
-      </p>
-      
-      <br />
-      
-      <i style="font-size: normal; font-weight: 100 ; color: #363636;">
-        Questa è una risposta automatica.
-        Per eventuali domande o assistenza, ti preghiamo di contattare il nostro servizio clienti alla mail:
-        <b style="text-decoration: underline; font-style: normal; font-weight: 400; color: black;">
+      <span style="font-size: small; font-weight: normal; margin: 0">
+        <span>${meta.street} </span>
+        <span>${meta.number} </span>,
+        <b>${meta.city} </b>
+        <span>${meta.zip}</span>
+      </span>
+    </div>
+
+    <p style="font-size: medium; font-weight: normal">
+      La ringraziamo per aver scelto il nostro servizio.
+    </p>
+
+    <br />
+
+    <div style="max-width: 56rem">
+      <i style="font-size: normal; font-weight: 100; color: #363636">
+        Questa è una risposta automatica. Per eventuali domande o assistenza, ti
+        preghiamo di contattare il nostro servizio clienti alla mail:
+        <b
+          style="
+            text-decoration: underline;
+            font-style: normal;
+            font-weight: 400;
+            color: black;
+          "
+        >
           2m2srl@gmail.com
         </b>
       </i>
-      
-      <br />
-      <br />
+    </div>
 
-      --
-      <p style="font-size: medium; font-weight: 400; font-family: Arial, Helvetica, sans-serif;">
-        <span>Il team di </span>
-        <b style="font-weight: 800; ">
-          2M2 Ricambi
-        </b>
-      </p>
+    <br>
 
-     
+    --
 
-      <ul style="font-size: medium; font-style: italic; font-weight: 400; list-style-type: none; margin-left: 0; padding-left: 0;">
-        <li>
-          {setting.info.{settings.info.fullAddress()}}
-        </li>
-        <li>
-          {settings.info.email}
-        </li>
-        <li>
-          {settings.info.phone}
-        </li>
-      </ul>
+    <br />
+    <br />
+
+    <div style="padding-left: 0.8rem; border-left: 1px solid #565656">
+      <h3 style="margin: 0;">2m2 autoricambi</h3>
+      <div style="font-size: 0.9rem">
+        <p style="margin: 0">{setting.info.{settings.info.fullAddress()}}</p>
+        <p style="margin: 0.4rem 0 0">
+          <b>Mail: </b><span>{settings.info.email}</span>
+        </p>
+        <p style="margin: 0"><b>Tel: </b><span>{settings.info.phone}</span></p>
+      </div>
+    </div>
+  </body>
 
     `,
   })
