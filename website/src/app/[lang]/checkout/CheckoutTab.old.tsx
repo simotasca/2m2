@@ -1,3 +1,5 @@
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import useTranslation from "@/context/lang/useTranslation";
 import iconPayment from "@/images/icons/payment.svg";
 import { stripePromise } from "@/lib/stripe";
 import {
@@ -13,16 +15,13 @@ import type {
 } from "@stripe/stripe-js";
 import Image from "next/image";
 import {
-  Dispatch,
   forwardRef,
   useEffect,
   useImperativeHandle,
   useRef,
-  useState,
+  useState
 } from "react";
 import WizTabHandle from "./WizTabHandle";
-import useTranslation from "@/context/lang/useTranslation";
-import LoadingScreen from "@/components/ui/LoadingScreen";
 
 export interface CheckoutParams {
   email?: string;

@@ -16,7 +16,6 @@ import imgLogoEsteso from "@/images/logo-esteso.svg";
 import mainBg from "@/images/main-background-engine.jpg";
 import imgSkew from "@/images/skew.svg";
 import { ecodatData } from "@/lib/client/filters";
-import type { EcodatData } from "@/lib/client/filters";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
