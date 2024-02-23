@@ -3,14 +3,73 @@
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Image from "next/image";
+import usePrevious from "@/hooks/usePrevious";
+
+const imagePlaceholder = "/assets/placeholder-image.png";
+
+class ProductImagePool {
+  private queue = new Map<
+    string,
+    {
+      signal: ((res: string | null) => void)[];
+      done: boolean;
+      result: string | null;
+    }
+  >();
+  private fetching = false;
+
+  constructor(private size: number = 4) {
+    if (this.size < 1)
+      throw new Error("ProductImagePool size cannot be less than 1");
+  }
+
+  private async loop() {
+    if (this.fetching) return;
+    this.fetching = true;
+    let undone = this.nextUndone();
+    while (undone.length > 0) {
+      const promises = undone.slice(0, this.size).map((v) =>
+        fetch(v.url)
+          .then((res) => (res.status === 404 ? undefined : res.text()))
+          .then((res) => (v.val.result = res || null))
+          .catch(() => {})
+          .finally(() => {
+            v.val.done = true;
+            console.log("POOL FINISHED", v);
+            v.val.signal.forEach((sig) => sig(v.val.result));
+          })
+      );
+      await Promise.all(promises);
+      undone = this.nextUndone();
+    }
+    this.fetching = false;
+  }
+
+  private nextUndone() {
+    return Array.from(this.queue)
+      .filter(([, val]) => !val.done)
+      .map(([url, val]) => ({ url, val }));
+  }
+
+  public queueImage(url: string, signal: (res: string | null) => void) {
+    if (this.queue.has(url)) {
+      const queued = this.queue.get(url)!;
+      queued.signal.push(signal);
+      if (queued.result) return signal(queued.result);
+    } else {
+      this.queue.set(url, { signal: [signal], done: false, result: null });
+    }
+    this.loop();
+  }
+}
+
+const pool = new ProductImagePool();
 
 interface Props {
   photo?: { productId: number } | { imageId: number };
   big?: boolean;
   className?: string;
 }
-
-const imagePlaceholder = "/assets/placeholder-image.png";
 
 export default function ProductImage({ photo, big, className }: Props) {
   const [image, setImage] = useState<string | undefined>();
@@ -19,7 +78,10 @@ export default function ProductImage({ photo, big, className }: Props) {
 
   useEffect(() => {
     if (!photo) return;
-    if (image !== undefined) return;
+
+    console.log("FETCHING IMAGE");
+
+    setFetching(true);
 
     let qs = "";
     if ("productId" in photo) {
@@ -32,12 +94,18 @@ export default function ProductImage({ photo, big, className }: Props) {
       qs += "&big=true";
     }
 
-    fetch("/api/ecodat/product-image?" + qs)
-      .then((res) => (res.status === 404 ? undefined : res.text()))
-      .then((src) => setImage(src))
-      .catch(() => setImage(undefined))
-      .finally(() => setFetching(false));
-  }, [photo]);
+    pool.queueImage("/api/ecodat/product-image?" + qs, (src) => {
+      setImage(src || undefined);
+      setFetching(false);
+    });
+
+    // fetch("/api/ecodat/product-image?" + qs)
+    //   .then((res) => (res.status === 404 ? undefined : res.text()))
+    //   .then((src) => setImage(src))
+    //   .catch(() => setImage(undefined))
+    //   .finally(() => setFetching(false));
+    /** @ts-ignore */
+  }, [photo?.productId, photo?.imageId]);
 
   return (
     <div

@@ -3,29 +3,44 @@
 import ProductImage from "@/components/product/ProductImage";
 import useAsynEffect from "@/hooks/useAsyncEffect";
 import { type EcodatArticle } from "@/lib/shared/ecodat";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PhotoSection({ product }: { product: EcodatArticle }) {
   const [photoIds, setPhotoIds] = useState<number[]>([]);
   const [current, setCurrent] = useState(0);
+  const mainPhoto = { imageId: photoIds[current] };
 
   useAsynEffect(async () => {
-    const photoIdsList: number[] = await fetch(`/api/ecodat/product-image/list?product-id=${product.id}`)
+    const photoIdsList: number[] = await fetch(
+      `/api/ecodat/product-image/list?product-id=${product.id}`
+    )
       .then((res) => {
         if (res.status !== 200) throw new Error(res.statusText);
         return res.json();
       })
       .catch((e) => {
-        console.error("Error fetching photo list, for product", product.id, ":", e);
+        console.error(
+          "Error fetching photo list, for product",
+          product.id,
+          ":",
+          e
+        );
         return [];
       });
     setPhotoIds(photoIdsList);
   }, []);
 
+  useEffect(() => {
+    console.log("CURRENT PHOTO", mainPhoto);
+  }, [mainPhoto]);
+
   if (photoIds.length === 0)
     return (
       <div className="aspect-[3/2] bg-slate-200">
-        <img src="/assets/placeholder-image.png" className="w-full h-full object-cover" />
+        <img
+          src="/assets/placeholder-image.png"
+          className="w-full h-full object-cover"
+        />
       </div>
     );
 
@@ -40,14 +55,17 @@ export default function PhotoSection({ product }: { product: EcodatArticle }) {
                   onClick={() => setCurrent(i)}
                   key={imageId}
                   className="p-0.5 border border-slate-300 rounded-sm cursor-pointer">
-                  <ProductImage className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto" photo={{ imageId }} />
+                  <ProductImage
+                    className="max-xs:h-12 sm:max-md:h-12 xs:w-full sm:max-md:w-auto"
+                    photo={{ imageId }}
+                  />
                 </div>
               ))}
             </div>
           </div>
         </div>
         <div className="w-full p-0.5 border border-slate-300 rounded-sm">
-          <ProductImage big photo={{ imageId: photoIds[current] }} />
+          <ProductImage big photo={mainPhoto} />
         </div>
       </div>
     </div>
