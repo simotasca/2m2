@@ -4,29 +4,23 @@ import {
   fetchEcodatModels,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import {
-  EcodatBrand,
-  EcodatCategory,
-  EcodatModel,
-  EcodatTypology,
-} from "@/lib/shared/ecodat";
+import { EcodatBrand, EcodatCategory, EcodatModel, EcodatTypology } from "@/lib/shared/ecodat";
 import { NextResponse } from "next/server";
 
 // if something throws throws everything
 export async function GET() {
   const categoriesWithTypologies: (EcodatCategory & {
     typologies?: EcodatTypology[];
-  })[] = await fetchEcodatCategories();
+  })[] = await fetchEcodatCategories().catch(() => []);
 
   for (const cat of categoriesWithTypologies) {
-    cat.typologies = await fetchEcodatTypologies(cat.id);
+    cat.typologies = await fetchEcodatTypologies(cat.id).catch(() => []);
   }
 
-  const brandsWithModels: (EcodatBrand & { models?: EcodatModel[] })[] =
-    await fetchEcodatBrands();
+  const brandsWithModels: (EcodatBrand & { models?: EcodatModel[] })[] = await fetchEcodatBrands().catch(() => []);
 
   for (const brand of brandsWithModels) {
-    brand.models = await fetchEcodatModels(brand.id);
+    brand.models = await fetchEcodatModels(brand.id).catch(() => []);
   }
 
   const resBody = JSON.stringify({
