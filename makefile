@@ -1,5 +1,11 @@
+.PHONY: *
+
 none:
 	@echo "no command specified"
+
+dev:
+	docker compose up -d
+	docker compose logs website -f
 
 compress:
 	rm -f website.tar.gz
