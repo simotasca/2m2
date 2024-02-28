@@ -9,7 +9,6 @@ const mailer = nodemailer.createTransport({
 
 function sendMail(to, subject, content) {
   return mailer.sendMail({
-    // from: process.env.MAILER_USER,
     from: "simo.tasca@gmail.com",
     to,
     subject,
