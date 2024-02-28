@@ -3,7 +3,13 @@
 import { CookieCart } from "@/lib/client/cart";
 import { createClientSideClient } from "@/lib/client/supabase";
 import { CartProduct } from "@/lib/shared/cart";
-import { PropsWithChildren, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { CartContext } from ".";
 
 /**
@@ -25,64 +31,80 @@ function CartProvider({
   const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const isLogged = cartId !== undefined;
-  const count = initialized ? cartProducts.length : 0;
-  const total = initialized
-    ? cartProducts.reduce((subtotal, p) => subtotal + p.price, 0)
-    : 0;
+  const isLogged = useMemo(() => cartId !== undefined, [cartId]);
+  const count = useMemo(
+    () => (initialized ? cartProducts.length : 0),
+    [initialized, cartProducts]
+  );
+  const total = useMemo(
+    () =>
+      initialized
+        ? cartProducts.reduce((subtotal, p) => subtotal + p.price, 0)
+        : 0,
+    [initialized, cartProducts]
+  );
 
-  const hasProduct = (product: CartProduct) => {
-    return !!cart.find((c) => c === product.id.toString());
-  };
+  const hasProduct = useCallback(
+    (product: CartProduct) => {
+      return !!cart.find((c) => c === product.id.toString());
+    },
+    [cart]
+  );
 
-  const addProduct = async (p: CartProduct) => {
-    setLoading(true);
-    let failed = false;
-    if (!isLogged) {
-      CookieCart.addProduct(p);
-    } else {
-      const supabase = createClientSideClient();
-      const { error } = await supabase.from("cart_products").insert({
-        id_cart: cartId,
-        id_product: String(p.id),
-      });
-      if (error) {
-        console.error(error.message);
-        failed = true;
+  const addProduct = useCallback(
+    async (p: CartProduct) => {
+      setLoading(true);
+      let failed = false;
+      if (!isLogged) {
+        CookieCart.addProduct(p);
+      } else {
+        const supabase = createClientSideClient();
+        const { error } = await supabase.from("cart_products").insert({
+          id_cart: cartId,
+          id_product: String(p.id),
+        });
+        if (error) {
+          console.error(error.message);
+          failed = true;
+        }
       }
-    }
-    setLoading(false);
-    if (!failed) {
-      setCart((prev) => [...prev, p.id.toString()]);
-      setCartProducts((prev) => [...prev, p]);
-      setIsOpen(true);
-    }
-  };
-
-  const removeProduct = async (p: Pick<CartProduct, "id">) => {
-    setLoading(true);
-    let failed = false;
-    if (!isLogged) {
-      CookieCart.removeProduct(p);
-    } else {
-      const supabase = createClientSideClient();
-      const { error } = await supabase
-        .from("cart_products")
-        .delete()
-        .eq("id_product", String(p.id));
-      if (error) {
-        console.error(error.message);
-        failed = true;
+      setLoading(false);
+      if (!failed) {
+        setCart((prev) => [...prev, p.id.toString()]);
+        setCartProducts((prev) => [...prev, p]);
+        setIsOpen(true);
       }
-    }
-    if (!failed) {
-      setCart((prev) => prev.filter((f) => f !== p.id.toString()));
-      setCartProducts((prev) => prev.filter((f) => f.id !== p.id));
-    }
-    setLoading(false);
-  };
+    },
+    [isLogged, setLoading, setCart, setCartProducts, setIsOpen]
+  );
 
-  const reload = async () => {
+  const removeProduct = useCallback(
+    async (p: Pick<CartProduct, "id">) => {
+      setLoading(true);
+      let failed = false;
+      if (!isLogged) {
+        CookieCart.removeProduct(p);
+      } else {
+        const supabase = createClientSideClient();
+        const { error } = await supabase
+          .from("cart_products")
+          .delete()
+          .eq("id_product", String(p.id));
+        if (error) {
+          console.error(error.message);
+          failed = true;
+        }
+      }
+      if (!failed) {
+        setCart((prev) => prev.filter((f) => f !== p.id.toString()));
+        setCartProducts((prev) => prev.filter((f) => f.id !== p.id));
+      }
+      setLoading(false);
+    },
+    [isLogged, setLoading, setCart, setCartProducts]
+  );
+
+  const reload = useCallback(async () => {
     setInitialized(false);
     fetch("/api/cart")
       .then((res) => res.json())
@@ -93,7 +115,7 @@ function CartProvider({
       .catch((e) => {
         console.error("ERROR: loading cart", e.message);
       });
-  };
+  }, [setInitialized, setCartProducts, setInitialized, cart]);
 
   useEffect(() => {
     reload();

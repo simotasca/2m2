@@ -1,7 +1,5 @@
 "use client";
 
-import iconRight from "@/images/icons/right.svg";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 
@@ -47,7 +45,7 @@ export default function Pagination({ isLast }: { isLast?: boolean }) {
         )}>
         <div className="translate-y-px">{"<"}</div>
       </a>
-      <span className="oswald text-lg">{page}</span>
+      <span className="oswald text-lg">page: {page}</span>
       <a
         href={isLast ? undefined : changePage((v) => v + 1)}
         className={twMerge(

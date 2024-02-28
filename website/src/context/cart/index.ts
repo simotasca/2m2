@@ -1,6 +1,5 @@
 import { CartProduct } from "@/lib/shared/cart";
-import { EcodatArticle, productName } from "@/lib/shared/ecodat";
-import { SetStateAction, createContext, Dispatch } from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 
 interface CartContext {
   isOpen: boolean;

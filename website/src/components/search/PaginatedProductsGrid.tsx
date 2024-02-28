@@ -12,11 +12,7 @@ interface Props {
   className?: string;
 }
 
-export default async function PaginatedProductsGrid({
-  searchParams,
-  query,
-  className,
-}: Props) {
+export default async function PaginatedProductsGrid({ searchParams, query, className }: Props) {
   const currentPage = getCurrentPage(searchParams);
 
   const products = await fetchEcodatArticles({
@@ -32,10 +28,7 @@ export default async function PaginatedProductsGrid({
   return (
     <>
       <Pagination isLast={isLast} />
-      <ProductsGrid
-        className={className}
-        products={products.slice(0, RESULTS_PER_PAGE)}
-      />
+      <ProductsGrid className={className} products={products.slice(0, RESULTS_PER_PAGE)} />
       <Pagination isLast={isLast} />
     </>
   );

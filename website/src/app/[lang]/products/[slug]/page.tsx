@@ -1,20 +1,18 @@
-import ProductImage from "@/components/product/ProductImage";
 import Breadcrumbs from "@/components/search/Breadcrumbs";
 import SearchModal from "@/components/search/SearchModal";
 import StyledSearchModalToggle from "@/components/search/StyledSearchModalToggle";
-import Button from "@/components/ui/Button";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import { PaymentsBar } from "@/components/ui/PaymentsBar";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import iconAvailable from "@/images/icons/available.svg";
 import iconFavorite from "@/images/icons/favorite.svg";
-import iconShare from "@/images/icons/share.svg";
-import iconCart from "@/images/icons/white/cart.svg";
 import imgLogo from "@/images/logo-dark.svg";
 import PageLayout from "@/layouts/PageLayout";
+import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
 import {
   fetchEcodatArticle,
-  fetchEcodatArticlePhotoList,
   fetchEcodatCategories,
   fetchEcodatItems,
   fetchEcodatTypologies,
@@ -24,14 +22,11 @@ import { EcodatArticle, itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import CartButton from "./CartButton";
+import PhotoSection from "./PhotoSection";
 import ProductDetails from "./ProductDetails";
 import SimilarProducts from "./SimilarProducts";
-import useCart from "@/context/cart/useCart";
-import CartButton from "./CartButton";
-import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
-import { getServerData } from "@/layouts/base/ServerLayout";
-import ClientLayout from "@/layouts/base/ClientLayout";
-import PhotoSection from "./PhotoSection";
+import { twJoin } from "tailwind-merge";
 
 interface Props {
   params: {
@@ -205,6 +200,7 @@ function BuySection({
   t,
   r,
 }: { product: EcodatArticle } & TranslationFactories) {
+  const hasPrice = product.price > 0;
   return (
     <aside className="font-sans order-2 row-span-2">
       <div className="flex gap-1 items-center -mb-1">
@@ -217,9 +213,15 @@ function BuySection({
           alt="available icon"
         />
       </div>
-      <span className="font-semibold text-4xl sm:text-3xl md:text-4xl">
-        {product.price.toFixed(2)}€
-      </span>
+      <p
+        className={twJoin(
+          "font-semibold",
+          hasPrice ? "text-4xl sm:text-3xl md:text-4xl" : "text-2xl py-1 leading-[1]"
+        )}>
+        {hasPrice
+          ? String(product.price.toFixed(2)) + "€"
+          : "Richiedi un preventivo"}
+      </p>
       <p className="text-[#5F5C5C] text-sm sm:text-xs md:text-sm">
         {t("page.buy-section.iva")}
       </p>
@@ -238,21 +240,11 @@ function BuySection({
             {t("page.buy-section.favourites")}
           </span>
         </div>
-        {/* <div className="flex items-center gap-2 sm:gap-1 md:gap-2 max-w-[80%]">
-          <Image
-            className="w-6 sm:w-5 md:w-6"
-            src={iconShare}
-            alt="share icon"
-          />
-          <span className="text-xs leading-[1.1]">
-            {t("page.buy-section.share")}
-          </span>
-        </div> */}
       </div>
 
       <div className="h-[10px]"></div>
 
-      <CartButton product={product} />
+      {hasPrice ? <CartButton product={product} /> : <></>}
 
       <div className="pt-2 flex justify-end pr-2 gap-2">
         <span className="text-sm sm:text-xs md:text-sm">

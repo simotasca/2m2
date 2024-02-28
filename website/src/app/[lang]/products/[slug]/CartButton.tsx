@@ -17,16 +17,29 @@ export default function CartButton({ product }: Props) {
   return (
     <Button
       onClick={() =>
-        hasProduct(product) ? removeProduct(product) : addProduct(product)
+        product.price > 0
+          ? hasProduct(product)
+            ? removeProduct(product)
+            : addProduct(product)
+          : (location.hash = "contacts")
       }
-      className="w-full text-sm bg-gradient-to-br from-red-700 to-red-500 text-white py-2 pb-1.5"
-    >
-      <div className="child:-translate-x-2 contents">
-        <Image className="w-6 translate-y-px" src={iconCart} alt="icon-cart" />
-        <span>
-          {hasProduct(product) ? "rimuovi" : t("page.buy-section.add-to-cart")}
-        </span>
-      </div>
+      className="w-full text-sm bg-gradient-to-br from-red-700 to-red-500 text-white py-2 pb-1.5">
+      {product.price > 0 ? (
+        <div className="child:-translate-x-2 contents">
+          <Image
+            className="w-6 translate-y-px"
+            src={iconCart}
+            alt="icon-cart"
+          />
+          <span>
+            {hasProduct(product)
+              ? "rimuovi"
+              : t("page.buy-section.add-to-cart")}
+          </span>
+        </div>
+      ) : (
+        <p className="py-0.5 md:text-lg">Contattaci</p>
+      )}
     </Button>
   );
 }

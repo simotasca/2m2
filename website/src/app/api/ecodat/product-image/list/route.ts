@@ -10,8 +10,6 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  console.log("HELLOOOOOWWWW")
-
   const { photoIds, err } = await fetchEcodatArticlePhotoList({ articleId })
     .then((photoIds) => ({ photoIds, err: false }))
     .catch((e) => {

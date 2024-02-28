@@ -245,9 +245,15 @@ export default function SearchModal({ category: baseCategory }: Props) {
                       key={i}>
                       <a href={routes.product(r)}>
                         <p
-                          className="text-sm group-last:border-b-0 leading-tight py-2"
+                          className="text-sm leading-tight pt-2"
                           dangerouslySetInnerHTML={{
                             __html: highlightSearch(r.description, value),
+                          }}
+                        />
+                        <p
+                          className="text-xs text-neutral-500 pb-2"
+                          dangerouslySetInnerHTML={{
+                            __html: highlightSearch(r.oeCode, value),
                           }}
                         />
                       </a>

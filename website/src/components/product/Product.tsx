@@ -12,11 +12,11 @@ import { CartProduct } from "@/lib/shared/cart";
 import { productName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
 import FavouritesToggle from "./FavouritesToggle";
 import ProductImage from "./ProductImage";
-import { useEffect } from "react";
+import { useMemo } from "react";
 
 interface Props {
   product: CartProduct;
@@ -26,6 +26,7 @@ export default function Product({ product }: Props) {
   const { t } = useTranslation("product");
   const { addProduct, removeProduct, hasProduct, loading } = useCart();
   const { isFavourite } = useFavourites();
+  const hasPrice = product.price > 0;
 
   return (
     <Link
@@ -42,41 +43,65 @@ export default function Product({ product }: Props) {
         <b className="font-bold mt-2 leading-[1.2] text-center group-hover:underline">
           {productName(product)}
         </b>
-        <div className="text-red-600 text-xl font-bold my-auto text-center">
-          <p className="pb-2.5 pt-2">{product.price.toFixed(2)}€</p>
+        <div className="my-auto text-center">
+          <p
+            className={twJoin(
+              "pb-2.5 pt-2 text-red-600 leading-[1]",
+              hasPrice ? "text-xl font-bold" : "font-semibold"
+            )}>
+            {hasPrice
+              ? String(product.price.toFixed(2)) + "€"
+              : "richiedi un preventivo"}
+          </p>
         </div>
         <div className="flex gap-1">
-          <Button
-            disabled={loading}
-            onClick={(e) => {
-              e.preventDefault();
-              hasProduct(product)
-                ? removeProduct(product)
-                : addProduct(product);
-            }}
-            className={twMerge(
-              "w-full rounded-sm border-2 py-0 text-sm",
-              hasProduct(product)
-                ? "bg-white text-red-600 border-red-600"
-                : "bg-red-gradient text-white border-0"
-            )}>
-            {hasProduct(product) ? (
-              <span>Remove</span>
-            ) : (
-              <>
-                {loading ? (
-                  <Image
-                    className="w-5 animate-spin invert"
-                    src={iconLoader}
-                    alt=""
-                  />
-                ) : (
-                  <Image className="w-5 translate-y-px" src={iconCart} alt="" />
-                )}
-                <span>{t("addToCart")}</span>
-              </>
-            )}
-          </Button>
+          {!hasPrice ? (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                location.hash = "contacts";
+              }}
+              className="w-full rounded-sm py-0 text-sm bg-red-gradient text-white border-0">
+              Contattaci
+            </Button>
+          ) : (
+            <Button
+              disabled={loading}
+              onClick={(e) => {
+                e.preventDefault();
+                hasProduct(product)
+                  ? removeProduct(product)
+                  : addProduct(product);
+              }}
+              className={twJoin(
+                "w-full rounded-sm py-0 text-sm",
+                hasProduct(product)
+                  ? "bg-white text-red-600 border-2 border-red-600"
+                  : "bg-red-gradient text-white border-0"
+              )}>
+              {hasProduct(product) ? (
+                <span>Remove</span>
+              ) : (
+                <>
+                  {loading ? (
+                    <Image
+                      className="w-5 animate-spin invert"
+                      src={iconLoader}
+                      alt=""
+                    />
+                  ) : (
+                    <Image
+                      className="w-5 translate-y-px"
+                      src={iconCart}
+                      alt=""
+                    />
+                  )}
+                  <span>{t("addToCart")}</span>
+                </>
+              )}
+            </Button>
+          )}
+
           <FavouritesToggle
             product={product}
             className="bg-red-600 rounded-sm aspect-square relative">

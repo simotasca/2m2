@@ -9,6 +9,8 @@ export interface APIArticles {
   };
   /** filtra per la descrizione completa dell’articolo attraverso l’operatore LIKE */
   description?: string;
+  /** filtra per il codice costruttore */
+  oeCode?: string;
   /** se > 0 filtra per IDMarca */
   brandId?: number;
   /** se > 0 filtra per IDModello */
@@ -47,7 +49,7 @@ export async function fetchEcodatArticles(
     <StrLoc3></StrLoc3>
     <StrLoc4></StrLoc4>
     <StrDisponibile>disponibile</StrDisponibile>
-    <StrCodOE></StrCodOE>
+    <StrCodOE>${props.oeCode || ""}</StrCodOE>
     <NumeroPS></NumeroPS>
     <AnnoPs></AnnoPs>
     <StrNomeModello></StrNomeModello>

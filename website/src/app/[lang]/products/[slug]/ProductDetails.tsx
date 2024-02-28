@@ -32,17 +32,33 @@ export default function ProductDetails({ product }: Props) {
           href={routes.model(product.brand, product.model)}
         />
         <PropertyRow name={t("version")} value={product.version} />
-        {(product.yearFrom || product.yearTo) && (
+        {product.category === "MOTORE" && (
+          <>
+            <PropertyRow name={t("engine")} value={product.engine} />
+            {product.displacement && (
+              <PropertyRow
+                name={t("engine-displacement")}
+                value={product.displacement}
+              />
+            )}
+            {product.power && (
+              <PropertyRow name={t("fuel-system")} value={product.power} />
+            )}
+          </>
+        )}
+        <PropertyRow name={t("engine")} value={product.engine} />
+        {product.displacement && (
           <PropertyRow
-            name={t("year")}
-            value={[product.yearFrom, product.yearTo]
-              .filter((y) => !!y)
-              .join(" - ")}
+            name={t("engine-displacement")}
+            value={product.displacement}
           />
+        )}
+        {product.power && (
+          <PropertyRow name={t("fuel-system")} value={product.power} />
         )}
 
         {/** expandible */}
-        {!expanded ? (
+        {/* {!expanded ? (
           <button
             className="text-start p-1 col-span-full text-red-700"
             onClick={() => setExpanded(true)}
@@ -62,9 +78,8 @@ export default function ProductDetails({ product }: Props) {
             {product.power && (
               <PropertyRow name={t("fuel-system")} value={product.power} />
             )}
-            <PropertyRow name={t("notes")} value={product.notes} />
           </>
-        )}
+        )} */}
       </div>
     </main>
   );
@@ -87,8 +102,7 @@ function PropertyRow({
         className={twJoin(
           "max-lg:text-left max-lg:pl-6 text-right font-medium",
           href && "underline hover:text-red-600"
-        )}
-      >
+        )}>
         {value}
       </a>
     </div>

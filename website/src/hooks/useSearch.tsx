@@ -1,7 +1,7 @@
 "use client";
 
 import { EcodatArticle } from "@/lib/shared/ecodat";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useInterval from "./useInterval";
 
 interface Options {
@@ -15,8 +15,8 @@ export default function useSearch(
   value: string,
   options?: Options
 ): [EcodatArticle[], boolean] {
-  const timeout = options?.timeout || 500;
   const rows = options?.rows || 10;
+  const timeout = options?.timeout || 500;
   const query = options?.query || {};
   const active = options?.active === undefined ? true : options.active;
 
@@ -24,6 +24,28 @@ export default function useSearch(
   const [lastQuery, setLastQuery] = useState(query);
   const [searchResult, setSearchResult] = useState<EcodatArticle[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchProds = useCallback(
+    (filters: any) =>
+      fetch("/api/ecodat/products", {
+        method: "POST",
+        body: JSON.stringify({
+          ...filters,
+          fetchRow: {
+            lastRow: 0,
+            nRows: rows,
+          },
+          ...query,
+        }),
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          console.error("Error fetching products:", err.message);
+          return [];
+        })
+        .then((data) => data as EcodatArticle[]),
+    []
+  );
 
   useInterval(() => {
     if (!active) return;
@@ -47,22 +69,15 @@ export default function useSearch(
 
     setIsLoading(true);
 
-    fetch("/api/ecodat/products", {
-      method: "POST",
-      body: JSON.stringify({
-        description: value,
-        fetchRow: {
-          lastRow: 0,
-          nRows: rows,
-        },
-        ...query,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data: EcodatArticle[]) => {
-        setSearchResult(data);
-        setIsLoading(false);
-      });
+    (async () => {
+      const [byOeCode, byDescription] = await Promise.all([
+        fetchProds({ oeCode: value }),
+        fetchProds({ description: value }),
+      ]);
+      const results = byOeCode.concat(byDescription);
+      setSearchResult(results);
+      setIsLoading(false);
+    })();
   }, timeout);
 
   return [searchResult, isLoading];
