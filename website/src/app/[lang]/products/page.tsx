@@ -41,22 +41,21 @@ export default async function ProductsPage({ searchParams }: Props) {
   return (
     <TranslationClientComponent value={translations}>
       <ClientLayout cart={cart} favourites={favs}>
-        <SearchModal></SearchModal>
+        <SearchModal />
+
         <PageLayout headerSmall>
           <div className="bg-white pb-4 xs:px-2">
-            <MaxWidthContainer className="max-sm:pt-2 pt-4">
+            <MaxWidthContainer className="pt-4">
               <div className="pt-4 max-sm:pt-0 pb-2">
-                <div className="flex items-center justify-between gap-x-4 gap-y-2 max-sm:flex-col max-sm:items-start max-sm:justify-start">
-                  <div />
-                  <StyledSearchModalToggle />
+                <div className="flex justify-between flex-wrap-reverse gap-x-4 gap-y-2">
+                  <Title as="h1">
+                    <Title.Gray>{r("page.title")}</Title.Gray>
+                  </Title>
+                  <div className="pt-1">
+                    <StyledSearchModalToggle />
+                  </div>
                 </div>
               </div>
-
-              <div className="max-sm:h-3"></div>
-
-              <Title as="h1">
-                <Title.Gray>{r("page.title")}</Title.Gray>
-              </Title>
 
               <div className="pt-6">
                 <EngineAssistance />
