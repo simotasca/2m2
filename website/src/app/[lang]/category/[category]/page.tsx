@@ -10,11 +10,7 @@ import TranslationClientComponent from "@/context/lang/TranslationClientComponen
 import PageLayout from "@/layouts/PageLayout";
 import ClientLayout from "@/layouts/base/ClientLayout";
 import { getServerData } from "@/layouts/base/ServerLayout";
-
-import {
-  fetchEcodatCategories,
-  fetchEcodatTypologies,
-} from "@/lib/server/ecodat";
+import { fetchEcodatCategories, fetchEcodatTypologies } from "@/lib/server/ecodat";
 import { generateTranslations } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
@@ -96,8 +92,7 @@ export default async function CategoryPage({
               <Title as="h1">
                 <Title.Gray>{t("page.title")}</Title.Gray>
                 <Title.Red>
-                  {" "}
-                  {t(["categories", category.name], category.name)}
+                  {" " + t(["categories", category.name], category.name)}
                 </Title.Red>
               </Title>
 
