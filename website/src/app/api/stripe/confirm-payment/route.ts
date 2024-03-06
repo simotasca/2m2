@@ -78,16 +78,26 @@ async function handleOrder(
 ): Promise<{ err?: string; products: EcodatArticle[] }> {
   if (!meta) return { err: "Missing metadata", products: [] };
 
+  console.log("Handlin order");
+  
   if (!checkMetadata(meta)) return { err: "Invalid metadata", products: [] };
+
+  console.log("metadata ok");
 
   const { err: errorObtainProducts, products } = await obtainProducts(meta);
   if (errorObtainProducts) return { err: errorObtainProducts, products: [] };
 
+  console.log("PRoducts obtained")
+  
   const { err: orderError } = await finalizeEcodatOrder(meta, products);
   if (orderError) return { err: orderError, products: [] };
+  
+  console.log("Order sent to ecodat");
 
   const { err: disableError } = await disableProducts(products);
   if (disableError) return { err: disableError, products: [] };
+
+  console.log("products disabled");
 
   return { products };
 }

@@ -7,14 +7,19 @@ import EngineAssistance from "@/components/ui/EngineAssistance";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import i18n from "@/i18n";
 import PageLayout from "@/layouts/PageLayout";
 import ClientLayout from "@/layouts/base/ClientLayout";
 import { getServerData } from "@/layouts/base/ServerLayout";
-import { fetchEcodatCategories, fetchEcodatTypologies } from "@/lib/server/ecodat";
-import { generateTranslations } from "@/lib/server/lang";
+import {
+  fetchEcodatCategories,
+  fetchEcodatTypologies,
+} from "@/lib/server/ecodat";
+import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -24,14 +29,54 @@ interface Props {
   searchParams: GenericSearchParams;
 }
 
-export default async function CategoryPage({
-  params: { category: qsCategory },
-  searchParams,
-}: Props) {
+async function getCategory(qsCategory: string) {
   const categories = await fetchEcodatCategories();
   const category = categories.find(
     (c) => c.name.toLowerCase() === decodeQueryParam(qsCategory).toLowerCase()
   );
+  return { categories, category };
+}
+
+export async function generateMetadata({
+  params: { category: qsCategory },
+}: Props): Promise<Metadata> {
+  const title = "titoloh";
+  const { category } = await getCategory(qsCategory);
+  const description = "desc....." + category?.name;
+  const lang = getCurrentLang();
+  const ogImage = "/opengraph.jpg";
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_HOST!),
+    title: title,
+    description: description,
+    applicationName: "2M2 autoricambi",
+    icons: {
+      icon: "/favicon.svg",
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: "/",
+      siteName: "Next.js",
+      images: [ogImage],
+      locale: i18n.values.get(lang),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: description,
+      images: [ogImage], // Must be an absolute URL
+    },
+  };
+}
+
+export default async function CategoryPage({
+  params: { category: qsCategory },
+  searchParams,
+}: Props) {
+  const { category, categories } = await getCategory(qsCategory);
   if (!category) return notFound();
 
   const types = await fetchEcodatTypologies(category.id);
