@@ -3,6 +3,7 @@ import Button from "@/components/ui/Button";
 import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import i18n from "@/i18n";
 import imgBackground from "@/images/about-background.jpg";
 import imgMap from "@/images/europe.svg";
 import imgGarage from "@/images/officina.jpg";
@@ -11,8 +12,43 @@ import PageLayout from "@/layouts/PageLayout";
 import ClientLayout from "@/layouts/base/ClientLayout";
 import { getServerData } from "@/layouts/base/ServerLayout";
 
-import { TranslationFactories, generateTranslations } from "@/lib/server/lang";
+import { TranslationFactories, generateTranslations, getCurrentLang } from "@/lib/server/lang";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const title = "2M2 Autoricambi | Chi siamo";
+  
+  const description = "Semplifichiamo la tua esperienza nella ricerca di autoricambi di alta qualità a prezzi convenienti";
+  const lang = getCurrentLang();
+  const ogImage = "/opengraph.jpg";
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_HOST!),
+    title: title,
+    description: description,
+    applicationName: "2M2 autoricambi",
+    icons: {
+      icon: "/favicon.svg",
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: "/",
+      siteName: "Next.js",
+      images: [ogImage],
+      locale: i18n.values.get(lang),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: description,
+      images: [ogImage], // Must be an absolute URL
+    },
+  };
+}
+
 
 export default async function AboutPage() {
   const [translations, { t, r }] = await generateTranslations(
