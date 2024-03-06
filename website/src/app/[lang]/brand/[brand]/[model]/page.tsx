@@ -6,15 +6,17 @@ import ContactsSection from "@/components/ui/ContactsSection";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import i18n from "@/i18n";
 import PageLayout from "@/layouts/PageLayout";
 import ClientLayout from "@/layouts/base/ClientLayout";
 import { getServerData } from "@/layouts/base/ServerLayout";
 
 import { fetchEcodatBrands, fetchEcodatModels } from "@/lib/server/ecodat";
-import { generateTranslations } from "@/lib/server/lang";
+import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
 import { GenericSearchParams } from "@/lib/server/search";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -25,20 +27,67 @@ interface Props {
   searchParams: GenericSearchParams;
 }
 
-export default async function ModelPage({
-  params: { brand: qsBrand, model: qsModel },
-  searchParams,
-}: Props) {
+async function getBrand(qsBrand: string) {
   const brands = await fetchEcodatBrands();
   const brand = brands.find(
     (b) => b.name.toLowerCase() === decodeQueryParam(qsBrand).toLowerCase()
   );
+  return { brand, brands };
+
+async function getModel(qsModel: string, brandId: number) {
+  const models = await fetchEcodatModels(brandId);
+  const model = models.find(
+    (b) => b.name.toLowerCase() === decodeQueryParam(qsModel).toLowerCase()
+  );
+  return { model, models };
+}
+
+export async function generateMetadata({
+  params: { model: qsModel },
+}: Props): Promise<Metadata> {
+  const title = "2M2 Autoricambi | Modelli";
+  const { brand } = await getBrand(qsBrand);
+  const { model } = await getModel(qsModel, brand!.id);
+  const description = "Modello:" + model?.name + brand?.name ;
+  const lang = getCurrentLang();
+  const ogImage = "/opengraph.jpg";
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_HOST!),
+    title: title,
+    description: description,
+    applicationName: "2M2 autoricambi",
+    icons: {
+      icon: "/favicon.svg",
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: "/",
+      siteName: "Next.js",
+      images: [ogImage],
+      locale: i18n.values.get(lang),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: description,
+      images: [ogImage], // Must be an absolute URL
+    },
+  };
+}
+
+export default async function ModelPage({
+  params: { brand: qsBrand, model: qsModel },
+  searchParams,
+}: Props) {
+  const { brand, brands } = await getBrand(qsBrand);
+  
   if (!brand) return notFound();
 
-  const models = await fetchEcodatModels(brand.id);
-  const model = models.find(
-    (m) => m.name.toLowerCase() === decodeQueryParam(qsModel).toLowerCase()
-  );
+  const {model, models} = await getModel(qsModel, brand.id);
+  
   if (!model) return notFound();
 
   const bread = [
