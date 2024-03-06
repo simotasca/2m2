@@ -73,16 +73,13 @@ export const knownCategories = {
   "CAMBIO E TRASMISSIONE": { image: "/assets/category-images/cambio.png" },
   CRISTALLI: { image: "/assets/category-images/cristalli.png" },
   FANALERIA: { image: "/assets/category-images/fanaleria.png" },
-
   "LAMIERATI ESTERNI": {
     image: "/assets/category-images/lamierati-esterni.png",
   },
-
   "MANUTENZIONE ORDINARIA": {
     image: "/assets/category-images/manutenzione.png",
   },
   MOTORE: { image: "/assets/category-images/motore.png" },
-
   SELLERIA: { image: "/assets/category-images/selleria.png" },
 } as const;
 

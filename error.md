@@ -1,0 +1,3 @@
+Internal Error API Ecodat: Impossibile modificare la disponibilità di un articolo durante il processo di sincronizzazione con ricambi-pro
+
+Probabilmente mentre loro fanno la sincronizzazione non vanno le api...

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "@/components/navigation/Link";
+import useAuth from "@/context/auth/useAuth";
 import useCart from "@/context/cart/useCart";
 import useTranslation from "@/context/lang/useTranslation";
 import iconTime from "@/images/icons/time.svg";
@@ -9,14 +11,13 @@ import type { EcodatData } from "@/lib/client/filters";
 import { ecodatData } from "@/lib/client/filters";
 import { createClientSideClient } from "@/lib/client/supabase";
 import routes from "@/lib/shared/routes";
+import settings from "@/settings";
 import Image from "next/image";
-import Link from "@/components/navigation/Link";
 import { useRouter } from "next/navigation";
 import type { FormEventHandler } from "react";
 import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import MaxWidthContainer from "../ui/MaxWidthContainer";
-import useAuth from "@/context/auth/useAuth";
 
 export default function Footer() {
   const { setIsOpen } = useCart();
@@ -49,12 +50,10 @@ export default function Footer() {
             {filters?.categories?.map((c) => (
               <li
                 key={c.id}
-                className="flex flex-col text-sm leading-4  whitespace-nowrap"
-              >
+                className="flex flex-col text-sm leading-4  whitespace-nowrap">
                 <a
                   className="hover:underline underline-offset-2"
-                  href={routes.category(c.name)}
-                >
+                  href={routes.category(c.name)}>
                   {tCat(c.name, c.name)}
                 </a>
               </li>
@@ -97,32 +96,28 @@ export default function Footer() {
             <li>
               <Link
                 href={routes.home()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {tHead("navbar.home")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.about()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {tHead("navbar.about")}
               </Link>
             </li>
             <li>
               <Link
                 href={routes.products()}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {tHead("search-bar.search")}
               </Link>
             </li>
             <li>
               <button
                 onClick={() => setIsOpen(true)}
-                className="hover:underline underline-offset-4 cursor-pointer"
-              >
+                className="hover:underline underline-offset-4 cursor-pointer">
                 {t("your-cart")}
               </button>
             </li>
@@ -229,8 +224,7 @@ function DropdownLogin() {
                 onClick={(e) => {
                   e.preventDefault();
                   togglePasswordVisibility();
-                }}
-              >
+                }}>
                 {pwInputType === "text"
                   ? t("auth.login.hide-password")
                   : t("auth.login.show-password")}
@@ -239,8 +233,7 @@ function DropdownLogin() {
 
             <Link
               className="underline text-xs -mt-1.5 text-neutral-200"
-              href={routes.passwordReset()}
-            >
+              href={routes.passwordReset()}>
               {t("auth.login.forgot-password")}
               {/* TODO */}
             </Link>
@@ -251,8 +244,7 @@ function DropdownLogin() {
 
             <Button
               type="submit"
-              className="w-full font-normal text-sm bg-red-500 text-white"
-            >
+              className="w-full font-normal text-sm bg-red-500 text-white">
               Login
             </Button>
           </form>
@@ -284,7 +276,7 @@ function ContactsSection() {
               <p>
                 <span className="text-xs leading-tight">Email: </span>
                 <span className="font-medium text-sm leading-tight">
-                  assistenza@2m2.com
+                  {settings.info.email}
                 </span>
               </p>
             </div>
@@ -298,7 +290,7 @@ function ContactsSection() {
                 </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium text-sm leading-tight">
-                  +39 374 9284720
+                  {settings.info.phone}
                 </span>
               </p>
             </div>
@@ -310,7 +302,7 @@ function ContactsSection() {
                 <span className="text-xs leading-tight">Whatsapp: </span>
                 <br className="xs:hidden md:block lg:hidden" />
                 <span className="font-medium text-sm leading-tight">
-                  +39 374 9284720
+                  {settings.info.phone}
                 </span>
               </p>
             </div>
@@ -328,8 +320,8 @@ function ContactsSection() {
             <p>
               {r("contacts.timetables.monday-friday")}
               <span className="">
-                <br className="xs:hidden md:block lg:hidden" /> 08:30-12:30 /
-                14:40-17:30
+                <br className="xs:hidden md:block lg:hidden" />{" "}
+                {settings.info.openings.monTue}
               </span>
             </p>
           </li>
@@ -342,7 +334,8 @@ function ContactsSection() {
             <p>
               <b className="font-medium">{r("contacts.timetables.saturday")}</b>
               <span className="">
-                <br className="xs:hidden md:block lg:hidden" /> 08:30-12:30
+                <br className="xs:hidden md:block lg:hidden" />{" "}
+                {settings.info.openings.sat}
               </span>
             </p>
           </li>

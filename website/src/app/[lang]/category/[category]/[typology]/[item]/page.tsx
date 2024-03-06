@@ -43,12 +43,14 @@ export default async function ItemPage({
   if (!category) return notFound();
 
   const types = await fetchEcodatTypologies(category.id);
+  console.log("typezz", types);
   const typology = types.find(
     (t) => t.name.toLowerCase() === decodeQueryParam(urlTypology).toLowerCase()
   );
   if (!typology) return notFound();
 
   const items = await fetchEcodatItems(category.id, typology.id);
+  console.log("ITEMZZ", items);
   const item = items.find((i) => {
     return (
       itemName(i).toLowerCase() === decodeQueryParam(urlItem).toLowerCase()

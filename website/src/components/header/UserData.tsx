@@ -94,7 +94,7 @@ function DropdownLogin({ small }: { small: boolean }) {
             session?.user ? router.push("/reserved") : setOpen((o) => !o)
           }
           className={twJoin(
-            "h-full flex items-center outline-none",
+            "h-full flex items-center outline-none hover:outline hover:outline-[#ffffff2a] -outline-offset-1",
             small ? "lg:px-3" : "md:px-3"
           )}>
           <p

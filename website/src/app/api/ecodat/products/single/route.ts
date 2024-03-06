@@ -1,4 +1,4 @@
-import { fetchEcodatArticle, fetchEcodatArticles } from "@/lib/server/ecodat";
+import { fetchEcodatArticle } from "@/lib/server/ecodat";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

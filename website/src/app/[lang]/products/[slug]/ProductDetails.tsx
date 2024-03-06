@@ -46,16 +46,6 @@ export default function ProductDetails({ product }: Props) {
             )}
           </>
         )}
-        <PropertyRow name={t("engine")} value={product.engine} />
-        {product.displacement && (
-          <PropertyRow
-            name={t("engine-displacement")}
-            value={product.displacement}
-          />
-        )}
-        {product.power && (
-          <PropertyRow name={t("fuel-system")} value={product.power} />
-        )}
 
         {/** expandible */}
         {/* {!expanded ? (

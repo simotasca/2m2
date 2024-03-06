@@ -22,6 +22,7 @@ export default function SimilarProducts({
     fetch("/api/ecodat/products", {
       method: "POST",
       body: JSON.stringify({
+        disponibile: "disponibile",
         categoryId: product.categoryId,
         typeId: product.typeId,
         itemId: product.itemId,
@@ -48,6 +49,7 @@ export default function SimilarProducts({
     fetch("/api/ecodat/products", {
       method: "POST",
       body: JSON.stringify({
+        disponibile: "disponibile",
         brandId: product.brandId,
         modelId: product.modelId,
         fetchRow: {

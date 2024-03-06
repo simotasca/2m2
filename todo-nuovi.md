@@ -3,7 +3,7 @@
   - ora redirect a login
 - [ ] Miglioria elenco prodotti: Nell'elenco dei prodotti, è assente un sistema di filtraggio per parametri come prezzo (crescente/decrescente) o data di inserimento (crescente/decrescente), implementare tali filtri per migliorare l'esperienza utente.
 - [x] Problema ricerca: Durante la ricerca, i prodotti non vengono trovati a causa della mancanza di alcuni parametri chiave, come il “codice ricambio”. Per esempio, cercando un motore “306DT” non viene trovato. È necessario integrare più parametri di ricerca per affinare i risultati.
-- [ ] Problema indirizzo: Nel processo di check-out, non è possibile inserire lettere o caratteri speciali nel campo del numero civico (es: 52/A  non è accettato, solo 52 è permesso). Occorre modificare il campo per accettare tali inserimenti.
+- [x] Problema indirizzo: Nel processo di check-out, non è possibile inserire lettere o caratteri speciali nel campo del numero civico (es: 52/A  non è accettato, solo 52 è permesso). Occorre modificare il campo per accettare tali inserimenti.
 - [x] Problema prestazioni sito: Il sito web risulta essere lento. Rimango in attesa di indicazioni per l'upgrade del Droplet per migliorare le prestazioni.
 - [ ] Problema del codice prodotto... quale mostrare?
 

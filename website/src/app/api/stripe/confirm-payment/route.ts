@@ -1,14 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
-import { stripeInstance } from "../init-stripe";
-import { EcodatArticle, productName } from "@/lib/shared/ecodat";
 import { fetchEcodatArticle } from "@/lib/server/ecodat";
+import { setEcodatAvalability } from "@/lib/server/ecodat/disponabilita";
 import { sendEcodatOrder } from "@/lib/server/ecodat/ordine";
 import { sendMail } from "@/lib/server/mail";
-import { setEcodatAvalability } from "@/lib/server/ecodat/disponabilita";
+import { EcodatArticle, productName } from "@/lib/shared/ecodat";
+import { checkEnvVariable } from "@/lib/shared/env";
+import { NextRequest, NextResponse } from "next/server";
+import { stripeInstance } from "../init-stripe";
+
+checkEnvVariable(["NEXT_PUBLIC_WEBSITE_HOST"]);
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-
+  
+  console.log("PAYMENT");
+  
   const { amount, paymentMethodId, metadata } = body;
 
   if (!paymentMethodId) {
@@ -43,13 +48,13 @@ export async function POST(req: NextRequest) {
       currency: "eur",
       automatic_payment_methods: { enabled: true },
       payment_method: paymentMethodId,
-      // TODO: ACTUAL URL!!|!!!i!!1!
       return_url:
-        "http://localhost:3000/checkout/success?email=" + metadata.email,
+        process.env.NEXT_PUBLIC_WEBSITE_HOST! +
+        "/checkout/success?email=" +
+        metadata.email,
       use_stripe_sdk: true,
     });
 
-    // TODO: e se non manda la meil?
     await notifyCustomer(metadata, products);
 
     return new NextResponse(

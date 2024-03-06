@@ -20,6 +20,7 @@ export default async function PaginatedProductsGrid({ searchParams, query, class
       nRows: RESULTS_PER_PAGE + 1,
       lastRow: (currentPage - 1) * RESULTS_PER_PAGE,
     },
+    disponibile: "disponibile",
     ...query,
   });
 

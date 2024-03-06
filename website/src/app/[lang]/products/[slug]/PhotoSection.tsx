@@ -29,11 +29,7 @@ export default function PhotoSection({ product }: { product: EcodatArticle }) {
       });
     setPhotoIds(photoIdsList);
   }, []);
-
-  useEffect(() => {
-    console.log("CURRENT PHOTO", mainPhoto);
-  }, [mainPhoto]);
-
+  
   if (photoIds.length === 0)
     return (
       <div className="aspect-[3/2] bg-slate-200">
@@ -65,7 +61,7 @@ export default function PhotoSection({ product }: { product: EcodatArticle }) {
           </div>
         </div>
         <div className="w-full p-0.5 border border-slate-300 rounded-sm">
-          <ProductImage big photo={mainPhoto} />
+          <ProductImage smallFallback big photo={mainPhoto} />
         </div>
       </div>
     </div>

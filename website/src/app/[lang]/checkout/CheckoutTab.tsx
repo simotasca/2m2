@@ -1,13 +1,23 @@
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import useTranslation from "@/context/lang/useTranslation";
 import iconPayment from "@/images/icons/payment.svg";
 import { stripePromise } from "@/lib/stripe";
-import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import type { Appearance, CssFontSource, CustomFontSource, StripeElementsOptions } from "@stripe/stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import type { StripeElementsOptions } from "@stripe/stripe-js";
 import Image from "next/image";
-import { Dispatch, FormEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import {
+  FormEvent,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import WizTabHandle from "./WizTabHandle";
-import useTranslation from "@/context/lang/useTranslation";
-import LoadingScreen from "@/components/ui/LoadingScreen";
-import useLogger from "@/hooks/useLogger";
 
 export interface CheckoutParams {
   email?: string;
@@ -15,28 +25,32 @@ export interface CheckoutParams {
   amount: number;
 }
 
-export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>((forwardProps, ref) => {
-  const tabRef = useRef<HTMLDivElement>(null);
+export const CheckoutTab = forwardRef<WizTabHandle, CheckoutParams>(
+  (forwardProps, ref) => {
+    const tabRef = useRef<HTMLDivElement>(null);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      validate: () => true,
-      focus: () => tabRef.current?.querySelector("input")?.focus(),
-    }),
-    []
-  );
+    useImperativeHandle(
+      ref,
+      () => ({
+        validate: () => true,
+        focus: () => tabRef.current?.querySelector("input")?.focus(),
+      }),
+      []
+    );
 
-  return (
-    <div ref={tabRef} className="mb-2.5">
-      <div className="flex items-start gap-2 mb-2">
-        <Image className="w-5 -translate-y-px" src={iconPayment} alt="" />
-        <h4 className="text-xl leading-[0.9] font-bold uppercase">Checkout</h4>
+    return (
+      <div ref={tabRef} className="mb-2.5">
+        <div className="flex items-start gap-2 mb-2">
+          <Image className="w-5 -translate-y-px" src={iconPayment} alt="" />
+          <h4 className="text-xl leading-[0.9] font-bold uppercase">
+            Checkout
+          </h4>
+        </div>
+        <ElementsWrapper {...forwardProps} />
       </div>
-      <ElementsWrapper {...forwardProps} />
-    </div>
-  );
-});
+    );
+  }
+);
 
 function ElementsWrapper({ email, metadata, amount }: CheckoutParams) {
   if (!stripePromise || !amount || !metadata) return <LoadingSpinner />;
@@ -81,7 +95,15 @@ const LoadingSpinner = () => {
   );
 };
 
-function CheckoutForm({ email, totalPrice, metadata }: { email?: string; totalPrice?: number; metadata: any }) {
+function CheckoutForm({
+  email,
+  totalPrice,
+  metadata,
+}: {
+  email?: string;
+  totalPrice?: number;
+  metadata: any;
+}) {
   const [loading, setLoading] = useState(false);
   // TODO: display
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -90,7 +112,8 @@ function CheckoutForm({ email, totalPrice, metadata }: { email?: string; totalPr
 
   const handleError = (error) => {
     setLoading(false);
-    setErrorMessage(error.message);
+    console.log(error.message);
+    setErrorMessage("Error processing payment... retry");
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -107,11 +130,11 @@ function CheckoutForm({ email, totalPrice, metadata }: { email?: string; totalPr
       return;
     }
 
-    const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
-      elements,
-      params: { metadata },
-      
-    });
+    const { error: paymentMethodError, paymentMethod } =
+      await stripe.createPaymentMethod({
+        elements,
+        params: { metadata },
+      });
 
     if (paymentMethodError) {
       // This point is only reached if there's an immediate error when
@@ -166,7 +189,8 @@ function CheckoutForm({ email, totalPrice, metadata }: { email?: string; totalPr
 
         {totalPrice && (
           <button className="bg-[linear-gradient(135deg,#DB5F06_30%,#D20404_140%)] text-white rounded px-8 py-1 font-semibold m4-2">
-            {t("pay")} ${totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
+            {t("pay")} $
+            {totalPrice != undefined ? totalPrice.toFixed(2) + "€" : ""}
           </button>
         )}
       </form>

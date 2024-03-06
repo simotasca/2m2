@@ -1,20 +1,20 @@
 "use server";
 
-import { getServerData } from "@/layouts/base/ServerLayout";
-import ClientPage from "./ClientPage";
-import { fetchEcodatArticles } from "@/lib/server/ecodat";
-import { generateTranslations } from "@/lib/server/lang";
-import { shuffle } from "@/lib/shared/array";
-import { knownCategories } from "@/lib/shared/ecodat";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import ClientLayout from "@/layouts/base/ClientLayout";
+import { getServerData } from "@/layouts/base/ServerLayout";
+import { fetchEcodatArticles } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
+import { knownCategories } from "@/lib/shared/ecodat";
+import ClientPage from "./ClientPage";
 
 export default async function HomePage() {
   const latestProducts = await fetchEcodatArticles({
     fetchRow: { nRows: 10, lastRow: 0 },
+    disponibile: "disponibile"
   });
 
-  const categories = shuffle(shuffle(Object.keys(knownCategories)));
+  const categories = Object.keys(knownCategories);
 
   const [translations] = await generateTranslations({
     product: "misc/product",

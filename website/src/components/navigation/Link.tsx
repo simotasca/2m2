@@ -72,7 +72,7 @@ export function translateRoute({ href, lang }: HrefSpec): string {
     langOk = undefined;
   }
 
-  lang != undefined && console.log("LANGOK", hrefOk, href, lang, langOk);
+  // lang != undefined && console.log("LANGOK", hrefOk, href, lang, langOk);
 
   if (isLangInHref) {
     if (lang)

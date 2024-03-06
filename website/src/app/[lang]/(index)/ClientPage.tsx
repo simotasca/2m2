@@ -1,39 +1,28 @@
 "use client";
 
+import Link from "@/components/navigation/Link";
 import ProductsGrid from "@/components/product/ProductsGrid";
+import BrandsCarousel from "@/components/ui/BrandsCarousel";
 import Button from "@/components/ui/Button";
+import ContactsSection from "@/components/ui/ContactsSection";
+import EngineAssistance from "@/components/ui/EngineAssistance";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
+import { PaymentsBar } from "@/components/ui/PaymentsBar";
+import useTranslation from "@/context/lang/useTranslation";
 import imgCarbonFiber from "@/images/carbon-fiber.png";
 import iconRight from "@/images/icons/right.svg";
 import PageLayout from "@/layouts/PageLayout";
 import { EcodatArticle, knownCategories } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import Link from "@/components/navigation/Link";
+import { Fragment } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
-import ContactsSection from "@/components/ui/ContactsSection";
 import Hero from "./Hero";
-import { PaymentsBar } from "@/components/ui/PaymentsBar";
-import { Fragment, useEffect, useRef, useState } from "react";
-import BrandsCarousel from "@/components/ui/BrandsCarousel";
-import useTranslation from "@/context/lang/useTranslation";
-import EngineAssistance from "@/components/ui/EngineAssistance";
 
 interface Props {
   latestProducts: EcodatArticle[];
   categories: string[];
 }
-
-const selectedCategories = [
-  "Assale",
-  "Lamierati esterni",
-  "Fanaleria",
-  "Motore",
-  "Cambio e Trasmissione",
-  "Selleria",
-  "Cristalli",
-  "Manutenzione Ordinaria",
-];
 
 export default function ClientPage({ latestProducts, categories }: Props) {
   const { t, r } = useTranslation("page");
@@ -101,17 +90,13 @@ export default function ClientPage({ latestProducts, categories }: Props) {
 }
 
 function CategoriesSection({ categories }: { categories: string[] }) {
-  const filteredCategories = categories.filter((category) =>
-    selectedCategories.includes(category)
-  );
   return (
     <div className="bg-gradient-to-b from-neutral-700 to-neutral-900 shadow-[0px_3px_5px_#00000030] z-10">
       <div className="max-w-screen-3xl mx-auto overflow-hidden">
         <div
           className={twJoin(
             "max-w-7xl grid xxs:grid-cols-2 md:grid-cols-4 3xl:grid-cols-8 mx-auto"
-          )}
-        >
+          )}>
           {categories.map((key) => (
             <Fragment key={key}>
               <CategoryCard name={key} />
@@ -160,8 +145,7 @@ function CategoryCard({ name }: { name: string }) {
         // "2xl:[&:nth-child(n+17)]:hidden",
         cardColors
       )}
-      key={name}
-    >
+      key={name}>
       <img
         src={knownCategories[name].image || undefined}
         className={twMerge(

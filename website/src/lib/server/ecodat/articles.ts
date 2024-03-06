@@ -11,6 +11,8 @@ export interface APIArticles {
   description?: string;
   /** filtra per il codice costruttore */
   oeCode?: string;
+  /** filtra per lo stato dell’articolo: */ 
+  disponibile?: "disponibile" | "non disponibile" | "da completare" | "completo" | "Ricambi PRO Visibili" | "NON Ricambi PRO",
   /** se > 0 filtra per IDMarca */
   brandId?: number;
   /** se > 0 filtra per IDModello */
@@ -48,7 +50,7 @@ export async function fetchEcodatArticles(
     <StrLoc2></StrLoc2>
     <StrLoc3></StrLoc3>
     <StrLoc4></StrLoc4>
-    <StrDisponibile>disponibile</StrDisponibile>
+    <StrDisponibile>${props.disponibile || ""}</StrDisponibile>
     <StrCodOE>${props.oeCode || ""}</StrCodOE>
     <NumeroPS></NumeroPS>
     <AnnoPs></AnnoPs>

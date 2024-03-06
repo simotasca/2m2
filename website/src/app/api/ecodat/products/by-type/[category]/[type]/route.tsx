@@ -22,6 +22,7 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
     categoryId,
     typeId,
     fetchRow: { nRows: 4, lastRow: 0 },
+    disponibile: "disponibile",
   }).catch((err) => {
     throw new Error("Error fetching ecodat articles by typeId: " + err.message);
   });

@@ -31,6 +31,7 @@ export default function useSearch(
         method: "POST",
         body: JSON.stringify({
           ...filters,
+          disponibile: "disponibile",
           fetchRow: {
             lastRow: 0,
             nRows: rows,
