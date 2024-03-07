@@ -40,7 +40,7 @@ async function getCategory(qsCategory: string) {
 export async function generateMetadata({
   params: { category: qsCategory },
 }: Props): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Categorie";
+  const title = "Categorie | 2M2 Autoricambi";
   const { category } = await getCategory(qsCategory);
   const description = "Categoria:" + category?.name;
   const lang = getCurrentLang();

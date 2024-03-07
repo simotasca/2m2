@@ -1,14 +1,20 @@
-import CheckoutClientPage from "./CheckoutClientPage";
-import { notFound } from "next/navigation";
-import { fetchEcodatArticle } from "@/lib/server/ecodat";
-import { EcodatArticle } from "@/lib/shared/ecodat";
-import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
-import { generateTranslations } from "@/lib/server/lang";
-import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import AuthProvider from "@/context/auth/AuthContext";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { fetchEcodatArticle } from "@/lib/server/ecodat";
+import { generateTranslations } from "@/lib/server/lang";
+import { EcodatArticle } from "@/lib/shared/ecodat";
+import { notFound } from "next/navigation";
+import CheckoutClientPage from "./CheckoutClientPage";
 
 interface Props {
   searchParams: { [key: string]: string };
+}
+
+export async function generateMetadata() {
+  return {
+    title: "Checkout",
+    robots: { index: false },
+  };
 }
 
 export default async function CheckoutPage({ searchParams }: Props) {

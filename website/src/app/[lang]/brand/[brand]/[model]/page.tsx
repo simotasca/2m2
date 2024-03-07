@@ -33,6 +33,7 @@ async function getBrand(qsBrand: string) {
     (b) => b.name.toLowerCase() === decodeQueryParam(qsBrand).toLowerCase()
   );
   return { brand, brands };
+}
 
 async function getModel(qsModel: string, brandId: number) {
   const models = await fetchEcodatModels(brandId);
@@ -43,7 +44,7 @@ async function getModel(qsModel: string, brandId: number) {
 }
 
 export async function generateMetadata({
-  params: { model: qsModel },
+  params: { brand: qsBrand, model: qsModel },
 }: Props): Promise<Metadata> {
   const title = "2M2 Autoricambi | Modelli";
   const { brand } = await getBrand(qsBrand);

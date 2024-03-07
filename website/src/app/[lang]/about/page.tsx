@@ -17,7 +17,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Chi siamo";
+  const title = "Chi siamo | 2M2 Autoricambi";
   
   const description = "Semplifichiamo la tua esperienza nella ricerca di autoricambi di alta qualità a prezzi convenienti";
   const lang = getCurrentLang();
