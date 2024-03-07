@@ -7,6 +7,7 @@ import EngineAssistance from "@/components/ui/EngineAssistance";
 import MaxWidthContainer from "@/components/ui/MaxWidthContainer";
 import Title from "@/components/ui/Title";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import i18n from "@/i18n";
 import PageLayout from "@/layouts/PageLayout";
 import ClientLayout from "@/layouts/base/ClientLayout";
 import { getServerData } from "@/layouts/base/ServerLayout";
@@ -16,11 +17,12 @@ import {
   fetchEcodatItems,
   fetchEcodatTypologies,
 } from "@/lib/server/ecodat";
-import { generateTranslations } from "@/lib/server/lang";
+import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
 import type { GenericSearchParams } from "@/lib/server/search";
 import { itemName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import { decodeQueryParam } from "@/lib/shared/search";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -32,6 +34,66 @@ interface Props {
   searchParams?: GenericSearchParams;
 }
 
+async function getCategory(qsCategory: string) {
+  const categories = await fetchEcodatCategories();
+  const category = categories.find(
+    (c) => c.name.toLowerCase() === decodeQueryParam(qsCategory).toLowerCase()
+  );
+  return { categories, category };
+}
+
+async function getTypology(qsTypology: string, categoryId: number) {
+  const typologies = await fetchEcodatTypologies(categoryId);
+  const typology = typologies.find(
+    (c) => c.name.toLowerCase() === decodeQueryParam(qsTypology).toLowerCase()
+  );
+  return { typologies, typology };
+}
+
+async function getItem(qsItem: string, typologyId: number) {
+  const items = await fetchEcodatItems(qsItem,typologyId);
+  const item = items.find(
+    (c) => c.name.toLowerCase() === decodeQueryParam(qsItem).toLowerCase()
+  );
+  return { items, item };
+}
+
+export async function generateMetadata({
+  params: { category: qsCategory, typology: qsTypology, item: qsItem},
+}: Props): Promise<Metadata> {
+  const title = "2M2 Autoricambi | Item";
+  const { category } = await getCategory(qsCategory);
+  const { typology } = await getTypology(qsTypology, category!.id);
+  const { item } = await getItem(qsItem, typology!.id);
+  const description = "Prodotto:" + item?.name + typology?.name + category?.name;
+  const lang = getCurrentLang();
+  const ogImage = "/opengraph.jpg";
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_HOST!),
+    title: title,
+    description: description,
+    applicationName: "2M2 autoricambi",
+    icons: {
+      icon: "/favicon.svg",
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: "/",
+      siteName: "Next.js",
+      images: [ogImage],
+      locale: i18n.values.get(lang),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: description,
+      images: [ogImage], // Must be an absolute URL
+    },
+  };
+}
 export default async function ItemPage({
   params: { category: urlCategory, typology: urlTypology, item: urlItem },
   searchParams,

@@ -40,9 +40,9 @@ async function getCategory(qsCategory: string) {
 export async function generateMetadata({
   params: { category: qsCategory },
 }: Props): Promise<Metadata> {
-  const title = "titoloh";
+  const title = "2M2 Autoricambi | Categorie";
   const { category } = await getCategory(qsCategory);
-  const description = "desc....." + category?.name;
+  const description = "Categoria:" + category?.name;
   const lang = getCurrentLang();
   const ogImage = "/opengraph.jpg";
 
@@ -118,6 +118,7 @@ export default async function CategoryPage({
   const { cart, favs } = await getServerData();
 
   return (
+    <>
     <TranslationClientComponent value={translations}>
       <ClientLayout cart={cart} favourites={favs}>
         <PageLayout headerSmall>
@@ -168,5 +169,6 @@ export default async function CategoryPage({
         </PageLayout>
       </ClientLayout>
     </TranslationClientComponent>
+    </>
   );
 }
