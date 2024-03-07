@@ -34,6 +34,7 @@ import i18n from "@/i18n";
 interface Props {
   params: {
     slug: string;
+    product: string;
     category: string;
     typology: string;
     item: string;
@@ -73,7 +74,7 @@ async function getProduct(qsProduct: string, itemId: number) {
 }
 
 export async function generateMetadata({
-  params: { slug:qsProduct, category: qsCategory, typology: qsTypology, item: qsItem},
+  params: { product:qsProduct, category: qsCategory, typology: qsTypology, item: qsItem},
 }: Props): Promise<Metadata> {
   const title = "Item | 2M2 Autoricambi";
   const { category } = await getCategory(qsCategory);
