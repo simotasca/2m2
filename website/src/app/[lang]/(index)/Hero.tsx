@@ -15,7 +15,7 @@ import iconCategory from "@/images/icons/widgets.svg";
 import imgLogoEsteso from "@/images/logo-esteso.svg";
 import mainBg from "@/images/main-background-engine.jpg";
 import imgSkew from "@/images/skew.svg";
-import { ecodatData } from "@/lib/client/filters";
+import { getEcodatData } from "@/lib/client/filters";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -94,9 +94,7 @@ function HeroFilters() {
   };
 
   useEffect(() => {
-    ecodatData.then((res) => {
-      res && setContent(res);
-    });
+    getEcodatData().then(setContent);
   }, []);
 
   const doSearch = () => {
@@ -185,8 +183,7 @@ function HeroFilters() {
             className={twMerge(
               "text-white text-lg w-full bg-gradient-to-br from-red-700 to-red-500",
               !brand && !category && "opacity-70"
-            )}
-          >
+            )}>
             Search
           </Button>
         </div>
@@ -217,8 +214,7 @@ function HeroBg() {
           <Image
             src={mainBg}
             alt="backgroud engine"
-            className="absolute inset-0 w-full h-full object-cover"
-          ></Image>
+            className="absolute inset-0 w-full h-full object-cover"></Image>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       </div>

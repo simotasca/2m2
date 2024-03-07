@@ -9,7 +9,7 @@ import imgLoad from "@/images/icons/loader.svg";
 import imgGoTo from "@/images/icons/open_in_new.svg";
 import iconSearch from "@/images/icons/search.svg";
 import type { EcodatData } from "@/lib/client/filters";
-import { ecodatData } from "@/lib/client/filters";
+import { getEcodatData } from "@/lib/client/filters";
 import {
   EcodatBrand,
   EcodatCategory,
@@ -77,7 +77,7 @@ export default function SearchModal({ category: baseCategory }: Props) {
   });
 
   useEffect(() => {
-    ecodatData.then(setFilters);
+    getEcodatData().then(setFilters);
   }, []);
 
   useEffect(() => {

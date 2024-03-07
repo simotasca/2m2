@@ -18,6 +18,7 @@ import {
   useState,
 } from "react";
 import WizTabHandle from "./WizTabHandle";
+import { useRouter } from "next/navigation";
 
 export interface CheckoutParams {
   email?: string;
@@ -109,15 +110,17 @@ function CheckoutForm({
   const [errorMessage, setErrorMessage] = useState<string>();
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
 
   const handleError = (error) => {
     setLoading(false);
     console.log(error.message);
-    setErrorMessage("Error processing payment... retry");
+    setErrorMessage("Error processing payment... retry later");
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setErrorMessage(undefined);
 
     if (!stripe || !elements) return;
 
@@ -143,6 +146,7 @@ function CheckoutForm({
       return;
     }
 
+    // https://docs.stripe.com/payments/finalize-payments-on-the-server?platform=web&type=payment
     const res = await fetch("/api/stripe/confirm-payment", {
       method: "POST",
       body: JSON.stringify({
@@ -160,8 +164,10 @@ function CheckoutForm({
     const data = await res.json();
 
     if (data.status === "requires_action") {
+      console.log("IT REQUIRES AN ACTION");
+
       // Use Stripe.js to handle the required next action
-      const { error, paymentIntent } = await stripe.handleNextAction({
+      const { error } = await stripe.handleNextAction({
         clientSecret: data.client_secret,
       });
 
@@ -170,9 +176,15 @@ function CheckoutForm({
         handleError(error);
         return;
       }
+
+      console.log("WHAT SHOULD I DO WITH PAYMENT INTENT???");
     }
 
-    setLoading(false);
+    router.push(
+      process.env.NEXT_PUBLIC_WEBSITE_HOST! +
+        "/checkout/success?email=" +
+        metadata.email
+    );
   };
 
   const { t } = useTranslation("page.checkout");

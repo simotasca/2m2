@@ -24,8 +24,8 @@ type ServerStorageContext = { cookies: () => ReturnType<typeof nextCookies> };
 class ServerStorageAdapter implements StorageAdapter {
   constructor(private readonly context: ServerStorageContext) {}
 
-  // TODO: THIS IS BAD!!!
   getItem(key: string) {
+    // TODO: THIS IS BAD!!!
     key = key.replace("kong", process.env.SUPABASE_HOST_FIX!);
     let val = this.context.cookies().get(key)?.value;
     return val ? JSON.parse(val) : null;

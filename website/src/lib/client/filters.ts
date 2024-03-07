@@ -14,16 +14,18 @@ export interface EcodatData {
   })[];
 }
 
-async function getEcodatData(): Promise<EcodatData | undefined> {
-  return await fetch("/api/ecodat/filters")
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    })
-    .catch((e) => {
-      console.error("ERROR: fetching search filters:", e.message);
-      return undefined;
-    });
-}
+let data: Promise<EcodatData | undefined>;
+let fetched = false;
 
-export const ecodatData = getEcodatData();
+export function getEcodatData(): Promise<EcodatData | undefined> {
+  if (!fetched) {
+    fetched = true;
+    data = fetch("/api/ecodat/filters")
+      .then((res) => res.json())
+      .catch((e) => {
+        console.error("ERROR: fetching search filters:", e.message);
+        return undefined;
+      });
+  }
+  return data;
+}
