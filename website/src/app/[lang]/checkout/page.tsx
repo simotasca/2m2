@@ -1,13 +1,12 @@
-import CheckoutClientPage from "./CheckoutClientPage";
-import { notFound } from "next/navigation";
-import { fetchEcodatArticle } from "@/lib/server/ecodat";
-import { EcodatArticle } from "@/lib/shared/ecodat";
-import TranslationClientProvider from "@/context/lang/TranslationClientProvider";
-import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
-import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import AuthProvider from "@/context/auth/AuthContext";
+import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
 import i18n from "@/i18n";
+import { fetchEcodatArticle } from "@/lib/server/ecodat";
+import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
+import { EcodatArticle } from "@/lib/shared/ecodat";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import CheckoutClientPage from "./CheckoutClientPage";
 
 interface Props {
   searchParams: { [key: string]: string };
@@ -21,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = "/opengraph.jpg";
 
   return {
+    robots: { index: false },
     metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_HOST!),
     title: title,
     description: description,

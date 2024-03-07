@@ -31,11 +31,8 @@ function CartProvider({
   const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const isLogged = useMemo(() => cartId !== undefined, [cartId]);
-  const count = useMemo(
-    () => (initialized ? cartProducts.length : 0),
-    [initialized, cartProducts]
-  );
+  const isLogged = cartId !== undefined;
+  const count = initialized ? cartProducts.length : 0
   const total = useMemo(
     () =>
       initialized

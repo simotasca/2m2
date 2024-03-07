@@ -12,7 +12,7 @@ import { Metadata } from "next";
 import i18n from "@/i18n";
 
 export async function generateMetadata() : Promise<Metadata> {
-  const title = "2M2 Autoricambi | Home";
+  const title = "2M2 Autoricambi";
   
   const description = "Il migliori ricambi per la tua auto. Semplice, facile e veloce";
   const lang = getCurrentLang();

@@ -7,8 +7,7 @@ import useTranslation from "@/context/lang/useTranslation";
 import iconTime from "@/images/icons/time.svg";
 import gifLoader from "@/images/loader.gif";
 import logo2m2 from "@/images/logo.svg";
-import type { EcodatData } from "@/lib/client/filters";
-import { ecodatData } from "@/lib/client/filters";
+import { getEcodatData, type EcodatData } from "@/lib/client/filters";
 import { createClientSideClient } from "@/lib/client/supabase";
 import routes from "@/lib/shared/routes";
 import settings from "@/settings";
@@ -29,7 +28,7 @@ export default function Footer() {
   const [filters, setFilters] = useState<EcodatData>();
 
   useEffect(() => {
-    ecodatData.then((f) => setFilters(f));
+    getEcodatData().then(setFilters);
   }, []);
 
   return (

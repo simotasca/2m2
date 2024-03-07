@@ -1,9 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-import { EcodatArticle } from "../shared/ecodat";
-import { handleSupaError } from "../shared/error";
 import { Database } from "../shared/supabase";
-import { fetchEcodatArticle } from "./ecodat";
 
 export async function getCart(supabase: SupabaseClient<Database>) {
   const isLogged = !!(await supabase.auth.getSession()).data.session?.user;

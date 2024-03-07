@@ -15,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = "/opengraph.jpg";
 
   return {
+    robots: { index: false },
     metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_HOST!),
     title: title,
     description: description,

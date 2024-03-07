@@ -6,6 +6,14 @@ import routes from "@/lib/shared/routes";
 import CookieKiller from "./CookieKiller";
 import { generateTranslations } from "@/lib/server/lang";
 import TranslationClientComponent from "@/context/lang/TranslationClientComponent";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Checkout Success",
+    robots: { index: false },
+  };
+}
 
 export default async function CheckoutSuccessPage({ searchParams }) {
   const [translations] = await generateTranslations({});

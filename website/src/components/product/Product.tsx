@@ -12,11 +12,10 @@ import { CartProduct } from "@/lib/shared/cart";
 import { productName } from "@/lib/shared/ecodat";
 import routes from "@/lib/shared/routes";
 import Image from "next/image";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 import Button from "../ui/Button";
 import FavouritesToggle from "./FavouritesToggle";
 import ProductImage from "./ProductImage";
-import { useMemo } from "react";
 
 interface Props {
   product: CartProduct;

@@ -17,6 +17,14 @@ import { Customer } from "./customer";
 import FavouritesProvider from "@/context/favourites/FavouritesContext";
 import AuthProvider from "@/context/auth/AuthContext";
 import CartProvider from "@/context/cart/CartProvider";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Reserved Area | 2M2",
+    robots: { index: false },
+  };
+}
 
 export default async function ReservedPage() {
   const supabase = createServerSideClient({ cookies });
