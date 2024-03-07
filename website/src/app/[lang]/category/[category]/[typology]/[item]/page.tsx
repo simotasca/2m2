@@ -61,7 +61,7 @@ async function getItem(qsItem: string, typologyId: number) {
 export async function generateMetadata({
   params: { category: qsCategory, typology: qsTypology, item: qsItem},
 }: Props): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Item";
+  const title = "Item | 2M2 Autoricambi";
   const { category } = await getCategory(qsCategory);
   const { typology } = await getTypology(qsTypology, category!.id);
   const { item } = await getItem(qsItem, typology!.id);

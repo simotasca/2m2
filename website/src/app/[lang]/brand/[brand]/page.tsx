@@ -35,7 +35,7 @@ async function getBrand(qsBrand: string) {
 export async function generateMetadata({
   params: { brand: qsBrand },
 }: Props): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Marchi";
+  const title = "Marchi | 2M2 Autoricambi";
   const { brand } = await getBrand(qsBrand);
   const description = "Marchio:" + brand?.name;
   const lang = getCurrentLang();

@@ -10,7 +10,7 @@ import { Metadata } from "next";
 import { twJoin } from "tailwind-merge";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Privacy policy";
+  const title = "Privacy policy | 2M2 Autoricambi";
   
   const description = "Privacy policy di 2m2 autoricambi";
   const lang = getCurrentLang();

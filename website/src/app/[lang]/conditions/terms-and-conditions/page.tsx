@@ -9,7 +9,7 @@ import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Terms and conditions";
+  const title = "Terms and conditions | 2M2 Autoricambi";
   
   const description = "Termini e condizioni di 2m2 autoricambi";
   const lang = getCurrentLang();

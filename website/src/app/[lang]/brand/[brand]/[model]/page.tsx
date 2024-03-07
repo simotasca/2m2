@@ -45,7 +45,7 @@ async function getModel(qsModel: string, brandId: number) {
 export async function generateMetadata({
   params: { model: qsModel },
 }: Props): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Modelli";
+  const title = "Modelli | 2M2 Autoricambi";
   const { brand } = await getBrand(qsBrand);
   const { model } = await getModel(qsModel, brand!.id);
   const description = "Modello:" + model?.name + brand?.name ;

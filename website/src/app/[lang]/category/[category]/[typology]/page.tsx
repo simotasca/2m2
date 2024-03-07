@@ -52,7 +52,7 @@ async function getTypology(qsTypology: string, categoryId: number) {
 export async function generateMetadata({
   params: { category: qsCategory, typology: qsTypology },
 }: Props): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Tipologie";
+  const title = "Tipologie | 2M2 Autoricambi";
   const { category } = await getCategory(qsCategory);
   const { typology } = await getTypology(qsTypology, category!.id);
   const description = "Tipologia:" + typology?.name + category?.name;

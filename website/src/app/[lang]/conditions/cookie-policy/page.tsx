@@ -9,7 +9,7 @@ import { generateTranslations, getCurrentLang } from "@/lib/server/lang";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "2M2 Autoricambi | Cookie policy";
+  const title = "Cookie policy | 2M2 Autoricambi";
   
   const description = "Cookie policy di 2m2 autoricambi";
   const lang = getCurrentLang();
